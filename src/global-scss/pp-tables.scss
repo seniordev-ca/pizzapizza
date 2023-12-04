@@ -1,0 +1,173 @@
+@import 'global-scss-mixing';
+
+$empty-list-text: #6d7273;
+$empty-list-icon-color: #edf2f5;
+$row-text: #3b210b;
+$border: #e1e7e9;
+
+.pp-table {
+
+	.border-left-right {
+		border-right: 1px solid $border;
+		border-left: 1px solid $border;
+	}
+
+	.border-left {
+		border-left: 1px solid $border;
+	}
+
+	.border-right {
+		border-right: 1px solid $border;
+	}
+
+	.pp-table-pre-header-row {
+		@include font-regular;
+		padding-bottom: 15px;
+
+		.left-title {
+			color: $pp-default-text-colour;
+			font-size: 1.875em;
+
+			span {
+				margin-left: 12px;
+			}
+		}
+
+		i {
+			color: $pp-bg-maincolour;
+			font-size: 26px;
+		}
+
+		.right-title {
+			padding-top: 18px;
+			color: $pp-default-text-colour;
+
+			span {
+				@include font-extra-bold;
+			}
+		}
+	}
+
+
+	.pp-table-header-row {
+		@include font-extra-bold;
+		border-top: 1px solid $border;
+		border-bottom: 1px solid $border;
+		line-height: 1.2em;
+		color: $pp-default-text-colour;
+		font-size: 1.25em;
+
+		>div {
+			padding-top: 17px;
+			padding-bottom: 17px;
+		}
+
+		.orange {
+			color: $pp-bg-maincolour;
+		}
+	}
+
+
+	.pp-empty-body-container {
+		@include font-regular;
+
+		.title {
+			padding-top: 50px;
+			padding-bottom: 15px;
+			color: $empty-list-text;
+			font-size: 1.875em;
+		}
+
+		i {
+			color: $empty-list-icon-color;
+			font-size: 160px;
+
+			&:before {
+				width: 2em;
+			}
+		}
+	}
+
+	.pp-table-body-container {
+		padding-bottom: 40px;
+	}
+
+	.pp-table-row {
+		@include font-regular;
+		border-bottom: 1px solid $border;
+		color: $row-text;
+
+		>div {
+			padding-top: 17px;
+			padding-bottom: 17px;
+		}
+
+		.border-split {
+			margin-top: 8px;
+			margin-bottom: 8px;
+			padding: 0;
+			height: 1px;
+
+			&:after {
+				position: absolute;
+				left: 2%;
+				background-color: $border;
+				width: 96%;
+				height: 100%;
+				content: ' ';
+			}
+		}
+
+		h6 {
+			display: none;
+		}
+	}
+
+
+}
+
+
+@include media-breakpoint-down(sm) {
+	.pp-table {
+
+		.border-left-right, 
+		.border-left,
+		.border-right {
+			border: initial;
+		}
+
+		.pp-table-pre-header-row {
+			background-color: $white;
+			padding-top: 20px;
+
+			.left-title { 
+				font-size: 1.5em;
+			}
+
+			.right-title { 
+				padding-left: 10px;
+			}
+		}
+
+		.pp-table-row {
+			margin-top: 7px;
+			background-color: $white;
+			padding-top: 15px;
+			padding-bottom: 15px;
+
+			>div {
+				padding-top: 7px;
+				padding-bottom: 7px;
+			}
+
+			h6 {
+				display: block;
+				margin-bottom: -2px;
+			}
+
+			.earned { 
+				border: initial;
+			}
+		}
+	}
+}

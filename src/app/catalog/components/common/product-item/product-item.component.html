@@ -1,0 +1,210 @@
+<div class="row mb-3 mx-0 mx-md-2 individual-product-row" [ngClass]="{
+		'is-selected' : productItem.isSelected,
+		'single-product' : !productItem.isComboProduct && productItem.isCustomizationAllowed,
+		'combo-product' : productItem.isComboProduct,
+		'single-unconfigurable': !productItem.isComboProduct && !productItem.isCustomizationAllowed,
+		'inactive-product': productItem.isNotApplicable
+	}" id="{{productItem.seoTitle ? productItem.seoTitle : productItem.id}}">
+
+  <!-- Quick Add Modal template -->
+  <ng-container *ngTemplateOutlet="quickAddModalTemplate">
+  </ng-container>
+
+  <div class="col-4 text-center individual-product-left individual-product-left-regular-layout ghost-bg-dark"
+    [ngStyle]="{'background-image': productItem.hasFullWidthImage ? 'url('+productItem.image+')' : ''}"
+    [class.has-background-image]="productItem.hasFullWidthImage">
+
+    <div class="row align-items-center h-100 left-row">
+      <!-- individual-product-badge-container -->
+      <span *ngIf="!productItem.marketingBadge"></span>
+
+      <div
+        class="d-flex justify-content-center justify-content-md-start ghost-hidden individual-product-badge-container w-100"
+        [style.color]="'#' + productItem.marketingBadge.color" *ngIf="productItem.marketingBadge">
+        <i class="server-font-icon individual-product-badge-icon" [style.color]="'#' + productItem.marketingBadge.color"
+          *ngIf="productItem.marketingBadge.fontKey"
+          [innerHTML]="productItem.marketingBadge.fontKey | pp_convertfontkey">
+        </i>
+
+        <span class="align-self-center individual-product-marketing-badge-text individual-product-icon-text">
+          {{productItem.marketingBadge.text}}
+        </span>
+      </div>
+
+      <!-- product-image -->
+      <div class="w-100 product-image-wrapper">
+        <img alt="{{ productItem.name }}" class="img individual-product-image ghost-hidden" src="{{productItem.image}}"
+          *ngIf="!productItem.hasFullWidthImage" />
+      </div>
+
+      <div
+        class="d-flex justify-content-center justify-content-md-start ghost-hidden individual-product-allergens-container w-100">
+        <!-- TODO: Once Pickup/Delivery Flags are ready -->
+        <span class="allergens-wrap m-2 py-1 px-3" *ngIf="productItem.productTag">
+          <span class="align-self-center allergens-span">
+            {{productItem.productTag}}
+          </span>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-8 individual-product-right ghost-bg pt-4 pb-3 pl-lg-4">
+    <span class="active-checkmark">
+      <i class="icon-checkmark"></i>
+    </span>
+    <div class="row h-100">
+
+      <div class="col-12 align-self-center individual-product-header" [class.selected-text]="productItem.isSelected">
+        <h4 class="fw-black mb-md-0 bar ghost-bar">
+          {{ productItem.name }}
+        </h4>
+        <div class="fw-extra-bold individual-product-caption smaller ghost-hidden text-capitalize"
+          *ngIf="productItem.subText">
+          {{ productItem.subText | lowercase }}
+        </div>
+
+      </div>
+
+      <div class="col-12 align-self-end indvidual-product-bottom">
+        <ng-container *ngTemplateOutlet="isComboItem ? comboLayout : defaultLayout; context:productItem">
+        </ng-container>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- individual-product-container -->
+<!-- Layout for Combo Item -->
+<ng-template #comboLayout>
+  <div class="row align-items-end">
+
+    <div class="col-12 col-md-7">
+      <p class="ghost-bar g-w-90 product-description" *ngIf="productItem.description"
+        [innerHTML]="productItem.description">
+      </p>
+      <div class="h5 fw-extra-bold ghost-bar g-w-40 mb-0" *ngIf="productItem.priceText">
+        <ng-container i18n>Starting from </ng-container>
+        {{ productItem.priceText.priceValue | currency:'CAD':'symbol-narrow':'1.2'}}
+      </div>
+      <div class="h5 fw-extra-bold ghost-bar g-w-60 text-capitalize cal-text" *ngIf="productItem.calText">
+        {{ productItem.calText }}
+      </div>
+    </div>
+
+    <div class="col-12 col-md-5 align-self-end text-right">
+      <div class="row btn-row justify-content-center no-gutters">
+        <div class="col-12 d-flex justify-content-center mb-2 h3 ghost-hidden"
+          *ngIf="productItem.isQuantitySelectionAllowed">
+          <app-quantity-selector class="w-100" [quantitySelectorContent]="{
+							maxQuantity: productItem.isMaxReached ? -1 : 100,
+							quantity: productItem.quantity ? this.productItem.quantity : 1,
+							title: productItem.name
+						}" (quantitySelectorEventEmitter)="quantitySelectorEventHandler($event)">
+          </app-quantity-selector>
+        </div>
+        <div class="col-12" *ngIf="productItem.isAddableToCartWithoutCustomization && !productItem.isForceSelected">
+          <button class="btn btn-lg btn-primary w-100"
+            [class.disabled]="productItem.isMaxReached && !productItem.isSelected"
+									[attr.aria-label]="productItem.isSelected ? 'Remove ' + productItem.name : 'Select ' + productItem.name"
+									(keydown.enter)="onButtonClick(productItem, ProductItemActionsEnum.onAddToCartClick)"
+            (click)="onButtonClick(productItem, ProductItemActionsEnum.onAddToCartClick)">
+            <ng-container *ngIf="productItem.isSelected" i18n>Remove</ng-container>
+            <ng-container *ngIf="!productItem.isSelected" i18n>Select</ng-container>
+          </button>
+        </div>
+        <div class="col-12" *ngIf="productItem.isCustomizationAllowed && !productItem.isNotApplicable">
+          <button
+            class="btn btn-lg btn-primary w-100"
+					[attr.aria-label]="productItem.isSelected ? 'Edit ' + productItem?.name : 'Customize ' + productItem?.name"
+          [attr.tabindex]="isVerticalModalOpen ? '-1' : '0'"
+					(click)="onButtonClick(productItem, ProductItemActionsEnum.onCustomizeButtonClick)">
+            <ng-container *ngIf="productItem.isSelected" i18n>Edit </ng-container>
+            <ng-container *ngIf="!productItem.isSelected" i18n>Customize</ng-container>
+          </button>
+        </div>
+        <div class="col-12" *ngIf="productItem.isCustomizationAllowed && productItem.isNotApplicable">
+          <button class="btn btn-lg btn-primary w-100"
+            (click)="onButtonClick(productItem, ProductItemActionsEnum.onCustomizeButtonClick)" i18n>Select</button>
+        </div>
+      </div>
+      <!-- Button Row -->
+    </div>
+  </div>
+</ng-template>
+
+<!-- Layout for products list -->
+<ng-template #defaultLayout>
+  <div class="row">
+    <div class="col-12">
+      <p class="ghost-bar g-w-90 my-3 product-description" *ngIf="productItem.description"
+        [innerHTML]="productItem.description">
+      </p>
+    </div>
+  </div>
+
+  <div class="row no-gutters align-items-end justify-content-between">
+    <div class="col-12 text-left" [class.selected-text]="productItem.isSelected" [ngClass]="{
+				'col-md-5': isProductWithTwoButtons,
+				'col-md-7': !isProductWithTwoButtons
+			}">
+      <div class="h5 fw-extra-bold ghost-bar g-w-40 mb-0" *ngIf="productItem.priceText">
+        <span *ngIf="!productItem.isQuantityIncrementerDisplayed">
+          {{productItem.priceText.labels}}
+          {{ productItem.priceText.priceValue | currency:'CAD':'symbol-narrow':'1.2'}}
+        </span>
+        <span *ngIf="productItem.isQuantityIncrementerDisplayed">
+          {{ quantitySelectorContent.quantity * productItem.priceText.priceValue | currency:'CAD':'symbol-narrow':'1.2'}}
+        </span>
+      </div>
+      <div class="h5 fw-extra-bold ghost-bar g-w-60 text-capitalize cal-text">
+        {{ productItem.calText }}
+      </div>
+    </div>
+
+    <div class="col-12 align-self-end text-right" [ngClass]="{
+				'col-md-7': isProductWithTwoButtons,
+				'col-md-5': !isProductWithTwoButtons
+			}">
+      <div class="row btn-row align-items-center justify-content-center justify-content-md-end no-gutters">
+        <div class="col-12 px-1 mb-2 h3 ghost-hidden" *ngIf="productItem.isQuantityIncrementerDisplayed">
+          <app-quantity-selector class="w-100" [quantitySelectorContent]="{
+							maxQuantity: productItem.isMaxReached ? -1 : 100,
+							quantity: productItem.quantity ? this.productItem.quantity : 1,
+							title: productItem.name
+						}" (quantitySelectorEventEmitter)="quantitySelectorEventHandler($event)">
+          </app-quantity-selector>
+        </div>
+        <div class="col-12 px-1 my-2 my-md-0" [class.col-md-6]="isProductWithTwoButtons"
+          *ngIf="productItem.isCustomizationAllowed">
+          <a attr.aria-label="Customize {{productItem?.name}} " [routerLink]="[productURL]"
+            class="btn btn-lg btn-primary w-100 add-customize-item p-0 d-flex align-items-center justify-content-center"
+            [class.btn-white]="productItem.isCustomizationAllowed && (productItem.isQuickAddAllowed || productItem.isAddableToCartWithoutCustomization)"
+            i18n>Customize</a>
+        </div>
+        <div class="col-12 px-1" [class.col-md-6]="isProductWithTwoButtons"
+          *ngIf="productItem.isAddableToCartWithoutCustomization">
+          <button class="btn btn-lg btn-primary w-100 add-customize-item p-0"
+            [class.loading-state]="productItem.isLoading"
+            (click)="onButtonClick(productItem, ProductItemActionsEnum.onAddToCartClick)" i18n>
+						Add To Cart
+					</button>
+        </div>
+        <div class="col-12 px-1" [class.col-md-6]="isProductWithTwoButtons" *ngIf="productItem.isQuickAddAllowed">
+          <button
+            attr.aria-label="Quick Add {{productItem?.name}} "
+            class="btn btn-lg btn-primary w-100 add-customize-item p-0"
+            [class.loading-state]="isQuickAddButtonLoading"
+            (click)="onButtonClick(productItem, ProductItemActionsEnum.onQuickAddButtonClick)" i18n>
+
+            Quick Add
+					</button>
+        </div>
+      </div>
+      <!-- Button Row -->
+    </div>
+  </div>
+
+</ng-template>

@@ -1,0 +1,78 @@
+<!-- container start -->
+<div class="container-fluid header-container">
+
+  <div class="container-fluid header-inner-container">
+    <div class="row no-gutters">
+      <div class="col-12">
+        <!-- header start -->
+        <nav class="row navbar navbar-expand-md py-0 py-md-4 px-0 navbar-custom mr-0">
+
+          <button class="navbar-toggler col-2" type="button" [attr.aria-expanded]="!navbarCollapsed"
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation"
+            (click)="mobileMenu.open()">
+
+            <span class="icon-menu-nav"></span>
+
+          </button>
+          <div class="col-auto">
+            <a class="navbar-brand mx-auto" [routerLink]="['/']">
+              <img alt="pizza pizza logo" class="img img-fluid" src="./static-files/images/logo.svg" />
+            </a>
+          </div>
+          <div class="mobile-user-link d-flex d-md-none col-auto">
+            <a routerLink="/user/sign-in" *ngIf="!(loginUser$ | async)">
+              <i class="icon-sign-in"></i>
+            </a>
+            <a routerLink="/user/account" *ngIf="(loginUser$ | async)">
+              <ng-container *ngIf="(loginUser$ | async).profilePic">
+                <div class="circle">
+                  <img class="img-fluid circle user-profile-image" [src]="(loginUser$ | async).profilePic">
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!(loginUser$ | async).profilePic">
+                <i class="icon-sign-in"></i>
+              </ng-container>
+            </a>
+          </div>
+          <div class=" collapse navbar-collapse" [ngbCollapse]="navbarCollapsed" id="navbarContent">
+
+            <div class="row w-100 align-self-center justify-content-end">
+              <div class="col-auto  nav-item  align-self-center">
+                <app-club-eleven-balance>
+                </app-club-eleven-balance>
+              </div>
+              <div class="col-auto col-md-3 col-xl-auto nav-item align-self-center">
+                <app-add-coupon-widget [parentContainer]="couponParentContainerEnum.Header">
+                </app-add-coupon-widget>
+              </div>
+              <div class="col-auto nav-item align-self-center store-selector-li">
+                <app-store-selector [userInputAddress]="userInputAddress$ | async"
+                  [isAddressComplete]="isAddressComplete$ | async" [isActiveDelivery]="isActiveDelivery$ | async"
+                  [selectedStore]="selectedStore$ | async">
+                </app-store-selector>
+              </div>
+              <div class="col-auto col-md-2 col-xl-auto nav-item pr-0 align-self-center">
+                <app-login-register [userDetails]="loginUser$ | async">
+                </app-login-register>
+              </div>
+            </div>
+
+          </div>
+          <div class="top-content-wrapper d-none d-md-block">
+            <a class="px-2 py-1 smaller lang-bold" i18n *ngIf="!isFrench" href="./fr/">
+              Français
+            </a>
+            <a class="px-2 py-1 smaller lang-bold" i18n *ngIf="isFrench" href="/">
+              English
+            </a>
+          </div>
+        </nav>
+        <!-- header end -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- container end -->
+<app-mobile-nav #mobileMenu [isDelivery]="isActiveDelivery$ | async" [selectedStore]="selectedStore$ | async"
+  [userDetails]="loginUser$ | async">
+</app-mobile-nav>

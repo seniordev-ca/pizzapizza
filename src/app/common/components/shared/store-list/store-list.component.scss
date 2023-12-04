@@ -1,0 +1,325 @@
+@import 'global-scss-mixing';
+
+$mid-grey: #dae9f0;
+$light-grey: #edf2f5;
+$dark-header-text: #6d7273;
+$ghost-loader-bg: #e1e7e9;
+$modal-bg: #000;
+$pp-green: #4e7026;
+$modal-header-bg: #eaf0f3;
+$error-color: #f00;
+$location-scrollbar-primary-color: #c3c5c5;
+
+
+.store-list-parent-container {
+	.store-list-item-row {
+		border: 2px solid $ghost-loader-bg;
+		border-radius: 4.5px;
+		padding: 10px 15px 20px 0;
+
+		&.select-active {
+			border: 2px solid $pp-green;
+
+			// sass-lint:disable nesting-depth
+			.store-select-col {
+				.store-select-row {
+					display: none;
+				}
+
+				.store-selected-row {
+					display: flex;
+					justify-content: flex-end;
+
+					i {
+						color: $pp-green;
+						font-size: .875em;
+					}
+				}
+			}
+
+			.store-address-col {
+				.store-address-intersection-row {
+					color: $pp-green;
+				}
+
+				.store-address-address-row,
+				.store-address-phone-number-row,
+				.store-address-distance-row {
+					color: $pp-green;
+				}
+			}
+
+			.store-hours-info-col {
+				.location-contact-header-row {
+					color: $pp-green;
+				}
+
+				.location-contact-phone-number-row,
+				.location-contact-extension-row {
+					color: $pp-green;
+				}
+
+				.location-hours-options-row {
+					color: $pp-green;
+				}
+			}
+
+			.left-icon-col {
+				color: $pp-green;
+			}
+		}
+
+		.left-icon-col {
+			color: $dark-header-text;
+			font-size: 1.5em;
+		}
+
+		.store-address-col {
+			.store-address-intersection-row {
+				@include font-extra-bold;
+				color: $dark-header-text;
+				font-size: 1em;
+			}
+
+			.store-address-address-row,
+			.store-address-phone-number-row,
+			.store-address-distance-row {
+				color: $dark-header-text;
+				font-size: .76em;
+			}
+		}
+
+		.store-hours-info-col {
+			.location-contact-header-row {
+				@include font-extra-bold;
+				color: $dark-header-text;
+				font-size: 1em;
+			}
+
+			.location-contact-phone-number-row,
+			.location-contact-extension-row {
+				color: $dark-header-text;
+				font-size: .76em;
+			}
+
+			.location-hours-options-row {
+				color: $dark-header-text;
+				font-size: .72em;
+				font-weight: 600;
+			}
+		}
+
+		.store-select-col {
+
+			position: relative;
+
+			.store-select-row {
+				position: absolute;
+				z-index: 10;
+
+				button {
+					@include font-extra-bold;
+					cursor: pointer;
+					color: $pp-bg-maincolour;
+					font-size: .875em;
+				}
+			}
+
+			.store-selected-row {
+				display: none;
+			}
+		}
+
+		.user-action-col {
+			cursor: pointer;
+
+			.action-icon,
+			.action-text {
+				color: $pp-bg-maincolour;
+				font-size: .81em;
+				font-weight: 600;
+			}
+		}
+
+		&.is-default {
+			border: 2px solid $pp-green;
+
+			.left-icon-col {
+				color: $pp-green;
+			}
+
+			.store-address-intersection-row,
+			.store-address-address-row {
+				color: $pp-green;
+			}
+
+			.payment-method-default-col {
+				cursor: pointer;
+				color: $pp-green;
+				font-size: .875em;
+
+				.set-default-row {
+					display: none;
+				}
+
+				.default-row {
+					display: flex;
+					justify-content: flex-end;
+
+					i {
+						font-size: .875em;
+					}
+				}
+			}
+		}
+
+		.payment-method-default-col {
+			@include font-extra-bold;
+			cursor: pointer;
+			color: $pp-bg-maincolour;
+			font-size: .875em;
+
+			.default-row {
+				display: none;
+			}
+
+			.set-default-row {
+				display: flex;
+				justify-content: flex-end;
+			}
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.store-list-parent-container {
+		.store-list-item-row { 
+			.left-icon-col {
+				font-size: 1em;
+			}
+
+			&.default-card {
+				.payment-method-default-state {
+					@include font-extra-bold;
+					position: absolute;
+					top: 4.5%;
+					left: 82%;
+					color: $pp-green;
+					font-size: .875em;
+				}
+
+				.default-state-icon {
+					display: inline-block;
+					font-size: .7em;
+				}
+			}
+		}
+	}
+}
+
+
+@include media-breakpoint-down(sm) {
+	.store-list-parent-container {
+		margin-left: 0;
+		padding-left: 0;
+
+		.store-list-item-row {
+			width: 100%;
+
+			&.is-default {
+
+				.store-select-col {
+
+					.select-row-mobile,
+					.store-selected-row {
+						position: absolute;
+						top: 5px;
+						right: 20px;
+						font-size: .65em;
+					}
+
+					.store-select-row {
+						padding-right: 10px;
+					}
+				}
+
+				.payment-method-default-col {
+					@include font-extra-bold;
+					color: $pp-bg-maincolour;
+					font-size: .65em;
+
+					.default-row {
+						color: $pp-green;
+					}
+				}
+			}
+
+			.payment-method-default-col {
+
+				.set-default-row {
+					font-size: .65em;
+				}
+
+			}
+
+		}
+	}
+}
+
+@include media-breakpoint-down(xs) {
+	.store-list-parent-container {
+		.store-list-item-row {
+			.store-address-col {
+				.store-address-intersection-row {
+					font-size: .88em;
+				}
+
+				.store-address-address-row,
+				.store-address-phone-number-row,
+				.store-address-distance-row {
+					font-size: .67em;
+				}
+			}
+
+			.store-hours-info-col {
+				.location-contact-header-row {
+					font-size: .88em;
+				}
+
+				.location-contact-phone-number-row,
+				.location-contact-extension-row {
+					font-size: .67em;
+				}
+			}
+
+			.user-action-col {
+
+				.action-icon,
+				.action-text {
+					color: $pp-bg-maincolour;
+					font-size: .7em;
+				}
+			}
+
+			&.default-card {
+				border: 2px solid $pp-green;
+
+				.payment-method-default-state {
+					@include font-extra-bold;
+					position: absolute;
+					top: 4.5%;
+					left: 80%;
+					color: $pp-green;
+					// font-size: .875em;
+					font-size: .65em;
+				}
+
+				.default-state-icon {
+					display: inline-block;
+					// font-size: .7em;
+					font-size: .5em;
+				}
+			}
+		}
+	}
+}

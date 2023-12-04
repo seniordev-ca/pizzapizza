@@ -1,0 +1,93 @@
+<!-- Container - Temp for Now, Later this modal will be a component that will be fed into another component as a modal -->
+<!-- <div class="container"> -->
+
+<!-- Beginning of Modal Content -->
+
+<!-- Parent Row -->
+<div class="row d-flex prompt-modal-parent-row mx-0 {{data.class}}">
+
+	<!-- Current close button should not be placed inside of this component, since it has it above, If there is no further issues, this commented code should be removed within next PR -->
+	<!-- <div class="col-11 col-md-12 prompt-modal-x-col">
+		<i class="icon-close-bold prompt-modal-x mx-3"
+			(click)="onCancel()">
+		</i>
+	</div> -->
+
+	<!-- Column - Header Column - Contains 2 rows - 1 for icon, 1 for header -->
+	<div class="col-12 align-items-center prompt-modal-header-col">
+		<div class="row d-flex justify-content-center prompt-modal-icon-row">
+			<i class="{{ data.icon }} prompt-modal-top-icon"></i>
+		</div>
+		<div class="row d-flex justify-content-center prompt-modal-header-row w-100">
+			<div class="col-12">
+				<span class="prompt-modal-title d-block w-100">
+					{{ title }}
+				</span>
+				<div class="prompt-modal-subtitle d-block w-100 my-4"
+					*ngIf="subtitle" [innerHTML]="subtitle">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Column - Body Column - Contains main modal text -->
+	<div class="col-12 prompt-modal-body-col">
+		<div class="row d-flex justify-content-center prompt-modal-body-text h-100">
+			<span *ngIf="text" class="col-12">{{ text }}</span>
+			<ng-container *ngTemplateOutlet="childrenTemplate"></ng-container>
+		</div>
+	</div>
+
+	<!-- Column - Button Column - Contains a Row with 2 Button Columns -->
+	<div class="col-12 prompt-modal-button-col" *ngIf="leftButtonText && rightButtonText">
+
+		<!-- Button Row -->
+		<div class="row d-flex justify-content-center button-row">
+
+			<!-- Button 1 Column -->
+			<div class="col-6 col-md-5 px-1" *ngIf="leftButtonText">
+				<button class="btn btn-lg btn-secondary prompt-modal-cancel-button"
+				(click)="onCancel()">
+
+					<span class="btn-text">
+						<span class="button-inner-text">
+							{{ leftButtonText }}
+						</span>
+					</span>
+				</button>
+			</div>
+			<!-- End Of Button 1 Column -->
+
+			<!-- Button 2 Column -->
+			<div class="col-6 col-md-5 px-1" *ngIf="rightButtonText">
+				<button class="btn btn-lg btn-secondary prompt-modal-okay-button"
+					(click)="onConfirm()">
+
+					<span class="btn-text"
+						[class.button-load]="buttonLoad">
+						<span class="button-inner-text">
+							{{ rightButtonText }}
+						</span>
+						<img alt="loading image" class="button-inner-load pp-image-loaded" src="./static-files/images/button-loading-state.gif" width="25" height="25">
+					</span>
+
+				</button>
+			</div>
+			<!-- End Of Button 2 Column -->
+
+		</div>
+		<!-- Button Row -->
+
+	</div>
+	<!-- Button Column -->
+
+</div>
+<!-- End of parent row -->
+<!-- End of Modal -->
+
+<!-- Button Is Only Here for Testing Purposes to open modal -->
+<!-- <button class="btn btn-lg btn-secondary"
+		(click)="open(content)">Open Modal</button> -->
+
+<!-- </div> -->
+<!-- Container -->

@@ -1,0 +1,140 @@
+<div class="container-fluid order-summary-container">
+
+	<div class="row p-4">
+		<div class="col-12 title" i18n>
+			Order Summary
+		</div>
+	</div>
+
+	<div class="row p-0">
+		<div class="separator">&nbsp;</div>
+	</div>
+	<ng-container *ngIf="!orderSummaryUI.isCartUpdating">
+		<!--
+			Price parts
+		-->
+		<div class="row px-4 line-item" *ngFor="let orderComponent of orderSummaryData.orderComponent">
+			<div class="col-6 label">
+				{{ orderComponent.label }}:
+			</div>
+			<div class="col-6 value">
+				{{ orderComponent.value | currency:'CAD':'symbol-narrow':'1.2' }}
+			</div>
+		</div>
+		<!--
+			Redeemtion parts
+		-->
+		<div class="row p-0" *ngIf="orderSummaryData.redemptionComponents && orderSummaryData.redemptionComponents.length > 0">
+				<div class="separator">&nbsp;</div>
+		</div>
+		<div class="row px-4 line-item" *ngFor="let redeemComponent of orderSummaryData.redemptionComponents">
+			<div class="col-6 label">
+				<strong>
+					{{ redeemComponent.label }}:
+				</strong>
+			</div>
+			<div class="col-6 value">
+				<strong>
+					{{ redeemComponent.value | currency:'CAD':'symbol-narrow':'1.2' }}
+				</strong>
+			</div>
+		</div>
+	</ng-container>
+	<div class="row" *ngIf="orderSummaryUI.isCartUpdating">
+		<div class="col-12 text-center">
+			<button class="btn-primary btn-transparent loading-state"></button>
+		</div>
+	</div>
+
+	<div class="row p-0" *ngIf="!orderSummaryUI.isPastOrder && orderSummaryUI.isDelivery && !orderSummaryUI.isPayAtDoor">
+		<div class="separator">&nbsp;</div>
+	</div>
+
+	<div class="row px-4 pb-3" *ngIf="!orderSummaryUI.isPastOrder && orderSummaryUI.isDelivery && !orderSummaryUI.isPayAtDoor">
+
+		<div class="col-12 p-0 d-flex justify-content-center">
+			<app-checkout-tips-form class="w-100"
+				[orderSummaryData]="orderSummaryData">
+			</app-checkout-tips-form>
+		</div>
+	</div>
+
+	<div class="row p-0">
+		<div class="separator">&nbsp;</div>
+	</div>
+
+	<div class="row justify-content-between px-4">
+		<div class="col-auto align-self-center title">
+			<ng-container *ngIf="orderSummaryData.redemptionComponents && orderSummaryData.redemptionComponents.length > 0 && !orderSummaryUI.isPastOrder" i18n>Total Remaining</ng-container>
+			<ng-container *ngIf="!(orderSummaryData.redemptionComponents && orderSummaryData.redemptionComponents.length > 0 && !orderSummaryUI.isPastOrder)"><ng-container i18n>Total</ng-container>:</ng-container>
+		</div>
+		<div class="col-auto p-0 text-right total" *ngIf="!orderSummaryUI.isCartUpdating">
+			{{ orderSummaryData.total | currency:'CAD':'symbol-narrow':'1.2' }}
+		</div>
+	</div>
+
+
+	<div class="row" *ngIf="userSummary && userSummary.userHasCouponsInWallet">
+		<div class="col-12 save-coupon">
+			<ng-container i18n>
+			Saved coupons?
+			</ng-container>
+			<a [routerLink]="['/user/club-eleven-eleven/loyalty']" i18n>
+				Check here!
+			</a>
+		</div>
+	</div>
+
+	<div class="row px-4 pb-3" *ngIf="!orderSummaryUI.isPastOrder">
+		<div class="col-12 p-0 my-3 text-center">
+
+			<button #placeOrder class="btn btn-primary checkout"
+				[class.d-none]="(orderSummaryUI.isVisaCheckoutSelected || orderSummaryUI.isMasterPassSelected) && orderSummaryUI.isCheckoutStoreValid && orderSummaryUI.isOrderReadyToPlace && orderSummaryData.total != 0"
+				[class.disabled]="!orderSummaryUI.isOrderReadyToPlace"
+				[class.loading-state]="orderSummaryUI.isPlaceOrderLoading"
+				[attr.aria-label]="!orderSummaryUI.isOrderReadyToPlace ? 'Please fill out all the fields in order to place an order' : ''"
+				(click)="onPlaceOrder($event, orderSummaryData.orderId)" i18n>
+				PLACE ORDER
+			</button>
+
+			<div [hidden]="!(orderSummaryUI.isCheckoutStoreValid && orderSummaryUI.isVisaCheckoutSelected && orderSummaryUI.isOrderReadyToPlace) || orderSummaryData.total === 0">
+				<img alt="Visa Checkout" class="v-button" role="button"
+					src="{{visaBtnUrl}}" />
+			</div>
+			<div class="masterpass-btn" [hidden]="!(orderSummaryUI.isCheckoutStoreValid && orderSummaryUI.isMasterPassSelected && orderSummaryUI.isOrderReadyToPlace) ||  orderSummaryData.total === 0"
+					(click)="onMpButtonClick()">
+				<img src="https://masterpass.com/dyn/img/btn/global/mp_chk_btn_147x034px.svg" alt="masterpass" />
+			</div>
+			<!-- <div class="col-12 d-flex justify-content-center submission-missing-info mt-3" *ngIf="(orderSummaryUI.isCheckoutStoreValid && (orderSummaryUI.isVisaCheckoutSelected || orderSummaryUI.isMasterPassSelected ) && orderSummaryUI.isOrderReadyToPlace)" i18n>
+				Please note 3D Secure payment methods will not be accepted at this time
+			</div> -->
+
+			<div class="ghost-btn-overlay" (click)="onGhostBtnClick()" *ngIf="orderSummaryUI.isOrderHasWarning && orderSummaryUI.isOrderReadyToPlace"></div>
+		</div>
+		<div class="col-12 d-flex justify-content-center submission-missing-info error"
+			*ngIf=" isDisabledPLaceOrderClicked &&
+			(!orderSummaryUI.isOrderReadyToPlace && !(orderSummaryUI.isMasterPassSelected || orderSummaryUI.isVisaCheckoutSelected)) ||
+			(!orderSummaryUI.isCheckoutStoreValid && orderSummaryUI.isMasterPassSelected) ||
+			(!orderSummaryUI.isCheckoutStoreValid && orderSummaryUI.isVisaCheckoutSelected)
+			" i18n>
+			We don't have all your info
+		</div>
+
+		<!-- UNTIL WE DETERMINE SURCHARGE HANDLING LEAVE THIS HERE -->
+		<!-- <div class="col-12 d-flex justify-content-center submission-missing-info"
+			*ngIf="orderSummaryData.isSurchargeAdded">
+			A {{orderSummaryUI.isDelivery ? 'delivery' : 'pickup'}} order must be a minimum of
+
+			{{orderSummaryData.orderComponent[0].value + orderSummaryData.surchargeValue | currency:'CAD':'symbol-narrow':'1.2'}}
+
+			(before taxes{{orderSummaryUI.isDelivery ? ' and delivery charge' : ''}}). If you proceed to place your order, an additional surcharge of
+
+			{{orderSummaryData.surchargeValue | currency:'CAD':'symbol-narrow':'1.2'}}
+
+			will be added to your total. This surcharge will be removed automatically if you add more items to your cart and bring the subtotal to at least
+
+			{{orderSummaryData.orderComponent[0].value + orderSummaryData.surchargeValue | currency:'CAD':'symbol-narrow':'1.2'}}.
+		</div> -->
+	</div>
+
+</div>

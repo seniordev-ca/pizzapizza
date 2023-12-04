@@ -1,0 +1,153 @@
+<div class="dev-box" [class.is-open]="isMobileOpen" *ngIf="!isHtmlHidden">
+
+	<div class="mobile-close-btn"
+			(click)="onMobileClose($event)">
+		X
+	</div>
+
+	<span (click)="onBoxClick()">Dev menu</span>
+
+	<ngb-tabset>
+		<ngb-tab title="Routes">
+			<ng-template ngbTabContent>
+				<ng-container *ngTemplateOutlet="routes">
+				</ng-container>
+			</ng-template>
+		</ngb-tab>
+
+		<ngb-tab title="Env">
+			<ng-template ngbTabContent>
+				<ng-container *ngTemplateOutlet="environments">
+				</ng-container>
+			</ng-template>
+		</ngb-tab>
+
+		<ngb-tab title="API states">
+			<ng-template ngbTabContent>
+				<ng-container *ngTemplateOutlet="apiMockStates">
+				</ng-container>
+			</ng-template>
+		</ngb-tab>
+
+	</ngb-tabset>
+</div>
+
+<ng-template #environments>
+
+	<div class="btn btn-warning"
+		(click)="onEnvClick(null)">
+		Reset to default
+	</div>
+
+	<div class="btn-group btn-group-toggle mt-2" ngbRadioGroup name="radioEnv"
+			[(ngModel)]="selectedBaseUrl">
+		<label ngbButtonLabel class="btn-success"
+				 *ngFor="let environment of appEnvironments$ | async">
+			<input ngbButton type="radio"
+				value="{{ environment.url }}"
+				(click)="onEnvClick(environment.url)">
+					{{ environment.label }}
+		</label>
+	</div>
+
+	<div class="mt-2">
+		Base API url:
+		<b>
+			{{ selectedBaseUrl ? selectedBaseUrl : 'default from web middleware' }}
+		</b>
+	</div>
+</ng-template>
+
+
+<ng-template #apiMockStates>
+
+	<div class="btn btn-warning"
+			(click)="onMockHeaderClick(null)">
+		No mock headers
+	</div>
+
+	<div class="btn-group btn-group-toggle mt-2" ngbRadioGroup name="radioMockHeader"
+			[(ngModel)]="selectedMockHeader">
+		<label ngbButtonLabel class="btn-info"
+				*ngFor="let mockHeader of apiMock$ | async">
+			<input ngbButton type="radio"
+				value="{{ mockHeader.header_val }}"
+				(click)="onMockHeaderClick(mockHeader.header_val)">
+					{{ mockHeader.label }}
+		</label>
+	</div>
+
+	<div class="mt-2">
+		Mock header:
+		<b>
+			{{ selectedMockHeader }}
+		</b>
+	</div>
+</ng-template>
+
+
+<ng-template #routes>
+
+	<div class="wrap">
+		<div>
+			<div class="form-check">
+				<label class="form-check-label">
+					<input type="checkbox" class="form-check-input" value=""
+						[checked]="isMockImageBaseUrl"
+						(click)="toggleMockImage()"> Is mock image replace
+				</label>
+			</div>
+
+		</div>
+
+		<br>
+
+		<span class="integrated">1.00 Home </span>
+
+		<span class="integrated">2.00 Category Pages</span>
+
+		<span class="integrated">3.00 Config Specials</span>
+
+		<span class="integrated">4.00, 5.00, 6.00, 7.00 Builder Pizza, Wings, Dillas</span>
+
+		<span class="integrated">8.00 Checkout</span>
+
+		<span class="integrated">9.00 Order Confirmation</span>
+
+		<span class="integrated">10.00 Account</span>
+
+		<span class="integrated">11.00 Order History</span>
+
+		<span class="integrated">12.00 Sign In</span>
+
+		<span class="integrated">13.00, 14.00 Sign Up</span>
+
+		<a routerLink="/user/account" class="next-wave">15.00 Kids Club</a>
+		<span class="info">Click the "Register" button on the Kids Club banner</span>
+
+		<a routerLink="/catalog/pizza-assistant">16.00 Pizza Assistant</a>
+
+		<span class="integrated">17.00 Location Finder </span>
+
+		<a routerLink="/user/club-eleven-eleven">18.00 Club 11-11</a>
+
+		<a routerLink="/user/club-eleven-eleven/loyalty">18.00 Club 11-11 New Section</a>
+
+		<a routerLink="/user/account/activity">19.00 - Club 11-11 - Account Activity</a>
+		<span class="info">Click on "No Transaction History"</span>
+
+		<a routerLink="/user/club-eleven-eleven">20.00 - Club 11-11 - Balance Check</a>
+		<span class="info">Click on "Balance Check"</span>
+
+		<a routerLink="/user/club-eleven-eleven/learn-more">21.00 - Club 11-11 - Learn More</a>
+
+		<a routerLink="/user/club-eleven-eleven/loyalty">22.00 - Club 11-11 - Edit profile</a>
+		<span class="info">Click "Edit"</span>
+
+		<a routerLink="/user/club-eleven-eleven/transfer">23.00 - Club 11-11 - combine cards</a>
+
+		<br>
+
+	</div>
+
+</ng-template>

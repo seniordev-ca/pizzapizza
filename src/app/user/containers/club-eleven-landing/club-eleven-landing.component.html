@@ -1,0 +1,116 @@
+<div class="container-fluid club-eleven-container-header" [style.background-image]="'url(./static-files/images/order-confirmation/oc-header-bg.jpg)'">
+	<div class="row pb-0 pb-md-4">
+		<div class="col-12 align-self-start">
+			<app-sub-header-navigation [subHeaderNavContent]="{
+				textColor: '#FFFFFF',
+				iconColor: '#EE5A00',
+				backToLocation: '/'
+			}"
+			title="Welcome To Club 11-11"
+			navText="Back to Home"
+			i18n-navText
+			i18n-title>
+			</app-sub-header-navigation>
+		</div>
+	</div>
+	<div class="row text-center mobile-sub-header-container d-flex d-md-none justify-content-center">
+		<ng-container *ngTemplateOutlet="actionButtons">
+		</ng-container>
+	</div>
+</div>
+
+<div class="container-fluid club-eleven-container pb-4">
+	<div class="container">
+		<div class="row overlap-row justify-content-around">
+			<!-- 11/11 image with button -->
+			<div class="col-12 col-md-5">
+				<div class="row">
+					<div class="col image-col">
+						<img alt="club 11-11 image" class="club-eleven-eleven-image" src="./static-files/images/club-eleven-eleven.png">
+					</div>
+				</div>
+
+				<app-balance-vertical-modal>
+				</app-balance-vertical-modal>
+			</div>
+
+			<!-- Action buttons and description -->
+			<div class="col-12 col-md-5">
+				<div class="row h-100">
+					<span class="col-12 d-none d-md-block">
+						<ng-container *ngTemplateOutlet="actionButtons">
+						</ng-container>
+					</span>
+
+					<div class="col-12 align-self-center text-center info-text">
+						<h3 class="w-100" i18n>
+							Members earn 5% in Loyalty 'dollars' back on every order!
+						</h3>
+						<h5 class="w-100" i18n>
+							Redeem your loyalty rewards after 5th purchase
+							<sup>*</sup>
+						</h5>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+<div class="row club-eleven-actions-row text-center">
+	<div class="col-12 col-sm-6 col-md action-cart">
+			<a routerLink="/user/sign-up">
+				<app-club-eleven-landing-actions
+					[clubActionsContent]="{
+					fontKey: 'icon-club-11-11-refresh-card-1',
+					isUpComing: false
+				}"
+					title="Manage Cards"
+					subTitle="Reload, check balance and view transaction history"
+					i18n-title
+					i18n-subTitle>
+				</app-club-eleven-landing-actions>
+			</a>
+	</div>
+	<div class="col-12 col-sm-6 col-md action-cart">
+			<a routerLink="/restaurant-locator">
+				<app-club-eleven-landing-actions
+					[clubActionsContent]="{
+					fontKey: 'icon-perfect-gift',
+					isUpComing: false
+					}"
+					title="The Perfect Gift"
+					subTitle="Click here for locations"
+					i18n-title
+					i18n-subTitle>
+				</app-club-eleven-landing-actions>
+			</a>
+	</div>
+</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-12">
+				<p class="text-center mt-4 mb-0" i18n>
+					*Rewards must be redeemed with 90 days after your 5th visit. Must be added to your online ordering account to collect on website or mobile app orders.
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<app-coupon-wallet-container *ngIf="(userSummary$ | async)"></app-coupon-wallet-container>
+
+<ng-template #actionButtons>
+	<div class="col-12 col-sm-10 col-md-12 text-center action-buttons d-flex" [ngClass]="!(userSummary$ | async) ? 'justify-content-around' : 'justify-content-end'">
+		<button class="btn btn-primary pp-button" [routerLink]="['/user/sign-up']" (click)="handleSignUPCTAcLick()" i18n>
+			register
+		</button>
+		<button class="btn btn-primary pp-button" *ngIf="!(userSummary$ | async)" [routerLink]="['/user/sign-in']" (click)="handleSignInCTAcLick()" i18n>
+			sign in
+		</button>
+	</div>
+</ng-template>
+

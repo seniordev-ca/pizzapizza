@@ -1,0 +1,36 @@
+<div class="tab-option-drop-down-wrap">
+	<div class="tab-option-select">
+		<div (click)="onOpenTabOptionListClick()" class="d-inline-flex align-items-center tab-option current"
+				 (keydown.enter)="onOpenTabOptionListClick()" tabindex="0">
+
+			<ng-container *ngFor="let option of optionDropDownData.options">
+				<ng-container *ngIf="option.isSelected">
+					<i class="server-font-icon"
+						[innerHTML]="option.fontKey | pp_convertfontkey">
+					</i>
+					<div class="label text-capitalize">
+						{{ option.title | lowercase }}
+					</div>
+				</ng-container>
+			</ng-container>
+
+			<i class="icon-triangle dropdown-icon ml-auto" [class.is-list-open]="isListOpen">
+			</i>
+		</div>
+
+		<div class="tab-option-dropdown-list-wrap" [hidden]="!isListOpen">
+			<div *ngFor="let option of optionDropDownData.options"
+					(click)="onOptionClick(option.id)" tabindex="0"
+					 (keydown.enter)="onOptionClick(option.id)"
+					class="d-inline-flex align-items-center tab-option current">
+				<i class="server-font-icon"
+					[innerHTML]="option.fontKey | pp_convertfontkey">
+				</i>
+				<div class="label text-capitalize">
+					{{ option.title | lowercase }}
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

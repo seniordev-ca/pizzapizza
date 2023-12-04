@@ -1,0 +1,410 @@
+<div class="container accounts-component-container">
+
+	<div class="row pb-0 pb-md-4">
+		<div class="col-12 align-self-start">
+			<app-sub-header-navigation
+				[subHeaderNavContent]="{
+					textColor: '#4c3017',
+					iconColor: '#EE5A00',
+					backToLocation: '/'
+				}"
+				title="Account"
+				navText="Back to home"
+				i18n-navText
+				i18n-title>
+			</app-sub-header-navigation>
+		</div>
+	</div>
+
+	<!-- Row Two -->
+	<div class="row accounts-container-row-two">
+
+		<!-- Column Holds Personal Details Box & Club 11-11 Component -->
+		<div class="col-12 col-md-4">
+			<div class="">
+				<app-personal-details
+					[userPersonalDetails]="userSummary$ | async"
+					(personalDetailsEventEmitter)="handlePersonalDetailsEventEmitter($event)">
+				</app-personal-details>
+			</div>
+	
+			<div class="mt-2 mt-md-3">
+				<app-club-11-11-card parentContainer="account">
+				</app-club-11-11-card>
+			</div>
+			<div class="mt-2 mt-md-3" *ngIf="(kidsClubUsers$ | async)">
+				<app-registered-kids-club
+					[registeredKidsClub]="kidsClubUsers$ | async"
+					(registeredKidsClubEventEmitter)="handleRegisteredKidsClubEventEmitter($event)">
+				</app-registered-kids-club>
+			</div> 
+		</div>
+
+		<!-- Column Holds List of User Activities -->
+		<div class="col-12 col-md-8 px-0 px-md-4 mt-3 row-two-account-activities-col">
+			<app-activities
+				[userActivities]="userActivities"
+				(userActivitiesEventEmitter)="handleUserActivityEventEmitter($event)"
+
+				[orderHistoryItems]="orderInfoData$ | async"
+				(orderHistoryEventEmitter)="handleOrderHistoryEventEmitter($event)"
+
+				[addPaymentCardFormData]="checkoutPaymentForm"
+				[userPaymentMethodsUI]="checkoutPaymentUI"
+				[bamboraValidation]="bamboraValidation"
+
+				[userPaymentMethods]="savedCards$ | async"
+				[universitiesWithMealCard]="universitiesWithMealCard$ | async"
+				(userPaymentMethodsEventEmitter)="handleUserPaymentMethodEventEmitter($event)"
+
+				[userState]="userSummary$ | async"
+				
+				[addressFormData]="addressFormData"
+				(addressFormEventEmitter)="handleAddressFormEventEmitter($event)"
+
+				[savedAddresses]="savedAddresses$ | async"
+				(savedAddressesEventEmitter)="handleSavedAddressesEventEmitter($event)"
+
+				[universityList]="universityList$ | async"
+				[buildingList]="buildingList$ | async"
+
+				[savedStores]="savedStores$ | async"
+				[storeSearchResults]="storeSearchResults$ | async"
+				(savedStoresEventEmitter)="handleStoreListEventEmitter($event)"
+				(storeSearchEmitter)="handleStoreSearchEmitter($event)">
+			</app-activities>
+			<!-- <app-address-list 
+			[savedAddresses]="savedAddresses">
+
+			</app-address-list> -->
+		</div>
+
+	</div>
+	<!-- End of Row Two -->
+
+	<!-- Row Three - Holds Kids Club -->
+	<div class="row mt-2 mt-md-3" *ngIf="(userSummary$ | async) && !(kidsClubUsers$ | async)">
+		<div class="col-12 mx-0">
+			<app-kids-club
+				(userKidsClubEventEmitter)="handleRegisteredKidsClubEventEmitter($event)">
+			</app-kids-club>
+		</div>
+	</div>
+<!--
+Global error message
+-->
+<ng-template #maxReachedModal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal(); isMaxReached = false" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+		<app-confirmation-modal 
+			[data]="{
+				icon: 'icon-bell'
+			}"
+			title='Oops'
+			subtitle=""
+			i18n-title>
+			<ng-template>
+				<div class="row w-100 justify-content-center" [ngSwitch]="activeActivity">
+					<!-- TODO - figure out why using enum was causing errors -->
+					<div class="col-12 mb-3"
+						*ngSwitchCase="1" i18n>
+						Sorry we can only accept 5 saved credit cards per account. Please remove one before trying to add a new one.
+					</div>
+					<div class="col-12 mb-3"
+						*ngSwitchCase="2" i18n>
+						Sorry we can only accept 10 saved addresses per account. Please remove one before trying to add a new one.
+					</div>
+					<div class="col-12 mb-3"
+						*ngSwitchCase="3" i18n>
+						Sorry, but we can only accept 10 saved pickup locations per account. Please remove an address before trying to add a new one.
+					</div>
+				</div>
+				<div class="row w-100 justify-content-center">
+					<button class="btn btn-primary" (click)="closeModal(); isMaxReached = false" i18n>
+						Okay
+					</button>
+				</div>
+			</ng-template>
+		</app-confirmation-modal>
+</ng-template>
+
+</div>
+<!-- End of Container -->
+
+<!-- Footer Spacer -->
+<div class="container accounts-component-container footer-spacer">
+</div>
+
+<app-edit-profile-vertical-modal #editProfileModal
+	[userDetails]="userSummary$ | async">
+</app-edit-profile-vertical-modal>
+
+
+<app-kids-club-modal-vertical-modal #kidsClubModal
+	[activeKidsClubUser]="activeKidsClubUser"
+	(userKidsClubEventModalCloseEmitter)="handleKidsClubModalClose($event)">
+</app-kids-club-modal-vertical-modal>
+
+
+<!--
+Add Store Modal
+-->
+<ng-template #searchModal let-closeModal="close">
+		<button class="store-modal-close" (click)="handleCloseStoreSearch();" aria-label="close button">
+			<i class="icon-close-bold"></i>
+		</button>
+
+		<ng-container *ngTemplateOutlet="isLocationError || (isStoreSearchError$ | async) ? errorLocationLayout: defaultLayout "></ng-container>
+			<ng-template #defaultLayout>
+				<app-confirmation-modal 
+					[data]="{
+						icon: 'icon-bell',
+						class: 'split-modal'
+					}"
+					title='Find the closest store'
+					i18n-title>
+					<ng-template>
+						<div class="container p-0">
+
+							<app-store-search-modal
+								[isLocationError]="isLocationError || (isStoreSearchError$ | async)"
+								[storeSearchResults]="storeSearchResults$ | async"
+								[isLoading]="isStoreSearchLoading$ | async"
+								(savedStoresEventEmitter)="handleStoreSearchEmitter($event)"
+								(retryLocationEventEmitter)="handleRetryLocationEmitter($event)">
+							</app-store-search-modal>
+
+						</div>
+					</ng-template>
+				</app-confirmation-modal>
+			</ng-template>
+			<ng-template #errorLocationLayout>
+				<app-confirmation-modal 
+					[data]="{
+						icon: 'icon-bell',
+						class: 'split-modal'
+					}"
+					title='We are having trouble locating you'
+					i18n-title>
+					<ng-template>
+						<div class="container p-0">
+
+							<app-store-search-modal
+								[isLocationError]="isLocationError || (isStoreSearchError$ | async)"
+								[isLoading]="isStoreSearchLoading$ | async"
+								[storeSearchResults]="storeSearchResults$ | async"
+								(savedStoresEventEmitter)="handleStoreSearchEmitter($event)"
+								(retryLocationEventEmitter)="handleRetryLocationEmitter($event)">
+							</app-store-search-modal>
+
+						</div>
+					</ng-template>
+				</app-confirmation-modal>
+			</ng-template>
+</ng-template>
+
+
+<ng-template #overrideMealCardModal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal()" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+	<app-confirmation-modal
+		[data]="{
+			icon: 'icon-trash-can-one'
+		}"
+		title="Override?"
+		i18n-title>
+		<ng-template>
+			<div class="col-12 mb-4">
+				<p i18n>You can only have one meal card per account. Are you sure you’d like to override the existing one?</p>
+			</div>
+			<div class="col-12">
+					<div class="row justify-content-center button-row">
+						<div class="col-6 col-md-5 px-1">
+							<button class="btn btn-lg btn-primary btn-white text-uppercase w-100"
+							(click)="closeModal()" i18n>
+								No
+							</button>
+						</div>
+						<div class="col-6 col-md-5 px-1">
+							<button class="btn btn-lg btn-primary text-uppercase w-100"
+							(click)="closeModal(); confirmOverride();" i18n>
+								Yes
+							</button>
+						</div>
+					</div>
+			</div>
+			<!-- Button Row -->
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+<ng-template #confirmDeletePayment let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal()" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+	<app-confirmation-modal
+		[data]="{
+			icon: 'icon-trash-can-one'
+		}"
+		title="Delete?"
+		i18n-title>
+		<ng-template>
+			<div class="col-12 mb-4">
+				<p>
+					<ng-container i18n>Are you sure that you want to delete this payment option?</ng-container>
+					<ng-container *ngIf="(userSummary$ | async).isClubElevenElevenMember" i18n>If it is being used for Club 11-11 Auto Reload it will stop reload process.</ng-container>
+				</p>
+			</div>
+			<div class="col-12 align-self-end">
+					<div class="row justify-content-center button-row">
+						<div class="col-6 px-1 col-md-5">
+							<button class="btn btn-lg btn-primary btn-white text-uppercase w-100"
+							(click)="closeModal()" i18n>
+								No
+							</button>
+						</div>
+						<div class="col-6 px-1 col-md-5">
+							<button class="btn btn-lg btn-primary text-uppercase w-100"
+							(click)="closeModal(); onConfirmDeletePayment();" i18n>
+								Yes
+							</button>
+						</div>
+					</div>
+			</div>
+			<!-- Button Row -->
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+<ng-template #confirmDeleteAddress let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal()" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+	<app-confirmation-modal
+		[data]="{
+			icon: 'icon-trash-can-one'
+		}"
+		title="Delete?"
+		i18n-title>
+		<ng-template>
+			<div class="col-12 mb-4">
+				<p i18n>Are you sure that you want to delete this address?</p>
+			</div>
+			<div class="col-12">
+					<div class="row justify-content-center button-row">
+						<div class="col-6 px-1col-md-5">
+							<button class="btn btn-lg btn-primary btn-white text-uppercase w-100"
+							(click)="closeModal()" i18n>
+								No
+							</button>
+						</div>
+						<div class="col-6 px-1 col-md-5">
+							<button class="btn btn-lg btn-primary text-uppercase w-100"
+							(click)="closeModal(); onConfirmDeleteAddress();" i18n>
+								Yes
+							</button>
+						</div>
+					</div>
+			</div>
+			<!-- Button Row -->
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+<ng-template #confirmDeleteStore let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal()" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+	<app-confirmation-modal
+		[data]="{
+			icon: 'icon-trash-can-one'
+		}"
+		title="Delete?"
+		i18n-title>
+		<ng-template>
+			<div class="col-12 mb-4">
+				<p i18n>Are you sure that you want to delete this pick up location?</p>
+			</div>
+			<div class="col-12">
+					<div class="row justify-content-center button-row">
+						<div class="col-6 px-1 col-md-5">
+							<button class="btn btn-lg btn-primary btn-white text-uppercase w-100"
+							(click)="closeModal()" i18n>
+								No
+							</button>
+						</div>
+						<div class="col-6 px-1 col-md-5">
+							<button class="btn btn-lg btn-primary text-uppercase w-100"
+							(click)="closeModal(); onConfirmDeleteStore();" i18n>
+								Yes
+							</button>
+						</div>
+					</div>
+			</div>
+			<!-- Button Row -->
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+<!--
+Cart error message
+-->
+	<ng-template #cartInvalidModal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal(); onConfirmChangeClickHandler(false)" aria-label="close button">
+			<i class="icon-close-bold"></i>
+		</button>
+		<app-confirmation-modal [data]="{
+				icon: 'icon-bell'
+			}" title="D'ough!" subtitle='' i18n-title>
+			<ng-template>
+				<div class="col-12">
+					<p class="invalid-cart-message">
+						<ng-container *ngIf="invalidProducts$ | async" i18n>
+							Looks like some of the items you want are no longer available or have changed, taping okay will add all available items to your cart.
+							<span class="invalid-products">{{invalidProducts$ | async}}</span>
+						</ng-container>
+					</p>
+				</div>
+				<div class="col-12 d-flex justify-content-center p-0 align-self-end">
+					<div class="col-6 col-lg-5 px-1">
+						<button class="btn btn-primary btn-white w-100" (click)="closeModal(); onConfirmChangeClickHandler(false)" i18n>
+							Cancel
+						</button>
+					</div>
+					<div class="col-6 col-lg-5 px-1">
+						<button class="btn btn-primary w-100" (click)="closeModal(); onConfirmChangeClickHandler(true)" i18n>
+							Continue
+						</button>
+					</div>
+				</div>
+			</ng-template>
+		</app-confirmation-modal>
+	</ng-template>
+	<!--
+Checkout Store Credit Card error message
+-->
+<ng-template #checkoutCreditCardModal let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal(); handleCreditCardFailure()" aria-label="close button">
+			<i class="icon-close-bold"></i>
+		</button>
+	<app-confirmation-modal 
+		[data]="{
+			icon: 'icon-bell'
+		}"
+		title="Card Error"
+		subtitle=""
+		i18n-title>
+		<ng-template>
+			<div class="col-12 text-center">
+				<p *ngIf="newCardFailedMessage$ | async">{{newCardFailedMessage$ | async}}</p>
+			</div>
+			<div class="col-6 d-flex justify-content-around">
+				<button class="btn btn-primary" (click)="closeModal(); handleCreditCardFailure()" i18n>
+					Okay
+				</button>
+			</div>
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>

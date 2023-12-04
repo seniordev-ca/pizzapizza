@@ -1,0 +1,51 @@
+@import 'global-scss-mixing';
+
+$inactive-btn-color: #6d7273;
+
+.quantity-selector-container {
+	.product-quantity-price {
+		@include font-black;
+		color: $pp-default-text-colour;
+
+		.quantity-wrap {
+			width: 100%;
+
+			button {
+				margin: 0;
+				outline: 0;
+				border: 0;
+				background: transparent;
+				padding: 0;
+			}
+		}
+
+		.icon-stacked-layers {
+			cursor: pointer;
+
+			.icon-stack-base {
+				opacity: .4;
+				color: $white;
+			}
+
+			.icon-increment-layer {
+				opacity: .6;
+				color: $inactive-btn-color;
+			}
+
+			&.active-incrementer {
+				.icon-stack-base {
+					opacity: 1;
+			}
+
+				.icon-increment-layer {
+					opacity: 1;
+					color: $pp-bg-maincolour;
+				}
+			}
+
+			.icon-right {
+				position: fixed;
+			}
+		}
+	}
+}

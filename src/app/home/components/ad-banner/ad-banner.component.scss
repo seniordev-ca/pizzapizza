@@ -1,0 +1,85 @@
+@import 'global-scss-mixing';
+
+$ghost-bg: #e1e7e9;
+$error-state-bg: #edf2f5;
+
+.pizza-banner-container {
+	.error-state {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: $error-state-bg;
+		height: 200px;
+	}
+
+	.title {
+		@include font-black;
+		color: $white;
+		font-size: 1.45em;
+	}
+
+	%fine-print {
+		@include font-regular;
+		line-height: .84em;
+		letter-spacing: .01em;
+		color: $white;
+		font-size: .7em;
+	}
+
+	.fine-print {
+		@extend %fine-print;
+	}
+
+	.fine-print-responsive {
+		@extend %fine-print;
+		display: none;
+	}
+
+	a {
+		display: block;
+		text-decoration: underline;
+		color: $white;
+	}
+
+	.img-left {
+		display: none;
+	}
+
+	.pp-image-loaded {
+		max-height: 170px;
+	}
+
+}
+
+@include media-breakpoint-down(xs) {
+	.pizza-banner-container {
+
+		.title {
+			@include font-black;
+			color: $white;
+			font-size: 1em;
+		}
+
+		.fine-print {
+			display: none;
+		}
+
+		.fine-print-responsive {
+			display: block;
+		}
+
+		.img-left {
+			display: block;
+			position: absolute;
+			bottom: 0;
+		}
+
+		.img-right {
+			display: none;
+		}
+
+		.hide-ad {
+			display: none;
+		}
+	}
+}

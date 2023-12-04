@@ -1,0 +1,242 @@
+@import 'global-scss-mixing';
+
+$mid-grey: #dae9f0;
+$light-grey: #edf2f5;
+$dark-header-text: #6d7273;
+$ghost-loader-bg: #e1e7e9;
+$modal-bg: #000;
+$pp-green: #4e7026;
+$modal-header-bg: #eaf0f3;
+$error-color: #f00;
+$location-scrollbar-primary-color: #c3c5c5;
+
+.address-list-parent-container {
+	.address-list-item-row {
+		border: 2px solid $ghost-loader-bg;
+		border-radius: 4.5px;
+
+		.location-select-col {
+			.location-select-row {
+				@include font-extra-bold;
+
+				cursor: pointer;
+				color: $pp-bg-maincolour;
+				font-size: .875em;
+			}
+
+			.location-selected-row {
+				@include font-extra-bold;
+
+				display: flex;
+				justify-content: flex-end;
+				color: $pp-green;
+				font-size: .875em;
+
+				i {
+					color: $pp-green;
+					font-size: .875em;
+				}
+			}
+		}
+
+		.left-icon-col {
+			text-align: center;
+			color: $dark-header-text;
+			font-size: 1.2em;
+		}
+
+		.location-address-col {
+			.location-address-intersection-row {
+				@include font-extra-bold;
+				
+				margin-bottom: 1.5%;
+				line-height: 1.29;
+				letter-spacing: .3px;		
+				color: $dark-header-text;
+				font-size: 1em;
+				word-break: break-word;
+			}
+
+			.location-address-address-row,
+			.location-apt-info-row,
+			.location-address-distance-row {
+				line-height: 1.38;
+				letter-spacing: .2px;
+				color: $dark-header-text;
+				font-size: .76em;
+			}
+		}
+
+		.location-contact-info-col {
+			.location-contact-header-row {
+				@include font-extra-bold;
+
+				margin-bottom: 1.5%;
+				line-height: 1.29;
+				letter-spacing: .3px;
+				color: $dark-header-text;
+				font-size: 1em;
+			}
+
+			.location-contact-phone-number-row,
+			.location-contact-extension-row {
+				line-height: 1.38;
+				letter-spacing: .2px;
+				color: $dark-header-text;
+				font-size: .76em;
+			}
+
+			.location-hours-options-row {
+				line-height: 1.38;
+				color: $dark-header-text;
+				font-size: .72em;
+				font-weight: 600;
+			}
+		}
+
+		.location-user-actions-col {
+			color: $pp-bg-maincolour;
+
+			.action-spacer {
+				margin-right: 5%;
+				margin-left: 5%;
+			}
+
+			.action-icon,
+			.action-text {
+				cursor: pointer;
+				font-size: .81em;
+				font-weight: 600;
+			}
+		}
+
+		&.is-default {
+			border: 2px solid $pp-green;
+
+			.location-address-col {
+				.location-address-intersection-row {
+					color: $pp-green;
+				}
+
+				.location-address-address-row,
+				.location-apt-info-row,
+				.location-address-distance-row {
+					color: $pp-green;
+				}
+			}
+
+			.location-contact-info-col {
+				.location-contact-header-row {
+					color: $pp-green;
+				}
+
+				.location-contact-phone-number-row,
+				.location-contact-extension-row {
+					color: $pp-green;
+				}
+
+				.location-hours-options-row {
+					color: $pp-green;
+				}
+			}
+
+			.left-icon-col {
+				color: $pp-green;
+			}
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.address-list-parent-container {
+		margin-top: 1%;
+		margin-left: 0;
+		padding-left: 0;
+
+		.address-list-item-row {
+			width: 100%;
+
+			&.is-default {
+				border: 2px solid $pp-green;
+
+				// sass-lint:disable nesting-depth
+				.location-select-col {
+					.select-row-mobile,
+					.location-selected-row {
+						display: none;
+					}
+
+					.location-selected-row,
+					.location-selected-row-mobile {
+						@include font-extra-bold;
+
+						display: flex;
+						justify-content: flex-start;
+						color: $pp-green;
+						font-size: .65em;
+
+						i {
+							color: $pp-green;
+							font-size: .65em;
+						}
+					}
+				}
+			}
+
+			.location-address-col {
+				padding-top: 1.5%;
+			}
+
+			.location-contact-info-col {
+				padding-top: 1%;
+			}
+
+			.location-select-col {
+				.select-row-mobile,
+				.location-selected-row {
+					position: absolute;
+					top: 5px;
+					right: 20px;
+					font-size: .65em;
+				}
+			}
+		}
+	}
+}
+
+
+@include media-breakpoint-down(xs) {
+	.address-list-parent-container {
+		.address-list-item-row {
+			.location-address-col {
+				.location-address-intersection-row {
+					font-size: .88em;
+				}
+
+				.location-address-address-row,
+				.location-apt-info-row,
+				.location-address-distance-row {
+					font-size: .67em;
+				}
+			}
+
+			.location-contact-info-col {
+				.location-contact-header-row {
+					font-size: .88em;
+				}
+
+				.location-contact-phone-number-row,
+				.location-contact-extension-row {
+					font-size: .67em;
+				}
+			}
+
+			.location-user-actions-col {
+				.action-icon,
+				.action-text {
+					font-size: .7em;
+				}
+			}
+		}
+	}
+}

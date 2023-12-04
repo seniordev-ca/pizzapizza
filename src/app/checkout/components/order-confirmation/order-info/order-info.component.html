@@ -1,0 +1,42 @@
+<div class="order-info-container">
+
+	<div class="row p-4">
+		<div class="col-12 title" i18n>
+			Order Information
+		</div>
+		<div class="col-12 p-0">
+			<div class="separator"></div>
+		</div>
+	</div>
+	<div class="row px-4 line-item">
+		<div class="col-6 p-0">
+			<span class="label" i18n>Name</span>
+			<span class="value customer-name">{{orderInfoData.name}}</span>
+		</div>
+		<div class="col-6 p-0" *ngIf="orderInfoData.phone">
+			<span class="label" i18n>Phone</span>
+			<span class="value" x-ms-format-detection="none">{{orderInfoData.phone | phone}}</span>
+			<span class="value" *ngIf="orderInfoData.phoneExtension">{{'Ext. ' + orderInfoData.phoneExtension}}</span>
+		</div>
+	</div>
+	<div class="row px-4 line-item" *ngIf="orderInfoData.address">
+		<div class="col-12 p-0">
+			<span class="label" i18n>{{orderInfoData.orderTypeText}} Address</span>
+			<span class="value text-capitalize">{{orderInfoData.address}}</span>
+		</div>
+	</div>
+	<div class="row px-4 pb-3">
+		<div class="col-12 p-0 text-center">
+			<button class="btn btn-primary selected checkout"
+				(click)="onViewOrderClick(orderInfoData.orderId, $event)" i18n>
+				VIEW ORDER
+			</button>
+		</div>
+		<div class="col-12 pt-2 guarantee-text label" *ngIf="orderInfoData.timeGuarantee">
+			<span
+				*ngIf="orderInfoData.timeGuarantee">
+				{{orderInfoData.timeGuarantee}}
+			</span>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,179 @@
+@import 'global-scss-mixing';
+
+$white: #fff;
+$semi-transparent-white: rgba(255, 255, 255, .4);
+
+.block {
+	display: block;
+}
+
+.login-register-container {
+	.action-link {
+		@include font-bold;
+		padding: 0;
+		color: $white;
+		font-size: .8125em;
+		word-break: break-word;
+
+		&.signed-in {
+			line-height: .815em;
+		}
+
+		a {
+			text-decoration: none;
+			color: $white;
+			font-size: 14px;
+		}
+
+		.smaller {
+			@include font-regular;
+			display: block;
+			line-height: 1;
+		}
+
+		.profile {
+			@include font-extra-bold;
+			text-transform: uppercase;
+			color: $white;
+		}
+
+		.reduced-text {
+			display: inline-block;
+			margin-bottom: 0;
+			max-width: 120px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+
+	.img-link {
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
+	.icon-sign-in {
+		color: $white;
+		font-size: 32px;
+	}
+
+	.icon-toggle {
+		display: none;
+		float: right;
+		transform: rotate(90deg);
+		font-size: 10px;
+	}
+
+	.no-image-span {
+		@include font-bold;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		background: $white;
+		padding: 10px;
+		width: 30px;
+		height: 30px;
+	}
+
+	.photo {
+		padding: 0;
+		padding-right: 8px;
+
+		img {
+			padding: 0;
+			min-width: 2.5em;
+			max-width: 2.5em;
+			height: 2.5em;
+		}
+	}
+
+	@include media-breakpoint-down(lg) {
+
+		.icon-sign-in {
+			font-size: 26px;
+		}
+
+		.photo {
+			img {
+				min-width: 2em;
+				max-width: 2em;
+				height: 2em;
+			}
+		}
+	}
+
+	@include media-breakpoint-only(md) {
+		i {
+			display: none;
+		}
+
+		.photo {
+			display: none;
+		}
+	}
+
+	@include media-breakpoint-down(sm) {
+		.action-link {
+			display: none;
+		}
+
+		.icon-sign-in {
+			padding: 3%;
+			padding-bottom: 0;
+			font-size: 50px;
+		}
+
+		.photo {
+			display: block;
+			padding: 3% 2%;
+			font-size: 50px;
+		}
+
+		.img-link {
+			padding: 0 6% 2%;
+		}
+
+		.action-link {
+			display: block;
+			padding: 0;
+			width: 100%;
+
+			.big {
+				@include font-extra-bold;
+				display: inherit;
+				border-bottom: 1px solid $semi-transparent-white;
+				padding: 0 6% 5%;
+				letter-spacing: .8px;
+				color: $white;
+				font-size: 20px;
+			}
+
+			.profile {
+				display: inherit;
+				padding: 0 6% 6%;
+				max-width: 100%;
+			}
+
+			.smaller {
+				display: inherit;
+				padding: 6%;
+			}
+		}
+
+		.icon-toggle {
+			display: initial;
+		}
+	}
+}
+// sass-lint:disable no-vendor-prefixes
+@media all and (-ms-high-contrast: none)
+{
+	.login-register-container {
+		.no-image-span {
+			padding: 0;
+		}
+	}
+}

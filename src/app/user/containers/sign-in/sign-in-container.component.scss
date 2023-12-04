@@ -1,0 +1,123 @@
+@import 'global-scss-mixing';
+
+$light-gray: #e1e7e9;
+$blue: #3c5193;
+$black-50: rgba(0, 0, 0, .5);
+$light-gray: #e1e7e9;
+$weak: #857700;
+$strong: #8abc53;
+
+.sign-in-component-container {
+	.content-title {
+		margin-bottom: 30px;
+		letter-spacing: .5px;
+		font-size: 1.6em;
+	}
+
+	.border-right {
+		border-right: 1px solid $light-gray;
+	}
+
+	@include media-breakpoint-down(sm) {
+		.border-right {
+			border-right: 0;
+			border-bottom: 1px solid $light-gray;
+		}
+	}
+
+	.form-control {
+		&.password {
+			float: left;
+			margin-right: -50px;
+			margin-bottom: 10px;
+		}
+	}
+
+	.password-strength {
+		@include font-semi-bold;
+		float: right;
+		margin-left: -50px;
+		text-transform: uppercase;
+		line-height: 2rem;
+		font-size: .8rem;
+
+		&.strong {
+			color: $strong;
+		}
+
+		&.weak {
+			color: $weak;
+		}
+	}
+
+}
+
+///**skilaru@pizzapizza.ca for social login and signIn**/
+//.content-width {
+//	margin: 0 auto;
+//	width: 75%;
+//	}
+//
+//@media screen and (max-width: 450px) {
+//	.content-width {
+//		margin: 0 auto;
+//		width: 100%;
+//	}
+//}
+
+.social-login-container {
+
+	.btn {
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		min-width: 270px;
+		text-align: right;
+
+		span {
+			font-size: 1em;
+		}
+	}
+
+	.btn-sign-in-facebook {
+		background-color: $blue;
+		color: $white;
+
+	}
+
+	.btn-sign-in-google {
+		box-shadow: 0 1px 5px $black-50;
+		background-color: $white;
+		color: $black-50;
+	}
+
+	.separator {
+		position: relative;
+
+		&:before {
+			display: block;
+			position: absolute;
+			top: calc(50% + 1px);
+			background-color: $light-gray;
+			width: 100%;
+			max-width: 270px;
+			height: 1px;
+			content: '';
+		}
+
+		.separator-word {
+			display: block;
+			z-index: 1;
+			background-color: $white;
+		}
+	}
+}
+
+.prompt-modal-container {
+	.show-pasword {
+		color: $pp-bg-maincolour;
+		font-size: .84em;
+		font-weight: 700;
+	}
+}
+

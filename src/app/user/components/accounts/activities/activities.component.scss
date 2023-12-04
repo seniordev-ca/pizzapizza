@@ -1,0 +1,189 @@
+@import 'global-scss-mixing';
+
+$mid-grey: #dae9f0;
+$light-grey: #edf2f5;
+$not-active-btn-color: #6d7273;
+$btn-dark-grey: #dbe4ea;
+$ghost-loader-bg: #e1e7e9;
+$pp-green: #4e7026;
+$black: #000;
+
+.accounts-activities-container {
+
+	
+	.individual-account-activities-row {
+		border-bottom: 1px solid $ghost-loader-bg;
+
+		&:last-child {
+			border-bottom: 0;
+		}
+	}
+
+	.individual-account-activities-main-col {
+		position: relative;
+	}
+
+	.activity-main-column-right-default {
+		position: relative;
+		top: 43%;
+	}
+
+	.user-activity-main-icon {
+		color: $pp-bg-maincolour;
+		font-size: 2em;
+
+		&.icon-order-history-account-sized {
+			font-size: 3em;
+		}
+
+		&.icon-credit-card {
+			font-size: 2.5em;
+		}
+	}
+
+	.user-activity-title-text {
+		@include font-regular;
+		letter-spacing: .5px;
+		color: $pp-default-text-colour;
+		font-size: 1.6em;
+	}
+
+	.user-activity-action-span {
+		@include font-extra-bold;
+		cursor: pointer;
+		color: $pp-bg-maincolour;
+		font-size: .85em;
+	}
+
+	.user-activity-action-icon {
+		color: $pp-bg-maincolour;
+		font-size: 1.3em;
+	}
+
+	.order-history-action-wrap {
+		padding-top: 1.4%;
+	}
+
+	.order-history-action-span {
+		@include font-extra-bold;
+		color: $pp-default-text-colour;
+		font-size: 1.07em;
+	}
+
+	.order-history-action-icon {
+		font-size: 1.2em;
+	}
+
+	.transparent-btn {
+		outline: 0;
+		border: 0;
+		background: transparent;
+		padding: 0;
+	}
+}
+
+@include media-breakpoint-down(md) {
+	.accounts-activities-container {
+
+		.user-activity-main-icon {
+			font-size: 1.8em;
+		}
+
+		.user-activity-title-text {
+			letter-spacing: .3px;
+			color: $pp-default-text-colour;
+			font-size: 1.44em;
+		}
+
+		.user-activity-action-span {
+			@include font-extra-bold;
+			letter-spacing: .3px;
+			color: $pp-bg-maincolour;
+			font-size: .765em;
+		}
+
+		.user-activity-action-icon {
+			font-size: 1.17em;
+		}
+
+		.order-history-action-wrap {
+			padding-top: 2%;
+		}
+
+		.order-history-action-span {
+			@include font-extra-bold;
+			color: $pp-default-text-colour;
+			font-size: .96em;
+		}
+
+		.order-history-action-icon {
+			font-size: 1.08em;
+		}
+	
+	}
+}
+
+@include media-breakpoint-down(xs) {
+	.accounts-activities-container {
+		.activity-main-column-right-default {
+			padding-top: 2%;
+			vertical-align: center;
+		}
+	}
+}
+
+@include media-breakpoint-down(xs) {
+	.accounts-activities-container {
+
+		.activity-main-column-right-saved-pick-up-locations {
+			position: relative;
+			top: 60%;
+		}
+
+		.user-activity-main-icon {
+			font-size: 1.7em;
+
+			&.icon-credit-card,
+			&.icon-order-history-account-sized {
+				font-size: 2em;
+			}
+		}
+
+		.user-activity-title-text {
+			line-height: 1.2em;
+			letter-spacing: .3px;
+			color: $pp-default-text-colour;
+			// font-size: .91em;
+			font-size: 1.1em;
+		}
+
+		.order-history-action-wrap {
+			padding-top: 2.1%;
+		}
+
+		.order-history-action-span {
+			@include font-extra-bold;
+			color: $pp-default-text-colour;
+			font-size: .76em;
+
+			&.order-history-action-span {
+				color: $pp-default-text-colour;
+			}
+		}
+
+		.order-history-action-icon {
+			font-size: 1.02em;
+		}
+
+		.user-activity-action-span {
+			@include font-extra-bold;
+			letter-spacing: .3px;
+			color: $pp-bg-maincolour;
+			font-size: .76em;
+		}
+
+		.user-activity-action-icon {
+			font-size: 1.14em;
+		}
+	}
+}

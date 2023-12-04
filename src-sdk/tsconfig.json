@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": false,
+    //"noImplicitAny": true,
+    "sourceMap": true,
+    "lib": [ "es6" ,"dom"],
+    "target": "es2015",
+    "typeRoots": [
+      "./node_modules/@types/"
+    ],
+    "skipLibCheck": true,
+  },
+  "awesomeTypescriptLoaderOptions": {
+    "useCache": true
+  },
+}

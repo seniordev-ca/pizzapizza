@@ -1,0 +1,182 @@
+<div class="container-fluid order-history-header-container">
+
+	<div class="row pb-4 header-nav">
+
+		<div class="col-12 align-self-start">
+			<app-sub-header-navigation
+				[subHeaderNavContent]="{
+				textColor: '#4C3017',
+				iconColor: '#EE5A00',
+				backToLocation: '/'}"
+				title="Repeat Last Order"
+				navText="Back to Menu"
+				i18n-title
+				i18n-navText>
+			</app-sub-header-navigation>
+		</div>
+
+	</div>
+	<!-- Container -->
+
+</div>
+<!-- Container Fluid -->
+<div class="container order-history-container">
+	<div class="row" *ngFor="let orderDetails of (orderInfoData$ | async) | slice:0:1; let i = index">
+
+		<div class="col-lg-9 col-12 modal-details">
+			<div class="row cart-detail-header pt-4">
+				<div class="col-md-4 col-6 fw-extra-bold">
+					{{orderDetails.orderDate | date: 'longDate'}}
+				</div>
+				<div class="col-md-4 col-6 text-center">
+					<span class="fw-extra-bold">
+						{{orderDetails.orderTypeText}}
+					</span>
+					<span *ngIf="orderDetails.orderLocationName" i18n> To </span>
+					<span class="fw-extra-bold location-name" *ngIf="orderDetails.orderLocationName">
+						{{orderDetails.orderLocationName ? orderDetails.orderLocationName : 'given address'}}
+					</span>
+				</div>
+				<div class="col text-right d-none d-sm-inline-block" i18n>
+					Quantity
+				</div>
+				<div class="col text-right d-none d-sm-inline-block" i18n>
+					Item Total
+				</div>
+				<div class="col-12">
+					<div class="separator"></div>
+				</div>
+			</div>
+			<div class="row cart-detail-wrapper mx-0">
+				<div class="col-12">
+					<!-- MOVE THE BELOW TO A COMMON COMPONENT! TO BE USED IN THE ORDER CONFIRMATION MODAL AS WELL -->
+					<div class="row cart-details"
+						[class.expired]="item.expired"
+						*ngFor="let item of orderDetails.cartItems; let n = index">
+						<div class="col-3 col-sm-2 d-flex align-items-center item-img text-center">
+							<img alt="cart image" src="{{item.image}}" />
+						</div>
+						<div class="col-9 col-sm-10">
+							<div class="row h-100">
+								<div class="col-12">
+									<div class="item-title fw-black text-uppercase">
+									{{item.name}} <span class="fw-extra-bold expired-text" *ngIf="item.expired" i18n>Offer Expired</span>
+
+									</div>
+									<div class="item-description" [innerHTML]="item.description">
+									</div>
+								</div>
+								<div class="col-12 col-sm-8 align-self-end">
+									<!-- <span class="fw-extra-bold different-text" *ngIf="n === 0 && i === 2">Something is Different</span> -->
+								</div>
+								<div class="col align-self-end text-right fw-extra-bold item-quantity">
+									<span class="d-block d-sm-none sm-label" i18n>
+										Quantity
+									</span>
+									{{item.quantity}}
+								</div>
+								<div class="col align-self-end text-right fw-extra-bold item-price">
+									<span class="d-block d-sm-none sm-label" i18n>
+										Item Total
+									</span>
+									{{item.price | currency:'CAD':'symbol-narrow'}}
+								</div>
+							</div>
+						</div>
+						<div class="col-12 p-0">
+							<div class="separator"></div>
+						</div>
+					</div>
+					<!-- END OF CART ITEM -->
+					<div class="row justify-content-end d-none d-md-flex">
+						<div class="col-12 col-sm-3 col-lg-2 align-self-end mb-4 p-0">
+							<button class="btn btn-primary btn-full text-uppercase"
+								[ngClass]="{ 'selected with-icon' : orderDetails.selected }"
+								[class.loading-state]="orderDetails.isLoading"
+								[disabled]="orderDetails.selected || orderDetails.isUnavailable"
+								(click)="addToCart(orderDetails.orderId)">
+								<span class="btn-text"
+								*ngIf="!orderDetails.selected" i18n>
+									Add to Cart
+								</span>
+								<span class="btn-text"
+								*ngIf="orderDetails.selected" i18n>
+									Added
+								</span>								
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 col-12">
+			<div class="order-summary-wrap">
+				<app-order-summary
+					[orderSummaryData]="orderDetails"
+					[orderSummaryUI]="{isPastOrder:true}">
+				</app-order-summary>
+
+				<div class="col-12 d-inline-block d-md-none pb-3">
+					<button class="btn btn-primary btn-full text-uppercase"
+					[ngClass]="{ 'selected with-icon' : orderDetails.selected }"
+					[class.loading-state]="orderDetails.isLoading"
+					[disabled]="orderDetails.selected || orderDetails.isUnavailable"
+					(click)="addToCart(orderDetails.orderId)">
+						<span class="btn-text"
+						*ngIf="!orderDetails.selected" i18n>
+							Add to Cart
+						</span>
+						<span class="btn-text"
+						*ngIf="orderDetails.selected" i18n>
+							Added
+						</span>								
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-12">
+				<div class="separator"></div>
+		</div>
+	</div>
+
+	<div class="row loading-row" *ngIf="isLoading$ | async">
+		<div class="col-12 text-center">
+			<button class="btn btn-primary btn-white loading-state pagination-loading"></button>
+		</div>
+	</div>
+</div>
+
+<!--
+Cart error message
+-->
+	<ng-template #cartInvalidModal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal(); onConfirmChangeClickHandler(false)" aria-label="close button">
+			<i class="icon-close-bold"></i>
+		</button>
+		<app-confirmation-modal [data]="{
+				icon: 'icon-bell'
+			}" title="D'ough!" subtitle='' i18n-title>
+			<ng-template>
+				<div class="col-12">
+					<p class="invalid-cart-message">
+						<ng-container *ngIf="invalidProducts$ | async" i18n>
+							Looks like some of the items you want are no longer available or have changed, tapping okay will add all available items to your cart.
+							<span class="invalid-products">{{invalidProducts$ | async}}</span>
+						</ng-container>
+					</p>
+				</div>
+				<div class="col-12 d-flex justify-content-center p-0 align-self-end">
+					<div class="col-6 col-lg-5 px-1">
+						<button class="btn btn-primary btn-white w-100" (click)="closeModal(); onConfirmChangeClickHandler(false)" i18n>
+							Cancel
+						</button>
+					</div>
+					<div class="col-6 col-lg-5 px-1">
+						<button class="btn btn-primary w-100" (click)="closeModal(); onConfirmChangeClickHandler(true)" i18n>
+							Okay
+						</button>
+					</div>
+				</div>
+			</ng-template>
+		</app-confirmation-modal>
+	</ng-template>

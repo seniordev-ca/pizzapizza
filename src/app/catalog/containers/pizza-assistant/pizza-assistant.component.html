@@ -1,0 +1,294 @@
+<div class="container-fluid p-0 pizza-assistant-open-container h-100">
+
+	<div class="row h-100 no-gutters">
+		<div class="col-12">
+			<div class="row py-0 py-md-4 mx-0">
+				<div class="col-12 align-self-start"
+        >
+					<app-sub-header-navigation
+						[subHeaderNavContent]="{
+							textColor: '#4c3017',
+							iconColor: '#EE5A00',
+							backToLocation: '/'
+						}"
+						title="PIZZA ASSISTANT"
+						navText="Back to Home"
+            [isVerticalModalOpen]="isVerticalModalOpen || isVerticalCompModalOpen ? '-1' : '0'"
+						i18n-navText
+						i18n-title>
+					</app-sub-header-navigation>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12 assistant-wrap">
+			<ng-container *ngTemplateOutlet="assistantOrderList">
+			</ng-container>
+		</div>
+
+		<div class="col-12 assistant-chat-bottom align-self-end">
+			<ng-container *ngTemplateOutlet="assistantBottomAction">
+			</ng-container>
+		</div>
+
+	</div>
+
+
+</div>
+
+<ng-template #assistantOrderList>
+	<div class="container h-100">
+		<div class="row assistant-order-list-row h-100">
+			<div class="col-12">
+				<div class="row align-items-center">
+
+					<div class="col-md-auto col-12">
+						<div class="order-block text">
+							<h2 i18n>
+								Hi, I’d like to order a
+							</h2>
+						</div>
+					</div>
+					<div class="col-md-auto col-12">
+						<ng-container *ngIf="assistantProducts$ | async">
+							<ng-container *ngFor="let product of assistantProducts$ | async; let i = index;">
+								<div class="order-block text" *ngIf="i > 0">
+									<h2 i18n>
+										and
+									</h2>
+								</div>
+								<div class="order-block product">
+									<div class="row align-items-center mx-0">
+										<span class="text-center col-auto">
+											<img alt="product-image" class="product-image" [src]="product.image">
+										</span>
+										<div class="product-name col-auto pl-0" (click)="onProductClick(product.lineId, product.isCustomizationAllowed)"
+                    (keydown.enter)="onProductClick(product.lineId, product.isCustomizationAllowed)"
+                    [attr.tabindex]="product.quantity >= 1 && isVerticalModalOpen || isVerticalCompModalOpen ? '-1':'0'"
+                    [attr.aria-label]="'Press enter to customize your ' + product.name "
+                    >
+											{{product.quantity > 1 ? product.quantity : ''}}
+											{{product.pizzaAssistantLabel}}
+											<ng-container *ngIf="product.pizzaAssistantLabel && product.pizzaAssistantDescription"
+												i18n> with </ng-container>
+											<span *ngIf="product.pizzaAssistantDescription">{{product.pizzaAssistantDescription}}</span>
+											<div class="arrow" *ngIf="product.isCustomizationAllowed"></div>
+											<div *ngIf="product.isConfigRequired" class="text-center product-warning" i18n>
+												Tap to configure
+											</div>
+										</div>
+
+										<div class="col-auto close-btn px-0" (click)="onProductClose(product.lineId)"
+                    (keydown.enter)="onProductClose(product.lineId)"
+                    [attr.tabindex]="product.quantity >= 1 && isVerticalModalOpen || isVerticalCompModalOpen ? '-1':'0'"
+                    [attr.aria-label]="'Press enter remove your your ' + product.name ">
+											<i class="icon-close-bold">
+											</i>
+										</div>
+
+									</div>
+								</div>
+							</ng-container>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+
+			<ng-container *ngTemplateOutlet="assistantInformation">
+			</ng-container>
+
+		</div>
+	</div>
+</ng-template>
+
+
+<ng-template #assistantInformation>
+	<div class="col-12 align-self-end assistant-information-col">
+		<div class="assistant-icon-wrap">
+			<i class="icon-stack ml-auto">
+				<i class="icon icon-pizza-assistant-1 icon-stack-base h1"></i>
+				<i class="icon icon-pizza-assistant-2 h1"></i>
+			</i>
+		</div>
+		<div class="text-wrap">
+			<div class="arrow">
+
+			</div>
+			<div class="text-wrap-body">
+				<ng-container *ngIf="!(isLoading$ | async) && !(comboProduct$ | async)">
+					<h2 *ngIf="!(assistantMessage$ | async)" i18n>
+						What would you like to order?
+					</h2>
+					<h2 *ngIf="(assistantMessage$ | async)">
+						{{assistantMessage$ | async}}
+					</h2>
+					<h4 i18n>
+						Click ‘help’ to see what you can ask
+					</h4>
+				</ng-container>
+				<ng-container *ngIf="!(isLoading$ | async) && (comboProduct$ | async)">
+					<h2 i18n>I'm sorry I don't know that one yet</h2>
+					<h4>
+						<ng-container i18n>Click 'continue' to build your</ng-container>
+						{{(comboProduct$ | async).name}}
+					</h4>
+					<button class="btn btn-transparent p-0" [routerLink]="'/catalog/product-combo/' + (comboProduct$ | async).seo_title">
+						<ng-container i18n>Continue</ng-container>
+						<i class="icon-triangle icon-rotate-right"></i>
+					</button>
+				</ng-container>
+				<div class="d-block text-center" *ngIf="isLoading$ | async">
+					<button class="btn-primary btn-white loading-state p-0"></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>
+
+
+<ng-template #assistantBottomAction>
+	<div class="bottom-action-wrap">
+		<div class="container">
+
+			<div class="row">
+				<div class="col-12 text-input-line">
+					<form [formGroup]="messageForm" class="d-flex justify-content-between w-100 align-items-center"
+						(ngSubmit)="onFormSubmit()">
+						<input class="assistant-text-input form-control"
+            [attr.tabindex]="isVerticalModalOpen || isVerticalCompModalOpen ? '-1' : '0'"
+             placeholder="Type here…" aria-label="Type what you’d like to order"
+							formControlName="message" #messageInput i18n-placeholder/>
+						<button class="enter-btn d-flex justify-content-center align-items-center" [attr.tabindex]="isVerticalModalOpen || isVerticalCompModalOpen ? '-1' : '0'"
+                    [attr.aria-label]="messageForm.invalid ? 'Send button is disabled' : 'Send Button'"
+							[class.disabled]="messageForm.invalid" [disabled]="messageForm.invalid"
+
+              >
+							<i class="icon-toggle"></i>
+						</button>
+						<button class="btn transparent-btn assistant-speeach-btn p-0" *ngIf="isSpeechAvailable"
+							(click)="activateSpeechStart($event)" [attr.tabindex]="isVerticalModalOpen || isVerticalCompModalOpen ? '-1' : '0'"
+              >
+							<i class="icon-stack ml-auto h3 mb-0" *ngIf="!isChatActive">
+								<i class="icon icon-pizza-assistant-1 icon-stack-base"></i>
+								<i class="icon icon-pizza-assistant-2"></i>
+							</i>
+							<i class="icon-loader_01 h3 pp-loading-icon" *ngIf="isChatActive"></i>
+						</button>
+					</form>
+				</div>
+			</div>
+
+			<div class="row justify-content-end assistant-action">
+				<div class="col-6 col-sm-auto assistant-action-btn help">
+					<button (click)="helpVerticalModal.openModal(); handleHelpClickEvent()" i18n [disabled]="!(isPAHelpConfigLoaded$ | async)"  [attr.tabindex]="isVerticalModalOpen || isVerticalCompModalOpen ? '-1' : '0'"
+          [attr.aria-label]="!(isPAHelpConfigLoaded$ | async) ? 'Help button is disabled' : 'Press Enter for Help'"
+          >
+						help?
+					</button>
+				</div>
+				<div class="col-6 col-sm-auto assistant-action-btn">
+					<button [disabled]="(!(assistantProducts$ | async) || (assistantProducts$ | async).length < 1) || !(isDoneButtonValid$ | async)"
+						(click)="orderModal.open(); handleIamDoneClickEvent()" [attr.tabindex]="isVerticalModalOpen || isVerticalCompModalOpen ? '-1' : '0'"
+                  (keydown.enter)="orderModal.open(); handleIamDoneClickEvent()"
+                  [attr.aria-label]="(!(assistantProducts$ | async) || (assistantProducts$ | async).length < 1) || !(isDoneButtonValid$ | async) ? 'I am done button is disabled' : 'Press Enter when done'"
+                  i18n>
+						I’M DONE
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>
+
+<div class="pizza-assistant-help-vertical-modal">
+	<app-vertical-modal #helpVerticalModal
+  (verticalModalOutputEmitter)="checkIfModalOpen($event)"
+  >
+		<ng-template>
+			<div class="container">
+
+				<div class="row vertical-modal-header">
+					<div class="col-12">
+						<div class="assistant-icon">
+							<i class="icon-stack ml-auto">
+								<i class="icon icon-pizza-assistant-1 icon-stack-base h1"></i>
+								<i class="icon icon-pizza-assistant-2 h1"></i>
+							</i>
+						</div>
+						<h6 i18n>
+							help
+						</h6>
+					</div>
+				</div>
+
+				<div class="row vertical-modal-body">
+					<div class="col-12 d-flex flex-column justify-content-between">
+
+						<h3 i18n [attr.tabindex]="isVerticalModalOpen  ? '0' : '-'">
+							What can you say?
+						</h3>
+
+						<div class="separator">
+						</div>
+						<ng-container *ngIf="(isPAHelpConfigLoaded$ | async)">
+							<div class="questions-example" *ngFor="let example of helpConfigData$ | async as helpData">
+								<h2 [attr.tabindex]="isVerticalModalOpen  ? '0' : '-1'" >{{example}}</h2>
+							</div>
+						</ng-container>
+						<div class="separator">
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</ng-template>
+	</app-vertical-modal>
+</div>
+
+<app-pizza-assistant-order-modal-container (productItemEventEmitter)="productListEventHandler($event)" #orderModal
+(verticalModalComponentOutputEmitter)="checkIfPizzaAssistantCompModalOpen($event)"
+[isVerticalModalOpen]="isVerticalModalOpen">
+
+</app-pizza-assistant-order-modal-container>
+
+<app-product-configurator #verticalModalConfigurator [isVerticalModalContainer]="true" [isPizzaAssistant]="true"
+(verticalModalOutputEmitter)="checkIfModalOpen($event)"
+
+
+>
+</app-product-configurator>
+
+<ng-template #guardModalForNormal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal(); cancelLeaveAttempt();" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+	<app-confirmation-modal
+		[data]="{
+				icon: 'icon-bell'
+			}"
+		title="Are you sure?"
+		i18n-title>
+		<ng-template>
+			<div class="col-12 mb-4">
+				<p i18n>Are you sure you want to abandon all the delicious you've created?</p>
+			</div>
+			<div class="col-12 align-self-end">
+					<div class="row justify-content-center button-row">
+						<div class="col-6 col-md-5 px-1">
+							<button class="btn btn-lg btn-primary btn-white text-uppercase w-100"
+							(click)="closeModal(); cancelLeaveAttempt();" i18n>
+								Cancel
+							</button>
+						</div>
+						<div class="col-6 col-md-5 px-1">
+							<button class="btn btn-lg btn-primary text-uppercase w-100"
+							(click)="closeModal(); confirmLeaveAttempt();" i18n>
+								Okay
+							</button>
+						</div>
+					</div>
+			</div>
+			<!-- Button Row -->
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>

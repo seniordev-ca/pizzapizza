@@ -1,0 +1,62 @@
+@import 'global-scss-mixing';
+
+$selected-icon: #4e7026;
+$selected-label: #427a00;
+$selector-border: #ccd6d8;
+$white: #fff;
+
+.tab-option-drop-down-wrap {
+	position: absolute;
+	right: 5px;
+	bottom: 0;
+	left: 0;
+	z-index: 10;
+	border: 2px solid $selector-border;
+	background: $white;
+	max-width: 100%;
+
+	.tab-option-dropdown-list-wrap {
+		display: flex;
+		position: absolute;
+		left: -2px;
+		flex-direction: column;
+		border-right: 2px solid $selector-border;
+		border-bottom: 2px solid $selector-border;
+		border-left: 2px solid $selector-border;
+		max-width: 100%;
+		box-sizing: content-box;
+	}
+
+	.tab-option-select {
+		.tab-option {
+			background-color: $white;
+			padding: 6px;
+			width: 180px;
+			max-width: 100%;
+
+			.selection-icon {
+				color: $selected-icon;
+				font-size: 20px;
+			}
+
+			.label {
+				@include font-extra-bold;
+				margin-left: 5px;
+				line-height: 1.1em;
+				color: $selected-label;
+				font-size: .75em;
+			}
+
+			.dropdown-icon {
+				transform: rotate(180deg);
+				width: auto;
+				color: $selected-icon;
+				font-size: .813rem;
+
+				&.is-list-open {
+					transform: rotate(0deg);
+				}
+			}
+		}
+	}
+}

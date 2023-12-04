@@ -1,0 +1,15 @@
+<div class="styled-dropdown-container">
+	<button class="form-control styled-dropdown-selected" (click)="openMenu($event)" *ngIf="currentSelected" type="button"
+>
+
+  {{currentSelected.label}}</button>
+	<ul class="styled-dropdown" [class.hidden]="!menuOpen">
+		<li *ngFor="let option of optionsArray"
+			[class.selected]="option.selected"
+			(click)="updateFormControlValue(option)"
+      (keydown.enter)="updateFormControlValue(option)"
+      [attr.tabindex]="menuOpen?'0':'-1'">
+			{{option.label}}
+		</li>
+	</ul>
+</div>

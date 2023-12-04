@@ -1,0 +1,72 @@
+@import 'global-scss-mixing';
+
+$bg: #edf2f5;
+
+.pizza-assistant-container {
+	.pizza-assistant {
+		border-radius: 9px;
+		background-color: $bg;
+
+		// .search {
+
+		// 	// max-width: 75%;
+		// }
+
+		.search-text {
+			@include font-black;
+			outline: none;
+			border: 0;
+			border-radius: 0;
+			background-color: transparent;
+			cursor: pointer;
+			text-align: left;
+			line-height: 1;
+			color: $pp-default-text-colour;
+			font-size: 2rem;
+			word-break: break-word;
+		}
+
+		.icon-pizza-assistant-1 {
+			color: $pp-bg-maincolour;
+		}
+
+		.icon-pizza-assistant-2 {
+			color: $pp-default-text-colour;
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		.pizza-assistant {
+			.search-text {
+				font-size: 1.875rem;
+			}
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.container {
+		&.pizza-assistant-container {
+			background-color: $bg;
+			padding-right: 0;
+			padding-left: 0;
+
+			.pizza-assistant {
+				border-radius: 0;
+
+				.search-text {
+					font-size: 1rem;
+				}
+
+				.icon-pizza-assistant-1 {
+					font-size: 1.65em;
+				}
+
+				.icon-pizza-assistant-2 {
+					left: 2px;
+					font-size: 1.45em;
+				}
+			}
+		}
+	}
+}

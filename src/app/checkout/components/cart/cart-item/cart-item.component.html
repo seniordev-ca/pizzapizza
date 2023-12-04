@@ -1,0 +1,128 @@
+<div class="row my-1 p-2 cart-item-container" [class.is-removed]="cartItemRemoved" id="cart-item-{{cartItem.cardId}}">
+
+	<div [ngClass]="isCompact ? 'col-4' : 'col-4 col-lg-2'" class="d-flex justify-content-center image-wrap"
+		[style.background-image]="cartItem.hasFullWidthImage ? 'url(' + cartItem.image + ')' : ''">
+		<img class="img-fluid" alt="cart-image" [src]="cartItem.image" *ngIf="!cartItem.hasFullWidthImage">
+	</div>
+
+	<div [ngClass]="isCompact ? 'col-8' : 'col-8 col-lg-10'">
+		<div class="row h-100">
+
+			<div [ngClass]="isCompact ? 'col-12' : 'col-12 col-lg-8'" class="pr-0">
+				<div class="mb-2 item-title">
+					{{cartItem.name}}
+				</div>
+
+				<div class="description">
+					<!-- <ng-container *ngIf="cartItem.cartItemChildren">
+						<ng-container *ngFor="let child of cartItem.cartItemChildren">
+							<strong>{{child.name}}{{child.config_options.length > 0 ? ':' : ''}} </strong>
+							<span *ngFor="let option of child.config_options | slice:0:10; let i = index">
+								<ng-container *ngIf="child.config_options.length < 11">
+									{{option | mapCartItemDescription}}{{i < child.config_options.length - 1 ? ', ' : ' '}}
+								</ng-container>
+								<ng-container *ngIf="child.config_options.length > 10">
+									{{option | mapCartItemDescription}}{{i < 9 ? ', ' : '... '}}
+								</ng-container>
+							</span>
+						</ng-container>
+					</ng-container>
+					<span *ngFor="let option of cartItem.cartConfig; let i = index">
+					{{option | mapCartItemDescription }}<ng-container>{{i < cartItem.cartConfig.length - 1 ? ', ' : ' '}}</ng-container>
+					</span> -->
+					<span [innerHTML]="cartItem.description"></span>
+					<ng-container *ngIf="cartItem.cartIncludes">
+						<!-- <b i18n>Comes With: </b> {{cartItem.cartIncludes}} -->
+					</ng-container>
+
+					<strong *ngIf="cartItem.isPersonalMessageApplied" i18n>
+						Personalized Message Added
+					</strong>
+				</div>
+			</div>
+
+			<ng-container *ngIf="isFirst">
+				<div *ngIf="!isCompact" class="d-none d-lg-flex col-lg-2 align-self-start column-name text-center justify-content-center w-50 px-0" i18n>
+					Quantity
+				</div>
+
+				<div *ngIf="!isCompact" class="d-none d-lg-block col-lg-2 p-0 text-center column-name align-self-start w-50 px-0" i18n>
+					Item Total
+				</div>
+			</ng-container>
+
+			<!-- begining of row -->
+			<div [ngClass]="isCompact ? 'col-12': 'col-12 col-lg-8'" class="my-2 pr-0 d-flex align-self-end">
+				<div [ngClass]="isCompact ? 'd-flex align-self-start justify-content-between mb-0 mb-lg-1 w-100' : 'align-self-center'">
+					<div *ngIf="!isCompact" (click)="onRemoveItem($event, cartItem)" class="remove" tabindex="0"
+               [attr.aria-label]="'Remove ' + cartItem.name" (keydown.enter)="onRemoveItem($event, cartItem)" >
+						<i class="mr-1 icon-minus-2"></i>
+						<ng-container i18n>Remove</ng-container>
+					</div>
+					<ng-container *ngIf="isCompact">
+							<div class="col-auto p-0 remove smaller" (click)="onRemoveItem($event, cartItem)"
+                   tabindex="0" [attr.aria-label]="'Remove ' + cartItem.name"
+                   (keydown.enter)="onRemoveItem($event, cartItem)" >
+								<i class="mr-1 icon-minus-2"></i> <ng-container i18n>Remove</ng-container>
+
+							</div>
+							<div class="align-self-center edit smaller ml-2" tabindex="0"
+								*ngIf="cartItem.isCustomizationAllowed" [attr.aria-label]="'Edit ' + cartItem.name"
+								(click)="onEditItem($event, cartItem)" (keydown.enter)="onEditItem($event, cartItem)" >
+								<i class="mr-1 icon-edit"></i> <ng-container i18n>Edit</ng-container>
+							</div>
+							<div [ngClass]="isCompact ? 'col-5 item-title align-self-center' : 'd-none'">
+								{{cartItem.priceText.priceValue | currency:'CAD':'symbol-narrow':'1.2'}}
+							</div>
+					</ng-container>
+				</div>
+
+				<div class="align-self-center edit ml-2"
+             tabindex="0" [attr.aria-label]="'Edit ' + cartItem.name"
+					*ngIf="!isCompact && cartItem.isCustomizationAllowed"
+					(click)="onEditItem($event, cartItem)" (keydown.enter)="onEditItem($event, cartItem)" >
+					<i class="mr-1 icon-edit"></i> <ng-container i18n>Edit</ng-container>
+				</div>
+
+			</div>
+			<div class="col-12 w-100 px-0 d-block d-lg-none" *ngIf="!isCompact">
+				<div class="row w-100 mx-0">
+					<div class="label mobile-qty col-6 p-0 text-left pl-2">
+						<span *ngIf="!cartItem.isCoupon" i18n>Quantity</span>
+					</div>
+					<div class="label mobile-qty col-6 p-0 text-right" i18n>
+						Item Total
+					</div>
+				</div>
+				<div class="row w-100 mx-0">
+					<div class="col-6 price p-0 align-items-center justify-content-left d-flex text-center">
+						<app-quantity-selector
+							*ngIf="!cartItem.isCoupon"
+
+							[quantitySelectorContent]="quantitySelectorContent"
+							(quantitySelectorEventEmitter)="quantitySelectorEventHandler($event, cartItem)">
+						</app-quantity-selector>
+					</div>
+					<div class="col-6 price p-0 text-right">
+						{{ cartItem.priceText.priceValue | currency:'CAD':'symbol-narrow':'1.2' }}
+					</div>
+				</div>
+			</div>
+			<div *ngIf="!isCompact" class="d-none d-lg-flex col-lg-2 align-self-end text-center price w-50 px-0">
+				<app-quantity-selector
+					*ngIf="cartItem.isQuantitySelectionAllowed"
+
+					[quantitySelectorContent]="quantitySelectorContent"
+					(quantitySelectorEventEmitter)="quantitySelectorEventHandler($event, cartItem)">
+				</app-quantity-selector>
+			</div>
+
+			<div *ngIf="!isCompact" class="d-none d-lg-block col-lg-2 p-0 text-center price align-self-end w-50 px-0">
+				{{ cartItem.priceText.priceValue | currency:'CAD':'symbol-narrow':'1.2' }}
+			</div>
+		</div>
+		<!-- end of row -->
+
+	</div>
+
+</div>

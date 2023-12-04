@@ -1,0 +1,252 @@
+<div class="container-fluid mx-0 px-0 accounts-add-address-form-container">
+		<form class="pp-form" [formGroup]="addressForm">
+
+			<!-- Form Row One - Holds Radio Buttons -->
+			<div class="form-row">
+
+				<div class="col-12 col-lg-6 form-group" *ngIf="!isGuestUser">
+					<label for="title" class="alternate-label pl-0">
+						<ng-container i18n>Nickname</ng-container>
+						<br/>
+						<span class="optional-label-identifier" i18n>(Optional)</span>
+					</label>
+					<input type="text" class="form-control" id="title" placeholder="" formControlName="title" maxlength="50"
+          tabindex="0">
+				</div>
+
+				<div class="col-2 d-none d-lg-block">&nbsp;</div>
+				<div class="col-3" *ngIf="!isCheckout">
+					<div class="row door-radio-row">
+						<div class="col-12 form-group">
+							<label class="radio-group radio-group-gray">
+								<input name="type" type="radio" class="radio-group-input" formControlName="type" value="Home"
+                tabindex="0"
+                >
+								<div class="select-el-wrapper">
+									<div class="select-el"></div>
+								</div>
+								<span class="door-radio-label" i18n>Residential</span>
+							</label>
+						</div>
+						<div class="col-12 form-group">
+							<label class="radio-group radio-group-gray">
+								<input name="type" type="radio" class="radio-group-input" formControlName="type" value="University"
+                tabindex="0">
+								<div class="select-el-wrapper">
+									<div class="select-el"></div>
+								</div>
+								<span class="door-radio-label" i18n>University</span>
+							</label>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!-- End of Row One -->
+
+			<div class="form-row">
+
+				<ng-container *ngIf="addressForm['controls']['type']['value'] === addressTypeEnum.Home">
+					<div class="col-12 col-lg-10 form-group"
+						[class.invalid-entry]="error || formValidationService.isInputInvalidOrEmpty(addressForm.controls['addressString'])">
+							<label for="streetAddress" class="alternate-label pl-0">
+								<ng-container i18n>Number & Street Name</ng-container>
+								<div class="invalid-text-alt" *ngIf="error">&nbsp;<ng-container i18n>Incomplete Address</ng-container></div>
+								<app-form-invalid-message
+									[control]="addressForm.controls['addressString']">
+								</app-form-invalid-message>
+							</label>
+							<div class="row no-gutters">
+								<app-address-autocomplete
+									class="w-100"
+									[isManualToggleAllowed]="true"
+									[manualAddressForm]="manualAddressForm"
+									[placeholder]="initialInput"
+									(addressSearchEmitter)="handleAddressSearchEmitter($event)"
+									[minimumRequirements]="['street_number']">
+								</app-address-autocomplete>
+							</div>
+					</div>
+					<div class="col-2 d-none d-lg-block">
+							&nbsp;
+						</div>
+
+						<div class="col-12 col-md-7 form-group">
+							<div class="row">
+								<div class="col-6 col-md-6">
+									<label for="unitNumber" class="alternate-label">
+										<ng-container i18n>Apt #</ng-container>
+										<br/>
+										<span class="optional-label-identifier" i18n>(Optional)</span>
+									</label>
+									<input type="text" class="form-control" id="unitNumber" placeholder="" formControlName="unitNumber" maxlength="5">
+								</div>
+								<div class="col-6 col-md-6" [class.invalid-entry]="unitBuzzerValidation.isInputEmpty()">
+									<div class="row">
+										<div class="col-4">
+											<label for="unitBuzzer" class="alternate-label">
+												<ng-container i18n>Buzzer</ng-container>
+												<app-form-invalid-message
+														[control]="addressForm.controls['unitBuzzer']"
+														#unitBuzzerValidation>
+												</app-form-invalid-message>
+												<br/>
+												<span class="optional-label-identifier" i18n>(Optional)</span>
+											</label>
+										</div>
+										<div class="col-8 invalid-text-alt unit-buzzer-reminder" *ngIf="addressForm.controls['unitNumber'].value
+										 && addressForm.controls['unitNumber'].valid && !addressForm.controls['unitBuzzer'].value
+										 && addressForm.controls['unitBuzzer'].untouched">
+											<span i18n>Do you have a buzzer number?</span>
+										</div>
+									</div>
+									<input type="text" class="form-control" id="unitBuzzer" placeholder="" formControlName="unitBuzzer" maxlength="5">
+								</div>
+							</div>
+						</div>
+
+						<div class="col-1 d-none d-md-block">
+							&nbsp;
+						</div>
+
+						<div class="col-12 col-lg-3 form-group door-radio-col">
+							<div class="row door-radio-row">
+								<div class="col-6 col-md-12 form-group">
+									<label class="radio-group radio-group-gray" id="frontDoorOption">
+										<input name="entrance" type="radio" class="radio-group-input"
+											formControlName="entrance"
+											value="Front Door"
+                      tabindex="0"
+aria-label="Front Door option">
+
+										<div class="select-el-wrapper">
+											<div class="select-el"></div>
+										</div>
+										<span class="door-radio-label" i18n>Front Door</span>
+									</label>
+								</div>
+								<div class="col-6 col-md-12 form-group">
+									<label class="radio-group radio-group-gray"  id="backDoorOption">
+										<input name="entrance" type="radio" class="radio-group-input"
+										formControlName="entrance"
+										value="Back Door"
+                    tabindex="0"
+  aria-label="Back Door option">
+										<div class="select-el-wrapper">
+											<div class="select-el"></div>
+										</div>
+										<span class="door-radio-label" i18n>Back Door</span>
+									</label>
+								</div>
+							</div>
+						</div>
+				</ng-container>
+				<ng-container *ngIf="addressForm['controls']['type']['value'] === addressTypeEnum.University">
+						<div class="col-12 form-group" id="parentUniversityDropdown">
+							<label for="university" class="alternate-label" i18n>
+								Name of College or University
+							</label>
+							<div class="row no-gutters" *ngIf="!universityList">
+								<button class="btn btn-primary btn-white loading-state"></button>
+							</div>
+							<app-dropdown
+								*ngIf="universityList"
+								[inputControl]="addressForm.controls['university']"
+								[options]="universityList"
+								[selectedValue]="getSelectedUniversity()">
+							</app-dropdown>
+						</div>
+						<div class="col-12 col-lg-6 form-group" id="parentUniversityBuildingDropdown">
+							<label for="building" class="alternate-label mb-4" i18n>Building</label>
+							<ng-container *ngIf="!buildingList">
+							<div class="row no-gutters" *ngIf="getSelectedUniversity()">
+								<button class="btn btn-primary btn-white loading-state"></button>
+							</div>
+								<app-dropdown
+									*ngIf="!getSelectedUniversity()"
+									[inputControl]="addressForm.controls['building']"
+									[options]="[{
+										value: null,
+										label: locale === 'en-US'? 'Select Building': 'Sélectionnez un bâtiment'
+									}]"
+									[selectedValue]="getSelectedBuilding()">
+								</app-dropdown>
+							</ng-container>
+							<app-dropdown
+								*ngIf="buildingList"
+								[inputControl]="addressForm.controls['building']"
+								[options]="buildingList"
+								[selectedValue]="getSelectedBuilding()">
+							</app-dropdown>
+						</div>
+
+						<div class="col-6 col-lg-3">
+							<label for="buildingEntrance" class="alternate-label">
+								<ng-container i18n>Building Entrance</ng-container> <br />
+								<span class="optional-label-identifier" i18n>(Optional)</span>
+							</label>
+							<input id="buildingEntrance" class="form-control" type="text" formControlName="buildingEntrance" maxlength="30"/>
+						</div>
+						<div class="col-6 col-lg-3 form-group"
+							[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(addressForm.controls['unitNumber'])">
+							<label class="alternate-label" >
+								<ng-container i18n>Room Number</ng-container>
+								<br/>
+								<app-form-invalid-message
+									[control]="addressForm.controls['unitNumber']">
+								</app-form-invalid-message>
+							</label>
+							<input class="form-control" type="text" formControlName="unitNumber" maxlength="5" id="univRoomNumber" />
+						</div>
+
+				</ng-container>
+
+			</div>
+
+			<div class="form-row mt-2" *ngIf="!isGuestUser">
+				<div class="col-12 form-group contact-information-col" i18n>Contact Information</div>
+				<div class="col-12 col-lg-6 form-group">
+					<div class="row">
+						<div class="col-8 form-group" formGroupName="contactInfo">
+							<label for="phoneNumber" class="alternate-label">
+								<ng-container i18n>Phone Number</ng-container>
+								<br/>
+								<span class="optional-label-identifier-spacer" i18n>(Optional)</span>
+							</label>
+							<input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber"
+								[textMask]="{mask: mask}">
+						</div>
+						<div class="col-4" formGroupName="contactInfo">
+							<label for="extension" class="alternate-label">
+								<ng-container i18n>Extension</ng-container>
+								<br/>
+								<span class="optional-label-identifier" i18n>
+									(Optional)
+								</span>
+							</label>
+
+							<input type="text" class="form-control" id="extension" placeholder="" formControlName="extension">
+						</div>
+					</div>
+				</div>
+
+				<div class="col-4 d-none d-lg-block">
+					&nbsp;
+				</div>
+
+				<div class="col-12 col-lg-2 mt-3 mt-lg-0 align-self-end justify-self-end text-right submit-col"
+					*ngIf="!isCheckout">
+					<button type="submit" class="btn btn-primary justify-self-end"
+						(click)="onSaveAddress($event, addressForm.value)"
+						[class.selected]="!addressForm.invalid"
+						[disabled]="addressForm.invalid">
+						<span class="btn-text" i18n>
+							SAVE
+						</span>
+					</button>
+				</div>
+			</div>
+
+		</form>
+</div>
+<!-- End of Container -->

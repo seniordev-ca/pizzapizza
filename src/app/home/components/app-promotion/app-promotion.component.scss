@@ -1,0 +1,70 @@
+@import 'global-scss-mixing';
+
+$bg: #edf2f5;
+$content-font-color: #000;
+$border-live-color: #e1e7e9;
+
+.app-promotion-container {
+	.container-fluid {
+		border-top: 1px solid $border-live-color;
+		border-bottom: 1px solid $border-live-color;
+		background-color: $bg;
+	}
+
+	.title {
+		@include font-black;
+		line-height: 1.35em;
+		letter-spacing: .02em;
+		color: $pp-default-text-colour;
+		font-size: 1.4625em;
+	}
+
+	.content {
+		@include font-regular;
+		line-height: 1.29375em;
+		letter-spacing: .0175em;
+		color: $content-font-color;
+		font-size: 1.0125em;
+	}
+
+	.app-buttons {
+		img {
+			@include img-fluid;
+			margin: 0 10px;
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.app-promotion-container {
+		display: none;
+
+		.title {
+			font-size: .9em;
+		}
+
+		.description {
+			font-size: .5em;
+		}
+
+		.app-buttons {
+			img {
+				width: 30%;
+			}
+		}
+
+	}
+
+}
+
+@include media-breakpoint-between(sm, md) {
+	.app-promotion-container {
+		.title {
+			font-size: 1.2em;
+		}
+
+		.description {
+			font-size: 1em;
+		}
+	}
+}

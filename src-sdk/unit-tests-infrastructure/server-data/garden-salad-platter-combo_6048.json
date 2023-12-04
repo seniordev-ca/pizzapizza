@@ -1,0 +1,347 @@
+{
+  "data": {
+    "combo": {
+      "combo_item_info": null,
+      "description": "Cucumber slices, and ripe red grape tomatoes on a bed of fresh crisp iceberg lettuce. Comes with 10 salad dressings of your choice.",
+      "groups": [
+        {
+          "allow_multiple_items": false,
+          "child_items": [
+            "6048"
+          ],
+          "group_image": "Garden.png",
+          "group_title": "GARDEN SALAD PLATTER",
+          "max_selection": 1,
+          "sequence": -1
+        },
+        {
+          "allow_multiple_items": false,
+          "child_items": [
+            "6039"
+          ],
+          "group_image": "tongs.png",
+          "group_title": "SEND TONG FOR SALAD",
+          "max_selection": 1,
+          "sequence": 1
+        }
+      ],
+      "image": "garden.png",
+      "name": "GARDEN SALAD PLATTER"
+    },
+    "products": [
+      {
+        "allow_customization": false,
+        "configuration_options": [],
+        "configurations": [],
+        "description": "",
+        "image": "tongs.png",
+        "is_flat": false,
+        "is_pizza": false,
+        "line_id": 2,
+        "name": "SEND TONG FOR SALAD",
+        "product_id": "6039",
+        "product_options": {
+          "label": "Choose Your Size",
+          "options": [
+            {
+              "base_price": 0,
+              "cal_count": null,
+              "cal_scale": "Cals",
+              "font_key": null,
+              "grouped_products": null,
+              "guarantee_group": null,
+              "id": 6039,
+              "image": "tongs.png",
+              "same_topping_limit": 3,
+              "selected": true,
+              "sequence": 1,
+              "size_code": null,
+              "size_label": null,
+              "size_name": null,
+              "sub_title": null,
+              "title": "SEND TONG FOR SALAD"
+            }
+          ]
+        },
+        "sequence": 1,
+        "sub_configuration_options": []
+      },
+      {
+        "allow_customization": true,
+        "configuration_options": [
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "BD",
+            "image": "BD.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 185,
+            "parent_id": "dressing",
+            "product_options_data": [
+              {
+                "cal_count": 120,
+                "product_option_id": 6048,
+                "selected": false,
+                "sequence": 20
+              }
+            ],
+            "quantity": 0,
+            "sequence": 20,
+            "tag": null,
+            "title": "Balsamic Dressing"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "BS",
+            "image": "BS.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 32,
+            "parent_id": "toppings",
+            "product_options_data": [
+              {
+                "cal_count": 450,
+                "product_option_id": 6048,
+                "selected": false,
+                "sequence": 2
+              }
+            ],
+            "quantity": 0,
+            "sequence": 2,
+            "tag": null,
+            "title": "Bacon Strips"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "CA",
+            "image": "CA.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 129,
+            "parent_id": "dressing",
+            "product_options_data": [
+              {
+                "cal_count": 140,
+                "product_option_id": 6048,
+                "selected": false,
+                "sequence": 30
+              }
+            ],
+            "quantity": 0,
+            "sequence": 30,
+            "tag": null,
+            "title": "Caesar Dressing"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "CH",
+            "image": "CH.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 29,
+            "parent_id": "toppings",
+            "product_options_data": [
+              {
+                "cal_count": 140,
+                "product_option_id": 6048,
+                "selected": false,
+                "sequence": 1
+              }
+            ],
+            "quantity": 0,
+            "sequence": 1,
+            "tag": null,
+            "title": "Grilled Chicken"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "IH",
+            "image": "IH.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 132,
+            "parent_id": "dressing",
+            "product_options_data": [
+              {
+                "cal_count": 20,
+                "product_option_id": 6048,
+                "selected": false,
+                "sequence": 90
+              }
+            ],
+            "quantity": 0,
+            "sequence": 90,
+            "tag": null,
+            "title": "Calorie Wise Italian Dressing"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "NN",
+            "image": "NN.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 184,
+            "parent_id": "dressing",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 6048,
+                "selected": false,
+                "sequence": 100
+              }
+            ],
+            "quantity": 0,
+            "sequence": 100,
+            "tag": null,
+            "title": "No Dressing"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "OL",
+            "image": "OL.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 63,
+            "parent_id": "dressing",
+            "product_options_data": [
+              {
+                "cal_count": 60,
+                "product_option_id": 6048,
+                "selected": false,
+                "sequence": 60
+              }
+            ],
+            "quantity": 0,
+            "sequence": 60,
+            "tag": null,
+            "title": "Olive Oil Dressing"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "RA",
+            "image": "RA.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 87,
+            "parent_id": "dressing",
+            "product_options_data": [
+              {
+                "cal_count": 90,
+                "product_option_id": 6048,
+                "selected": false,
+                "sequence": 70
+              }
+            ],
+            "quantity": 0,
+            "sequence": 70,
+            "tag": null,
+            "title": "Calorie Wise Ranch Dressing"
+          }
+        ],
+        "configurations": [
+          {
+            "font_key": null,
+            "id": "dressing",
+            "not_available": [],
+            "sequence": 2,
+            "sub_configurations": [
+              {
+                "allow_half_and_half": false,
+                "allow_multiple_options": true,
+                "id": "dressing",
+                "not_available": [],
+                "personalized_message": {
+                  "display_personalized_message": false
+                },
+                "sequence": 1,
+                "title": "Dressing"
+              }
+            ],
+            "title": "Dressing"
+          },
+          {
+            "font_key": "0xe809",
+            "id": "toppings",
+            "not_available": [],
+            "sequence": 1,
+            "sub_configurations": [
+              {
+                "allow_half_and_half": false,
+                "allow_multiple_options": true,
+                "id": "toppings",
+                "not_available": [],
+                "personalized_message": {
+                  "display_personalized_message": false
+                },
+                "sequence": 1,
+                "title": "Toppings"
+              }
+            ],
+            "title": "Toppings"
+          }
+        ],
+        "description": "Cucumber slices, and ripe red grape tomatoes on a bed of fresh crisp iceberg lettuce. Comes with 10 salad dressings of your choice.",
+        "image": "Garden.png",
+        "is_flat": false,
+        "is_pizza": false,
+        "line_id": 1,
+        "name": "GARDEN SALAD PLATTER",
+        "product_id": "6048",
+        "product_options": {
+          "label": "Choose Your Size",
+          "options": [
+            {
+              "base_price": 19.99,
+              "cal_count": 25,
+              "cal_scale": "Cals/serving, serves 5",
+              "font_key": null,
+              "grouped_products": null,
+              "guarantee_group": "G7",
+              "id": 6048,
+              "image": "Garden.png",
+              "same_topping_limit": -1,
+              "selected": true,
+              "sequence": 1,
+              "size_code": null,
+              "size_label": null,
+              "size_name": null,
+              "sub_title": null,
+              "title": "GARDEN SALAD PLATTER"
+            }
+          ]
+        },
+        "sequence": -1,
+        "sub_configuration_options": []
+      }
+    ]
+  },
+  "is_coupon_item": false,
+  "js_data": "eJzFV11v2jAU/StWnqFNOqjG3iigrhWiCNBepioyiUHWjJM69toV8d937XyShjTq0vGW2Df3nnPP\nNRzvrV+U+9Y3ZHnBbh1YHWSFIvCVJyNY/Lm3GOXEpTriqqOD+IZulcCSBlxH7A+wuhWBCk8EuUF4\nFJtkLy5b1/aXgXmICCOe+UooRjSqmYEU0VficrzTS1wxVsjjBb4JXD3MbnWoh1kgKIlchteEmawb\noQNGmEU6gPDsTeOR+CUrtjhKIDDfFgrSyM22IgncPNiTQhGNz+Amfr6Shubfr3FE3FBQT+e0L+zD\nIU4qn6lGtAFAcaonRbgJcvSrWte2ExKE9PUVpxlgraiZU6mZJYMwpHwbv1DuMeUT331SmEsq/ySa\n9L5qoEkRAbCoMAyzvbSglSiTdvoWC06lEiRv9yotqMN3+IXu1K5Yr+voDV+QKIKw92E5dbi0BBWw\nflCO6VYQKQvAxmnJ08BKE/6mpUejfDOOB7ksm/k0J3jyIBgCe9gkOwpIsiakg5NNfzpHvcHxtDlX\ndjIWcYrCaFV11K44StNlF2gY3rUkdMDD9Mx8r9ugCyya0Z3N/jNdu/K35J/4joAw8GhGeDQ89zz3\n2hAYaDTje/f9zHxbOb7AoqG8tXSzv4m26PbL89yCuqPldDzvjmoYy+Kfz+LcAz1oQ+BF03m+WZ5X\n4F6/JYGBSAOBTzvMhMhbhzl5wZ6cMxU1NJoazbtG8zIMhK7SQX7AOQG/gpKVkge9jIj4Ddg7SD+Q\nCPVbcKW5l6yxpVf9sil1BheDwfu2tPshX/pYaCXNLxyuUaaTXj90F/UTWLU0HdxBaklmLs8nG6yY\nLCixHE6H4wmaT4cr1EX3w8X4bpa3H2yqTzhaYoZ9NGcYfKGAsGWsg2MbIZ7JupBQRxGs0JjEnxF0\nD0kop0Wvewt1JjNkipvaq8kinszGqsatMW3S/WkwhamgnzqVxycL8Bl99O2tY3A+Vk/UY3qwssNX\nuvZ9Kuhyhz54YsoSVZ2cw+EvOpcFEA==\n",
+  "kind": "single_configurable_combo",
+  "product_id": "combo_6048",
+  "seo_title": "garden-salad-platter-combo_6048"
+}

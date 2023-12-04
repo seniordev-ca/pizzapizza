@@ -1,0 +1,211 @@
+<div class="row upsells-container mx-0" [class.pp-ghost-container]="isLoading$ | async"
+  [class.d-none]="!(isLoading$ | async) && (!productSlides || productSlides.length === 0)">
+
+  <ng-container *ngIf="parentContainer !== 'miniModal'">
+    <h3 [class]="parentContainer === 'cart'? 'title fw-bold pl-2 pl-md-5' : 'col-12 content-title'">
+      <ng-container i18n>You may also like</ng-container>
+    </h3>
+
+    <!-- Start of Upsells Container that holds all individual swiper products and buttons-->
+    <div class="container p-0 upsells-container {{parentContainer}}-upsells-container">
+      <!-- Start of Swiper Container -->
+      <ng-container *ngIf="!(isLoading$ | async)">
+        <div class="swiper-container" [swiper]="config">
+
+          <div class="swiper-wrapper">
+            <ng-container
+              *ngTemplateOutlet="parentContainer === 'cart' ? cartSlide : defaultSlide; context:productSlides">
+            </ng-container>
+          </div>
+
+          <ng-container *ngTemplateOutlet="parentContainer === 'cart' ? cartSliderNav : defaultSliderNav">
+          </ng-container>
+
+        </div>
+      </ng-container>
+
+      <!-- Start of Ghost Swiper Container -->
+      <ng-container *ngIf="isLoading$ | async">
+        <div class="swiper-container" [swiper]="config">
+
+          <div class="swiper-wrapper">
+            <ng-container *ngTemplateOutlet="parentContainer === 'cart' ? cartGhostSlider : ghostSlider"></ng-container>
+          </div>
+
+          <ng-container *ngTemplateOutlet="parentContainer === 'cart' ? cartSliderNav : defaultSliderNav">
+          </ng-container>
+
+        </div>
+      </ng-container>
+    </div>
+    <!-- Upsells Container that holds all individual swiper products and buttons -->
+  </ng-container>
+  <ng-container *ngIf="parentContainer === 'miniModal' && !(isLoading$ | async) && productSlides.length > 0">
+    <div class="row configurator-upsale-modal-row mx-0 w-100"
+      id="{{productSlides[0].isCustomizationAllowed ? 'customizable' : 'notCustomizable'}}">
+      <div class="col-3 product-image-wrap p-1">
+        <img alt="{{ productSlides[0].name }}" class="rounded-circle img-fluid pp-image-loaded"
+          src="{{ productSlides[0].image }}">
+      </div>
+      <div class="col-9" attr.aria-label="Add {{ productSlides[0].name }} " tabindex="0">
+        <h4>
+          {{ productSlides[0].name }}
+        </h4>
+        <div class="description">
+          {{productSlides[0].priceText.labels}}
+          {{productSlides[0].priceText.priceValue | currency:'CAD':'symbol-narrow':'1.2'}}
+        </div>
+        <div class="d-flex align-content-center add-to-cart" (click)="onButtonClick(productSlides[0])"
+        (keydown.enter)="onButtonClick(productSlides[0])"
+        tabindex="0"
+        attr.aria-label="Add {{ productSlides[0].name }} to cart">
+
+
+          <i class="icon-plus-2 align-self-center"></i>
+          <span class="label align-self-center add-to-cart-14" i18n>
+            Add to cart
+          </span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<!-- SLIDE TEMPLATES -->
+<ng-template #cartSlide>
+  <div class="swiper-slide p-1" *ngFor="let product of productSlides" [class.selected]="product.isSelected">
+    <div class="cart-upsell-card-container">
+      <div class="row h-100 align-items-center justify-content-around mx-0" id="{{product.seoTitle}}">
+        <div class="col-3 p-1">
+          <img alt="{{ product.name }}" class="img-fluid rounded-circle pp-image-loaded" src="{{ product.image }}">
+        </div>
+        <div class="col-9">
+          <span class="upsell-item-title">{{ product.name }}</span>
+          <div class="d-flex justify-content-between">
+            <span class="desc smaller">{{product.priceText.labels}}
+              {{product.priceText.priceValue | currency:'CAD':'symbol-narrow':'1.2'}}</span>
+            <span class="add smaller d-flex align-items-center" (click)="onButtonClick(product)"
+                  tabindex="0" [attr.aria-label]="'Add ' + product.name" (keydown.enter)="onButtonClick(product)" >
+              <i class="icon-plus-2"></i>
+              <ng-container i18n>Add</ng-container>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #defaultSlide>
+  <div class="swiper-slide px-1" *ngFor="let product of productSlides">
+    <div class="upsells-swiper-container" attr.role="group" attr.aria-label="{{product.name}} carousel card"
+      tabIndex="0">
+
+      <div class="row mx-0 w-100 h-100">
+        <div class="col-12 px-0 upsells-top-background d-flex justify-content-center ghost-bg-dark"
+          [class.bg-image]="product.isCustomizationAllowed && product.isComboProduct">
+          <img alt="{{product.name}}" class="align-self-center pp-image-loaded" [src]="product.image"
+            [class.m-2]="!(product.isCustomizationAllowed && product.isComboProduct)">
+        </div>
+        <div class="col-12 d-flex py-2 px-3 caption">
+
+          <div class="mr-auto p-1 w-100">
+            <div class="pb-2 upsells-header-container h5 ghost-bar g-w-90">
+              {{product.name}}
+            </div>
+            <div class="upsells-price-cals-container mt-auto">
+              <div class="upsells-price ghost-bar g-w-70">
+                {{product.priceText.labels}} {{product.priceText.priceValue | currency:'CAD':'symbol-narrow':'1.2'}}
+              </div>
+              <div class="upsells-cals ghost-bar g-w-80 cal-text">
+                {{ product.calText }}
+              </div>
+            </div>
+          </div>
+          <a class="d-flex align-items-end mt-auto add-to-order-button" [class.selected]="product.isSelected"
+            (click)="onButtonClick(product)" (keydown)="onKeydownEvent($event, product)" tabIndex="0" attr.aria-label="Add 1
+            {{product?.name}} to cart ">
+            <i class="mb-2" [class.icon-checkmark]="product.isSelected" [class.icon-new-item]="!product.isSelected"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- END SLIDE TEMPLATES -->
+
+<!-- GHOST TEMPLATES -->
+<ng-template #ghostSlider>
+  <div class="swiper-slide mx-1 upsells-swiper-container" *ngFor="let product of [0,1,2,3]">
+    <div class="row mx-0 w-100">
+      <div class="col-12 upsells-top-background ghost-bg-dark">
+      </div>
+      <div class="col-12 d-flex py-2 px-3 caption">
+
+        <div class="mr-auto p-1 w-100">
+          <div class="pb-2 upsells-header-container h5 ghost-bar g-w-90">
+
+          </div>
+          <div class="upsells-price-cals-container mt-auto">
+            <div class="upsells-price ghost-bar g-w-70">
+            </div>
+            <div class="upsells-cals ghost-bar g-w-80">
+            </div>
+          </div>
+        </div>
+        <div class="d-flex align-items-end mt-auto add-to-order-button ghost-hidden">
+          <i class="icon-plus-2 pb-2"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #cartGhostSlider>
+  <div class="swiper-slide mx-1 cart-upsell-card-container" *ngFor="let product of [0,1,2,3]">
+    <div class="row h-100 align-items-center justify-content-around mx-0 w-100">
+      <div class="col-3 p-1 ghost-bg-dark rounded-circle h-100">
+      </div>
+      <div class="col-8 align-self-center h-100">
+        <div class="row h-100">
+          <div class="col-12 p-0 ">
+            <span class="upsell-item-title ghost-bar g-w-70 mb-1"></span>
+            <span class="desc smaller ghost-bar g-w-80"></span>
+          </div>
+          <div class="col-12 align-self-end pt-1 text-right">
+            <span class="add smaller ghost-hidden">
+              <i class="icon-plus-2"></i>
+              <ng-container i18n>Add</ng-container>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- END GHOST TEMPLATES -->
+
+<!-- NAVIGATION TEMPLATES -->
+<ng-template #defaultSliderNav>
+  <div class="swiper-button-prev" attr.role="button">
+    <div class="slider-nav-prev-bg" attr.aria-hidden="true">
+      <i class="icon-arrow-slice"></i>
+    </div>
+  </div>
+
+  <div class="swiper-button-next" attr.role="button">
+    <div class="slider-nav-next-bg" attr.aria-hidden="true">
+      <i class="icon-arrow-slice"></i>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #cartSliderNav>
+  <div class="swiper-button-prev">
+    <i class="icon-arrow-navigate"></i>
+  </div>
+  <div class="swiper-button-next">
+    <i class="icon-arrow-navigate"></i>
+  </div>
+</ng-template>
+<!-- NAVIGATION TEMPLATES -->

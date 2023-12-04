@@ -1,0 +1,15 @@
+$silver: #c0c0c0;
+$white: #fff;
+
+.temp-demo-btn {
+	position: fixed;
+	bottom: -1px;
+	left: -1px;
+	z-index: 100;
+	border: 1px solid $silver;
+	border-top-right-radius: 10px;
+	background-color: $white;
+	cursor: pointer;
+	padding: 4px;
+	font-size: .75em;
+}

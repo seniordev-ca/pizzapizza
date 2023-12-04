@@ -1,0 +1,24 @@
+<div class="form-row club-11-email-confirm-row" [formGroup]="emailForm">
+		<h4 class="form-row-heading col-12" i18n>Confirm Email</h4>
+		<div class="col-12 form-group"
+			[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(emailForm.controls['email'])">
+			<label for="email" class="alternate-label">
+				<ng-container i18n>Email</ng-container>
+				<app-form-invalid-message [control]="emailForm.controls['email']"></app-form-invalid-message>
+			</label>
+			<input type="text" class="form-control" placeholder="" formControlName="email" maxlength="254" id="email">
+		</div>
+	
+		<div class="col-12 form-group mb-1"
+			[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(emailForm.controls['confirmEmail'])">
+			<label for="emailConfirm" class="alternate-label">
+				<ng-container i18n>Confirm Email</ng-container>
+				<app-form-invalid-message [control]="emailForm.controls['confirmEmail']"></app-form-invalid-message>
+			</label>
+			<input type="text" class="form-control" placeholder="" formControlName="confirmEmail" maxlength="254" id="confirmEmail">
+		</div>
+
+		<div class="col-12">
+			<p class="hint-text" i18n> A confirmation email and receipt of your order will be emailed to you.</p>
+		</div>
+</div>

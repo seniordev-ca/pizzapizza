@@ -1,0 +1,45 @@
+
+<div class="signed-out-modal-wrap">
+
+	<app-vertical-modal #signedOutVerticalModal>
+		<ng-template>
+			<div class="container-fluid signed-out-modal-header">
+				<div class="bg-image" 
+						[style.background-image]="'url(./static-files/images/order-confirmation/oc-header-bg.jpg)'">
+				</div>
+				<div class="row text-center align-items-center">
+					<div class="col-12">
+						<img class="img-fluid pp-logo mb-1 mb-md-5" src="./static-files/images/logo.svg">
+						<h2 class="title" i18n>
+							Thank you for ordering with Pizza Pizza!
+						</h2>
+					</div>
+				</div>
+			</div>
+		
+			<div class="container signed-out-modal-body">
+				<div class="row">
+					<div class="col-12 text-center">
+						<h2 class="title" i18n>
+							Save Your Order
+						</h2>
+						<p i18n>
+							Simply create a password to make an account. 
+							Save your order, and info for faster checkout next time!
+						</p>
+						<p>
+							<button class="btn btn-primary" (click)="createAccount()" i18n>
+								Create an Account
+							</button>
+						</p>
+		
+						<button class="btn btn-white" (click)="close()" i18n>
+							Skip to Order Tracker
+						</button>
+					</div>
+				</div>
+			</div>
+		</ng-template>
+	</app-vertical-modal>
+
+</div>

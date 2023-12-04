@@ -1,0 +1,47 @@
+<div class="form-row" [formGroup]="parentForm">
+	<h4 class="form-row-heading col-12" *ngIf="!isAutoReload" i18n>Amount</h4>
+	<ng-container *ngIf="isAutoReload">	
+		<h4 class="form-row-heading col-12" i18n>Reload Options</h4>
+		<div class="col-6 col-md-4 form-group">
+			<label for="reloadAmount" class="alternate-label" i18n>
+				Type of Reload
+			</label>
+			<app-dropdown
+				[inputControl]="parentForm.controls['type']"
+				[options]="settings.type"
+				[selectedValue]="parentForm.controls['type'].value">
+			</app-dropdown>
+		</div>
+		<div class="col-6 col-md-4 form-group">
+			<label for="reloadAmount" class="alternate-label" i18n>
+				Frequency of Reload
+			</label>
+			<app-dropdown
+				[inputControl]="parentForm.controls['frequency']"
+				[options]="settings.frequency"
+				[selectedValue]="parentForm.controls['frequency'].value">
+			</app-dropdown>
+		</div>
+	</ng-container>
+	<div class="col-12 col-md-3 form-group">
+		<label for="reloadAmount" class="alternate-label" i18n>
+			Amount to load
+		</label>
+		<app-dropdown
+			[inputControl]="parentForm.controls['amount']"
+			[options]="settings.amount"
+			[selectedValue]="parentForm.controls['amount'].value">
+		</app-dropdown>
+	</div>
+	<ng-container *ngIf="isAutoReload">
+		<div class="form-row w-100 mx-0" *ngIf="parentForm.controls['frequency'].value === 'Threshold reached'">
+			<div class="col-12 col-md-4 form-group">
+				<label for="reloadAmount" class="alternate-label">
+					<ng-container i18n>Threshold Amount</ng-container>
+					<span class="optional-label-identifier" i18n>(Must be greater than zero)</span>
+				</label>
+				<input class="form-control" formControlName="thresholdAmount" />
+			</div>			
+		</div>
+	</ng-container>
+</div>

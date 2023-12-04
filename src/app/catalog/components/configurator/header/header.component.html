@@ -1,0 +1,103 @@
+<div class="configurator-header-container">
+	<ng-container *ngTemplateOutlet="isHeaderStrippedVersion ? simpleImageWrapper : swiperWrapper"></ng-container>
+</div>
+<ng-template #simpleImageWrapper>
+	<div class="product-image-center">
+			<div class="product-image-wrap">
+				<img alt="product image" class="product-image ghost-hidden" [src]="configuratorProductInfo.image" *ngIf="configuratorProductInfo.image">
+			<ng-container
+				*ngIf="configuratorProductInfo.isPizza">
+				<div class="side-wrapper center"
+					[ngStyle]="{'z-index': ingredients.zIndex}"
+					*ngFor="let ingredients of configuratorProductInfo.subText; trackBy: trackIngByFn">
+					<img alt="Your custom pizza with toppings" class="ingredient-overlay ghost-hidden"
+						*ngIf="ingredients.image"
+						[src]="ingredients.image"
+						id="{{ingredients.id}}-overlay"
+						[default]="null">
+				</div>
+			</ng-container>
+		</div>
+
+	</div>
+	<!-- row product-image-row -->
+</ng-template>
+<ng-template #swiperWrapper>
+		<div class="swiper-container-wrap">
+				<div class="swiper-container"
+						[swiper]="productImageSwiperConfig"
+						(indexChange)="onIndexChange($event)"
+						(swiperTouchStart)="onTouchStart()"
+						(swiperTouchEnd)="onTouchEnd()">
+					<div class="swiper-wrapper">
+
+						<ng-container *ngIf="configuratorProductInfo.isTwinProduct">
+							<div *ngFor="let configuratorSlider of configuratorProductsSlider" class="swiper-slide" [style.min-width]="minWidth">
+								<div class="product-image-center ghost-hidden">
+									<div class="product-image-wrap" *ngIf="configuratorSlider.productImageUrl">
+										<img
+											alt="Base Pizza"
+											*ngIf="configuratorProductInfo.isPizza"
+											class="product-image pizza-base ghost-hidden"
+											[src]="configuratorSlider.productImageUrl">
+
+										<img
+											alt="product image"
+											*ngIf="!configuratorProductInfo.isPizza"
+											class="product-image ghost-hidden"
+											[src]="configuratorSlider.productImageUrl">
+
+										<!-- Render ingredients overlay for single and single configurable combo-->
+
+										<!-- Render ingredients overlay for twin pizza -->
+											<div class="side-wrapper center twin"
+												[ngStyle]="{'z-index': ingredients.zIndex}"
+												*ngFor="let ingredients of configuratorSlider.ingredients">
+												<img alt="Your custom pizza with toppings" class="ingredient-overlay ghost-hidden"
+													*ngIf="ingredients.image"
+													[src]="ingredients.image"
+													[default]="null"
+													id="{{ ingredients.id }}-overlay">
+											</div>
+									</div>
+								</div>
+							</div>
+						</ng-container>
+
+						<ng-container *ngIf="!configuratorProductInfo.isTwinProduct">
+							<div class="swiper-slide" [style.min-width]="minWidth">
+								<div class="product-image-center ghost-hidden">
+									<div class="product-image-wrap" *ngIf="configuratorProductInfo.image">
+										<img
+											alt="Base Pizza"
+											*ngIf="configuratorProductInfo.isPizza"
+											class="product-image pizza-base ghost-hidden"
+											[src]="configuratorProductInfo.image">
+
+										<img
+											alt="Product Image"
+											*ngIf="!configuratorProductInfo.isPizza"
+											class="product-image ghost-hidden"
+											[src]="configuratorProductInfo.image">
+
+										<!-- Render ingredients overlay for single and single configurable combo-->
+										<ng-container
+											*ngIf="configuratorProductInfo.isPizza">
+											<div class="side-wrapper center h-100"
+												[ngStyle]="{'z-index': ingredients.zIndex}"
+												*ngFor="let ingredients of configuratorProductInfo.subText; trackBy: trackIngByFn">
+												<img alt="Your custom pizza with toppings" class="ingredient-overlay ghost-hidden"
+													*ngIf="ingredients.image"
+													[src]="ingredients.image"
+													[default]="null" id="{{ingredients.id}}-overlay">
+											</div>
+										</ng-container>
+									</div>
+								</div>
+							</div>
+						</ng-container>
+
+					</div>
+				</div>
+			</div>
+</ng-template>

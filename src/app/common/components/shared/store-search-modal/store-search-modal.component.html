@@ -1,0 +1,37 @@
+<div class="vertical-row w-100 align-items-center" *ngIf="!isLocationError">
+	<div class="col-12 py-4 py-md-3 px-0 text-left search-bar" *ngIf="!isLoading">
+		<app-add-pick-up-location-form (storeSearchEmitter)="handleStoreSearchEmitter($event)">
+		</app-add-pick-up-location-form>
+	</div>
+	<div class="col-12 py-4 py-md-3 px-0 text-center" *ngIf="isLoading">
+		<button class="btn btn-primary btn-white loading-state"></button>
+	</div>
+	<div class="row location-modal-image-row" *ngIf="!storeSearchResults">
+		<img src="./static-files/home/location-modal/location-modal-pick-up-image.png" alt="" class="bg-image pp-image-loaded" />
+	</div>
+
+	<div class="col-12 text-left search-image" [class.search-results]="storeSearchResults">
+		<div class="col-12 locations-parent-container pl-3">
+			<ng-container *ngIf="storeSearchResults && storeSearchResults.length === 0">
+				<div class="row no-results-row justify-content-center">
+					<div class="col-12 text-center">
+						<h3 class="fw-normal w-100 mb-3" i18n>No results found</h3>
+						<i class="icon-pp-speech-bubble"></i>
+					</div>
+				</div>
+			</ng-container>
+		</div>
+		<app-store-list *ngIf="storeSearchResults && storeSearchResults.length > 0" [savedStores]="storeSearchResults"
+			[storeSearch]="true" (savedStoresEventEmitter)="handleStoreSearchEmitter($event)">
+		</app-store-list>
+	</div>
+</div>
+
+<div class="vertical-row w-100 align-items-center" *ngIf="isLocationError">
+	<div class="col-12 py-4 py-md-3 px-0 text-center" >
+		<button class="btn btn-lg btn-primary" (click)="handleRetryClick()"> Retry</button>
+	</div>
+	<div class="row location-modal-image-row" *ngIf="!storeSearchResults">
+		<img src="./static-files/home/location-modal/location-modal-pick-up-image.png" alt="" class="bg-image pp-image-loaded" />
+	</div>
+</div>

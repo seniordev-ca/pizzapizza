@@ -1,0 +1,1254 @@
+{
+  "data": {
+    "combo": {
+      "combo_item_info": null,
+      "description": "10 Chicken Wings, 10 Boneless Chicken Bites, 2 Dips + Your choice of any 2 items: 8 Jalapeno Poppers / 8 Crunchy Dill Pickles / Potato Wedges / French Fries / Onion Rings",
+      "groups": [
+        {
+          "allow_multiple_items": false,
+          "child_items": [
+            "11105"
+          ],
+          "group_image": "Chicken-Bites.png",
+          "group_title": "10 Chicken Bites",
+          "max_selection": 1,
+          "sequence": 20
+        },
+        {
+          "allow_multiple_items": false,
+          "child_items": [
+            "12039"
+          ],
+          "group_image": "WFRO1_thumb.png",
+          "group_title": "Fried Items",
+          "max_selection": 1,
+          "sequence": 30
+        },
+        {
+          "allow_multiple_items": false,
+          "child_items": [
+            "12038"
+          ],
+          "group_image": "classicwings_thumb.png",
+          "group_title": "10 Wings",
+          "max_selection": 1,
+          "sequence": -1
+        }
+      ],
+      "image": "WBOX6_55000_ML.png",
+      "name": "Wing It Box"
+    },
+    "products": [
+      {
+        "allow_customization": true,
+        "configuration_options": [
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "BC",
+            "image": "BC.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 85,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 200,
+                "product_option_id": 11105,
+                "selected": false,
+                "sequence": 150
+              }
+            ],
+            "quantity": 0,
+            "sequence": 150,
+            "tag": null,
+            "title": "Blue Cheese"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "BL",
+            "image": "BL.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 254,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 160,
+                "product_option_id": 11105,
+                "selected": false,
+                "sequence": 20
+              }
+            ],
+            "quantity": 0,
+            "sequence": 20,
+            "tag": null,
+            "title": "Buffalo Blue Cheese"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "CD",
+            "image": "CD.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 179,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 200,
+                "product_option_id": 11105,
+                "selected": false,
+                "sequence": 160
+              }
+            ],
+            "quantity": 0,
+            "sequence": 160,
+            "tag": null,
+            "title": "Creamy Dill"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "CG",
+            "image": "CG.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 86,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 350,
+                "product_option_id": 11105,
+                "selected": false,
+                "sequence": 30
+              }
+            ],
+            "quantity": 0,
+            "sequence": 30,
+            "tag": null,
+            "title": "Creamy Garlic"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "CJ",
+            "image": "CJ.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 79,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 150,
+                "product_option_id": 11105,
+                "selected": false,
+                "sequence": 40
+              }
+            ],
+            "quantity": 0,
+            "sequence": 40,
+            "tag": null,
+            "title": "Cheddar Jalapeno"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "GI",
+            "image": "GI.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 267,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 170,
+                "product_option_id": 11105,
+                "selected": false,
+                "sequence": 12
+              }
+            ],
+            "quantity": 0,
+            "sequence": 12,
+            "tag": null,
+            "title": "Sriracha Creamy Garlic"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "HG",
+            "image": "HG.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 81,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 70,
+                "product_option_id": 11105,
+                "selected": false,
+                "sequence": 50
+              }
+            ],
+            "quantity": 0,
+            "sequence": 50,
+            "tag": null,
+            "title": "Honey Garlic"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "HM",
+            "image": "HM.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 83,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 190,
+                "product_option_id": 11105,
+                "selected": false,
+                "sequence": 60
+              }
+            ],
+            "quantity": 0,
+            "sequence": 60,
+            "tag": null,
+            "title": "Honey Mustard"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "HS",
+            "image": "HS.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 64,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 10,
+                "product_option_id": 11105,
+                "selected": false,
+                "sequence": 70
+              }
+            ],
+            "quantity": 0,
+            "sequence": 70,
+            "tag": null,
+            "title": "Frank's Red Hot Sauce"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "IM",
+            "image": "IM.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 84,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 25,
+                "product_option_id": 11105,
+                "selected": false,
+                "sequence": 80
+              }
+            ],
+            "quantity": 0,
+            "sequence": 80,
+            "tag": null,
+            "title": "Italian Marinara"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "MD",
+            "image": "MD.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 82,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 50,
+                "product_option_id": 11105,
+                "selected": false,
+                "sequence": 90
+              }
+            ],
+            "quantity": 0,
+            "sequence": 90,
+            "tag": null,
+            "title": "Mild Sauce"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "NS",
+            "image": "NS.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 16,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 11105,
+                "selected": false,
+                "sequence": 190
+              }
+            ],
+            "quantity": 0,
+            "sequence": 190,
+            "tag": null,
+            "title": "No Sauce"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "PE",
+            "image": "PE.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 88,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 220,
+                "product_option_id": 11105,
+                "selected": false,
+                "sequence": 100
+              }
+            ],
+            "quantity": 0,
+            "sequence": 100,
+            "tag": null,
+            "title": "Peppercorn Ranch"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "SI",
+            "image": "SI.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 10,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 80,
+                "product_option_id": 11105,
+                "selected": false,
+                "sequence": 130
+              }
+            ],
+            "quantity": 0,
+            "sequence": 130,
+            "tag": null,
+            "title": "Sweet Chili Thai Sauce"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "SQ",
+            "image": "SQ.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 7,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 70,
+                "product_option_id": 11105,
+                "selected": false,
+                "sequence": 140
+              }
+            ],
+            "quantity": 0,
+            "sequence": 140,
+            "tag": null,
+            "title": "Texas BBQ (Contains Gluten)"
+          }
+        ],
+        "configurations": [
+          {
+            "font_key": "0xe812",
+            "id": "dippingsauce",
+            "not_available": [],
+            "sequence": 1,
+            "sub_configurations": [
+              {
+                "allow_half_and_half": false,
+                "allow_multiple_options": true,
+                "id": "dippingsauce",
+                "not_available": [],
+                "personalized_message": {
+                  "display_personalized_message": false
+                },
+                "sequence": 1,
+                "title": "DIPPING SAUCE"
+              }
+            ],
+            "title": "DIPPING SAUCE"
+          }
+        ],
+        "description": "",
+        "image": "Chicken-Bites.png",
+        "is_flat": false,
+        "is_pizza": false,
+        "line_id": 3,
+        "name": "10 Chicken Bites",
+        "product_id": "11105",
+        "product_options": {
+          "label": "Choose Your Size",
+          "options": [
+            {
+              "base_price": 0,
+              "cal_count": null,
+              "cal_scale": "Cals/3 Bites",
+              "font_key": null,
+              "grouped_products": null,
+              "guarantee_group": "G6",
+              "id": 11105,
+              "image": "Chicken-Bites.png",
+              "same_topping_limit": -1,
+              "selected": true,
+              "sequence": 1,
+              "size_code": null,
+              "size_label": null,
+              "size_name": null,
+              "sub_title": null,
+              "title": "10 Chicken Bites"
+            }
+          ]
+        },
+        "sequence": 20,
+        "sub_configuration_options": []
+      },
+      {
+        "allow_customization": true,
+        "configuration_options": [
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "BC",
+            "image": "BC.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 85,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 200,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 150
+              }
+            ],
+            "quantity": 0,
+            "sequence": 150,
+            "tag": null,
+            "title": "Blue Cheese"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "BL",
+            "image": "BL.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 254,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 160,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 20
+              }
+            ],
+            "quantity": 0,
+            "sequence": 20,
+            "tag": null,
+            "title": "Buffalo Blue Cheese"
+          },
+          {
+            "cal_scale": "5 pcs",
+            "description": "",
+            "id": "BW",
+            "image": "BW.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 97,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 60,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 160
+              }
+            ],
+            "quantity": 0,
+            "sequence": 160,
+            "tag": null,
+            "title": "BBQ Sauce"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "CD",
+            "image": "CD.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 179,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 200,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 22
+              }
+            ],
+            "quantity": 0,
+            "sequence": 22,
+            "tag": null,
+            "title": "Creamy Dill"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "CG",
+            "image": "CG.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 86,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 350,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 30
+              }
+            ],
+            "quantity": 0,
+            "sequence": 30,
+            "tag": null,
+            "title": "Creamy Garlic"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "CJ",
+            "image": "CJ.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 79,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 150,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 40
+              }
+            ],
+            "quantity": 0,
+            "sequence": 40,
+            "tag": null,
+            "title": "Cheddar Jalapeno"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "GI",
+            "image": "GI.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 267,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 170,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 12
+              }
+            ],
+            "quantity": 0,
+            "sequence": 12,
+            "tag": null,
+            "title": "Sriracha Creamy Garlic"
+          },
+          {
+            "cal_scale": "5 pcs",
+            "description": "",
+            "id": "GW",
+            "image": "GW.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 100,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 70,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 170
+              }
+            ],
+            "quantity": 0,
+            "sequence": 170,
+            "tag": null,
+            "title": "Honey Garlic"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "HG",
+            "image": "HG.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 81,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 70,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 50
+              }
+            ],
+            "quantity": 0,
+            "sequence": 50,
+            "tag": null,
+            "title": "Honey Garlic"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "HM",
+            "image": "HM.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 83,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 190,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 60
+              }
+            ],
+            "quantity": 0,
+            "sequence": 60,
+            "tag": null,
+            "title": "Honey Mustard"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "HS",
+            "image": "HS.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 64,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 10,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 70
+              }
+            ],
+            "quantity": 0,
+            "sequence": 70,
+            "tag": null,
+            "title": "Frank's Red Hot Sauce"
+          },
+          {
+            "cal_scale": "5 pcs",
+            "description": "",
+            "id": "HW",
+            "image": "HW.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 101,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 50,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 180
+              }
+            ],
+            "quantity": 0,
+            "sequence": 180,
+            "tag": null,
+            "title": "Hot Sauce"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "IM",
+            "image": "IM.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 84,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 25,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 80
+              }
+            ],
+            "quantity": 0,
+            "sequence": 80,
+            "tag": null,
+            "title": "Italian Marinara"
+          },
+          {
+            "cal_scale": "5 pcs",
+            "description": "",
+            "id": "IW",
+            "image": "IW.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 98,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 80,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 200
+              }
+            ],
+            "quantity": 0,
+            "sequence": 200,
+            "tag": null,
+            "title": "Sweet Chili"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "MD",
+            "image": "MD.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 82,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 50,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 90
+              }
+            ],
+            "quantity": 0,
+            "sequence": 90,
+            "tag": null,
+            "title": "Mild Sauce"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "MW",
+            "image": "MW.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 102,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 50,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 190
+              }
+            ],
+            "quantity": 0,
+            "sequence": 190,
+            "tag": null,
+            "title": "Mild Sauce"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "NS",
+            "image": "NS.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 16,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 10
+              }
+            ],
+            "quantity": 0,
+            "sequence": 10,
+            "tag": null,
+            "title": "No Sauce"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "PE",
+            "image": "PE.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 88,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 220,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 100
+              }
+            ],
+            "quantity": 0,
+            "sequence": 100,
+            "tag": null,
+            "title": "Peppercorn Ranch"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "SI",
+            "image": "SI.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 10,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 80,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 130
+              }
+            ],
+            "quantity": 0,
+            "sequence": 130,
+            "tag": null,
+            "title": "Sweet Chili Thai Sauce"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "SQ",
+            "image": "SQ.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 7,
+            "parent_id": "dippingsauce",
+            "product_options_data": [
+              {
+                "cal_count": 70,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 140
+              }
+            ],
+            "quantity": 0,
+            "sequence": 140,
+            "tag": null,
+            "title": "Texas BBQ (Contains Gluten)"
+          },
+          {
+            "cal_scale": "5 pcs",
+            "description": "",
+            "id": "WB",
+            "image": "WB.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 90,
+            "parent_id": "classicbreaded",
+            "product_options_data": [
+              {
+                "cal_count": 650,
+                "product_option_id": 12038,
+                "selected": false,
+                "sequence": 1
+              }
+            ],
+            "quantity": 0,
+            "sequence": 1,
+            "tag": null,
+            "title": "Breaded Wings"
+          },
+          {
+            "cal_scale": "5 pcs",
+            "description": "",
+            "id": "WC",
+            "image": "WC.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 89,
+            "parent_id": "classicbreaded",
+            "product_options_data": [
+              {
+                "cal_count": 510,
+                "product_option_id": 12038,
+                "selected": true,
+                "sequence": 2
+              }
+            ],
+            "quantity": 1,
+            "sequence": 2,
+            "tag": null,
+            "title": "Classic Wings"
+          }
+        ],
+        "configurations": [
+          {
+            "font_key": "0xe81e",
+            "id": "classicbreaded",
+            "not_available": [],
+            "sequence": 1,
+            "sub_configurations": [
+              {
+                "allow_half_and_half": false,
+                "allow_multiple_options": false,
+                "id": "classicbreaded",
+                "not_available": [],
+                "personalized_message": {
+                  "display_personalized_message": false
+                },
+                "sequence": 1,
+                "title": "CLASSIC / BREADED"
+              }
+            ],
+            "title": "CLASSIC / BREADED"
+          },
+          {
+            "font_key": "0xe812",
+            "id": "dippingsauce",
+            "not_available": [],
+            "sequence": 2,
+            "sub_configurations": [
+              {
+                "allow_half_and_half": false,
+                "allow_multiple_options": true,
+                "id": "dippingsauce",
+                "not_available": [],
+                "personalized_message": {
+                  "display_personalized_message": false
+                },
+                "sequence": 1,
+                "title": "DIPPING SAUCE"
+              }
+            ],
+            "title": "DIPPING SAUCE"
+          }
+        ],
+        "description": "10 Chicken Wings, 10 Boneless Chicken Bites, 2 Dips + Your choice of any 2 items: 8 Jalapeno Poppers / 8 Crunchy Dill Pickles / Potato Wedges / French Fries / Onion Rings",
+        "image": "classicwings_thumb.png",
+        "is_flat": false,
+        "is_pizza": false,
+        "line_id": 1,
+        "name": "10 Wings",
+        "product_id": "12038",
+        "product_options": {
+          "label": "Choose Your Size",
+          "options": [
+            {
+              "base_price": 24.79,
+              "cal_count": null,
+              "cal_scale": "Cals/serves 4",
+              "font_key": null,
+              "grouped_products": null,
+              "guarantee_group": null,
+              "id": 12038,
+              "image": "classicwings_thumb.png",
+              "same_topping_limit": -1,
+              "selected": true,
+              "sequence": 1,
+              "size_code": null,
+              "size_label": null,
+              "size_name": null,
+              "sub_title": null,
+              "title": "10 Wings"
+            }
+          ]
+        },
+        "sequence": -1,
+        "sub_configuration_options": []
+      },
+      {
+        "allow_customization": true,
+        "configuration_options": [
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "FF",
+            "image": "FF.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 137,
+            "parent_id": "choices",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 12039,
+                "selected": false,
+                "sequence": 1
+              }
+            ],
+            "quantity": 0,
+            "sequence": 1,
+            "tag": null,
+            "title": "French Fries"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "FJ",
+            "image": "FJ.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 252,
+            "parent_id": "choices",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 12039,
+                "selected": false,
+                "sequence": 4
+              }
+            ],
+            "quantity": 0,
+            "sequence": 4,
+            "tag": null,
+            "title": "8 Jalapeno Poppers"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "FP",
+            "image": "FP.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 253,
+            "parent_id": "choices",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 12039,
+                "selected": false,
+                "sequence": 5
+              }
+            ],
+            "quantity": 0,
+            "sequence": 5,
+            "tag": null,
+            "title": "Crunchy Dill Pickles"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "OR",
+            "image": "OR.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 136,
+            "parent_id": "choices",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 12039,
+                "selected": false,
+                "sequence": 2
+              }
+            ],
+            "quantity": 0,
+            "sequence": 2,
+            "tag": null,
+            "title": "Onion Rings"
+          },
+          {
+            "cal_scale": null,
+            "description": "Small box of potato wedges seasoned with a delicious blend of herbs and spices.",
+            "id": "WG",
+            "image": "WG.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 233,
+            "parent_id": "choices",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 12039,
+                "selected": false,
+                "sequence": 3
+              }
+            ],
+            "quantity": 0,
+            "sequence": 3,
+            "tag": null,
+            "title": "Potato Wedges"
+          }
+        ],
+        "configurations": [
+          {
+            "font_key": null,
+            "id": "choices",
+            "not_available": [],
+            "sequence": 1,
+            "sub_configurations": [
+              {
+                "allow_half_and_half": false,
+                "allow_multiple_options": true,
+                "id": "choices",
+                "not_available": [],
+                "personalized_message": {
+                  "display_personalized_message": false
+                },
+                "sequence": 1,
+                "title": "Choices"
+              }
+            ],
+            "title": "Choices"
+          }
+        ],
+        "description": "",
+        "image": "WFRO1_thumb.png",
+        "is_flat": true,
+        "is_pizza": false,
+        "line_id": 2,
+        "name": "Fried Items",
+        "product_id": "12039",
+        "product_options": {
+          "label": "Choose Your Size",
+          "options": [
+            {
+              "base_price": 0,
+              "cal_count": null,
+              "cal_scale": "Cals",
+              "font_key": null,
+              "grouped_products": null,
+              "guarantee_group": "G7",
+              "id": 12039,
+              "image": "WFRO1_thumb.png",
+              "same_topping_limit": -1,
+              "selected": true,
+              "sequence": 1,
+              "size_code": null,
+              "size_label": null,
+              "size_name": null,
+              "sub_title": null,
+              "title": "Fried Items"
+            }
+          ]
+        },
+        "sequence": 30,
+        "sub_configuration_options": []
+      }
+    ]
+  },
+  "is_coupon_item": false,
+  "js_data": "eJzdm21v4jgQgP9KlM9wTaB02/tWQkqzAsoSKk5aVSgkbs+6kNC83HJF/PeznQAJLyFup+DtlwK2\nY88ztmecGXch/4M9R/5Tkm1/OvHliiTPAt+J7SgkhT8Xsos9NMa0Rb1CG3nP+CUOrAj7Hm2xkB08\nm2HvJbRiG7EC7Nlu7CBn/BpbXoSj/1ipqqpKg3xTl6QbHI4D9BrjADm5yiiIEa33rGnS13NARRsO\n9G5fHw51Kh7yaFHL6PeNXlsybx81XabPTK05nsbT7KhVdUlrXgI/nh1gGPuzDUq3xT7CeJJvwx7N\ng270lOthBbIgtWiKiThrbcwCzBTkxa7Lnk5+Kn9c31ChLNcPMKK9NJREQ2kPpOTZckNEC/doVslI\nYvsO7VIe9aoEhbEfBaGNmpoI3DUFApywcIB3RABXr0DAOxzg96YQ4BDcBKU8t/lDBO5vENwEpTx3\nXxeBu1aDACcs5cG1tgjgdRCbTlg4wL+LAK7CgH/nARfCicM4M43Hi5uGCODXILbN4OA2uiJw1xoA\n3ASFw4cLwa3egDhxHvDeWQ4vSp47rf8oeI/n9HIvhDMDOb3c8/iythCWTQUBb5c2bcujLCFykc2e\nD2KXDaDPLTvqu3FIFRHiNzROX6XXdFsCqYrWlDOcY9eaIFfevHtrBPFi897NftalJo6ITqiEkTVf\njz7I9RRY3ktmaKK4dVUYEWxbTl74qaQMhAUD0pLdnTaxQjTObMdlGkiIfmEvMxUheo2Rxxqx0+bO\nosmoMu1hht/erFUXpCwb9KhtT1UyB/bfPhEk+X4g3lFT6je0g73xjrTyQLxDI73PMzpPBysd5dgR\nOrd+RoVWZEV2aPGlkp/Zcpqt6qjAgtgZjd31vwQuwSiHW3ju/31wC478WdyHwZfAJRjlZvfuS+AS\njOO4B/3fGuOA/yvr++4GD1dHfV/e9Ynu8uoALk/d7/LKxvnJ7FzLh+L8aSV8nJ/K7FphiO1JgCwn\nHa9YROUdImqdW9M0fjzqpnQhaYOHR3NodDq3vaFuZlYKa6SRFs2BftvSW4cE3/HcO7rPe+7COP0W\nf8Huuf6YEWjwxW3V/QfhUUGgfguFNhs1hWC/AgloERgedoD8zDvIv0Z+BgD898zPQICfPD9zPzoH\n97fPyMASFI6FLgQ3zDrn4QaIYUKs89PHMAFCeQDgpw/lASQpALhPn6QASMBCuPDTJ2ABgvUfP7Wd\nI1jfFsKkw8SseUw6QOIZwqSfIfEshEk/w1UDQ4iVDmLTDa6V/vGbBsK8lnHdNADIuEOAnzzjDpCH\nhDBtJ85DkkYAF2MBwE9/MRbguqAop3Su64JdISw6zHyXtuhF+YYEBSDf3nz463jO4WLmB3SYiuT4\nnoekSykt2MpGXIQo+BeF0mXJtMRqjKuGIkW+RC8SSGXH23kmNzZopqN2SZbC8VxHlQaWuXMdT5lZ\nwZt/fBgns1xZ/R8ES/KTb9hbp0B+Lgox14kCBz1bsRtl9N30cYSkLnJxlfzxN0odkdUnGZHU9OdM\njb/QhPuxc099or4ke0F1WGbVbyb+E/ZBfg8TydjksVszFSbiTfJx/bR/4T2ttvJ6u2/fu/kEofe+\nrL5jS51gwvft1eXyf8p5Rz0=\n",
+  "kind": "combo",
+  "product_id": "combo_12038",
+  "seo_title": "wing-it-box-combo_12038"
+}

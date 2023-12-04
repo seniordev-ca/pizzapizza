@@ -1,0 +1,23 @@
+<div class="row d-flex align-items-center justify-content-center py-md-4 py-1">
+	<div class="sign-up-steps d-flex align-items-center">
+		
+		<div class="step"
+			[class.active]="signUpContainerData.SignUpState == SignUpContainerStateEnum.isSignUpFormState"
+			[class.complete]="
+				signUpContainerData.SignUpState == SignUpContainerStateEnum.isSignUpClubElevenEleven ||
+				signUpContainerData.SignUpState == SignUpContainerStateEnum.isSuccessState">
+		</div>
+		<div class="step"
+			[class.active]="signUpContainerData.SignUpState == SignUpContainerStateEnum.isSignUpClubElevenEleven"
+			[class.complete]="signUpContainerData.SignUpState == SignUpContainerStateEnum.isSuccessState">
+		</div>
+		<div class="step"
+			[class.complete]="signUpContainerData.SignUpState == SignUpContainerStateEnum.isSuccessState">
+		</div>
+	</div>
+</div>
+<div class="col-12 text-center header-description">
+	<span>
+		{{ headerContent }}
+	</span>
+</div>

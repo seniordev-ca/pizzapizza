@@ -1,0 +1,350 @@
+
+<div class="my-3 checkout-address-form-container">
+	<div class="row" *ngIf="!checkoutAddressUI">
+		<div class="col-12 text-center">
+			<button class="btn-primary btn-white loading-state"></button>
+		</div>
+	</div>
+	<div class="row no-gutters" *ngIf="checkoutAddressUI">
+		<div class="col-12">
+			<div class="row mx-0 pp-form">
+				<!-- Form Row One - Holds Radio Option Buttons -->
+				<div class="form-row w-100 d-flex">
+					<!-- Column 1 - Holds Radio Buttons for user to select between delivery and pick up -->
+					<div class="col-12 col-lg-4 pick-up-delivery-col">
+
+						<div class="row">
+							<div class="col-6 col-lg-12 form-group"
+								(click)="onPickUpSelected($event)">
+								<label class="radio-group" id="pickupOption">
+									<input name="pizzaObtainMethod" type="radio" class="radio-group-input" [checked]="!checkoutAddressUI.isDelivery">
+									<span class="select-el-wrapper">
+										<span class="select-el"></span>
+									</span>
+									<span class="local-radio-label" i18n>
+										Pickup
+									</span>
+								</label>
+							</div>
+							<div class="col-6 col-lg-12 form-group"
+								(click)="onDeliverySelected($event)">
+								<label class="radio-group" id="deliveryOption">
+									<input name="pizzaObtainMethod" type="radio" class="radio-group-input" [checked]="checkoutAddressUI.isDelivery">
+									<span class="select-el-wrapper">
+										<span class="select-el"></span>
+									</span>
+									<span class="local-radio-label" i18n>
+										Delivery
+									</span>
+								</label>
+							</div>
+						</div>
+
+					</div>
+					<!-- End of Column One -->
+
+
+					<!-- Column 2 - Holds Radio Buttons for user to select between having delivery today or in the future -->
+					<div class="col-12 col-lg-4 for-today-and-future-col">
+
+						<div class="row">
+							<div class="col-6 col-lg-12 form-group"
+								(click)="onForTodaySelected($event)">
+								<label class="radio-group" id="forNowOption">
+									<input name="deliveryTiming" type="radio" id="" class="radio-group-input" [checked]="checkoutAddressUI.isToday">
+									<span class="select-el-wrapper">
+										<span class="select-el"></span>
+									</span>
+									<span class="local-radio-label" i18n>
+										For Now
+									</span>
+								</label>
+							</div>
+							<div class="col-6 col-lg-12 form-group"
+								(click)="onForFutureSelected($event)">
+								<label class="radio-group" id="forFutureOption">
+									<input name="deliveryTiming" type="radio" id="" class="radio-group-input" [checked]="!checkoutAddressUI.isToday">
+									<span class="select-el-wrapper">
+										<span class="select-el"></span>
+									</span>
+									<span class="local-radio-label" i18n>
+										For Future
+									</span>
+								</label>
+							</div>
+						</div>
+
+					</div>
+					<!-- End of Column 2 -->
+					<!-- Column 3 - Holds Radio Buttons for user to select between having residential or university, only shows when delivery selected -->
+					<div class="col-12 col-lg-4 residential-university-col"
+						*ngIf="checkoutAddressUI.isDelivery && (!selectedAddressIDForCheckout || !savedAddresses || checkoutAddressForm.controls['addressId'].value)">
+
+							<div class="row door-radio-row" [formGroup]="checkoutAddressForm">
+								<div class="col-6 col-lg-12 form-group">
+									<label class="radio-group" id="residentialOption">
+										<input name="type" type="radio" class="radio-group-input" formControlName="type" value="Home">
+										<div class="select-el-wrapper">
+											<div class="select-el"></div>
+										</div>
+										<span class="door-radio-label" i18n>Residential</span>
+									</label>
+								</div>
+								<div class="col-6 col-lg-12">
+									<label class="radio-group" id="universityOption">
+										<input name="type" type="radio" class="radio-group-input" formControlName="type" value="University">
+										<div class="select-el-wrapper">
+											<div class="select-el"></div>
+										</div>
+										<span class="door-radio-label" i18n>University</span>
+									</label>
+								</div>
+							</div>
+
+					</div>
+					<!-- End of Column 3 -->
+
+				</div>
+				<!-- End of Form Row One -->
+			</div>
+
+			<div class="row mb-3" *ngIf="!checkoutAddressUI.isToday">
+				<div class="col-6 col-lg-4" id="dateInputParent">
+					<app-dropdown
+						[inputControl]="checkoutAddressForm.controls['date']"
+						[options]="dayOptions"
+						[selectedValue]="selectedDate">
+					</app-dropdown>
+				</div>
+				<div class="col-6 col-lg-4" id="timeInputParent">
+					<app-dropdown
+						[inputControl]="checkoutAddressForm.controls['time']"
+						[options]="timeOptions"
+						[selectedValue]="selectedTime">
+					</app-dropdown>
+				</div>
+			</div>
+			<div class="row mx-0"
+				*ngIf="checkoutAddressUI.isDelivery">
+				<div class="col-12 mx-0 text-right"
+					*ngIf="selectedAddressIDForCheckout && (savedAddresses && savedAddresses.length > 0) && !checkoutAddressForm.controls['addressId'].value">
+					<button class="checkout-add-btn"
+						(click)="onAddLocation($event)">
+						<span class="user-activity-action-span" i18n>
+							Add
+						</span>
+						<i class="icon-plus-2 user-activity-action-icon">
+						</i>
+					</button>
+				</div>
+				<div class="col-12 mx-0 text-right"
+					*ngIf="(!selectedAddressIDForCheckout && (savedAddresses && savedAddresses.length > 0)) || checkoutAddressForm.controls['addressId'].value">
+					<button class="checkout-add-btn"
+						(click)="onCancelAddLocation($event)">
+						<span class="user-activity-action-span" i18n>
+							Cancel
+						</span>
+						<i class="icon-delete user-activity-action-icon">
+						</i>
+					</button>
+				</div>
+
+				<div class="col-12 mx-0 px-0"
+					*ngIf="!selectedAddressIDForCheckout || !savedAddresses || checkoutAddressForm.controls['addressId'].value">
+					<app-add-address-form
+						[addressFormData]="checkoutAddressForm"
+						[isCheckout]="true"
+						[universityList]="universityList"
+						[buildingList]="buildingList"
+						[isGuestUser]="!userState"
+						(addressFormEventEmitter)="handleAddressFormEmitter($event)">
+					</app-add-address-form>
+				</div>
+				<div class="col-12 mx-0 px-0">
+					<app-address-list
+						[savedAddresses]="savedAddresses"
+						[selectedAddressIDForCheckout]="selectedAddressIDForCheckout"
+						[isCheckout]="true"
+						(savedAddressesEventEmitter)="handleSavedAddressesEventEmitter($event)">
+					</app-address-list>
+				</div>
+			</div>
+
+			<div class="row"
+				*ngIf="!checkoutAddressUI.isDelivery">
+				<div class="col-12 mx-0 text-right">
+					<button class="checkout-add-btn"
+						(click)="onAddLocation($event)">
+						<span class="user-activity-action-span" i18n>
+							Add
+						</span>
+						<i class="icon-plus-2 user-activity-action-icon">
+						</i>
+					</button>
+				</div>
+				<div class="col-12 mx-0">
+					<p class="text-center no-results-found-row"
+						*ngIf="!savedStores || (savedStores && savedStores.length < 1)">
+						<span class="d-block no-results-found-title" i18n>
+							No stores selected
+						</span>
+						<i class="icon-pp-speech-bubble"></i>
+					</p>
+					<app-store-list
+						[savedStores]="savedStores"
+						[storeSearch]="true"
+						[selectedStoreIdForCheckout]="selectedStoreIdForCheckout"
+						(savedStoresEventEmitter)="handleStoreListEventEmitter($event)">
+					</app-store-list>
+				</div>
+      </div>
+
+      <div class="col-12 mx-0 px-0 form-group" *ngIf="(checkoutAddressUI.isDelivery && globalContactLessDelivery) || (!checkoutAddressUI.isDelivery && globalContactLessPickup)">
+								<label class="radio-group" id="deliveryOption">
+									<input class="checkbox-wrap" name="pizzaObtainMethod" type="checkbox" [(ngModel)]="checkoutAddressUI.isContactLessSelected">
+									<span class="local-radio-label pl-1 contact-list-delivery">
+                    <ng-container *ngIf="checkoutAddressUI.isDelivery && globalContactLessDelivery" i18n>	Contactless Delivery (available for online payment only)</ng-container>
+                    <ng-container *ngIf="!checkoutAddressUI.isDelivery && globalContactLessPickup" i18n>	Contactless Pickup (available for online payment only)</ng-container>
+                  </span>
+								</label>
+			</div>
+      <!--<div class=" form-check row mx-0" *ngIf="checkoutAddressUI.isDelivery">
+        <div class="col-12 mx-0">
+          <input type ='checkbox' name="contactListDeliveryOption">
+          <label class="col-12 form-group contact-list-delivery ">Contact Less Delivery </label>
+        </div>
+
+
+      </div>-->
+			<div class="pp-form"
+				*ngIf="checkoutAddressUI.isDelivery && checkoutAddressForm"
+				[formGroup]="checkoutAddressForm">
+				<div class="form-row mt-2">
+					<div class="col-12 form-group contact-information-col" i18n>Delivery Instructions</div>
+					<div class="col-12 form-group">
+						<textarea appSpecialIsAlphaNumeric class="form-control" formControlName="deliveryIntructions" maxlength="100"></textarea>
+					</div>
+
+					<div class="col-4 d-none d-lg-block">
+						&nbsp;
+					</div>
+				</div>
+				<!-- End of Form Row -->
+			</div>
+			<div class="pp-form"
+				*ngIf="(!checkoutAddressUI.isDelivery || !userState) && checkoutAddressForm"
+				[formGroup]="checkoutAddressForm">
+				<div class="form-row mt-2">
+					<div class="col-12 form-group contact-information-col" i18n>Contact Information</div>
+					<div class="col-12 form-group" *ngIf="!userState">
+						<div class="row">
+							<div class="col-6 col-lg-3 form-group"
+							[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(checkoutAddressForm.controls['firstName'])">
+								<label for="firstName" class="alternate-label">
+									<ng-container i18n>First Name</ng-container>
+									<app-form-invalid-message
+										[control]="checkoutAddressForm.controls['firstName']">
+									</app-form-invalid-message>
+								</label>
+								<input type="text" class="form-control" id="firstName" formControlName="firstName" maxlength="25" autocomplete="off">
+							</div>
+							<div class="col-6 col-lg-3 form-group"
+							[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(checkoutAddressForm.controls['lastName'])">
+								<label for="lastName" class="alternate-label">
+									<ng-container i18n>Last Name</ng-container>
+									<app-form-invalid-message
+										[control]="checkoutAddressForm.controls['lastName']">
+									</app-form-invalid-message>
+								</label>
+								<input type="text" class="form-control" id="lastName" formControlName="lastName" maxlength="25">
+							</div>
+							<div class="col-12 col-lg-6 form-group"
+							[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(checkoutAddressForm.controls['email'])">
+								<label for="email" class="alternate-label">
+									<ng-container i18n>Email Address</ng-container>
+									<app-form-invalid-message
+										[control]="checkoutAddressForm.controls['email']">
+									</app-form-invalid-message>
+								</label>
+								<input type="email" class="form-control text-lowercase" id="email" formControlName="email" maxlength="254">
+							</div>
+						</div>
+					</div>
+					<div class="col-12 form-group">
+						<div class="row">
+							<div class="col-md-4 col-12 mb-0 form-group" formGroupName="contactInfo"
+							[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(checkoutAddressForm.get('contactInfo').controls['phoneNumber'])">
+								<label for="addressPhoneNumber" class="alternate-label">
+									<ng-container i18n>Phone Number</ng-container>
+									<app-form-invalid-message
+										[control]="checkoutAddressForm.get('contactInfo').controls['phoneNumber']">
+									</app-form-invalid-message>
+									<span class="optional-label-identifier-spacer" i18n>(optional)</span>
+								</label>
+								<input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber" placeholder="(      )"
+									[textMask]="{mask: mask}">
+							</div>
+							<div class="col-md-4 mb-md-0 mb-2 col-12" formGroupName="contactInfo">
+								<label for="addressPhoneNumberExtension" class="alternate-label">
+									<ng-container i18n>Extension</ng-container>
+									<span class="optional-label-identifier" i18n>
+										(Optional)
+									</span>
+								</label>
+								<input type="text" class="form-control" id="extension" placeholder="" formControlName="extension" maxlength="5">
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-4 d-none d-lg-block">
+						&nbsp;
+					</div>
+				</div>
+				<!-- End of Form Row -->
+
+			</div>
+			<div class="col-12 align-self-end px-0  text-right submit-col">
+					<button type="submit" class="btn btn-lg btn-primary checkout-form-button"
+						[class.disabled]="!isFormValid()"
+						[class.loading-state]="isNextBtnLoading"
+						(click)="onCheckoutAddressFormSubmit()">
+						<span class="btn-text" i18n>
+							NEXT
+						</span>
+					</button>
+				</div>
+		</div>
+
+	</div>
+<!-- message shows up on: checkout - review order - add new address - cancel -->
+<ng-template #cancelModal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal(); onCancelLoseUnsaved()" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+	<app-confirmation-modal
+		[data]="{
+			icon: 'icon-bell'
+		}"
+		title='Are You Sure?'
+		subtitle='You will lose all that you have entered so far'
+		i18n-title
+		i18n-subtitle>
+		<ng-template>
+			<div class="col-12 d-flex justify-content-center p-0 align-self-end">
+				<div class="col-6 col-lg-5 px-1">
+					<button class="btn btn-primary btn-white" (click)="closeModal(); onCancelLoseUnsaved()" i18n>
+						Cancel
+					</button>
+				</div>
+				<div class="col-6 col-lg-5 px-1">
+					<button class="btn btn-primary" (click)="closeModal(); onNotSaveAddress()" i18n>
+						Okay
+					</button>
+				</div>
+			</div>
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+</div>

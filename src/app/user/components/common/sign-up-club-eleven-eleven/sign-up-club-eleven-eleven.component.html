@@ -1,0 +1,351 @@
+<div class="container sign-up-club-eleven-eleven-container mb-5 mt-4">
+  <div class="row">
+    <div class="col-md-6 px-md-5">
+      <div class="row">
+        <div
+          class="col-md-12 page-title pb-5 text-center"
+          *ngIf="!clubElevenElevenUI.isEditCard"
+          i18n
+        >
+          Love pizza? Join the club.
+        </div>
+      </div>
+      <div class="row mb-5">
+        <div class="col-md-12 text-center">
+          <img
+            alt="club 11-11 logo"
+            class="img-fluid club-eleven-eleven-image"
+            src="./static-files/images/club-eleven-eleven.png"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 px-md-5">
+      <form
+        class="pp-form"
+        [formGroup]="signUpClubElevenElevenForm"
+        (ngSubmit)="onFormSubmit($event)"
+      >
+        <div
+          class="form-row pb-4 club-card-row"
+          *ngIf="!clubElevenElevenUI.isEditCard"
+        >
+          <label class="radio-group radio-group-md mr-4">
+            <input
+              name="phoneOption"
+              type="radio"
+              class="radio-group-input"
+              (click)="onNeedCardSelect($event)"
+              [checked]="!clubElevenElevenUI.isHaveCardSelected"
+            />
+            <span class="select-el-wrapper">
+              <span class="select-el"></span>
+            </span>
+            <span class="local-radio-col" i18n> I need a card </span>
+          </label>
+          <label class="radio-group radio-group-md">
+            <input
+              name="phoneOption"
+              type="radio"
+              class="radio-group-input"
+              (click)="onHaveCardSelect($event)"
+              [checked]="clubElevenElevenUI.isHaveCardSelected"
+            />
+            <span class="select-el-wrapper">
+              <span class="select-el"></span>
+            </span>
+            <span class="local-radio-col" i18n> I have a card </span>
+          </label>
+        </div>
+
+        <!-- Have a card wrapper -->
+        <div
+          [class.d-none]="
+            !clubElevenElevenUI.isHaveCardSelected &&
+            !clubElevenElevenUI.isAddressRequired
+          "
+        >
+          <div class="form-row">
+            <div
+              class="col-12 form-group"
+              [class.invalid-entry]="
+                formValidationService.isInputInvalidOrEmpty(
+                  signUpClubElevenElevenForm.controls['cardNumber']
+                )
+              "
+            >
+              <label for="cardNumber" class="alternate-label">
+                <ng-container i18n>Club 11-11 Number</ng-container>
+                <br />
+                <app-form-invalid-message
+                  [control]="signUpClubElevenElevenForm.controls['cardNumber']"
+                >
+                </app-form-invalid-message>
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="cardNumber"
+                maxlength="19"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div
+              class="col-12 form-group"
+              [class.invalid-entry]="
+                formValidationService.isInputInvalidOrEmpty(
+                  signUpClubElevenElevenForm.controls['cardPin']
+                )
+              "
+            >
+              <label for="cardPin" class="alternate-label">
+                <ng-container i18n>Club 11-11 PIN</ng-container>
+                <br />
+                <app-form-invalid-message
+                  [control]="signUpClubElevenElevenForm.controls['cardPin']"
+                >
+                </app-form-invalid-message>
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="cardPin"
+                maxlength="3"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Need a card wrapper -->
+        <div
+          [class.d-none]="
+            clubElevenElevenUI.isHaveCardSelected &&
+            !clubElevenElevenUI.isAddressRequired
+          "
+        >
+          <div class="form-row">
+            <div
+              class="col-12 form-group"
+              [class.invalid-entry]="
+                formValidationService.isInputInvalidOrEmpty(
+                  signUpClubElevenElevenForm.controls['addressString']
+                )
+              "
+            >
+              <label for="streetAddress" class="alternate-label pl-0">
+                <ng-container i18n>Street Address</ng-container>
+                <app-form-invalid-message
+                  [control]="
+                    signUpClubElevenElevenForm.controls['addressString']
+                  "
+                >
+                </app-form-invalid-message>
+              </label>
+              <div class="row no-gutters">
+                <app-address-autocomplete
+                  class="w-100 no-gutters"
+                  [placeholder]="
+                    loggedInUser && loggedInUser.clubElevenElevenData
+                      ? loggedInUser.clubElevenElevenData.addressString
+                      : ''
+                  "
+                  (addressSearchEmitter)="handleAddressSearchEmitter($event)"
+                  [minimumRequirements]="[
+                    'street_address',
+                    'premise',
+                    'street_number'
+                  ]"
+                  [labelName]="''"
+                >
+                </app-address-autocomplete>
+              </div>
+            </div>
+          </div>
+          <div class="form-row optional-inputs-row align-items-end">
+            <div class="col-12 col-md-3 form-group">
+              <label for="phoneNumberExt" class="alternate-label">
+                <ng-container i18n>Apartment</ng-container>
+                <span class="optional-label-identifier" i18n>(Optional)</span>
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                id="apartment"
+                formControlName="apartmentNumber"
+                maxlength="5"
+                aria-label="Apartment (Optional)"
+              />
+            </div>
+            <div class="col-4 col-md-3 form-group" formGroupName="dateOfBirth">
+              <label for="dobDay" class="alternate-label">
+                <ng-container i18n>Date of Birth</ng-container>
+                <span class="optional-label-identifier" i18n>(Optional)</span>
+              </label>
+              <app-dropdown
+                [inputControl]="
+                  signUpClubElevenElevenForm.controls['dateOfBirth'][
+                    'controls'
+                  ]['day']
+                "
+                [options]="dayOptions"
+                [selectedValue]="
+                  signUpClubElevenElevenForm.controls['dateOfBirth'][
+                    'controls'
+                  ]['day']['value']
+                "
+              >
+              </app-dropdown>
+            </div>
+            <div class="col-4 col-md-3 form-group" formGroupName="dateOfBirth">
+              <label for="dobDay" class="alternate-label"> &nbsp; </label>
+              <app-dropdown
+                [inputControl]="
+                  signUpClubElevenElevenForm.controls['dateOfBirth'][
+                    'controls'
+                  ]['month']
+                "
+                [options]="monthOptions"
+                [selectedValue]="
+                  signUpClubElevenElevenForm.controls['dateOfBirth'][
+                    'controls'
+                  ]['month']['value']
+                "
+              >
+              </app-dropdown>
+            </div>
+            <div class="col-4 col-md-3 form-group" formGroupName="dateOfBirth">
+              <label for="dobDay" class="alternate-label"> &nbsp; </label>
+              <app-dropdown
+                [inputControl]="
+                  signUpClubElevenElevenForm.controls['dateOfBirth'][
+                    'controls'
+                  ]['year']
+                "
+                [options]="yearOptions"
+                [selectedValue]="
+                  signUpClubElevenElevenForm.controls['dateOfBirth'][
+                    'controls'
+                  ]['year']['value']
+                "
+              >
+              </app-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="form-row py-4">
+          <div class="col-12 alternate-label promotion-label" i18n>
+            Send me information about Club 11-11 promotions, contests & offers
+          </div>
+
+          <div class="col-12 ml-1 mt-2">
+            <label class="radio-group radio-group-md mr-4">
+              <input
+                name="sendClubPromotions"
+                type="radio"
+                value="no"
+                class="radio-group-input"
+                [checked]="
+                  signUpClubElevenElevenForm.controls['sendClubPromotions']
+                    .value === 'no'
+                "
+                formControlName="sendClubPromotions"
+                [attr.tabindex]="0"
+                [attr.aria-label]="
+                  signUpClubElevenElevenForm.controls['sendClubPromotions']
+                    .value === 'no'
+                    ? 'selected [No] to Send me information about Club 11-11 promotions, contests & offers'
+                    : 'select [No] to Send me information about Club 11-11 promotions, contests & offers'
+                "
+              />
+              <span class="select-el-wrapper">
+                <span class="select-el"></span>
+              </span>
+              <span class="local-radio-col" i18n>No</span>
+            </label>
+            <label class="radio-group radio-group-md">
+              <input
+                name="sendClubPromotions"
+                type="radio"
+                value="yes"
+                class="radio-group-input"
+                [checked]="
+                  signUpClubElevenElevenForm.controls['sendClubPromotions']
+                    .value === 'yes'
+                "
+                formControlName="sendClubPromotions"
+                [attr.tabindex]="0"
+                [attr.aria-label]="
+                  signUpClubElevenElevenForm.controls['sendClubPromotions']
+                    .value === 'yes'
+                    ? 'selected [Yes] to Send me information about Club 11-11 promotions, contests & offers'
+                    : 'select [Yes   ] to Send me information about Club 11-11 promotions, contests & offers'
+                "
+              />
+              <span class="select-el-wrapper">
+                <span class="select-el"></span>
+              </span>
+              <span class="local-radio-col" i18n>Yes</span>
+            </label>
+          </div>
+        </div>
+        <div
+          class="form-row"
+          *ngIf="
+            signUpClubElevenElevenForm.controls['sendClubPromotions'].value ===
+            'yes'
+          "
+        >
+          <div class="col-6 form-group">
+            <label for="userLanguagePreference" class="alternate-label" i18n
+              >Language for promotions</label
+            >
+            <app-dropdown
+              [inputControl]="signUpClubElevenElevenForm.controls['language']"
+              [options]="['English', 'French']"
+              [selectedValue]="
+                signUpClubElevenElevenForm.controls['language'].value
+              "
+            >
+            </app-dropdown>
+          </div>
+        </div>
+
+        <!-- Sign in btn + Create account -->
+        <div class="form-row pt-4">
+          <div class="col-12 col-lg-3" [attr.tabindex]="signUpClubElevenElevenForm.invalid ? '0':'-1'"
+          [attr.aria-label]="signUpClubElevenElevenForm.invalid ? 'Register button disabled':'Register button'">
+            <button
+              class="btn btn-primary btn-lg"
+              [disabled]="signUpClubElevenElevenForm.invalid"
+
+            >
+              <span class="btn-text">
+                <ng-container *ngIf="clubElevenElevenUI.isEditCard" i18n
+                  >Save</ng-container
+                >
+                <ng-container *ngIf="!clubElevenElevenUI.isEditCard" i18n
+                  >Register</ng-container
+                >
+              </span>
+            </button>
+          </div>
+          <div
+            class="col-12 col-lg-9 d-flex align-items-center create-account-wrapper justify-content-center pt-4 pt-lg-0"
+            *ngIf="!loggedInUser && !clubElevenElevenUI.isEditCard"
+          >
+            <span i18n>No thanks, just</span>
+            <a
+              class="pl-2"
+              [routerLink]=""
+              (click)="onCreateAccountClick($event)"
+              i18n
+            >
+              Create my Account
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

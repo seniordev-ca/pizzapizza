@@ -1,0 +1,51 @@
+@import 'global-scss-mixing';
+
+$mid-grey: #dae9f0;
+$light-grey: #edf2f5;
+$not-active-btn-color: #6d7273;
+$btn-dark-grey: #dbe4ea;
+$ghost-loader-bg: #e1e7e9;
+$pp-green: #4e7026;
+$black: #000;
+$border-grey: #ccd6d8;
+$pp-secondary-text-color: #3b210b;
+
+
+.accounts-add-address-form-container {
+
+	.contact-information-col {
+		@include font-extra-bold;
+		color: $pp-default-text-colour;
+	}
+
+	.pp-form {
+		.invalid-text-alt {
+			display: inline-block;
+		}
+	}
+
+	.unit-buzzer-reminder {
+		line-height: 1.5em;
+	}
+
+	.address-input {
+		padding: 0;
+
+		.find-me {
+			display: none;
+		}
+	}
+
+	.submit-col {
+		margin-bottom: 1em;
+	}
+
+	.door-radio-row {
+		vertical-align: baseline;
+
+		.door-radio-label {
+			letter-spacing: .3px;
+			color: $pp-secondary-text-color;
+		}
+	}
+}

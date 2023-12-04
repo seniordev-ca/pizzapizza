@@ -1,0 +1,519 @@
+{
+  "data": {
+    "combo": {
+      "combo_item_info": null,
+      "description": "Mozzarella cheese, chicken, green peppers and roasted red peppers, wrapped in a 12-inch flour tortilla.",
+      "groups": [
+        {
+          "allow_multiple_items": false,
+          "child_items": [
+            "11723"
+          ],
+          "group_image": "CHPIZ_thumb.png",
+          "group_title": "Choose your toppings",
+          "max_selection": 1,
+          "sequence": -1
+        },
+        {
+          "allow_multiple_items": false,
+          "child_items": [
+            "9782"
+          ],
+          "group_image": "IM_thumb.png",
+          "group_title": "ITALIAN MARINARA SAUCE",
+          "max_selection": 1,
+          "sequence": 4
+        }
+      ],
+      "image": "CHPIZ.png",
+      "name": "Chicken Quesadilla"
+    },
+    "products": [
+      {
+        "allow_customization": false,
+        "configuration_options": [],
+        "configurations": [],
+        "description": "",
+        "image": "IM.png",
+        "is_flat": false,
+        "is_pizza": false,
+        "line_id": 2,
+        "name": "",
+        "product_id": "9782",
+        "product_options": {
+          "label": "Choose Your Size",
+          "options": [
+            {
+              "base_price": 0,
+              "cal_count": null,
+              "cal_scale": "Cals",
+              "font_key": null,
+              "grouped_products": null,
+              "guarantee_group": null,
+              "id": 9782,
+              "image": "IM.png",
+              "same_topping_limit": 3,
+              "selected": true,
+              "sequence": 1,
+              "size_code": null,
+              "size_label": null,
+              "size_name": null,
+              "sub_title": null,
+              "title": ""
+            }
+          ]
+        },
+        "sequence": 4,
+        "sub_configuration_options": []
+      },
+      {
+        "allow_customization": true,
+        "configuration_options": [
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "BO",
+            "image": "BO.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 45,
+            "parent_id": "toppings",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 11730,
+                "selected": false,
+                "sequence": 1
+              }
+            ],
+            "quantity": 0,
+            "sequence": 1,
+            "tag": null,
+            "title": "Kalamata Olives"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "CH",
+            "image": "CH.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 29,
+            "parent_id": "toppings",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 11730,
+                "selected": true,
+                "sequence": 2
+              }
+            ],
+            "quantity": 1,
+            "sequence": 2,
+            "tag": null,
+            "title": "Grilled Chicken"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "FC",
+            "image": "FC.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 59,
+            "parent_id": "toppings",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 11730,
+                "selected": false,
+                "sequence": 3
+              }
+            ],
+            "quantity": 0,
+            "sequence": 3,
+            "tag": null,
+            "title": "Feta Cheese"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "FM",
+            "image": "FM.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 57,
+            "parent_id": "toppings",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 11730,
+                "selected": false,
+                "sequence": 4
+              }
+            ],
+            "quantity": 0,
+            "sequence": 4,
+            "tag": null,
+            "title": "Fresh Mushrooms"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "GC",
+            "image": "GC.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 58,
+            "parent_id": "toppings",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 11730,
+                "selected": false,
+                "sequence": 5
+              }
+            ],
+            "quantity": 0,
+            "sequence": 5,
+            "tag": null,
+            "title": "Goat Cheese"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "GO",
+            "image": "GO.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 44,
+            "parent_id": "toppings",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 11730,
+                "selected": false,
+                "sequence": 6
+              }
+            ],
+            "quantity": 0,
+            "sequence": 6,
+            "tag": null,
+            "title": "Green Olives"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "GP",
+            "image": "GP.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 41,
+            "parent_id": "toppings",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 11730,
+                "selected": true,
+                "sequence": 7
+              }
+            ],
+            "quantity": 1,
+            "sequence": 7,
+            "tag": null,
+            "title": "Green Peppers"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "HP",
+            "image": "HP.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 43,
+            "parent_id": "toppings",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 11730,
+                "selected": false,
+                "sequence": 8
+              }
+            ],
+            "quantity": 0,
+            "sequence": 8,
+            "tag": null,
+            "title": "Hot Banana Peppers"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "JP",
+            "image": "JP.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 48,
+            "parent_id": "toppings",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 11730,
+                "selected": false,
+                "sequence": 9
+              }
+            ],
+            "quantity": 0,
+            "sequence": 9,
+            "tag": null,
+            "title": "Jalapeno Peppers"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "K",
+            "image": "K.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 37,
+            "parent_id": "toppings",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 11730,
+                "selected": false,
+                "sequence": 15
+              }
+            ],
+            "quantity": 0,
+            "sequence": 15,
+            "tag": null,
+            "title": "Steak Strips"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "MZ",
+            "image": "MZ.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 19,
+            "parent_id": "toppings",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 11730,
+                "selected": true,
+                "sequence": 10
+              }
+            ],
+            "quantity": 1,
+            "sequence": 10,
+            "tag": null,
+            "title": "Mozzarella Cheese"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "O",
+            "image": "O.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 42,
+            "parent_id": "toppings",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 11730,
+                "selected": false,
+                "sequence": 11
+              }
+            ],
+            "quantity": 0,
+            "sequence": 11,
+            "tag": null,
+            "title": "Red Onions"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "RP",
+            "image": "RP.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 50,
+            "parent_id": "toppings",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 11730,
+                "selected": true,
+                "sequence": 12
+              }
+            ],
+            "quantity": 1,
+            "sequence": 12,
+            "tag": null,
+            "title": "Fire Roasted Red Peppers"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "S",
+            "image": "S.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 47,
+            "parent_id": "toppings",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 11730,
+                "selected": false,
+                "sequence": 14
+              }
+            ],
+            "quantity": 0,
+            "sequence": 14,
+            "tag": null,
+            "title": "Spinach"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "ST",
+            "image": "ST.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 56,
+            "parent_id": "toppings",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 11730,
+                "selected": false,
+                "sequence": 13
+              }
+            ],
+            "quantity": 0,
+            "sequence": 13,
+            "tag": null,
+            "title": "Roma tomatoes"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "SU",
+            "image": "SU.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 53,
+            "parent_id": "toppings",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 11730,
+                "selected": false,
+                "sequence": 16
+              }
+            ],
+            "quantity": 0,
+            "sequence": 16,
+            "tag": null,
+            "title": "Sun-Dried Tomatoes"
+          }
+        ],
+        "configurations": [
+          {
+            "font_key": "0xe809",
+            "id": "toppings",
+            "not_available": [],
+            "sequence": 2,
+            "sub_configurations": [
+              {
+                "allow_half_and_half": false,
+                "allow_multiple_options": true,
+                "id": "toppings",
+                "not_available": [],
+                "personalized_message": {
+                  "display_personalized_message": false
+                },
+                "sequence": 1,
+                "title": "TOPPINGS"
+              }
+            ],
+            "title": "TOPPINGS"
+          }
+        ],
+        "description": "Mozzarella cheese, chicken, green peppers and roasted red peppers, wrapped in a 12-inch flour tortilla.",
+        "image": "CHPIZ_thumb.png",
+        "is_flat": false,
+        "is_pizza": false,
+        "line_id": 1,
+        "name": "Choose your toppings",
+        "product_id": "11723",
+        "product_options": {
+          "label": "Choose Your Size",
+          "options": [
+            {
+              "base_price": 6.49,
+              "cal_count": 760,
+              "cal_scale": "Cals",
+              "font_key": null,
+              "grouped_products": null,
+              "guarantee_group": "G1",
+              "id": 11730,
+              "image": "CHPIZ_thumb.png",
+              "same_topping_limit": 3,
+              "selected": true,
+              "sequence": 1,
+              "size_code": null,
+              "size_label": null,
+              "size_name": null,
+              "sub_title": null,
+              "title": "Chicken Quesadilla"
+            }
+          ]
+        },
+        "sequence": -1,
+        "sub_configuration_options": []
+      }
+    ]
+  },
+  "is_coupon_item": false,
+  "js_data": "eJzdmF1v2jAUhv9KlGtAhHZl3d2G2kArKAN60wpFJjHMquOkjq12oPz32g75gAZmWmlSfZfYJ8fn\nec+bCM7GfkIksH9Yth+Fi8huWHZMo4D7LBGLjxsbIwI9JCM6DRlElmjFKWAoIjJik4rVFY14fCDI\ni+Kd2G326rJ92f3eURcJxNBXT1GOoaxqpEpK0Bp6BIRyiXCMK3n8KFCBg6EM9AGOKIKJh8ECYpVz\nSeV2D+BEBkBS3MlqGHgtjprsJKCArCrHocQrthImyHyxxyiHsjpVNQzKlTy0fH4BEujFFPkyZ7vV\nTtMsKXtBsqKlKChL9cwhUUHn8pYvjoopEsRovQZ5BrFW7ZhT2zGbRXGMyCq7QcTHPICB98wBYYj9\nVauO0z1ryyK2p1BRF6IKsdzMj7S3ncm1dn9ORoPZ/eRqWio+uxuPByN3qlQPwSsKeVg9sumke056\nV/yOZXr9zDD7AqlHS8IDhssJNmIXhkiUUsiQ96iwWXbrtDrfahsrW5DlqLSxTlSnxrTjwUNTkCj0\noxwyYDI2BVmQ6CG7xiC7usj9L4fcPoDc10X+dWcKsiDRQ74xpss3ul2+NYX4VhPYGFfrmno6M4VY\nkGgiG0OsCXzdM4VYkGj+CDEG2dVFnt6bgixINLtszOfa1f1eXw9NQRYkesjDh6+GfOgPhSDRQD40\ncSlJPjFy6fVFIf9/6lLOSo6MXboX0is7U5eL1vnlv8cuTSn4yXOXeUUeVI7TPKFz50wRqumaVEZe\nIVKMYx43xymL2UoAl4BjVlH3N4cJCBDGwALciiOhKKuo/Qf5T5BYZZTS/gUuPpXipP5lImTjHKmE\njomK5p3qql2fi1OVvHK22LCU3+e1jpjnZi/ehP1X5NRC3pF80Mb7ata4OU3fAOy0NOQ=\n",
+  "kind": "single_configurable_combo",
+  "product_id": "combo_11723",
+  "seo_title": "chicken-quesadilla-combo_11723"
+}

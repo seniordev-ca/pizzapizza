@@ -1,0 +1,39 @@
+<div class="row product-size-picker-row justify-content-center"
+	[hidden]="productSizePickerTabsArray.length === 1"
+  >
+
+	<div class="col-12 d-flex p-0 size-picker-wrapper"  >
+		<ng-container
+			*ngFor="let productSizePickerTab of productSizePickerTabsArray">
+			<button class="col-3 text-center size-instance"
+				[ngClass]="'col-' + 12 / productSizePickerTabsArray.length"
+				[class.active]="productSizePickerTab.isSelected"
+				(click)="productSizePickerTabClick(productSizePickerTab.id)"
+        (keydown.enter)="productSizePickerTabClick(productSizePickerTab.id)"
+
+        >
+				<!-- <div class="check-box-wrap">
+					<i class="icon-checkmark"></i>
+				</div> -->
+
+				<div class="icon-wrap">
+					<i
+						[class]="'server-font-icon ' + productSizePickerTab.title.toLowerCase()"
+						[innerHTML]="productSizePickerTab.fontKey | pp_convertfontkey">
+					</i>
+				</div>
+				<div class="label">
+					{{ productSizePickerTab.title }}
+				</div>
+
+				<div class="separator">
+				</div>
+
+				<div class="label mt-2">
+					{{ productSizePickerTab.subTitle }}
+				</div>
+			</button><!-- col-3 p-2 text-center size-instance -->
+		</ng-container>
+	</div>
+
+</div>

@@ -1,0 +1,153 @@
+/*
+All global css goes here
+*/
+
+// Override bootstrap variable
+
+@import 'global-scss-mixing';
+
+// Bootstrap core
+@import '~bootstrap/scss/bootstrap';
+// Icons compiled into font
+@import './icons/pizzapizza';
+
+// Styles for components render on server side
+@import './footer';
+@import './fonts-declaration';
+
+@import './startup-loader';
+
+@import './pp-accordion';
+@import './pp-buttons';
+@import './pp-font-sizing';
+@import './pp-forms';
+@import './pp-ghost';
+@import './pp-tables';
+
+@import './temp-demo';
+
+//Enable global CSS antialiasing for text
+// sass-lint:disable no-vendor-prefixes
+* {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+// No blue glow for a on focus
+a:focus {
+	outline: none;
+}
+
+body {
+	@include font-regular;
+	color: $pp-default-text-colour;
+}
+
+// Recaptcha v3 global overlay
+.grecaptcha-badge {
+	visibility: hidden;
+}
+
+//show cursor pointer over any link
+a {
+	cursor: pointer;
+	color: $pp-bg-maincolour;
+
+	&:hover,
+	&:active,
+	&:focus {
+		color: $pp-bg-maincolour;
+	}
+}
+
+.section-not-integrated {
+	opacity: .2;
+	filter: grayscale(100%);
+}
+
+//GLOBAL GOOGLE PLACES AUTOCOMPLETE STYLING OVERWRITE
+.pac-container {
+	z-index: 1051; // needs to be huge to ensure it will show up over nbgmodal
+	overflow: visible;
+
+	&:after {
+		display: none;
+	}
+
+	.no-results {
+		display: block;
+	}
+}
+
+.pp-no-img-text {
+	@include font-bold;
+	display: block;
+	margin-top: 5px;
+	width: 100%;
+	text-align: center;
+	color: $form-grey;
+}
+
+img {
+	transition: .9s opacity;
+	opacity: 0;
+
+	&.pp-image-loaded,
+	&.pp-default-image {
+		opacity: 1;
+	}
+}
+
+// sass-lint:disable force-element-nesting, class-name-format
+.QSIFeedbackButton img {
+	transition: .9s opacity;
+	opacity: 1;
+}
+
+.modal-backdrop {
+	&.show {
+		opacity: .3;
+	}
+}
+
+.no-cals {
+	.cal-text {
+		display: none;
+		opacity: 0;
+	}
+}
+
+@include media-breakpoint-only(lg) {
+	.container {
+		max-width: 100%;
+	}
+}
+
+@include media-breakpoint-only(md) {
+	.container {
+		max-width: 100%;
+	}
+}
+
+@include media-breakpoint-only(sm) {
+	.container {
+		max-width: 100%;
+	}
+}
+
+@include media-breakpoint-down(sm) {
+
+	.btn-lg {
+		width: 100%;
+	}
+}
+
+@include media-breakpoint-down(xs) {
+	/* THE FOLLOWING IS REQUIRED TO RESOLVE A BUG ON IOS*/
+	.modal-open {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+}

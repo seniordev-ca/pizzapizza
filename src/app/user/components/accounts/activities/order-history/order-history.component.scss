@@ -1,0 +1,25 @@
+@import 'global-scss-mixing';
+
+$grey: #e1e7e9;
+$green: #4e7026;
+$expired-text: #6d7273;
+$font-red: #f00;
+
+.accounts-order-history-container {
+	.seperator {
+		border-top: 1px solid $grey;
+	}
+
+	.expired {
+		color: $expired-text;
+	}
+
+	.expired-text {
+		color: $font-red;
+		font-size: .875em;
+	}
+}
+
+.green-added-text {
+	color: $green;
+}

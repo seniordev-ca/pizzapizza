@@ -1,0 +1,136 @@
+<div class="add-coupon-container {{ parentContainer }}" *ngIf="parentContainer !== couponParentContainerEnum.Checkout">
+
+	<!-- Desktop input block -->
+	<div class="row align-items-center h-100">
+		<div class="coupon-input col-8 d-flex d-md-none d-lg-flex align-items-center pr-0"
+				 [ngClass]="{
+				 	'has-placeholder': !couponCode
+				 }"
+			*ngIf="uiState == widgetUiStates.inputField || uiState == widgetUiStates.validationError">
+			<ng-container *ngTemplateOutlet="couponInputField">
+			</ng-container>
+		</div>
+
+		<div class="coupon-btn" [ngClass]="[
+				uiState == widgetUiStates.inputField || uiState === widgetUiStates.validationError ? 'mobile-active pl-0 pl-md-3 pl-lg-0' : '',
+				uiState == widgetUiStates.addCouponBtn ? 'col-12' : 'col-4 col-md-12 col-lg-4',
+				parentContainer === 'wallet' ? 'text-right' : 'text-center'
+			]">
+
+			<ng-container *ngTemplateOutlet="couponAddBtn">
+			</ng-container>
+		</div>
+	</div>
+
+	<!-- medium screen add coupon start -->
+	<div class="p-4 md-add-coupon" [hidden]="uiState == widgetUiStates.addCouponBtn">
+		<div class="arrow-top"></div>
+		<div class="input-group" [hidden]="uiState == widgetUiStates.validationError">
+
+			<ng-container *ngIf="uiState == widgetUiStates.inputField || uiState == widgetUiStates.validationError">
+				<ng-container *ngTemplateOutlet="couponInputField">
+				</ng-container>
+			</ng-container>
+
+		</div>
+		<span class="invalid-msg smaller" *ngIf="uiState == widgetUiStates.validationError">
+			{{validationText}}
+		</span>
+	</div>
+
+	<!-- medium screen add coupon end -->
+	<div class="row mx-0 d-block d-md-none d-lg-block validation-msg no-gutters">
+		<div class="col-12 text-center">
+			<span class="invalid-msg smaller" *ngIf="uiState == widgetUiStates.validationError">
+				{{validationText}}
+			</span>
+		</div>
+
+	</div>
+</div>
+
+<div *ngIf="parentContainer === couponParentContainerEnum.Checkout">
+	<div class="row click-to-open" (click)="toggleCoupon()" (keydown.enter)="toggleCoupon()" tabindex="0">
+		<div class="col-1 pr-0">
+			<i class="user-activity-action-icon h5" [ngClass]="[
+			isCouponAccordionOpen ? 'icon-minus-2' : 'icon-plus-2'
+			]">
+			</i>
+		</div>
+		<div class="col-11 pl-0">
+			<h6 i18n>Add a coupon</h6>
+		</div>
+	</div>
+	<div class="row" *ngIf="isCouponAccordionOpen">
+		<div class="col-11 pl-0 ml-auto">
+			<div class="row align-items-center pp-form">
+				<div class="col-12">
+					<label i18n class="alternate-label">Coupon code</label>
+				</div>
+				<div class="coupon-input col-8">
+					<input #addCouponInput type="text" class="form-control add-coupon-input"
+								 [ngClass]="{
+										'has-placeholder': !couponCode
+									 }"
+						[class.invalid-input]="uiState == widgetUiStates.validationError" [(ngModel)]="couponCode"
+						maxlength="13" autofocus>
+				</div>
+
+				<div class="coupon-btn">
+					<ng-container *ngTemplateOutlet="couponAddBtn">
+					</ng-container>
+				</div>
+			</div>
+
+			<div class="row mx-0 d-block validation-msg no-gutters">
+				<div class="col-12">
+					<span class="invalid-msg smaller" *ngIf="uiState == widgetUiStates.validationError">
+						{{validationText}}
+					</span>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<ng-template #couponInputField>
+	<input #addCouponInput type="text" class="form-control add-coupon-input"
+         aria-label="Enter Coupon Code field"
+		[class.invalid-input]="uiState == widgetUiStates.validationError" [(ngModel)]="couponCode" maxlength="13"
+		autofocus>
+	<i class="icon-close-bold" [class.reset-invalid]="validationText" tabindex="0"
+		 aria-label="X to close coupon code field"
+		 (click)="resetUiState()" (keydown.enter)="resetUiState()">
+	</i>
+</ng-template>
+
+<ng-template #couponAddBtn>
+  <span
+  [attr.tabindex]="parentContainer === couponParentContainerEnum.Checkout && !couponCode ?'0':'-1'"
+  [attr.aria-label]="parentContainer === couponParentContainerEnum.Checkout && !couponCode ? 'Apply Coupon code button disabled' : ''"
+  >
+	<button class="pp-btn align-self-start add-coupon-btn" type="button" [ngClass]="[
+				uiState == widgetUiStates.inputField ? 'coupon-open' : '',
+				uiState == widgetUiStates.added ? 'valid-button' : '',
+				uiState == widgetUiStates.validationError ? 'invalid-button' : '',
+				isLoading ? 'loading-state' : ''
+			]" (click)="onCouponAddClick()"
+			[disabled]="parentContainer === couponParentContainerEnum.Checkout && !couponCode"
+          [attr.aria-label]="uiState == widgetUiStates.inputField ? 'Apply Code' : ''"
+  >
+		<ng-container [ngSwitch]="uiState">
+			<ng-container *ngSwitchCase="widgetUiStates.added" i18n>
+				Coupon added. Nice!
+			</ng-container>
+			<ng-container *ngSwitchCase="widgetUiStates.addCouponBtn" i18n>
+				Add Coupon
+			</ng-container>
+			<ng-container *ngSwitchDefault>
+				<span *ngIf="parentContainer === couponParentContainerEnum.Checkout" i18n>Apply</span>
+				<span *ngIf="parentContainer !== couponParentContainerEnum.Checkout"i18n>Add</span>
+			</ng-container>
+		</ng-container>
+	</button>
+</span>
+</ng-template>

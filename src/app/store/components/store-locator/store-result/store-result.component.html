@@ -1,0 +1,185 @@
+<div *ngIf="canonicalLink">
+  <link rel="canonical" appMoveToHead [attr.href]="canonicalLink | safeUrl" />
+ </div>
+<ng-container [ngSwitch]="layout">
+	<span *ngSwitchCase="storeResultLayoutEnum.SINGLE">
+		<ng-container *ngTemplateOutlet="single"></ng-container>
+	</span>
+	<span *ngSwitchCase="storeResultLayoutEnum.NEARBY" class="d-block h-100">
+		<ng-container *ngTemplateOutlet="nearby"></ng-container>
+	</span>
+	<span *ngSwitchDefault>
+		<ng-container *ngTemplateOutlet="default"></ng-container>
+	</span>
+</ng-container>
+<ng-template #single>
+	<div class="row search-results-row">
+		<div class="col-12 col-md-6">
+			<span class="store-map">
+				<a href="https://www.google.com/maps/search/?api=1&query=pizza+pizza+{{fullAddress}}" target="_blank">
+					<i class="icon-pp-speech-bubble" *ngIf="!store.is_express"></i>
+					<img src="./static-files/images/express.svg" class="express-marker" *ngIf="store.is_express"/>
+
+					<img class="img-fluid"
+						alt="store map image"
+						src="https://maps.googleapis.com/maps/api/staticmap?center={{fullAddress}}&zoom=13&size=500x350&key={{googleAPIKey}}"
+					/>
+				</a>
+			</span>
+			<p class="smaller pt-3">
+				<a href="https://www.google.com/maps/search/?api=1&query=pizza+pizza+{{fullAddress}}" target="_blank" class="fw-extra-bold">
+				<i class="icon-location mr-1"></i>
+				<ng-container i18n>Get Directions</ng-container>
+				</a>
+			</p>
+		</div>
+		<div class="col-12 col-md-6 store-details single-store">
+			<div class="row">
+				<div class="col-12">
+					<div class="row mb-4">
+						<div class="col-12 align-self-start mb-4">
+							<span class="status-indicator fw-extra-bold" [ngClass]="{'open': store.is_open, 'closed': !store.is_open}">
+								<ng-container *ngIf="store.is_open" i18n>Open</ng-container>
+								<ng-container *ngIf="!store.is_open" i18n>Closed</ng-container>
+							</span>
+							<h2 class="fw-normal">
+								{{store.address}}
+							</h2>
+              <p>{{store.city}}, {{store.province}}</p>
+              <p>{{store.postal_code}}</p>
+							<p *ngIf="store.distance">{{store.distance | number : '1.1-1'}}km</p>
+						</div>
+						<div class="col-12 align-self-end">
+							<p>
+								<span class="fw-extra-bold" i18n>Available: </span>
+								{{ storeFeatures }}
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-md-8 store-hours">
+					<div class="row no-gutters mb-3 hours-header">
+						<div class="col">
+							<i class="icon-clock-account-sized"></i>
+							&nbsp;
+						</div>
+						<div class="col-11">
+							<span class="fw-extra-bold" i18n>
+								Hours
+							</span>
+						</div>
+					</div>
+
+					<div class="row justify-content-end no-gutters days-break-down" *ngFor="let hours of store.operating_hours">
+						<div class="col-6 col-lg-5">{{hours.label}}</div>
+						<div class="col-6">
+							<span>{{hours.start_time}} - </span>
+							<span>{{hours.end_time}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12">
+			<hr class="single-store-row" />
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #nearby>
+	<div class="row search-results-row nearby-store mx-0 mb-0 h-100">
+		<div class="col-12 store-details single-store py-3">
+			<div class="row h-100">
+				<div class="col-12">
+					<div class="row">
+						<div class="col-12 align-self-start">
+							<h6 class="fw-extra-bold mb-0">
+								<a 
+									(click)="onStoreClick(store)"
+									[routerLink]="['/restaurant-locator', store.province_slug, store.city_slug, (store.address | encodeURI), (store.store_id)]">
+									{{store.address}}
+								</a>
+							</h6>
+              <p>{{store.city}}, {{store.province}}</p>
+              <p>{{store.postal_code}}</p>
+							<p *ngIf="store.distance">{{store.distance | number : '1.1-1'}}km</p>
+							<p>
+								<a href="https://www.google.com/maps/search/?api=1&query=pizza+pizza+{{fullAddress}}" target="_blank" class="fw-extra-bold">
+									<i class="icon-location mr-1"></i>
+									<ng-container i18n>Get Directions</ng-container>
+								</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #default>
+	<div class="row search-results-row">
+		<div class="col-12 store-details">
+			<div class="row h-100">
+				<div class="col-12 col-lg-7">
+					<div class="row h-100">
+						<div class="col-12 align-self-start mb-4">
+							<span class="status-indicator fw-extra-bold" [ngClass]="{'open': store.is_open, 'closed': !store.is_open}">
+								<ng-container *ngIf="store.is_open" i18n>Open</ng-container>
+								<ng-container *ngIf="!store.is_open" i18n>Closed</ng-container>
+							</span>
+							<h2 class="fw-normal">
+								<a 
+								(click)="onStoreClick(store)"
+								[routerLink]="['/restaurant-locator', store.province_slug, store.city_slug, (store.address | encodeURI), (store.store_id)]">
+									{{store.address}}
+								</a>
+							</h2>
+              <p>{{store.city}}, {{store.province}}</p>
+              <p>{{store.postal_code}}</p>
+							<p *ngIf="store.distance">{{store.distance | number : '1.1-1'}}km</p>
+						</div>
+						<div class="col-12 align-self-end">
+							<p>
+								<span class="fw-extra-bold"><ng-container i18n>Available</ng-container>:&nbsp;</span>
+								<ng-container *ngIf="store.is_online"><span i18n>Online</span>&nbsp;</ng-container>
+								<ng-container *ngIf="store.pickup_available"><span i18n>Pickup</span>&nbsp;</ng-container>
+								<ng-container *ngIf="store.delivery_available"><span i18n>Delivery</span>&nbsp;</ng-container>
+								<ng-container *ngIf="store.is_express"><span i18n>Express</span>&nbsp;</ng-container>
+							</p>
+							<p>
+								<a href="https://www.google.com/maps/search/?api=1&query=pizza+pizza+{{fullAddress}}" target="_blank" class="fw-extra-bold">
+									<i class="icon-location mr-1"></i>
+									<ng-container i18n>Get Directions</ng-container>
+								</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-lg-5 store-hours">
+					<div class="row no-gutters mb-3 hours-header">
+						<div class="col">
+							<i class="icon-clock-account-sized"></i>
+							&nbsp;
+						</div>
+						<div class="col-11">
+							<span class="fw-extra-bold" i18n>
+								Hours
+							</span>
+						</div>
+					</div>
+
+					<div class="row justify-content-end no-gutters days-break-down" *ngFor="let hours of store.operating_hours">
+						<div class="col-6 col-lg-5">{{hours.label}}</div>
+						<div class="col-6">
+							<span>{{hours.start_time}} - </span>
+							<span>{{hours.end_time}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</ng-template>

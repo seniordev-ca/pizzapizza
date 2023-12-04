@@ -1,0 +1,93 @@
+<!-- Container That Holds this Entire Subcomponent -->
+<div class="container-fluid mx-0 px-0 my-2 store-list-parent-container">
+
+	<!-- Ng-Container That Gets Data from Input -->
+	<ng-container *ngFor="let savedStore of savedStores">
+
+		<!-- Row That Holds Each Individual Looped Item -->
+		<div class="row d-flex no-gutters my-2 store-list-item-row" id = "{{savedStore.storeId}}"
+			[class.is-default]="(!storeSearch && savedStore.isDefault) || (storeSearch && savedStore.storeId === selectedStoreIdForCheckout)">
+
+			<div class="col-9">
+				<div class="row no-gutters">
+					<!-- Column One - Store Icon -->
+					<div class="col-2 p-0 text-center left-icon-col">
+						<i class="icon-pp-logo-bg"></i>
+					</div>
+					<!-- End of Column One -->
+					<!-- Column 2 - Holds Address Information ml-1 ml-lg-0 mt-0 mt-lg-3 mx-lg-0  -->
+					<div class="col-10 store-address-col">
+						<!-- Intersection -->
+						<div class="store-address-intersection-row">
+							{{savedStore.storeAddress}}
+						</div>
+						<!-- Address -->
+						<div class="store-address-address-row">
+							{{savedStore.storeAddress}}, {{savedStore.city}}, {{savedStore.province}},
+							{{savedStore.postalCode}}
+						</div>
+						<!-- Phone Number -->
+						<!-- <div class="row store-address-phone-number-row">
+							{{savedAddress.contactInfo.phoneNumber}}
+						</div> -->
+						<!-- Distance -->
+						<div class="store-address-distance-row" *ngIf="storeSearch && savedStore.distance">
+							{{savedStore.distance | number:'1.0-1'}} km
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End of Column 2-->
+
+			<div class="col-3 text-right payment-method-default-col mt-1 mt-md-0"
+				*ngIf="!storeSearch">
+				<div class="set-default-row">
+					<button class="btn-no-style w-auto" (click)="onSetDefault($event, savedStore.storeId)" i18n>
+						Set Default
+					</button>
+				</div>
+				<div class="default-row">
+					<span
+						*ngIf="savedStore.isDefault" i18n>
+						Default
+					</span>
+					<i class="icon-checkmark"></i>
+				</div>
+			</div>
+			<div class="col-3 payment-method-default-col mt-1 mt-md-0"
+				*ngIf="storeSearch">
+				<div class="set-default-row"
+					*ngIf="savedStore.storeId !== selectedStoreIdForCheckout">
+					<button class="btn-no-style w-auto" (click)="onSelect($event, savedStore.storeId)"i18n>
+						Select
+					</button>
+				</div>
+				<div class="default-row"
+					*ngIf="savedStore.storeId === selectedStoreIdForCheckout">
+					<i class="icon-checkmark"></i>
+				</div>
+			</div>
+
+			<div class="col-12 d-flex align-items-center user-action-col"
+				*ngIf="!storeSearch">
+			
+				<div class="row mx-0 w-100">
+					<div class="col-10 offset-1"
+						*ngIf="!savedStore.isDefault">		
+						<button class="btn-no-style" (click)="onDelete($event, savedStore.storeId)">
+							<i class="align-self-center icon-delete action-icon"></i>
+							<span class="action-text" i18n>
+									Delete
+							</span>
+						</button>
+					</div>
+				</div>
+			
+			</div>
+
+		</div>
+		<!-- End of Row That Holds Each Individual Looped Item -->
+
+	</ng-container>
+	<!-- Ng Container-->
+</div>

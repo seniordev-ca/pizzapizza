@@ -1,0 +1,143 @@
+<div class="container-fluid sign-up-header-wrapper px-0 mb-5 pt-0">
+	<div class="container">
+		<div class="row pb-0 pb-md-4">
+			<div class="col-12 pt-0 pt-md-3">
+				<!-- Common Header -->
+				<ng-container [ngSwitch]="signUpContainerData.SignUpState">
+					<app-sub-header-navigation
+						*ngSwitchCase="SignUpContainerStateEnum.isSuccessState"
+						[subHeaderNavContent]="subHeaderNavContent"
+						title="Success!"
+						navText="Back"
+						i18n-navText
+						i18n-title>
+					</app-sub-header-navigation>
+					<app-sub-header-navigation
+						*ngSwitchCase="SignUpContainerStateEnum.isSignUpClubElevenEleven"
+						[subHeaderNavContent]="subHeaderNavContent"
+						title="Join The Club"
+						navText="Back"
+						i18n-navText
+						i18n-title>
+					</app-sub-header-navigation>	
+					<app-sub-header-navigation
+						*ngSwitchDefault
+						[subHeaderNavContent]="subHeaderNavContent"
+						title="Sign Up"
+						navText="Back"
+						i18n-navText
+						i18n-title>
+					</app-sub-header-navigation>			
+				</ng-container>
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12 pt-0 pt-md-4 pb-3">
+				<!-- Sign Up Header -->
+				<ng-container [ngSwitch]="signUpContainerData.SignUpState">
+					<app-sign-up-header
+						*ngSwitchCase="SignUpContainerStateEnum.isSignUpClubElevenEleven"
+						headerContent="Sign up and earn dough with every purchase!"
+						[signUpContainerData]="signUpContainerData"
+						i18n-headerContent>
+					</app-sign-up-header>
+					<app-sign-up-header
+						*ngSwitchCase="SignUpContainerStateEnum.isSuccessState"
+						headerContent="Sign up Successful"
+						[signUpContainerData]="signUpContainerData"
+						i18n-headerContent>
+					</app-sign-up-header>
+					<app-sign-up-header
+						*ngSwitchDefault
+						headerContent="Sign up and we’ll remember your recent orders and offer you exclusive promotions."
+						[signUpContainerData]="signUpContainerData"
+						i18n-headerContent>
+					</app-sign-up-header>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+	<!-- Background -->
+	<div class="header-background"></div>
+	<div class="header-background-color"></div>
+</div>
+<div class="w-100 text-center mb-5 pp-registration-loading"
+	*ngIf="signUpContainerData.SignUpState == SignUpContainerStateEnum.isRegistrationLoading || (isLogginLoading$ | async)">
+	<i class="icon-loader_01 pp-loading-icon"></i>
+</div>
+<ng-container *ngIf="!(isLogginLoading$ | async)">
+<!-- Sign Up Form -->
+<!-- NEED TO CHANGE CONDITIONS (TEST ONLY) -->
+	<app-sign-up-form-component
+		[signUpForm]="signUpFormStepOne"
+		[userImageDetails]="signUpDetailsData.userImage"
+		[isPasswordDisplayed]="isPasswordDisplayed"
+		[validDays]="validDays"
+		(signUpDetailsEventEmitter)="handleSignUpDetailsEventEmitter($event)"
+		*ngIf="signUpContainerData.SignUpState === SignUpContainerStateEnum.isSignUpFormState">
+	</app-sign-up-form-component>
+
+	<!-- Sign Up Club 11-11 -->
+	<app-sign-up-club-eleven-eleven
+		[loggedInUser]="userSummary$ | async"
+		[signUpClugElevenElevenUI]="signUpClubElevenElevenUI"
+		[signUpClubElevenElevenForm]="signUpFormStepTwo"
+		(signUpClubElevenElevenEventEmitter)="handleSignUpClubElevenElevenEventEmitter($event)"
+		*ngIf="signUpContainerData.SignUpState === SignUpContainerStateEnum.isSignUpClubElevenEleven">
+	</app-sign-up-club-eleven-eleven>
+
+	<!-- Sign Up Success -->
+	<app-sign-up-success-component
+		[signUpSuccessData]="signUpSuccessData"
+		(signUpSuccessDetailsEventEmitter)="handleSignUpSuccessEventEmitter($event)"
+		*ngIf="signUpContainerData.SignUpState === SignUpContainerStateEnum.isSuccessState"
+	></app-sign-up-success-component>
+</ng-container>
+
+<!--
+Club 1111 Address Required message
+-->
+<ng-template #clubErrorPopup let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal()" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+	<app-confirmation-modal 
+		[data]="{
+			icon: 'icon-bell'
+		}"
+		title='Hey there!'
+		subtitle="Looks like this card hasn't been registered yet! We are going to need a little more information, press continue to complete the remaining required fields!"
+		i18n-title
+		i18n-subtitle>
+		<ng-template>
+			<button class="btn btn-primary" (click)="closeModal(); isClub1111ErrorPopup = false" i18n>
+				Continue
+			</button>
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+<!--
+Club 1111 Error message
+-->
+<ng-template #clubFailedModal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal(); isClub1111Failed = false" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+	<app-confirmation-modal 
+			[data]="{
+				icon: 'icon-bell'
+			}"
+			title="D'ough!"
+			subtitle="Sorry we weren't able to register your Club 11-11 Account right now but come back another time and we will be happy to register you then."
+			i18n-title
+			i18n-subtitle>
+			<ng-template>
+				<button class="btn btn-primary" (click)="closeModal(); isClub1111Failed = false" i18n>
+					OKAY
+				</button>
+			</ng-template>
+	</app-confirmation-modal>
+</ng-template>

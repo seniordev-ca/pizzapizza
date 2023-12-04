@@ -1,0 +1,83 @@
+<div class="form-row" [formGroup]="parentForm" *ngIf="parentForm">
+	<h4 class="form-row-heading col-12" *ngIf="!isAutoReload" i18n>Payment Information</h4>
+	<div class="col-12 col-lg-9 form-group" 
+		[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(parentForm.controls['name'])">
+		<label for="name" class="alternate-label">
+			<ng-container i18n>Name on card</ng-container>
+			<app-form-invalid-message [control]="parentForm.controls['name']"></app-form-invalid-message>
+		</label>
+		<input type="text" class="form-control" placeholder="John Smith" formControlName="name" maxlength="50" id="cardName">
+	</div>
+
+	<div class="col-12 col-lg-5 form-group"
+		[class.invalid-entry]="bamboraValidation['card-number'].error">
+		<label for="card-number" class="alternate-label">
+			<ng-container i18n>Card number</ng-container>
+		</label>
+		<div class="input form-control card-number" id="card-number"
+		[style.background-image]="bamboraValidation['card-number'].background"></div>
+		<div class="feedback-icon"></div>
+		<div class="alternate-label">
+			<div class="invalid-text-alt"
+				*ngIf="bamboraValidation['card-number'].error">
+				<span>
+					{{bamboraValidation['card-number'].error}}
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-6 col-lg-2 form-group cvv-group" 
+	[class.invalid-entry]="bamboraValidation['cvv'].error">
+		<label for="creditCardCVV" class="alternate-label">
+			CVV
+			<span [ngbTooltip]="tipContent" placement="right" class="d-inline-block d-lg-none">
+				<i class="icon-question-mark cvv-icon"></i>
+			</span>
+			<span [ngbTooltip]="tipContent" placement="top" class="d-lg-inline-block d-none">
+				<i class="icon-question-mark cvv-icon" ></i>
+			</span>
+		</label>
+		<div class="input form-control mb-2" id="cvv"></div>
+		<div class="alternate-label">
+			<div class="invalid-text-alt"
+			*ngIf="bamboraValidation['cvv'].error">
+				<span>
+				{{bamboraValidation['cvv'].error}}
+				</span>
+			</div>
+		</div>
+		<ng-template #tipContent>
+			<div class="security-code-box">
+				<div class="d-flex justify-content-between align-items-start">
+					<div>
+						<i class="icon-question-mark"></i>
+					</div>
+					<div>
+						<strong i18n>Security Code</strong>
+						<p class="mb-0" i18n>
+							The security code is the last three digits on the signature strip on the rear of the card.
+						</p>
+					</div>
+				</div>
+			</div>
+		</ng-template>
+	</div>
+
+	<div class="col-6 col-lg-5 form-group" 
+	[class.invalid-entry]="bamboraValidation['expiry'].error">
+		<label for="expiryDate" class="alternate-label" i18n>
+			Expires
+		</label>
+		<div class="input form-control mb-2" name="expiry" id="expiry"></div>
+		<div class="feedback-icon"></div>
+		<div class="alternate-label">
+			<div class="invalid-text-alt"
+			*ngIf="bamboraValidation['expiry'].error">
+				<span>
+				{{bamboraValidation['expiry'].error}}
+				</span>
+			</div>
+		</div>
+	</div>
+</div>

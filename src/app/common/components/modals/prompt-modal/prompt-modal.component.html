@@ -1,0 +1,24 @@
+<div class="container prompt-modal-container p-0">
+	<!-- Icon + Title + text -->
+	<div class="row content-top pt-4 mx-0">
+		<div class="col-12">
+			<div class="row justify-content-center prompt-modal-icon-row">
+				<i class="{{ data.icon }} prompt-modal-top-icon"></i>
+			</div>
+			<div class="row d-flex justify-content-center prompt-modal-header-row">
+				{{ title }}
+			</div>
+		</div>
+		<!-- Text -->
+		<div class="col-12 py-4 px-5 prompt-modal-body-text" *ngIf="text">
+			{{text}}
+		</div>
+	</div>
+
+	<!-- Form -->
+	<div class="row content-bottom py-4 px-2 px-md-4 mx-0">
+		<div class="col-12">
+			<ng-container *ngTemplateOutlet="childrenTemplate"></ng-container>
+		</div>
+	</div>
+</div>

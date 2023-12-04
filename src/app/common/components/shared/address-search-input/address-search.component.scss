@@ -1,0 +1,136 @@
+@import 'global-scss-mixing';
+
+$mid-grey: #dae9f0;
+$light-grey: #edf2f5;
+$dark-header-text: #6d7273;
+$ghost-loader-bg: #e1e7e9;
+$modal-bg: #000;
+$pp-green: #4e7026;
+$modal-header-bg: #eaf0f3;
+$error-color: #f00;
+$form-grey: #ccd6d8;
+$location-scrollbar-primary-color: #c3c5c5;
+$autocomplete-border: #d9d9d9;
+
+.red-label {
+	color: $error-color;
+}
+
+.no-results {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 2;
+	background: $white;
+	width: 100%;
+
+	.no-results-row {
+		padding: 6px;
+
+		&:first-child {
+			border-bottom: 1px solid $form-grey;
+		}
+
+		.manual-address-link {
+			.manual-address-btn {
+				border: 0;
+				background: none;
+				cursor: pointer;
+				color: $pp-bg-maincolour;
+			}
+		}
+	}
+}
+
+.address-input {
+	width: 100%;
+
+	.no-results {
+		display: none;
+		flex-direction: column-reverse;
+		border-right: 1px solid $autocomplete-border;
+		border-left: 1px solid $autocomplete-border;
+
+		// Google's autocomplete container
+		.pac-container {
+			display: block;
+
+			// sass-lint:disable no-important
+			position: relative !important;
+			top: 0 !important;
+			left: 0 !important;
+			border-bottom: 1px solid $autocomplete-border;
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+			box-shadow: none;
+			max-width: 100%;
+		}
+	}
+
+	&.invalid {
+		color: $error-color !important;
+
+		input {
+			color: $error-color;
+		}
+
+		.icon-close-bold {
+			color: $error-color;
+			font-size: .5em;
+		}
+
+		.icon-spade {
+			color: $error-color;
+		}
+
+		.address-input-field  {
+			border-bottom: 1px solid $error-color;
+		}
+
+		.address-input-icon {
+			border-bottom: 1px solid $error-color;
+		}
+	}
+
+	.address-input-field {
+		padding: .375rem 0;
+	}
+
+	.address-input-field,
+	.address-input-icon {
+		border-top: 0;
+		border-right: 0;
+		border-bottom: 1px solid $form-grey;
+		border-left: 0;
+		border-radius: 0;
+	}
+
+	.address-input-icon {
+		position: absolute;
+		top: 0;
+		right: 15px;
+		bottom: 0;
+		z-index: 3;
+		background-color: $white;
+		padding: .375rem 0 .375rem 10px;
+
+		.find-me {
+			cursor: pointer;
+			color: $pp-dark-maincolour;
+		}
+
+		.icon-close-bold {
+			cursor: pointer;
+			// color: $pp-bg-maincolour;
+			font-size: .5em;
+		}
+	}
+}
+
+.global-error-modal-wrap {
+	.no-results {
+		left: 15px;
+		width: calc(100% - 30px);
+	}
+}

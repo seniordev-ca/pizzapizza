@@ -1,0 +1,14 @@
+<div class="container-fluid modal-info-header">
+	<div class="row text-center">
+		<div class="col-12 icon-wrap mb-3">
+			<i class="{{ modalInfoHeaderContent.fontKey }}"></i>
+		</div>
+		<div class="col-12 title">
+			{{ title }}
+		</div>
+		<div class="col-12 sub-title">
+			{{ subTitle }}
+		</div>
+		<ng-container *ngTemplateOutlet="childrenTemplate"></ng-container>
+	</div>
+</div>

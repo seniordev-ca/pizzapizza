@@ -1,0 +1,29 @@
+@import 'global-scss-mixing';
+$ghost-loader-bg: #e1e7e9;
+$shadow-color: rgba(0, 0, 0, .36);
+
+.cvv-group {
+
+	.tooltip-inner {
+		box-shadow: 1px 5px 10px 1px$shadow-color;
+		background: $ghost-loader-bg;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		width: 180px;
+		text-align: left;
+		line-height: 1.2;
+		color: $pp-default-text-colour;
+		font-size: .813em;
+	}
+
+	.arrow:before {
+		border-top-color: $ghost-loader-bg;
+	}
+
+	.security-code-box {
+
+		.icon-question-mark {
+			color: $pp-bg-maincolour;
+		}
+	}
+}

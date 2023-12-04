@@ -1,0 +1,60 @@
+<div class="row store-selector-container mx-0 pl-3"
+	[class.pp-ghost-container]="!selectStore"
+	(click)="openLocationModal()"
+  (keydown.enter)="openLocationModal()"
+		#popover="ngbPopover"
+		placement="bottom"
+        [ngbPopover]="popoverContent"
+		[popoverTitle]="popoverTitle"
+		triggers="manual">
+	<div class="col-auto p-0 align-self-center custom-nav-element">
+		<i class="icon-na"
+		[ngClass]="{
+			'icon-pp-speech-bubble': !isDelivery,
+			'icon-pizza-locator': isDelivery
+		}"></i>
+	</div>
+	<div class="col-auto p-0 align-self-center">
+		<div class="smaller action-link">
+			<span class="ghost-bar ghost-white d-block" [ngSwitch]="isDelivery" tabindex="0">
+					<div *ngSwitchCase="true" class="text-truncate" >
+						<span class="bold" i18n>Delivery</span>&nbsp;
+						<ng-container i18n ><span class="bold">in</span></ng-container>&nbsp;
+						<span class="bold reduced-text" *ngIf="selectStore"
+
+
+            >{{selectStore.delivery_city ? selectStore.delivery_city : selectStore.city}}</span>
+					</div>
+					<div *ngSwitchCase="false" class="text-truncate">
+						<span class="bold" i18n>Pickup</span>&nbsp;
+						<ng-container i18n><span class="bold"> at</span></ng-container>&nbsp;
+						<span class="bold reduced-text ">{{selectStore.address}}</span>
+					</div>
+					<div class="d-block bold" *ngIf="selectStore" x-ms-format-detection="none" >
+						{{selectStore.market_phone_number | phone}}
+					</div>
+          <span aria-label='   click to change location'></span>
+			</span>
+		</div>
+	</div>
+	<i class="icon-toggle"></i>
+</div>
+
+<ng-template #popoverTitle>
+	<ng-container i18n *ngIf="isDelivery">Heads up! We’re delivering to: </ng-container>
+	<ng-container i18n *ngIf="!isDelivery">Heads up! You’re picking up at: </ng-container>
+	<button class="close-btn" aria-label="Close"><i class="icon-close-bold" aria-hidden="true"></i></button>
+</ng-template>
+
+<ng-template #popoverContent>
+	<div class="d-flex align-items-end justify-content-between">
+		<ng-container *ngIf="isDelivery">{{userInputAddress}}</ng-container>
+		<ng-container *ngIf="!isDelivery">
+			<p class="mb-0" tabindex="0">
+				<strong>{{selectStore.address}}</strong><br />
+				{{selectStore.city}}, {{selectStore.province}}, {{selectStore.postal_code}}
+			</p>
+		</ng-container>
+		<button class="btn btn-link" i18n (click)="openLocationModal()" aria-label="Change your location" tabindex="0">Change</button>
+   </div>
+</ng-template>

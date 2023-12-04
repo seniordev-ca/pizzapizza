@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<base href="/">
+	<title>Pizza Pizza</title>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<link rel="icon" type="image/x-icon" href="./static-files/favicon.ico">
+	<link rel="stylesheet" href="https://use.typekit.net/wmm6tyv.css">
+  <script>
+    (function() {
+        var startDate = '12/25/2020 1:00';
+        var endDate = '12/26/2020 7:00';
+        var redirect = false;
+        var startDt = new Date(startDate);
+        var endDt = new Date(endDate);
+        var currentDate = new Date();
+        if (currentDate.getTime() >= startDt.getTime() && currentDate.getTime() <= endDt.getTime()) {
+          redirect = true;
+        }
+        if(redirect) {
+          window.location.href = '/holidayhours/';
+        }
+      }
+    )();
+  </script>
+	<style>
+		#pre-angular {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 99999;
+			background-color: white;
+		}
+
+		#pre-angular img {
+			width: 80px;
+			left: 50%;
+			top: 50%;
+			position: absolute;
+			margin-left: -40px;
+			margin-top: -40px;
+			opacity: 1;
+		}
+	</style>
+</head>
+
+<body>
+	<app-root></app-root>
+	<div id="pre-angular">
+		<img src="./static-files/images/pre-angular-loader.gif">
+  </div>
+  <script type="text/javascript" id="028a57d6e4a9">(function () {var siteId = "028a57d6e4a9";function t(t,e){for(var n=t.split(""),r=0;r<n.length;++r)n[r]=String.fromCharCode(n[r].charCodeAt(0)+e);return n.join("")}function e(e){return t(e,-l).replace(/%SN%/g,siteId)}function n(t){try{S.ex=t,g(S)}catch(e){}}function r(t,e,n){var r=document.createElement("script");r.onerror=n,r.onload=e,r.type="text/javascript",r.id="ftr__script",r.async=!0,r.src="https://"+t;var o=document.getElementsByTagName("script")[0];o.parentNode.insertBefore(r,o)}function o(){k(T.uAL),setTimeout(i,v,T.uAL)}function i(t){try{var e=t===T.uDF?h:m;r(e,function(){try{U(),n(t+T.uS)}catch(e){}},function(){try{U(),S.td=1*new Date-S.ts,n(t+T.uF),t===T.uDF&&o()}catch(e){n(T.eUoe)}})}catch(i){n(t+T.eTlu)}}var a={write:function(t,e,n,r){void 0===r&&(r=!0);var o,i;if(n?(o=new Date,o.setTime(o.getTime()+24*n*60*60*1e3),i="; expires="+o.toGMTString()):i="",!r)return void(document.cookie=escape(t)+"="+escape(e)+i+"; path=/");var a,c,u;if(u=location.host,1===u.split(".").length)document.cookie=escape(t)+"="+escape(e)+i+"; path=/";else{c=u.split("."),c.shift(),a="."+c.join("."),document.cookie=escape(t)+"="+escape(e)+i+"; path=/; domain="+a;var s=this.read(t);null!=s&&s==e||(a="."+u,document.cookie=escape(t)+"="+escape(e)+i+"; path=/; domain="+a)}},read:function(t){for(var e=escape(t)+"=",n=document.cookie.split(";"),r=0;r<n.length;r++){for(var o=n[r];" "==o.charAt(0);)o=o.substring(1,o.length);if(0===o.indexOf(e))return unescape(o.substring(e.length,o.length))}return null}},c="fort",u="erTo",s="ken",d=c+u+s,f="9";f+="ck";var l=3,h=e("(VQ(1fgq71iruwhu1frp2vq2(VQ(2vfulsw1mv"),m=e("g68x4yj4t5;e6z1forxgiurqw1qhw2vq2(VQ(2vfulsw1mv"),v=10;window.ftr__startScriptLoad=1*new Date;var g=function(t){var e=function(t){return t||""},n=e(t.id)+"_"+e(t.ts)+"_"+e(t.td)+"_"+e(t.ex)+"_"+e(f);a.write(d,n,1825,!0)},p=function(){var t=a.read(d)||"",e=t.split("_"),n=function(t){return e[t]||void 0};return{id:n(0),ts:n(1),td:n(2),ex:n(3),vr:n(4)}},w=function(){for(var t={},e="fgu",n=[],r=0;r<256;r++)n[r]=(r<16?"0":"")+r.toString(16);var o=function(t,e,r,o,i){var a=i?"-":"";return n[255&t]+n[t>>8&255]+n[t>>16&255]+n[t>>24&255]+a+n[255&e]+n[e>>8&255]+a+n[e>>16&15|64]+n[e>>24&255]+a+n[63&r|128]+n[r>>8&255]+a+n[r>>16&255]+n[r>>24&255]+n[255&o]+n[o>>8&255]+n[o>>16&255]+n[o>>24&255]},i=function(){if(window.Uint32Array&&window.crypto&&window.crypto.getRandomValues){var t=new window.Uint32Array(4);return window.crypto.getRandomValues(t),{d0:t[0],d1:t[1],d2:t[2],d3:t[3]}}return{d0:4294967296*Math.random()>>>0,d1:4294967296*Math.random()>>>0,d2:4294967296*Math.random()>>>0,d3:4294967296*Math.random()>>>0}},a=function(){var t="",e=function(t,e){for(var n="",r=t;r>0;--r)n+=e.charAt(1e3*Math.random()%e.length);return n};return t+=e(2,"0123456789"),t+=e(1,"123456789"),t+=e(8,"0123456789")};return t.safeGenerateNoDash=function(){try{var t=i();return o(t.d0,t.d1,t.d2,t.d3,!1)}catch(n){try{return e+a()}catch(n){}}},t.isValidNumericalToken=function(t){return t&&t.toString().length<=11&&t.length>=9&&parseInt(t,10).toString().length<=11&&parseInt(t,10).toString().length>=9},t.isValidUUIDToken=function(t){return t&&32===t.toString().length&&/^[a-z0-9]+$/.test(t)},t.isValidFGUToken=function(t){return 0==t.indexOf(e)&&t.length>=12},t}(),T={uDF:"UDF",uAL:"UAL",mLd:"1",eTlu:"2",eUoe:"3",uS:"4",uF:"9",tmos:["T5","T10","T15","T30","T60"],tmosSecs:[5,10,15,30,60],bIR:"43"},y=function(t,e){for(var n=T.tmos,r=0;r<n.length;r++)if(t+n[r]===e)return!0;return!1};try{var S=p();try{S.id&&(w.isValidNumericalToken(S.id)||w.isValidUUIDToken(S.id)||w.isValidFGUToken(S.id))||(S.id=w.safeGenerateNoDash()),S.ts=window.ftr__startScriptLoad,g(S);var D=new Array(T.tmosSecs.length),k=function(t){for(var e=0;e<T.tmosSecs.length;e++)D[e]=setTimeout(n,1e3*T.tmosSecs[e],t+T.tmos[e])},U=function(){for(var t=0;t<T.tmosSecs.length;t++)clearTimeout(D[t])};y(T.uDF,S.ex)?o():(k(T.uDF),setTimeout(i,v,T.uDF))}catch(F){n(T.mLd)}}catch(F){}})()</script>
+  <script type="text/javascript" src="/c3650cdf-216a-4ba2-80b0-9d6c540b105e58d2670b-ea0f-484e-b88c-0e2c1499ec9bd71e4b42-8570-44e3-89b6-845326fa43b6"></script>
+  <script type="text/javascript" src="https://cdn.gbqofs.com/pizzapizza/u/detector-dom.min.js"></script>
+  <script id="_cls_detector" data-clsconfig="reportURI=https://report.pizzapizza.gbqofs.io/reporting/1da0d61f-d9f9-44eb-bbf2-b4ba2f5d1aeb/cls_report" src="../detector-dom.min.js"></script>
+  <!-- <script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=7eba262a-be1d-4c49-b51f-e778f38e1e0c"> </script> -->
+  <script id="ze-snippet"
+src="https://static.zdassets.com/ekr/snippet.js?key=7eba262a-be1d-4c49-b51f-e778f38e1e0c"> </script>
+
+<script>
+zE('webWidget:on', 'chat:departmentStatus', function(dept) {
+  if (dept.name === 'Pizza Pizza' && dept.status === 'online') {
+    zE('webWidget', 'updateSettings', {
+      webWidget: {
+        chat: {
+          departments: {
+            enabled: [''],
+            select: 'Pizza Pizza'
+          },
+          suppress: false
+        }
+      }
+    });
+  } else if (dept.name === 'Pizza Pizza' && dept.status !== 'online') {
+    zE('webWidget', 'updateSettings', {
+      webWidget: {
+        chat: {
+          suppress: true
+        }
+      }
+    });
+  }
+});
+</script>
+  <!--BEGIN QUALTRICS WEBSITE FEEDBACK SNIPPET-->
+  <script type='text/javascript'>
+	(function(){var g=function(e,h,f,g){
+	this.get=function(a){for(var a=a+"=",c=document.cookie.split(";"),b=0,e=c.length;b<e;b++){for(var d=c[b];" "==d.charAt(0);)d=d.substring(1,d.length);if(0==d.indexOf(a))return d.substring(a.length,d.length)}return null};
+	this.set=function(a,c){var b="",b=new Date;b.setTime(b.getTime()+6048E5);b="; expires="+b.toGMTString();document.cookie=a+"="+c+b+"; path=/; "};
+	this.check=function(){var a=this.get(f);if(a)a=a.split(":");else if(100!=e)"v"==h&&(e=Math.random()>=e/100?0:100),a=[h,e,0],this.set(f,a.join(":"));else return!0;var c=a[1];if(100==c)return!0;switch(a[0]){case "v":return!1;case "r":return c=a[2]%Math.floor(100/c),a[2]++,this.set(f,a.join(":")),!c}return!0};
+	this.go=function(){if(this.check()){var a=document.createElement("script");a.type="text/javascript";a.src=g;document.body&&document.body.appendChild(a)}};
+	this.start=function(){var t=this;"complete"!==document.readyState?window.addEventListener?window.addEventListener("load",function(){t.go()},!1):window.attachEvent&&window.attachEvent("onload",function(){t.go()}):t.go()};};
+	try{(new g(100,"r","QSI_S_ZN_efH3Oj5L7fZ5APk","https://znefh3oj5l7fz5apk-pizzapizza.siteintercept.qualtrics.com/SIE/?Q_ZID=ZN_efH3Oj5L7fZ5APk")).start()}catch(i){}})();
+	</script><div id='ZN_efH3Oj5L7fZ5APk'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>
+	<!--END WEBSITE FEEDBACK SNIPPET-->
+</body>
+</html>

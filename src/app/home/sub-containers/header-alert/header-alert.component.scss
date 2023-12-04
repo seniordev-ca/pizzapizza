@@ -1,0 +1,112 @@
+@import 'global-scss-mixing';
+
+$alert-warning: #fff38e;
+$alert-success: #4e7026;
+$light-green: #8abc53;
+
+
+.alert-data-box {
+	position: fixed;
+	bottom: 40px;
+	left: -1px;
+	transition: all 1s ease;
+	opacity: .4;
+	z-index: 1222;
+	border: 1px solid;
+	border-top-right-radius: 10px;
+	background-color: $white;
+	padding: 5px;
+	width: 40px;
+	height: 40px;
+	overflow: hidden;
+
+	h3 {
+		font-size: .688em;
+	}
+
+	&:hover {
+		opacity: 1;
+		width: initial;
+		height: initial;
+	}
+
+	.temp-data-type {
+		cursor: pointer;
+
+		&.selected {
+			text-decoration: underline;
+		}
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+.header-alert-wrapper {
+	.alert {
+		margin-bottom: 0;
+		border: 0;
+		border-radius: 0;
+		padding: 20px;
+
+		&.alert-warning {
+			background-color: $alert-warning;
+
+			h4 {
+				color: $pp-bg-maincolour;
+			}
+
+			img { 
+				width: 100px;
+			}
+		}
+
+		&.alert-success {
+			background-color: $alert-success;
+			color: $white;
+		}
+
+		h4 {
+			margin-bottom: 0;
+			line-height: 1em;
+		}
+
+		.btn-primary {
+			height: auto;
+
+			&.selected {
+				i:before {
+					transform: rotateY(180deg);
+					color: $light-green;
+				}
+			}
+
+			&.transparent {
+				background-color: transparent;
+				color: $pp-default-text-colour;
+			}
+
+			.orange-icon {
+				color: $pp-bg-maincolour;
+			}
+		}
+	}
+	@include media-breakpoint-down(sm) {
+		.alert {
+			padding: 10px;
+
+			&.alert-warning {
+	
+				h4 {
+					font-size: 1rem;
+				}
+
+				img { 
+					width: 75px;
+				}
+			}
+		}
+	}
+}
+

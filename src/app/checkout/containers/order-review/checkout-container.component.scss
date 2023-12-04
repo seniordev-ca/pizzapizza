@@ -1,0 +1,201 @@
+@import 'global-scss-mixing';
+
+$border-color: #ccd6d8;
+$items-border: #e1e7e9;
+$light-grey: #eaf0f3;
+$dark-grey: #6d7273;
+$overlay-background: rgba(0, 0, 0, .5);
+
+.checkout-container {
+	margin-bottom: 80px;
+	overflow-x: hidden;
+
+	h6 {
+		@include font-extra-bold;
+	}
+
+	.overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 200;
+		background: $overlay-background;
+		width: 100%;
+		height: 100%;
+	}
+
+	.spinner {
+		position: relative;
+		top: 50%;
+		left: 50%;
+		z-index: 300;
+		width: 4em;
+		height: 4em;
+		color: $pp-bg-maincolour;
+	}
+
+	.header-nav {
+		position: relative;
+
+		.items {
+			position: absolute;
+			top: 0;
+			right: 0;
+			z-index: -1;
+			color: $pp-default-text-colour;
+		}
+
+		.icon-cart {
+			color: $pp-default-text-colour;
+			font-size: 35px;
+		}
+	}
+
+	.column-name {
+		line-height: 1.385em;
+		letter-spacing: .2px;
+		color: $pp-default-text-colour;
+		font-family: 'proxima-nova';
+		font-size: .883em;
+		font-style: normal;
+	}
+
+	.temp-sign-in {
+		@include font-black;
+
+		border: 1px solid $pp-default-text-colour;
+		color: $pp-bg-maincolour;
+		font-size: .6em;
+	}
+
+	.next {
+		border-bottom: 1px solid $border-color;
+		padding-top: 3%;
+		padding-right: 0;
+		padding-bottom: 3%;
+		padding-left: 0;
+	}
+
+	@include media-breakpoint-down(md) {
+		.decrement-amount-btn,
+		.increment-amount-btn {
+			display: none;
+		}
+	}
+
+
+	@include media-breakpoint-down(sm) {
+		.decrement-amount-btn,
+		.increment-amount-btn {
+			display: none;
+		}
+
+		.next {
+			margin-bottom: 20px;
+		}
+
+		.card-body {
+			padding-right: 0;
+			padding-left: 0;
+		}
+
+		.header-nav {
+			.items {
+				top: 5%;
+			}
+
+			.icon-cart {
+				color: $pp-default-text-colour;
+				font-size: 25px;
+			}
+		}
+	}
+
+	.store-modal-close {
+		position: absolute;
+		top: 5px;
+		right: 5px;
+		z-index: 22;
+		border: 0;
+		background: transparent;
+		cursor: pointer;
+		color: $pp-bg-maincolour;
+	}
+
+	.card:nth-of-type(2) {
+		.card-header {
+			&.active {
+				border-bottom: 0;
+			}
+		}
+
+		.card-body {
+			border-bottom: 1px solid $border-color;
+		}
+	}
+
+	.card-body {
+		padding: 1.125rem 0;
+	}
+
+	.surcharge-message {
+		margin-bottom: 2rem;
+		font-size: 1rem;
+	}
+
+	.no-payment-required {
+		color: $light-grey;
+
+		p {
+			color: $dark-grey;
+			font-size: 1.875em;
+		}
+
+		i {
+			font-size: 10em;
+		}
+
+		@include media-breakpoint-down(sm) {
+			p {
+				margin-bottom: 0;
+				font-size: 1.4em;
+			}
+
+			i {
+				font-size: 5em;
+			}
+		}
+	}
+
+	.pp-accordion {
+		.card {
+			.card-header {
+				.btn-link {
+					padding: .5rem;
+				}
+			}
+		}
+	}
+}
+
+.cart-checkout-container {
+	// .item-display-row {}
+
+	.outline-bottom {
+		border-bottom: 1px solid $border-color;
+	}
+
+	.title {
+		@include font-extra-bold;
+
+		letter-spacing: .31px;
+		color: $pp-default-text-colour;
+		font-size: 1rem;
+	}
+}
+
+.top-general-title {
+	position: relative;
+	top: 27px;
+	z-index: 100;
+}

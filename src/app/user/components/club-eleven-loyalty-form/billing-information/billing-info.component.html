@@ -1,0 +1,78 @@
+<div class="form-row club-11-billing-info-row" [formGroup]="billingInfo">
+	<h4 class="form-row-heading col-12">Billing Information</h4>
+	<div class="col-12 form-group"
+	[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(billingInfo.controls['address1'])">
+		<label for="addressLine1" class="alternate-label">
+			Address 1
+		</label>
+		<app-form-invalid-message [control]="billingInfo.controls['address1']"></app-form-invalid-message>
+		<input type="text" class="form-control" placeholder="" formControlName="address1">
+	</div>
+
+	<div class="col-12 form-group"
+	[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(billingInfo.controls['address2'])">
+		<label for="addressLin2" class="alternate-label">
+			Address 2 (optional)
+		</label>
+		<app-form-invalid-message [control]="billingInfo.controls['address2']"></app-form-invalid-message>
+		<input type="text" class="form-control" placeholder="" formControlName="address2">
+	</div>
+
+	<div class="col-12 col-lg-5 form-group"
+	[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(billingInfo.controls['city'])">
+		<label for="addressCity" class="alternate-label">
+			City
+		</label>
+		<app-form-invalid-message [control]="billingInfo.controls['city']"></app-form-invalid-message>
+		<input type="text" class="form-control" placeholder="" formControlName="city">
+	</div>
+
+	<div class="col-6 col-lg-2 form-group">
+		<label for="addressProvince" class="alternate-label">
+			Province
+		</label>
+		<div class="select-wrapper">
+			<select class="form-control">
+				<option>Select</option>
+				<option value="AB">AB</option>
+				<option value="BC">BC</option>
+				<option value="MB">MB</option>
+				<option value="NB">NB</option>
+				<option value="NL">NL</option>
+				<option value="NS">NS</option>
+				<option value="NT">NT</option>
+				<option value="NU">NU</option>
+				<option value="ON">ON</option>
+				<option value="PE">PE</option>
+				<option value="QC">QC</option>
+				<option value="SK">SK</option>
+				<option value="YT">YT</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="col-6 col-lg-5 form-group"
+	[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(billingInfo.controls['postalCode'])">
+		<label for="addressPostalCode" class="alternate-label">
+			Postal Code
+		</label>
+		<app-form-invalid-message [control]="billingInfo.controls['postalCode']"></app-form-invalid-message>
+		<input type="text" class="form-control" placeholder="" formControlName="postalCode">
+	</div>
+
+	<div class="col-12 col-lg-6 form-group">
+			<label for="addressCountry" class="alternate-label">
+				Country
+			</label>
+			<input type="text" class="form-control" placeholder="Canada" value="Canada" [disabled]="true">
+	</div>
+
+	<div class="col-12 col-lg-6 form-group"
+	[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(billingInfo.controls['phoneNumber'])">
+			<label for="addressPhone" class="alternate-label">
+				Phone Number
+			</label>
+			<app-form-invalid-message [control]="billingInfo.controls['phoneNumber']"></app-form-invalid-message>
+			<input type="text" class="form-control" placeholder="" formControlName="phoneNumber">
+	</div>
+</div>

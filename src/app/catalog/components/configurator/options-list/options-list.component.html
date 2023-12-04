@@ -1,0 +1,313 @@
+<!--
+		[ngClass] = "{
+		'is-top-nav-fixed': configuratorHeaderContent.isScrollCollapsed
+	}"
+-->
+<div class="container configurator-options">
+	<!--
+		TODO stripped for is scroll
+	-->
+	<div class="row justify-content-between config-row">
+
+		<div class="mt-3 mt-lg-3 configurator-options-sizer col-12"
+			#productsOptionsWrap
+			[class.col-md-12]="(!isScrollCollapsed && !isHeaderStrippedVersion)"
+			[class.col-md-8]="(isScrollCollapsed || isHeaderStrippedVersion)">
+
+			<div class="col-12 text-center" *ngIf="isPersonalMessageTab && !personalizationTemplate">
+				<button class="btn btn-primary btn-white loading-state"></button>
+			</div>
+			<div class="row justify-content-center mx-0" *ngIf="isPersonalMessageTab && personalizationTemplate">
+				<div class="col-12">
+					<div class="justify-content-end d-flex reset-selection-wrap ghost-hidden" (click)="onResetClick($event)">
+						<span class="align-self-center" i18n>
+							Reset
+						</span>
+						<i class="icon-reset"></i>
+					</div>
+				</div>
+				<div class="col-12 col-lg-10 text-center">
+						<h3>{{personalizationTemplate.header}}</h3>
+				</div>
+				<div class="col-12 col-lg-8">
+					<form class="pp-form" [formGroup]="personalizationForm">
+						<div class="form-row mt-2">
+							<div class="col-12 form-group">
+									<label for="to" class="alternate-label" i18n>To</label>
+									<input type="text" class="form-control"
+											formControlName="message_to" maxlength="25" placeholder="Please Enter Name">
+							</div>
+							<div class="col-12 form-group">
+									<label for="from" class="alternate-label" i18n>From</label>
+									<input type="text" class="form-control"
+											formControlName="message_from" maxlength="25" placeholder="Please Enter Name">
+							</div>
+							<div class="col-12 form-group">
+								<label for="message" class="alternate-label" i18n>Message</label>
+								<app-dropdown
+									[inputControl]="personalizationForm.controls['message']"
+									[options]="personalizationTemplate.messageOptions"
+									[selectedValue]="personalizationForm.controls['message'].value">
+								</app-dropdown>
+							</div>
+							<div class="col-12 form-group" [class.invalid-entry]="customMessageValidation.isInputInvalid()"
+									*ngIf="personalizationTemplate.isCustomAllowed && (personalizationForm.controls['message'].value === personalizationTemplate.customMessageLabel)">
+								<textarea class="form-control" formControlName="customMessage"></textarea>
+								<div class="d-inline-block mt-2">
+									<app-form-invalid-message
+										[control]="personalizationForm.controls['customMessage']"
+										#customMessageValidation>
+									</app-form-invalid-message>
+								</div>
+							</div>
+
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="row mx-0" *ngIf="!isPersonalMessageTab">
+				<!-- <div class="col text-left text-sm-center option-list-title">
+					<h3 class="fw-normal ghost-bar g-w-30 ghost-center">
+						{{ listTitle }}
+					</h3>
+				</div> -->
+				<div class="col-auto ml-auto d-flex reset-selection-wrap ghost-hidden" (click)="onResetClick($event)" (keydown.enter)="onResetClick($event)" tabindex="0"
+      aria-label="Reset all options">
+					<span class="align-self-center" i18n>
+						Reset
+					</span>
+					<i class="icon-reset"></i>
+				</div>
+			</div>
+			<!-- row align-items-center -->
+
+			<div class="row p-1 p-md-2 p-lg-4 products-options-wrap" *ngIf="!isPersonalMessageTab">
+				<ng-container *ngFor="let configurationOption of productOptionListArray">
+					<div class="product-option-col col-12 col-md-4"
+					[hidden]="!configurationOption.isVisible || !configurationOption.isAvailableForProduct"
+					[class.disabled]="configurationOption.isMaxQuantityReached && !configurationOption.selected && configurationOption.allowMultiSelect"
+					[ngClass]="{
+						'col-md-8 col-lg-4 selected' : configurationOption.selected && (!isScrollCollapsed && !isHeaderStrippedVersion),
+						'col-md-8 col-lg-6 selected' : configurationOption.selected && (isScrollCollapsed || isHeaderStrippedVersion),
+						'col-lg-2': !configurationOption.selected && (!isScrollCollapsed && !isHeaderStrippedVersion),
+						'col-lg-3': !configurationOption.selected && (isScrollCollapsed || isHeaderStrippedVersion)
+					}"
+					[id]="configurationOption.id">
+
+					<span class="product-option"
+          tabindex="0"
+          [attr.aria-label]="configurationOption.name"
+          [class.selected]="configurationOption.selected"
+						[hidden]="!configurationOption.isVisible || !configurationOption.isAvailableForProduct"
+						[class.open]="configurationOption.selected"
+						(click)="onOptionClick(
+							$event,
+							configurationOption.halfHalfOption,
+							configurationOption.id,
+							configurationOption.isMaxQuantityReached,
+							configurationOption.selected,
+							configurationOption.allowMultiSelect
+							)"
+              (keydown.enter)="onOptionClick(
+                $event,
+                configurationOption.halfHalfOption,
+                configurationOption.id,
+                configurationOption.isMaxQuantityReached,
+                configurationOption.selected,
+                configurationOption.allowMultiSelect
+                )"
+              >
+
+						<div class="check-box-icon-wrap">
+							<i class="icon-checkmark"></i>
+						</div>
+
+						<!-- Tab info block -->
+						<ng-container *ngTemplateOutlet="tabInfoWrap; context:configurationOption">
+						</ng-container>
+
+
+						<!-- Image wrap -->
+						<div class="image-overflow-wrap">
+							<div *ngIf="configurationOption.optionMode != OptionTabModeEnum.empty && configurationOption.productImage" class="image-wrap">
+								<img alt="config image" [src]="configurationOption.productImage" class="img-fluid ghost-hidden">
+							</div>
+						</div>
+
+						<div class="none-option-icon ghost-hidden" *ngIf="configurationOption.optionMode == OptionTabModeEnum.empty">
+							<i class="icon-close"></i>
+						</div>
+
+					</span>
+
+					</div>
+
+					<!-- product-option -->
+				</ng-container>
+			</div>
+			<!-- row production-options-row -->
+		</div>
+		<!-- container mt-3 -->
+
+		<div class="side-product-details p-1 p-md-2 p-lg-4 align-self-start col-12 sticky-top"
+		[class.is-visible]="(isScrollCollapsed || isHeaderStrippedVersion)"
+		[class.col-md-4]="(isScrollCollapsed || isHeaderStrippedVersion)"
+		[class.d-none]="!isScrollCollapsed && !isHeaderStrippedVersion"
+		#sideProductDetails>
+			<app-side-product-details
+				[configurationUi]="configurationUi"
+				[configuratorProductInfo]="configuratorProductInfo"
+				[isValid]="configuratorProductInfo.isValid && personalizationForm.valid"
+				(sideMenuEventEmitter)="sideMenuEventHandler($event)"
+
+				[quantitySelectorContent]="quantitySelectorContent"
+				(quantitySelectorEventEmitter)="quantitySelectorEventHandler($event)"
+
+				[productSizePickerTabsArray]="productSizePickerTabsArray"
+				(productSizePickerTabClickEmitter)="productSizePickerTabClickHandler($event)"
+				[isCombo]="isHeaderStrippedVersion && !isPizzaAssistant">
+			</app-side-product-details>
+		</div>
+		<!-- side-product-details -->
+
+	</div>
+
+</div>
+
+
+<!-- TabOption info template -->
+<ng-template #tabInfoWrap
+	let-id="id" let-name="name"
+	let-halfHalfOption="halfHalfOption"
+	let-calText="calText"
+	let-optionMode="optionMode"
+	let-optionSelected="selected"
+	let-quantity="quantity"
+	let-isAvailableForProduct="isAvailableForProduct"
+	let-optionDropDown="optionDropDown"
+	let-allowHalfAndHalf="allowHalfAndHalf"
+	let-isMaxQuantityReached="isMaxQuantityReached"
+	let-isPremium="isPremium"
+	let-isGluten="isGluten"
+	let-isSmallOnly="isSmallOnly"
+	let-isMediumOnly="isMediumOnly"
+	let-isDipOnWings="isDipOnWings">
+	<div class="info-wrap">
+		<div class="select" i18n>
+			Select
+		</div>
+		<div class="animation-wrap">
+			<div class="option-label ghost-bar text-capitalize">
+				{{ name | lowercase}}
+				<span *ngIf="isPremium || isDipOnWings || isSmallOnly || isMediumOnly || isGluten" class="sub-title">
+					<ng-container *ngIf="isSmallOnly"><i class="icon-smlonly"></i></ng-container>
+					<ng-container *ngIf="isMediumOnly"><i class="icon-med"></i></ng-container>
+					<ng-container *ngIf="isPremium"><i class="icon-dollar icon-border"></i></ng-container>
+					<ng-container *ngIf="isGluten"><i class="icon-wheat icon-border"></i></ng-container>
+					<ng-container *ngIf="isDipOnWings"><i class="icon-wing"></i></ng-container>
+				</span>
+			</div>
+
+			<!-- Half-half selector-->
+			<div class="half-half-wrap"
+				*ngIf="allowHalfAndHalf">
+
+				<div class="d-flex justify-content-between icons-wrap">
+					<i class="icon-topping-half"
+						[class.active]="halfHalfOption == HalfHalfOptionsEnum.left"
+						(click)="onHalfHalfClick($event, id, HalfHalfOptionsEnum.left)"
+            (keydown.enter)="onHalfHalfClick($event, id, HalfHalfOptionsEnum.left)"
+            tabindex="0"
+            [attr.aria-label]="'select'+ name +' on left side'"
+            >
+					</i>
+					<i class="icon-topping-full"
+						[class.active]="halfHalfOption == HalfHalfOptionsEnum.center"
+						(click)="onHalfHalfClick($event, id, HalfHalfOptionsEnum.center)"
+            (keydown.enter)="onHalfHalfClick($event, id, HalfHalfOptionsEnum.center)"
+            tabindex="0"
+            [attr.aria-label]="'select'+ name +' on whole'"
+            >
+
+
+					</i>
+					<i class="icon-topping-half right"
+						[class.active]="halfHalfOption == HalfHalfOptionsEnum.right"
+						(click)="onHalfHalfClick($event, id, HalfHalfOptionsEnum.right)"
+            (keydown.enter)="onHalfHalfClick($event, id, HalfHalfOptionsEnum.right)"
+            tabindex="0"
+            [attr.aria-label]="'select'+ name +' on right side'"
+
+            >
+					</i>
+				</div>
+
+				<div class="info" *ngIf="halfHalfOption == HalfHalfOptionsEnum.left" i18n>
+					On left side
+				</div>
+				<div class="info" *ngIf="halfHalfOption == HalfHalfOptionsEnum.center" i18n>
+					On whole
+				</div>
+				<div class="info" *ngIf="halfHalfOption == HalfHalfOptionsEnum.right" i18n>
+					On right side
+				</div>
+
+			</div>
+
+			<div class="separator">
+			</div>
+
+			<div class="calories-label ghost-bar g-w-80 cal-text" *ngIf="calText !== null">
+				{{ calText }} <ng-container i18n>Cals</ng-container>
+			</div>
+		</div>
+
+
+		<div class="align-items-center justify-content-between incrementor-wrap"
+			*ngIf="optionMode == OptionTabModeEnum.incrementor">
+
+			<i class="icon-minus-2 align-self-center"
+				[class.active]="quantity != 1"
+				(click)="onOptionQuantityChange($event, id, -1, true, false)"
+        (keydown.enter)="onOptionQuantityChange($event, id, -1, true, false)"
+        tabindex="0"
+        [attr.aria-label]="quantity == 1 ? 'Button Disabled' : 'remove 1 item'+ name"
+        ></i>
+
+			<span>
+				{{ quantity }}
+			</span>
+
+			<i class="icon-plus-2 align-self-center"
+				*ngIf="maxQtyForTopping > 0" tabindex="0"
+				[class.active]="!isMaxQuantityReached && quantity < maxQtyForTopping"
+				(click)="onOptionQuantityChange($event, id, +1, !isMaxQuantityReached, quantity >= maxQtyForTopping)"
+        (keydown.enter)="onOptionQuantityChange($event, id, +1, !isMaxQuantityReached, quantity >= maxQtyForTopping)"
+        [attr.aria-label]="!isMaxQuantityReached && quantity < maxQtyForTopping ?  'Add 1 item' + name:'Button Disabled' "
+        >
+			</i>
+
+			<i class="icon-plus-2 align-self-center"
+				*ngIf="maxQtyForTopping < 0" tabindex="0" [attr.aria-label]="'Add one ' + name"
+				[class.active]="!isMaxQuantityReached"
+				(click)="onOptionQuantityChange($event, id, +1, !isMaxQuantityReached, false)"
+        (keydown.enter)="onOptionQuantityChange($event, id, +1, !isMaxQuantityReached, false)"
+        tabindex="0"
+        aria-label="Add 1 item"
+
+        >
+			</i>
+		</div>
+
+		<ng-container *ngIf="optionMode == OptionTabModeEnum.dropDown && optionSelected && optionDropDown.options.length > 1">
+			<app-tab-options-drop-down
+				(click)="$event.stopPropagation()"
+
+				[optionDropDownData]="optionDropDown"
+				(optionDropDownEventEmitter)="onOptionDropDownClick(id, $event)">
+			</app-tab-options-drop-down>
+		</ng-container>
+
+	</div>
+	<!-- info-wrap -->
+</ng-template>

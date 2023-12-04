@@ -1,0 +1,125 @@
+/**
+* General Heading sizes and font weight classes
+*/
+h1,
+.h1 {
+	font-size: 3rem; // 48px
+}
+
+h2,
+.h2 {
+	font-size: 2rem; // 32px
+}
+
+h3,
+.h3 {
+	font-size: 1.875rem; // 30px
+}
+
+h4,
+.h4 {
+	font-size: 1.5rem; // 24px
+}
+
+h5,
+.h5 {
+	font-size: 1.25rem; // 20px
+}
+
+h6,
+.h6 {
+	font-size: 1.125rem; // 18px
+}
+
+.smaller {
+	font-size: .813rem; // 13px
+}
+
+.smaller-aa {
+	font-size: .875rem; // 14px
+}
+
+.smallest {
+	font-size: .7rem; // 11px
+}
+
+.fw-normal {
+	@include font-regular;
+}
+
+.fw-semi-bold {
+	@include font-semi-bold;
+}
+
+.fw-bold {
+	@include font-bold;
+}
+
+.fw-extra-bold {
+	@include font-extra-bold;
+}
+
+.fw-black {
+	@include font-black;
+}
+
+@include media-breakpoint-down(sm) {
+	h1,
+	.h1 {
+		font-size: 2.143rem;
+	}
+
+	h2,
+	.h2 {
+		font-size: 1.786rem;
+	}
+
+	h3,
+	.h3 {
+		font-size: 1.607rem;
+	}
+
+	h4,
+	.h4 {
+		font-size: 1.214rem;
+	}
+
+	h5,
+	.h5 {
+		font-size: 1.1rem;
+	}
+
+	h6,
+	.h6 {
+		font-size: 1.071rem;
+	}
+
+	.smaller {
+		font-size: .929rem;
+	}
+}
+
+/**
+* Global font scaling for big screens
+*/
+// I think this first one gets too big too fast
+// @media (min-width: 1600px) {
+// 	html,
+// 	body {
+// 		font-size: 18px;
+// 	}
+// }
+
+@media (min-width: 2000px) {
+	html,
+	body {
+		font-size: 24px;
+	}
+}
+
+@media (min-width: 3000px) {
+	html,
+	body {
+		font-size: 32px;
+	}
+}

@@ -1,0 +1,100 @@
+<div class="container-fluid club-eleven-learn-more-container">
+	<div class="row pb-4">
+		<div class="col-12 align-self-start">
+			<app-sub-header-navigation
+				[subHeaderNavContent]="subHeaderNavContent"
+				title="Learn More"
+				navText="Back"
+				i18n-navText
+				i18n-title>
+			</app-sub-header-navigation>
+		</div>
+	</div>
+</div>
+
+<!-- TODO from WP? -->
+<div class="container club-eleven-learn-more-content-container">
+	<div class="row justify-content-center">
+		<div class="col-12 col-lg-10 border-bottom pb-3">
+			<div class="row">
+				<!-- this content will likely come from an outside source -->
+				<div class="col-12">
+					<h3 class="fw-normal py-3">Membership Benefits</h3>
+				</div>
+				<div class="col-12 col-lg-6 border-right">
+
+					<h6 class="fw-extra-bold">Club 11-11 is Pizza Pizza’s exclusive loyalty program!</h6>
+
+					<p>
+						Register your Pizza Pizza Club 11-11 Loyalty Card or any Pizza Pizza Gift Card at www.pizzapizza.ca and start earning!
+					</p>
+					<p>
+						Earn 5% in Loyalty ‘Dollars’ on every order.
+					</p>
+					<p>
+						Order only 5 times and redeem your Loyalty ‘Dollars’ after every 5th visit*
+					</p>
+					<p>
+						Order another 5 times in order to unlock your next 5% collected, and so on and so forth.
+					</p>
+					<p>
+						You must add your registered card to your online ordering account in order to earn Loyalty ‘Dollars’ on digital purchases.
+					</p>
+					<p>
+						*Loyalty ‘Dollars’ must be redeemed within 90 days after your 5th visit.
+					</p>
+				</div>
+
+				<div class="col-12 col-lg-6">
+					<h6 class="fw-extra-bold">Other Benefits:</h6>
+
+					<p>
+						Access to reload your card online
+					</p>
+					<p>
+						Access to automatically reload your card
+					</p>
+					<p>
+						Protect your card if lost or stolen
+					</p>
+					<p>
+						Transfer your balance from your card to another
+					</p>
+					<p>
+						Access to manage your account online or on the Pizza Pizza app
+					</p>
+					<p>
+						Special offers & promotions for Club 11-11 Members!!
+					</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-12 col-lg-10">
+			<h3 class="fw-normal pt-4">Frequently Asked Questions</h3>
+		</div>
+		<div class="col-12 col-lg-6 pb-5">
+			<ngb-accordion [closeOthers]="true" #acc="ngbAccordion" class="pp-accordion">
+				<ngb-panel *ngFor="let question of faq; let i = index;" id="question{{i}}">
+					<ng-template ngbPanelTitle>
+						<div class="header d-flex justify-content-between align-items-center">
+							<div class="header-text">
+								{{question.question}}
+							</div>
+							<div>
+								<i class="icon-triangle">
+								</i>
+							</div>
+						</div>
+					</ng-template>
+
+					<ng-template ngbPanelContent>
+						<span *ngIf="question.answer" [innerHtml]="question.answer"></span>
+					</ng-template>
+				</ngb-panel>
+			</ngb-accordion>
+		</div>
+	</div>
+</div>

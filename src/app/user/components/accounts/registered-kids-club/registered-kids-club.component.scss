@@ -1,0 +1,210 @@
+@import 'global-scss-mixing';
+
+$mid-grey: #dae9f0;
+$light-grey: #edf2f5;
+$not-active-btn-color: #6d7273;
+$btn-dark-grey: #dbe4ea;
+$ghost-loader-bg: #e1e7e9;
+$pp-green: #4e7026;
+$black: #000;
+$border-grey: #ccd6d8;
+$pp-secondary-text-color: #3b210b;
+
+.registered-kids-club-container {
+
+	.registered-kids-club-title-icon {
+		color: $pp-bg-maincolour;
+		font-size: 3em;
+	}
+
+	.register-kids-club-title {
+		letter-spacing: .5px;
+		color: $pp-default-text-colour;
+		font-size: 1.6em;
+	}
+
+	.registered-kids-club-action {
+
+		.registered-kids-club-action-span {
+			@include font-extra-bold;
+			cursor: pointer;
+			letter-spacing: .3px;
+			color: $pp-bg-maincolour;
+			font-size: .85em;
+		}
+
+		i {
+			cursor: pointer;
+			color: $pp-bg-maincolour;
+			font-size: 1.3em;
+		}
+	}
+
+	.registered-kids-club-second-row {
+		border: 1px solid $ghost-loader-bg;
+		border-radius: 9px;
+		background-color: $light-grey;
+	}
+
+	.child-icon {
+		color: $pp-bg-maincolour;
+		font-size: 2.5em;
+	}
+
+	.child-image-col {
+		.child-image-circle-wrap {
+			margin-top: 10%;
+			width: 48px;
+			height: 48px;
+		}
+	}
+
+	.child-user-name {
+		@include font-extra-bold;
+		line-height: .8;
+		letter-spacing: .4px;
+		color: $pp-default-text-colour;
+		font-size: 1.25em;
+		word-wrap: break-word;
+	}
+
+	.child-birthday-col {
+		line-height: 1.29;
+		letter-spacing: .3px;
+		color: $pp-secondary-text-color;
+		font-size: .813em;
+	}
+
+	.child-edit-col {
+		i {
+			color: $pp-bg-maincolour;
+			font-size: .76em;
+		}
+
+		span {
+			cursor: pointer;
+			color: $pp-bg-maincolour;
+			font-size: .66em;
+		}
+	}
+}
+
+
+@include media-breakpoint-down(md) {
+	.registered-kids-club-container {
+
+		.registered-kids-club-title-icon {
+			font-size: 2.7em;
+		}
+
+		.register-kids-club-title {
+			font-size: 1.44em;
+		}
+
+		.registered-kids-club-action {
+			
+			.registered-kids-club-action-span {
+				font-size: .765em;
+			}
+
+			i {
+				color: $pp-bg-maincolour;
+				font-size: 1.17em;
+			}
+		}
+
+		.child-info-col {
+			text-align: center;
+		}
+
+		.child-image-col {
+
+			.child-image-circle-wrap {
+				margin-top: 10%;
+				width: 53px;
+				height: 53px;
+			}
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.registered-kids-club-container {
+		.child-image-col {
+			
+			.child-image-circle-wrap {
+				width: 60px;
+				height: 60px;
+			}
+		}
+
+		.child-info-col {
+			text-align: start;
+		}
+	}
+}
+
+
+
+@include media-breakpoint-down(xs) {
+	.registered-kids-club-container {
+
+		.registered-kids-club-title-icon {
+			font-size: 2.1em;
+		}
+
+		.register-kids-club-title {
+			line-height: 1.2em;
+			font-size: 1.1em;
+		}
+
+		.registered-kids-club-action {
+			
+			.registered-kids-club-action-span {
+				font-size: .76em;
+			}
+
+			i {
+				color: $pp-bg-maincolour;
+				font-size: 1.14em;
+			}
+		}
+
+		.child-icon {
+			color: $pp-bg-maincolour;
+			font-size: 2em;
+		}
+
+		.child-image-col {
+			
+			.child-image-circle-wrap {
+				width: 53px;
+				height: 53px;
+			}
+		}
+
+		.child-user-name {
+			@include font-extra-bold;
+			line-height: .8;
+			letter-spacing: .4px;
+			color: $pp-default-text-colour;
+			font-size: .87em;
+		}
+
+		.child-birthday-col {
+			font-size: .69em;
+		}
+
+		.child-edit-col {
+			i {
+				color: $pp-bg-maincolour;
+				font-size: .81em;
+			}
+
+			span {
+				color: $pp-bg-maincolour;
+				font-size: .7em;
+			}
+		}
+	}
+}

@@ -1,0 +1,204 @@
+$ghost-bg-light: #edf2f5;
+$ghost-bg-dark: #e1e7e9;
+
+$default-ghost-color: #e1e7e9;
+$white-ghost-color: #fff;
+
+
+// sass-lint:disable no-color-literals
+// sass-lint:disable no-important
+
+/**
+* Shimmer animation
+*/
+@mixin ghost-animation($speed) {
+	position: absolute;
+	top: 0;
+	transform: translateX(100%);
+	animation: shimmer $speed infinite;
+	background: linear-gradient(to right, rgba(211, 211, 211, 0) 0%, rgba(211, 211, 211, .8) 50%, rgba(255, 255, 255, 0) 99%, rgba(255, 255, 255, 0) 100%);
+	width: 100%;
+	height: 100%;
+	content: '';
+}
+
+@keyframes shimmer {
+	0% {
+		transform: translateX(-150%);
+	}
+
+	100% {
+		transform: translateX(600%);
+	}
+}
+
+/**
+* Visible only when ghost
+*/
+.ghost-visible-element {
+	display: none;
+	margin-top: 5px;
+}
+
+.pp-ghost-container {
+	.ghost-hidden {
+		visibility: hidden;
+		opacity: 0;
+	}
+
+	.ghost-visible-element {
+		display: flex;
+	}
+
+	/**
+	* Background color
+	*/
+
+	.ghost-bg {
+		background: none $ghost-bg-light !important;
+	}
+
+	.ghost-bg-dark {
+		background: none $ghost-bg-dark !important;
+	}
+
+	.ghost-col-4 {
+		flex: 0 0 33.33%;
+	}
+
+	.ghost-col-6 {
+		flex: 0 0 50%;
+	}
+
+	/**
+	* Ghost labels
+	*/
+	.ghost-bar {
+		position: relative;
+		background-color: $default-ghost-color;
+		width: 100%;
+		height: 1rem;
+		overflow: hidden;
+
+		&:before {
+			position: absolute;
+			top: 0;
+			left: 0;
+			background-color: inherit;
+			width: 100%;
+			height: 100%;
+			content: ' ';
+		}
+
+		&.ghost-white {
+			background-color: $white-ghost-color;
+		}
+
+		&.g-w-10 {
+			width: 10%;
+		}
+
+		&.g-w-20 {
+			width: 20%;
+		}
+
+		&.g-w-30 {
+			width: 30%;
+		}
+
+		&.g-w-40 {
+			width: 40%;
+		}
+
+		&.g-w-50 {
+			width: 50%;
+		}
+
+		&.g-w-60 {
+			width: 60%;
+		}
+
+		&.g-w-70 {
+			width: 70%;
+		}
+
+		&.g-w-80 {
+			width: 80%;
+		}
+
+		&.g-w-90 {
+			width: 90%;
+		}
+
+		&.g-w-100 {
+			width: 100%;
+		}
+
+		&.ghost-center {
+			display: block;
+			margin: 0 auto;
+		}
+
+		&:after {
+			@include ghost-animation(3s);
+			animation-delay: .3s;
+		}
+
+		&.speed-50:after {
+			@include ghost-animation(1.5s);
+			animation-delay: .1s;
+		}
+
+		&.speed-150:after {
+			@include ghost-animation(5s);
+			animation-delay: .2s;
+		}
+
+		&.speed-200:after {
+			@include ghost-animation(7s);
+			animation-delay: .5s;
+		}
+	}
+
+	/**
+	* Buttons
+	*/
+	.btn {
+		overflow: hidden;
+		text-indent: -9999px;
+	}
+
+	/**
+	* Heading sizes
+	*/
+	h1,
+	.h1 {
+		&.ghost-bar {
+			height: 2.375rem;
+		}
+	}
+
+	h2,
+	.h2 {
+		&.ghost-bar {
+			height: 2rem;
+		}
+	}
+
+	h3,
+	.h3 {
+		&.ghost-bar {
+			height: 1.5rem;
+		}
+	}
+
+	h4,
+	.h4,
+	h5,
+	.h5 {
+		&.ghost-bar {
+			height: 1.25rem;
+		}
+	}
+
+}

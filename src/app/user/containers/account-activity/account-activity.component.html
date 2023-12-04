@@ -1,0 +1,109 @@
+<div class="container-fluid account-activity-component pp-table">
+
+	<div class="container nav-container">
+		<div class="row pb-0 pb-md-4">
+			<div class="col-12 align-self-start">
+				<app-sub-header-navigation
+					[subHeaderNavContent]="subHeaderNavContent"
+					title="Account Activity"
+					navText="Back to Club 11/11"
+					i18n-navText
+					i18n-title>
+				</app-sub-header-navigation>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row pp-table-pre-header-row">
+			<div class="col-12 col-md-6 p-1 p-sm-2 left-title">
+				<i class="icon-rectangle-clock"></i>
+				<span i18n>
+					Transaction History
+				</span>
+			</div>
+
+			<div class="col-12 col-md-6 text-left text-md-right right-title">
+				<ng-container i18n>For Card</ng-container>:&nbsp;
+				<span>
+					{{(accountBalance$ | async).maskedCardNumber}}
+				</span>
+			</div>
+		</div>
+
+		<div class="row pp-table-header-row d-none d-md-flex">
+			<div class="col" i18n>
+				Date
+			</div>
+			<div class="col" i18n>
+				Time
+			</div>
+			<div class="col" i18n>
+				Location
+			</div>
+			<div class="col" i18n>
+				Transaction
+			</div>
+			<div class="col text-center border-left" i18n>
+				Amount
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container pp-empty-body-container"
+		*ngIf="(transactionHistory$ | async) && (transactionHistory$ | async).length < 1">
+		<div class="row text-center">
+			<div class="col">
+				<div class="title" i18n>
+					No Transaction History
+				</div>
+
+				<i class="icon-rectangle-clock"></i>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container pp-table-body-container">
+		<div class="row pp-table-row" *ngFor="let transactions of transactionHistory$ | async">
+							<div class="col-6 col-md">
+								<h6 i18n>
+									Date
+								</h6>
+								{{ transactions.date }}
+							</div>
+							<div class="col-6 col-md">
+								<h6 i18n>
+									Time
+								</h6>
+								{{ transactions.time }}
+							</div>
+							<div class="col-6 col-md">
+								<h6 i18n>
+									Location
+								</h6>
+								{{ transactions.location }}
+							</div>
+							<div class="col-6 col-md">
+								<h6 i18n>
+									Transaction
+								</h6>
+								{{ transactions.type }}
+							</div>
+
+							<div class="col-12 d-block d-md-none border-split">
+								&nbsp;
+							</div>
+
+							<div class="col-6 col-md border-left-right text-left text-md-center">
+								<h6 i18n>
+									Amount
+								</h6>
+								{{ transactions.amount | currency:'CAD':'symbol-narrow':'1.2' }}
+							</div>
+		</div>
+	</div>
+
+
+</div>

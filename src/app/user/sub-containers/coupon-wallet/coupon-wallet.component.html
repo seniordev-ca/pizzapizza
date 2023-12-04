@@ -1,0 +1,72 @@
+<div class="container pb-5 coupon-wallet-content-container" id="wallet">
+	<div class="row">
+		<div class="col-12">
+			<app-coupons-list
+				[couponsList]="{
+					listTitle: 'Coupons',
+					couponsArray: couponsArray$ | async
+				}"
+				[isCouponValid]="isCouponValid$ | async"
+				[validationText]="couponValidationMsg$ | async"
+				(walletListEventEmitter)="handleWalletListEventEmitter($event)">
+			</app-coupons-list>
+		</div>
+		<div class="col-12 text-center" #couponCursor *ngIf="couponCursorString || (isLoading$ | async)">
+			<button class="btn-primary btn-white loading-state"></button>
+		</div>
+	</div>
+</div>
+
+<ng-template #couponInCartModal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal(); onRetryClickHandler()" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+		<app-confirmation-modal 
+			[data]="{
+				icon: 'icon-bell'
+			}"
+			title="D'ough!"
+			[subtitle]="couponErrorMsg"
+			i18n-title>
+			<ng-template>
+				<button class="btn btn-primary" (click)="closeModal(); onRetryClickHandler()" i18n>
+					Okay
+				</button>
+			</ng-template>
+		</app-confirmation-modal>
+</ng-template>
+
+<ng-template #confirmDeleteCoupon let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal()" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+	<app-confirmation-modal
+		[data]="{
+			icon: 'icon-trash-can-one'
+		}"
+		title="Are You Sure?"
+		i18n-title>
+		<ng-template>
+			<div class="col-12 mb-4">
+				<p i18n>Are you sure that you want to remove this coupon?</p>
+			</div>
+			<div class="col-12 align-self-end">
+					<div class="row justify-content-center button-row">
+						<div class="col-6 px-1 col-md-5">
+							<button class="btn btn-lg btn-primary btn-white text-uppercase w-100"
+							(click)="closeModal()" i18n>
+								No
+							</button>
+						</div>
+						<div class="col-6 px-1 col-md-5">
+							<button class="btn btn-lg btn-primary text-uppercase w-100"
+							(click)="closeModal(); onConfirmDelete();" i18n>
+								Yes
+							</button>
+						</div>
+					</div>
+			</div>
+			<!-- Button Row -->
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>

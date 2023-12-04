@@ -1,0 +1,144 @@
+@import 'global-scss-mixing';
+
+
+$border-color: #ccd6d8;
+$items-border: #e1e7e9;
+$fill-color: #edf2f5;
+$green: #4e7026;
+$faded-gray: rgb(109, 114, 115);
+$brown: #4c3017;
+
+.club-eleven-loyalty-container {
+
+	.btn-transparent {
+		i {
+			color: $pp-bg-maincolour;
+		}
+
+		&:hover,
+		&:active,
+		&:not([disabled]):not(.disabled):active {
+			background-color: transparent;
+			color: $pp-default-text-colour;
+		}
+	}
+
+	.smaller {
+		margin-bottom: 0;
+	}
+
+	.balance-text {
+		@include font-extra-bold;
+		line-height: 1.2em;
+		color: $pp-bg-maincolour;
+	}
+
+	.green-text {
+		color: $green;
+	}
+
+	.pp-form {
+		.form-row-heading {
+			@include font-extra-bold;
+			font-size: 1rem;
+		}
+
+		.invalid-text-alt {
+			display: inline-block;
+		}
+	}
+
+	&.club-eleven-loyalty-container-header {
+		@include bg-opacity-gradient('/static-files/images/bg-club-eleven.jpg');
+		position: relative;
+	}
+
+	.card-toggle-btn {
+		outline: none;
+		border: 0;
+		background: transparent;
+		cursor: pointer;
+		color: $pp-bg-maincolour;
+		font-weight: 800;
+	}
+
+	.pp-accordion {
+		.card {
+			.card-header {
+				padding-right: 0;
+
+				.btn-link {
+					padding-right: 0;
+				}
+			}
+		}
+	}
+}
+
+.club-eleven-loyalty-header-middle {
+	.account-activity {
+		text-transform: none;
+		color: $brown;
+	}
+}
+
+.club-eleven-loyalty-header-bottom {
+	padding-bottom: 50px;
+
+	.accordion-header {
+		border-bottom: 1px solid $border-color;
+		color: $pp-bg-maincolour;
+	}
+
+	.add-card-col {
+		margin: 50px 0 10px;
+		border: 1px solid $border-color;
+		border-radius: 9px;
+		background-color: $fill-color;
+		padding: 25px 10px;
+		width: 100%;
+		color: $pp-default-text-colour;
+
+		h5 {
+			@include font-extra-bold;
+			margin: 0;
+		}
+
+		p {
+			@include font-regular;
+			margin-bottom: 0;
+		}
+	}
+
+	.card-body {
+		padding: 1.25rem 0;
+	}
+}
+
+
+.card-header {
+	.btn-link {
+		padding-left: 0;
+	}
+}
+@include media-breakpoint-down(sm) {
+	.club-eleven-loyalty-container {
+
+		.smaller {
+			font-size: .5em;
+		}
+
+		.card-body {
+			padding: 1.25rem 0;
+		}
+	}
+
+	.add-card-col {
+		font-size: .65em;
+
+		h5 {
+			font-size: 1.3em;
+		}
+	}
+
+}

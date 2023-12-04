@@ -1,0 +1,124 @@
+@import 'global-scss-mixing';
+
+$green: #4e7026;
+
+.sign-up-header-wrapper {
+	position: relative;
+	min-height: 200px;
+
+	.header-background {
+		position: absolute;
+		top: 0;
+		opacity: .2;
+		z-index: -1;
+		background-image: url('/static-files/images/sign-up-header.jpg');
+		background-size: cover;
+		width: 100%;
+		height: 100%;
+	}
+
+	.header-background-color {
+		position: absolute;
+		top: 0;
+		z-index: -2;
+		background-color: $pp-default-text-colour;
+		width: 100%;
+		height: 100%;
+	}
+
+	.sign-up-steps {
+		position: relative;
+
+		.step {
+			position: relative;
+			margin-left: 25px;
+			border: 1px solid $white;
+			border-radius: 50%;
+			background-color: $white;
+			width: 17px;
+			height: 17px;
+
+			// line on the left side of step
+			&:after {
+				display: none;
+				position: absolute;
+				top: 50%;
+				left: -27px;
+				transform: translateY(-50%);
+				z-index: 0;
+				background-color: $white;
+				width: 27px;
+				height: 2px;
+				content: '';
+			}
+
+			&.active {
+				background-color: $pp-bg-maincolour;
+
+				&:after {
+					display: block;
+					background: linear-gradient(to right, $green 0%, $pp-bg-maincolour 100%);
+					filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$green, endColorstr=$pp-bg-maincolour, GradientType=1 );
+				}
+			}
+
+			&.complete {
+				background-color: $green;
+
+				//checkmark
+				&:before {
+					position: absolute;
+					top: calc(50% - 1px);
+					left: 50%;
+					transform: translate(-50%, -50%) rotate(-45deg) ;
+					border-bottom: 2px solid $white;
+					border-left: 2px solid $white;
+					border-radius: 2px;
+					width: 9px;
+					height: 5px;
+					content: '';
+				}
+
+				&:after {
+					display: block;
+					background-color: $green;
+				}
+			}
+
+			&:first-child {
+				margin-left: 0;
+
+				&:after {
+					display: none;
+				}
+			}
+		}
+
+		&:after {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			z-index: -1;
+			border-radius: 5px;
+			background-color: $white;
+			width: calc(100% - 2px);
+			height: 4px;
+			content: '';
+		}
+	}
+
+	.header-description {
+		@include font-extra-bold;
+		color: $white;
+		font-size: 1.5em;
+	}	
+}
+
+@include media-breakpoint-down(sm) {
+	.sign-up-header-wrapper {
+		.header-description {
+			font-size: .9em;
+		}
+	}
+}

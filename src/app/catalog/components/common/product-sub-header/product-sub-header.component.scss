@@ -1,0 +1,102 @@
+@import 'global-scss-mixing';
+
+$mid-grey: #dae9f0;
+$light-grey: #edf2f5;
+$not-active-btn-color: #6d7273;
+$btn-dark-grey: #dbe4ea;
+$ghost-loader-bg: #e1e7e9;
+$pp-green: #4e7026;
+$pp-rgba-grey:  rgba(219, 228, 234, .65);
+
+.product-sub-header-container-fluid {
+	@include font-regular;
+	position: relative;
+	overflow: hidden;
+	color: $pp-default-text-colour;
+
+	&.combo-page {
+		// position: absolute;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		margin-top: 5px;
+		border: 1px solid $ghost-loader-bg;
+		background-color: $pp-rgba-grey;
+		padding: 45px 0 35px;
+	}
+
+	.product-sub-header-container {
+		position: relative;
+		z-index: 20;
+
+		.quantity-selector-container {
+			.product-quantity-price {
+				.quantity-wrap {
+					width: 100%;
+				}
+			}
+		}
+	}
+
+	//Active Variations
+	&.is-active {
+		button {
+			background-color: $pp-green;
+		}
+	}
+
+	.btn-primary {
+		&:disabled,
+		&.inactive,
+		&.disabled {
+			border: 1px solid $white;
+		}
+	}
+
+	.frosted-bg {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: 0;
+		background-repeat: no-repeat;
+		background-position: bottom;
+		background-size: cover;
+		filter: blur(10px);
+
+		&:after {
+			position: absolute;
+			top: 0;
+			left: 0;
+			background-color: $pp-rgba-grey;
+			width: 100%;
+			height: 100%;
+			content: ' ';
+		}
+	}
+}
+
+@include media-breakpoint-down(md) {
+
+	.product-sub-header-container-fluid {
+		&.combo-page {
+			position: relative;
+			padding: 30px 0;
+		}
+	}
+}
+@include media-breakpoint-down(sm) {
+
+	.product-sub-header-container-fluid {
+		&.combo-page {
+			margin-top: 0;
+			padding: 20px 0 30px;
+		}
+	}
+}
+
+
+
+
+

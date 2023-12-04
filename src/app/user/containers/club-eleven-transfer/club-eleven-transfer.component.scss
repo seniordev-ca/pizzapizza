@@ -1,0 +1,182 @@
+@import 'global-scss-mixing';
+
+$pp-default-text-colour-dark: #3b210b;
+$card-bg: #e1e7e9;
+$card-bg-selected: #edf2f5;
+$border: #979797;
+$selected: #4e7026;
+$disabled: #6e6e6e;
+
+.club-eleven-transfer-sub-header-container {
+	@include bg-opacity-gradient('/static-files/images/bg-club-eleven.jpg');
+}
+
+.club-eleven-transfer {
+	text-align: center;
+
+	&.confirmation {
+		.info-wrap {
+			padding-top: 50px;
+			padding-bottom: 20px;
+
+			h4 {
+				padding-top: 26px;
+			}
+		}
+
+		.green-separator {
+			border-top: 1px solid $selected;
+			width: 100%;
+
+			&:after {
+				position: absolute;
+				top: -9px;
+				left: 50%;
+				transform: rotate(45deg);
+				margin-left: -10px;
+				border-top: 1px solid $selected;
+				border-left: 1px solid $selected;
+				background-color: $white;
+				width: 20px;
+				height: 20px;
+				content: ' ';
+			}
+		}
+	}
+
+	.cart-col {
+		margin-top: 12px;
+		border-radius: 10px;
+		overflow: hidden;
+
+		.check-mark-wrap {
+			display: none;
+			position: absolute;
+			top: 5px;
+			right: 10px;
+			z-index: 1;
+
+			i {
+				color: $selected;
+				font-size: 12px;
+			}
+		}
+
+		&.selected {
+			border: 3px solid $selected;
+
+			.check-mark-wrap { 
+				display: block;
+			}
+
+			.cart-body {
+				background-color: $card-bg;
+
+				h4,
+				p,
+				.price {
+					color: $selected;
+				}
+			}
+
+			.btn {
+				background-color: $selected;
+			}
+		}
+
+		&.disabled {
+			.cart-body {
+				background-color: $card-bg;
+
+				h4,
+				p,
+				.price {
+					color: $disabled;
+				}
+
+				.btn {
+					background-color: $disabled;
+				}
+			}
+		}
+	}
+
+	.cart-bg {
+		background: linear-gradient(303deg, $pp-bg-secondcolor 0%, $pp-bg-maincolour 40%, $pp-bg-maincolour 100%);
+
+		img {
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			margin: auto;
+			width: auto;
+			max-width: 170px;
+			height: auto;
+			max-height: 100%;
+		}
+	}
+
+	.balance-row {
+		margin-top: 20px;
+
+		.btn {
+			min-width: 170px;
+		}
+	}
+
+	.cart-body {
+		background-color: $card-bg;
+		padding: 20px;
+		padding-left: 25px;
+
+		h4,
+		p,
+		.price {
+			margin: 0;
+			padding: 0;
+			color: $pp-default-text-colour;
+		}
+
+		.price {
+			margin-top: -5px;
+			font-size: 2.25em;
+		}
+
+		h4, 
+		.price {
+			@include font-black;
+		}
+	}
+
+	.continue-btn-wrap  {
+		margin-top: 15px;
+		margin-bottom: 15px;
+		padding: 0;
+
+		.btn {
+			min-width: 220px;
+		}
+	}
+
+	h3 {
+		@include font-regular;
+		padding: 10px;
+		color: $pp-default-text-colour;
+		font-weight: initial;
+	}
+
+	p {
+		@include font-extra-bold;
+		color: $pp-default-text-colour-dark;
+		font-weight: initial;
+	}
+
+	h4 {
+		@include font-regular;
+		padding: 10px;
+		color: $pp-bg-maincolour;
+	}
+
+}

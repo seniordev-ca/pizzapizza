@@ -1,0 +1,99 @@
+<div class="container coupons-list-container">
+
+	<div class="col-12 offset-0 col-md-10 offset-md-1 list-header">
+		<div class="row">
+			<div class="col-6 col-sm-8 p-0 list-title">
+				{{ couponDetails.listTitle }}
+			</div>
+			<div class="col-6 col-sm-4 p-0 text-right">
+				<app-add-coupon-widget
+					[parentContainer]="couponParentContainerEnum.Wallet">
+				</app-add-coupon-widget>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-12 offset-0 col-md-10 offset-md-1">
+		<ng-container *ngIf="couponDetails.couponsArray && couponDetails.couponsArray.length > 0">
+			<div class="row coupon-row" 
+				*ngFor="let coupon of couponDetails.couponsArray"
+				[class.added]="coupon.isAdded"
+				[class.expired]="coupon.isExpired">
+				<div class="col-4 col-sm-3 p-0 coupon-image"
+					[ngStyle]="{'background-image': coupon.imageUrl ? 'url('+coupon.imageUrl+')' : ''}">
+					<div class="dashes-overlay">
+							<div class="coupon-tag" *ngIf="coupon.tag">
+								{{coupon.tag}}
+							</div>
+					</div>
+					<div class="no-image-wrapper w-100 h-100 text-center" *ngIf="!coupon.imageUrl">
+						<img alt="coupon image" src="no-image" />
+					</div>
+				</div>
+
+				<div class="col-8 col-sm-9 info-side">
+					<div class="row h-100">
+
+						<div class="col-12">
+							<div class="row no-gutters">
+								<div class="col-7">
+									<h2 class="title">
+										{{ coupon.title }}
+									</h2>
+									<div class="expiry-date-label" [hidden]="!coupon.expiryDate">
+										{{coupon.status}}: {{ coupon.expiryDate }}
+									</div>
+								</div>
+								<div class="col-5 text-right">
+									<button class="btn remove-btn"
+									*ngIf="!coupon.isExpired && !coupon.isAdded"
+									(click)="onDeleteCouponClick(coupon)">
+										<ng-container i18n>Remove</ng-container> <i class="icon-delete"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 align-self-end">
+							<div class="row">
+								<div class="col-12 col-sm-7">
+									<div class="description">
+										{{ coupon.description }}
+									</div>
+								</div>
+								<div class="col-12 col-sm-5 align-self-end add-to-cart-wrap">
+									<button class="btn btn-primary add-to-cart"
+										[class.loading-state]="coupon.isLoading"
+											*ngIf="!coupon.isExpired && !coupon.isAdded"
+											(click)="onAddCouponClick(coupon)" i18n>
+										Add To Cart
+									</button>
+									<button class="btn btn-primary btn-white add-to-cart" 
+											*ngIf="coupon.isExpired"
+											(click)="onDeleteCouponClick(coupon)" i18n>
+										Delete
+									</button>
+									<button class="btn btn-primary selected with-icon add-to-cart" *ngIf="coupon.isAdded" i18n>
+										Added
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</ng-container>
+		<ng-container *ngIf="!couponDetails.couponsArray || couponDetails.couponsArray.length < 1">
+			<div class="row no-coupon-row">
+				<div class="col-12">
+					<p class="text-center">
+						<span class="d-block no-results-span" i18n>
+							No Coupons
+						</span>
+						<i class="icon-club-11-11-no-coupon no-results-icon"></i>
+					</p>
+				</div>
+			</div>
+		</ng-container>
+	</div>
+
+</div>

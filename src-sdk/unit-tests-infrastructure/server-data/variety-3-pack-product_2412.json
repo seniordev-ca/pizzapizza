@@ -1,0 +1,310 @@
+{
+  "data": {
+    "products": [
+      {
+        "allow_customization": true,
+        "configuration_options": [
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "BI",
+            "image": "BI.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 106,
+            "parent_id": "drinks",
+            "product_options_data": [
+              {
+                "cal_count": 160,
+                "product_option_id": 2412,
+                "selected": false,
+                "sequence": 1
+              }
+            ],
+            "quantity": 0,
+            "sequence": 1,
+            "tag": null,
+            "title": "Brio"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "CC",
+            "image": "CC.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 113,
+            "parent_id": "drinks",
+            "product_options_data": [
+              {
+                "cal_count": 140,
+                "product_option_id": 2412,
+                "selected": false,
+                "sequence": 2
+              }
+            ],
+            "quantity": 0,
+            "sequence": 2,
+            "tag": null,
+            "title": "Coke Classic"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "CS",
+            "image": "CS.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 108,
+            "parent_id": "drinks",
+            "product_options_data": [
+              {
+                "cal_count": 140,
+                "product_option_id": 2412,
+                "selected": false,
+                "sequence": 3
+              }
+            ],
+            "quantity": 0,
+            "sequence": 3,
+            "tag": null,
+            "title": "Barq's Cream Soda"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "CZ",
+            "image": "CZ.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 116,
+            "parent_id": "drinks",
+            "product_options_data": [
+              {
+                "cal_count": 0,
+                "product_option_id": 2412,
+                "selected": false,
+                "sequence": 4
+              }
+            ],
+            "quantity": 0,
+            "sequence": 4,
+            "tag": null,
+            "title": "Coke Zero"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "DC",
+            "image": "DC.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 112,
+            "parent_id": "drinks",
+            "product_options_data": [
+              {
+                "cal_count": 0,
+                "product_option_id": 2412,
+                "selected": false,
+                "sequence": 5
+              }
+            ],
+            "quantity": 0,
+            "sequence": 5,
+            "tag": null,
+            "title": "Diet Coke"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "FT",
+            "image": "FT.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 118,
+            "parent_id": "drinks",
+            "product_options_data": [
+              {
+                "cal_count": 150,
+                "product_option_id": 2412,
+                "selected": false,
+                "sequence": 7
+              }
+            ],
+            "quantity": 0,
+            "sequence": 7,
+            "tag": null,
+            "title": "Fanta Orange"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "GN",
+            "image": "GN.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 105,
+            "parent_id": "drinks",
+            "product_options_data": [
+              {
+                "cal_count": 130,
+                "product_option_id": 2412,
+                "selected": false,
+                "sequence": 8
+              }
+            ],
+            "quantity": 0,
+            "sequence": 8,
+            "tag": null,
+            "title": "Canada Dry"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "NE",
+            "image": "NE.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 114,
+            "parent_id": "drinks",
+            "product_options_data": [
+              {
+                "cal_count": 110,
+                "product_option_id": 2412,
+                "selected": false,
+                "sequence": 9
+              }
+            ],
+            "quantity": 0,
+            "sequence": 9,
+            "tag": null,
+            "title": "Nestea"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "RT",
+            "image": "RT.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 107,
+            "parent_id": "drinks",
+            "product_options_data": [
+              {
+                "cal_count": 160,
+                "product_option_id": 2412,
+                "selected": false,
+                "sequence": 11
+              }
+            ],
+            "quantity": 0,
+            "sequence": 11,
+            "tag": null,
+            "title": "Barq's Root Beer"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "SE",
+            "image": "SE.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 115,
+            "parent_id": "drinks",
+            "product_options_data": [
+              {
+                "cal_count": 140,
+                "product_option_id": 2412,
+                "selected": false,
+                "sequence": 12
+              }
+            ],
+            "quantity": 0,
+            "sequence": 12,
+            "tag": null,
+            "title": "Sprite"
+          }
+        ],
+        "configurations": [
+          {
+            "font_key": null,
+            "id": "drinks",
+            "not_available": [],
+            "sequence": 1,
+            "sub_configurations": [
+              {
+                "allow_half_and_half": false,
+                "allow_multiple_options": true,
+                "id": "drinks",
+                "not_available": [],
+                "personalized_message": {
+                  "display_personalized_message": false
+                },
+                "sequence": 1,
+                "title": "DRINKS"
+              }
+            ],
+            "title": "DRINKS"
+          }
+        ],
+        "description": "Choose from a variety of Coke products. Available in 355 mL cans.",
+        "image": "Coke_3_Cans.png",
+        "is_flat": false,
+        "is_pizza": false,
+        "line_id": 1,
+        "name": "Variety 3 Pack",
+        "product_id": "2412",
+        "product_options": {
+          "label": "Choose Your Size",
+          "options": [
+            {
+              "base_price": 3.49,
+              "cal_count": null,
+              "cal_scale": "Cals/can",
+              "font_key": null,
+              "grouped_products": null,
+              "guarantee_group": null,
+              "id": 2412,
+              "image": "Coke_3_Cans.png",
+              "same_topping_limit": -1,
+              "selected": true,
+              "sequence": 1,
+              "size_code": null,
+              "size_label": null,
+              "size_name": null,
+              "sub_title": null,
+              "title": "Variety 3 Pack"
+            }
+          ]
+        },
+        "sequence": 1,
+        "sub_configuration_options": []
+      }
+    ]
+  },
+  "is_coupon_item": false,
+  "js_data": "eJzdll1v2jAUhv8K8vXaEaCTustCW6FKtMK7mFZVkXEOyKrjUH9oDJT/PtsxwemQlotIkbgiOcd+\nfZ7zhuQc0DsTGfo+QIqJDQf0ZYC2ssgM1cpGXw+IMwEpc0sSm6OFWLONkUSzQrgVB5RJJt6rSyYo\nNxlk6YchQjP9x0dHk2RkL8al3c9UKuHDMAlZnNPSgEsLkoOPr6Wr6e55jvHzAruqQLjIbDlfPGHk\n1uZkx3KTx2ddJWX5uci02J5qXf7wP8qsmms835Hk1ILG3lDqwSYhZ/bgmnYrGXVlC8O531zdJtej\nW1cN4YVk4ESSb8OqB0HChtaEK3DBM60bRpXQInOaCL/MllcW4wxoA8KlH3qmvemG9qEd7eK+X9qk\nG1qL0YZ2Ou2XdtINrcVoQzvrl7Yb1lk71rv5RbyjLEar5/jXBThrIVqx4sv4z+JWtI+LfmnH3dBa\njDa0uOevT0fe4hZfn/J/GAo4UL9RGu6173eEaoev2B7SMOXVUM06xi9PKIJLOVkBj4bCqeX6SokA\nreE0GB6j3gxNdvXRPxtikohNPGEOB7pwr7zBedV/0igMsbWg0rZFNIywDtCz++k2RCKXAvGKKKit\nHV9Pbsugqn8zETmn7KQMonLc3X5+tqLmB4Et2+/JUaF8i7pbWXi881Z5m/NVYROvb+Vfdbvy4g==\n",
+  "kind": "single",
+  "product_id": "product_2412",
+  "seo_title": "variety-3-pack-product_2412"
+}

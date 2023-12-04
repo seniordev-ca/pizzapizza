@@ -1,0 +1,62 @@
+<div class="container-fluid personal-details-container">
+
+	<div class="row personal-details-row align-items-start" *ngIf="user">
+		<!-- Column One - User's Image -->
+		<div class="col-4 col-md-12 col-lg-4 mt-5 mt-md-4 mt-lg-3 px-1 px-lg-3 personal-details-image-col">
+			<app-user-image [userImageDetails]="userImage" [isDisplayOnly]="true"
+				[userInitials]="user.firstName.charAt(0) + user.lastName.charAt(0)"
+				(userImageEventEmitter)="userImageEventEmitterHandler($event)">
+			</app-user-image>
+		</div>
+		<!-- End of Column One -->
+		<!-- Column Two - Holds User's Information -->
+		<div
+			class="col-8 col-md-12 col-lg-8 mt-5 mt-md-4 mt-lg-4 pl-lg-0 justify-content-start justify-content-md-center justify-content-lg-start personal-details-information-col">
+
+			<div class="pl-0 pl-md-2 mb-2 personal-details-information-col-user-name">
+				{{user.firstName}} {{user.lastName}}
+			</div>
+
+			<div class="pl-0 pl-md-2 mb-2 d-flex align-items-center justify-content-start justify-content-md-center justify-content-lg-start personal-details-information-col-edit"
+				(click)="onEditProfile($event)"
+        (keydown.enter)="onEditProfile($event)"
+        tabindex="0"
+        aria-label="Edit Profile"
+
+        >
+
+				<i class="icon-edit"></i>
+				<span class="edit-text" i18n>
+					Edit
+				</span>
+
+			</div>
+
+			<div class="pl-0 pl-md-2 mb-4 personal-details-information-col-contact">
+
+				<div class="personal-details-information-col-contact-email">
+					{{user.email}}
+				</div>
+
+				<div class="personal-details-information-col-contact-phone" *ngIf="user.contactNumber.phoneNumber"
+					x-ms-format-detection="none">
+					{{user.contactNumber.phoneNumber | phone}}
+				</div>
+
+			</div>
+
+
+
+
+		</div>
+		<!-- End of Column Two -->
+		<div class="col-12 text-center">
+			<button class="btn btn-lg btn-primary mb-4 mt-4 mt-sm-0 sign-out-button" (click)="onSignOutProfile($event)" i18n>
+				Sign Out
+			</button>
+		</div>
+	</div>
+	<!-- End of Row -->
+
+</div>
+<!-- End of Container -->

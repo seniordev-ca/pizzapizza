@@ -1,0 +1,105 @@
+@import 'global-scss-mixing';
+$grey: #6d7273;
+
+.cart-buttons-row {
+	@include font-extra-bold;
+	margin-top: 25px;
+	min-width: 365px;
+	white-space: nowrap;
+	color: $pp-default-text-colour;
+	font-size: 1.25em;
+
+	&>div {
+		cursor: pointer;	
+	}
+
+	i {
+		vertical-align: middle;
+		color: $pp-bg-maincolour;
+		font-size: 24px;
+	}
+
+	a {
+		color: $pp-default-text-colour;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+.balance-vertical-modal-wrap {
+	.opacity-gradient-overlay {
+		@include bg-opacity-gradient('/static-files/images/bg-club-eleven.jpg', 160px);
+	}
+
+	.pp-form {
+		margin-top: 25px;
+		margin-bottom: 15px;
+		padding-right: 25px;
+		padding-left: 25px;
+	}
+}
+
+.cart-input-container {
+	margin-top: 70px;
+
+	.card-balance {
+		display: block;
+		color: $grey;
+		font-size: 2em;
+		font-weight: 800;
+	}
+
+	.btn-transparent:hover {
+		background-color: transparent;
+		color: $pp-bg-maincolour;
+	}
+}
+
+
+
+@include media-breakpoint-down(md) {
+	.cart-input-container {
+		.club-eleven-img {
+			text-align: center;
+
+			img {
+				width: 100%;
+				max-width: 400px;
+			}
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.cart-buttons-row {
+		min-width: initial;
+	}
+
+	.cart-input-container {
+
+		.club-eleven-img {
+			text-align: center;
+
+			img {
+				max-width: 250px;
+			}
+		}
+
+		.input-wrap-form {
+			margin-top: 40px;
+		}
+
+		.btn {
+			width: 100%;
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.balance-text {
+		font-size: .92rem;
+	}
+}
+

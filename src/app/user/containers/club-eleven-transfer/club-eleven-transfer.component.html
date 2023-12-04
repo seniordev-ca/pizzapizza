@@ -1,0 +1,150 @@
+<div class="container-fluid club-eleven-transfer-sub-header-container">
+	<div class="container">
+		<div class="row pb-0 pb-md-4">
+			<div class="col-12 align-self-start">
+				<app-sub-header-navigation
+					[subHeaderNavContent]="subHeaderNavContent"
+					title="Club 11-11"
+					navText="Back to Home"
+					i18n-navText
+					i18n-title>
+				</app-sub-header-navigation>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container club-eleven-transfer"
+		*ngIf="isCartSelectionView"
+	>
+	<div class="row">
+		<div class="col-12">
+			<h3 i18n>
+				Transfer Balance
+			</h3>
+			<p i18n>
+				We’re consolidating our systems and transferring all card balances to one single account. We’ve noticed that you have more
+				than one gift card, you’ll need to register one card before continuing…
+			</p>
+
+			<h4 i18n>
+				Select one of the cards below
+			</h4>
+		</div>
+	</div>
+
+	<div class="row justify-content-center">
+		<ng-container *ngFor="let cart of clubElevenTransferContent.cartsArr">
+			<ng-container *ngTemplateOutlet="giftCart; context:cart">
+			</ng-container>
+		</ng-container>
+		<div class="col-12 col-sm-10 d-flex justify-content-end continue-btn-wrap ">
+			<button class="btn btn-primary"
+				[disabled]="isContinueBtnDisabled"
+				(click)="onContinueBtnClick()" i18n>
+					continue
+			</button>
+		</div>
+	</div>
+</div>
+
+
+<div class="container club-eleven-transfer confirmation"
+		*ngIf="!isCartSelectionView"
+>
+
+	<div class="row">
+		<div class="col-12">
+			<h3 i18n>
+				Registered!
+			</h3>
+		</div>
+	</div>
+
+	<div class="row justify-content-center">
+		<ng-container *ngTemplateOutlet="giftCart; context:clubElevenTransferContent.selectedCart">
+		</ng-container>
+	</div>
+
+	<div class="row info-wrap">
+		<div class="col-12">
+
+			<div class="green-separator">
+			</div>
+
+			<h4 i18n>
+				Select one of the cards below
+			</h4>
+
+			<p i18n>
+				We’re consolidating our systems and transferring all card balances to one single account. We’ve noticed that you have more
+				than one gift card, you’ll need to register one card before continuing…
+			</p>
+		</div>
+	</div>
+
+	<div class="row justify-content-center">
+		<ng-container *ngFor="let cart of clubElevenTransferContent.cartsArr">
+			<ng-container *ngTemplateOutlet="giftCart; context:cart">
+			</ng-container>
+		</ng-container>
+
+		<div class="col-12 col-sm-10 d-flex justify-content-end continue-btn-wrap ">
+			<button class="btn btn-primary"
+				[disabled]="isContinueBtnDisabled"
+				(click)="onContinueBtnClick()" i18n>
+					continue
+			</button>
+		</div>
+	</div>
+
+</div>
+
+
+<ng-template #giftCart let-cartId="cartId" let-title="title" let-cartNumber="cartNumber" let-balance="balance" let-state="state">
+	<div class="col-12 col-sm-10 cart-col text-left" [ngClass]="	{
+			'selected': state == cartStated.selected, 
+			'inactive': state == cartStated.notActive,
+			'disabled': state == cartStated.disabled
+		}">
+
+		<div class="check-mark-wrap">
+			<i class="icon-checkmark"></i>
+		</div>
+
+		<div class="row cart-row">
+			<div class="col-5 col-sm-4 col-lg-3 cart-bg">
+				<img alt="club 11-11 logo" src="./static-files/images/club-eleven-eleven.png">
+			</div>
+			<div class="col-7 col-sm-8 col-lg-9 cart-body">
+				<div class="row">
+					<div class="col-12">
+						<h4>
+							{{ title }}
+						</h4>
+						<div class="smaller">
+							{{ cartNumber }}
+						</div>
+					</div>
+				</div>
+				<div class="row balance-row">
+					<div class="col-12 col-sm-6">
+						<p class="smaller" i18n>
+							Balance
+						</p>
+						<div class="price">
+							${{ balance }}
+						</div>
+					</div>
+					<div class="col-12 col-sm-6 text-right d-flex justify-content-end">
+						<button class="btn btn-primary"
+								(click)="onCartButtonClick(cartId)" i18n>
+							<!-- TODO i18n -->
+							{{ state == cartStated.disabled ? 'register' : state == cartStated.selected ? 'selected' : 'select' }}
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>

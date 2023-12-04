@@ -1,0 +1,81 @@
+@import 'global-scss-mixing';
+
+$mid-grey: #dae9f0;
+$light-grey: #edf2f5;
+$not-active-btn-color: #6d7273;
+$btn-dark-grey: #dbe4ea;
+$ghost-loader-bg: #e1e7e9;
+$pp-green: #4e7026;
+$black: #000;
+$border-grey: #ccd6d8;
+$pp-secondary-text-color: #3b210b;
+
+.accounts-payment-method-container {
+	.user-payment-methods-row {
+		border: 2px solid $ghost-loader-bg;
+		border-radius: 8px;
+		padding: 10px;
+		color: $not-active-btn-color;
+
+		.payment-btn {
+			outline: none;
+			border: 0;
+			background: transparent;
+			cursor: pointer;
+			color: $pp-bg-maincolour;
+			font-weight: 800;
+		}
+
+		.user-payment-method-actions {
+			color: $pp-bg-maincolour;
+
+			i,
+			.payment-btn,
+			span {
+				font-size: .81em;
+				font-weight: 600;
+			}
+		}
+
+		.payment-method-default-col {
+			.payment-btn {
+				@include font-extra-bold;
+				font-size: .875em;
+			}
+		}
+
+		&.is-default {
+			border: 2px solid $pp-green;
+			color: $pp-green;
+		}
+
+		&.expired {
+			border: 2px solid $danger;
+		}
+
+		.location-selected-row {
+			@include font-extra-bold;
+	
+			display: flex;
+			justify-content: flex-end;
+			color: $pp-green;
+			font-size: .875em;
+
+			i {
+				color: $pp-green;
+				font-size: .875em;
+			}
+		}
+	}
+
+	.user-payment-method-card-name {
+		@include font-extra-bold;
+
+		font-size: 1em;
+	}
+
+	.user-payment-method-card-number {
+		font-size: .76em;
+	}
+
+}

@@ -1,0 +1,58 @@
+<app-vertical-modal #menuVerticalModal class="mobile-menu-wrapper">
+	<ng-template>
+		<div class="mobile-nav-container container-fluid h-100">
+			<div class="row h-100">
+				<div class="col-12">
+					<div class="row py-2 pb-5">
+						<div class="col text-center">
+							<img alt="logo" class="img-fluid logo" src="./static-files/images/logo.png">
+						</div>
+					</div>
+				</div>
+				<div class="col-12 align-self-end">
+					<div class="row outline-bottom">
+						<div class="col-12 p-0">
+							<app-login-register
+								(menuItemClickEmitter)="close($event)"
+								[userDetails]="userDetails">
+							</app-login-register>
+						</div>
+					</div>
+					<div class="row outline-bottom">
+						<div class="col-12 p-0">
+							<app-store-selector
+								[isActiveDelivery]="isDelivery"
+								[selectedStore]="selectedStore"
+								(menuItemClickEmitter)="close($event)">
+							</app-store-selector>
+						</div>
+					</div>
+					<div class="row row-padding">
+						<div class="col-12">
+							<app-club-eleven-balance
+								(menuItemClickEmitter)="close($event)">
+							</app-club-eleven-balance>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<app-add-coupon-widget
+								[parentContainer]="couponParentContainerEnum.MobileNav">
+							</app-add-coupon-widget>
+						</div>
+					</div>
+					<div class="row pt-4">
+						<div class="col-12 text-right">
+							<a class="px-2 py-1 smaller lang" i18n *ngIf="!isFrench" href="./fr/">
+								Français
+							</a>
+							<a class="px-2 py-1 smaller lang" i18n *ngIf="isFrench" href="/">
+								English
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+</app-vertical-modal>

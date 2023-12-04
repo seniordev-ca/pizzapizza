@@ -1,0 +1,320 @@
+
+
+
+<ng-container *ngTemplateOutlet="parentContainer === 'justForYou' ? justForYou : defaultParent"></ng-container>
+
+<ng-template #defaultParent>
+<div class="container club-eleven-eleven-card-container" *ngIf="parentContainer !== 'inCart'">
+	<!--
+		TOP SIDE
+	-->
+	<div class="row align-items-center">
+		<div class="col-4 col-md-5 align-self-center club-eleven-eleven-image-wrap">
+			<!-- Image for account page -->
+			<img alt="club 11-11 logo" class="img-fluid pp-image-loaded" src="./static-files/images/club-eleven-eleven.png">
+			<!-- Image for loyalty page -->
+			<!--
+			<img class="img-fluid" src="./static-files/images/11-11_logo.png" />
+			-->
+		</div>
+
+		<div class="col-8 col-md-7 pl-0">
+			<ng-container *ngTemplateOutlet="parentContainer === 'checkout' ? checkout : defaultLayout"></ng-container>
+		</div>
+
+	</div>
+
+	<!--
+		BOTTOM SIDE
+	-->
+	<ng-container *ngTemplateOutlet="parentContainer === 'checkout' ? nullBottom : bottomTemplate"></ng-container>
+</div>
+
+<div class="container club-eleven-eleven-card-container" *ngIf="parentContainer === 'inCart'">
+	<div class="row align-items-center">
+		<div class="col-3 align-self-center club-eleven-eleven-image-wrap">
+			<img alt="club 11-11 logo" class="img-fluid pp-image-loaded" src="./static-files/images/11-11_logo.png" width="50">
+		</div>
+
+		<div class="col-8 pl-0">
+			<ng-container *ngTemplateOutlet="inCartLayout"></ng-container>
+		</div>
+	</div>
+</div>
+</ng-template>
+
+<ng-template #justForYou>
+	<div class="container club-eleven-eleven-card-container h-100 just-for-you-card" *ngIf="isPizzaOnly">
+			<ng-container [ngTemplateOutlet]="pizzaPie"></ng-container>
+	</div>
+	<div class="club-rewards" *ngIf="isRewardsOnly">
+		<ng-container [ngTemplateOutlet]="clubRewards"></ng-container>
+	</div>
+	<div class="container club-eleven-eleven-card-container h-100 just-for-you-card" *ngIf="!isPizzaOnly && !isRewardsOnly">
+		<ng-container [ngTemplateOutlet]="justForYouFull"></ng-container>
+	</div>
+</ng-template>
+
+<ng-template #checkout>
+	<ng-container>
+		<div class="mb-2 fw-semi-bold smaller">
+			<span [innerHTML]="determineText(parentContainer, (userSummary$ | async), (orderSummary$ | async), (accountBalance$ | async), (cartEarnings$ | async))">
+			</span>
+		</div>
+		<div class="mb-0 navigate text-right">
+			<button class="account-btn" [routerLink]="getAccountLink(userSummary$ | async)" *ngIf="!(accountBalance$ | async).balanceReadyText">
+				<i class="icon-arrow-circle"></i>
+				<ng-container *ngIf="(userSummary$ | async) && (userSummary$ | async).isClubElevenElevenMember" i18n>Manage Account</ng-container>
+				<ng-container *ngIf="!(userSummary$ | async) || !(userSummary$ | async).isClubElevenElevenMember" i18n>Create Account</ng-container>
+			</button>
+			<div class="account-btn d-flex justify-content-end" *ngIf="(accountBalance$ | async).balanceReadyText">
+				<i class="icon-arrow-circle"></i>
+				<app-redeem-modal [editAmount]="loyaltyRedeemed$ | async"></app-redeem-modal>
+			</div>
+		</div>
+	</ng-container>
+</ng-template>
+
+<ng-template #defaultLayout>
+	<div class="mb-0" *ngIf="(userSummary$ | async)">
+		<div class="user-details">
+			{{ (userSummary$ | async).firstName }} {{ (userSummary$ | async).lastName }}
+		</div>
+		<div class="user-card" *ngIf="(userSummary$ | async).isClubElevenElevenMember">
+			{{ (accountBalance$ | async).maskedCardNumber }}
+		</div>
+		<div class="fw-semi-bold smaller" *ngIf="!(userSummary$ | async).isClubElevenElevenMember">
+			<span [innerHTML]="determineText(parentContainer, (userSummary$ | async), (orderSummary$ | async), (accountBalance$ | async), (cartEarnings$ | async))">
+			</span>
+		</div>
+	</div>
+
+	<div class="mb-0" *ngIf="!(userSummary$ | async)">
+		<div class="fw-semi-bold smaller-aa">
+			<span [innerHTML]="determineText(parentContainer, (userSummary$ | async), (orderSummary$ | async), (accountBalance$ | async), (cartEarnings$ | async))">
+			</span>
+		</div>
+	</div>
+
+	<div class="text-left mb-0 pt-2 navigate" *ngIf="(userSummary$ | async) && parentContainer !== 'justForYou'">
+
+		<button class="account-btn" *ngIf="parentContainer !== 'loyalty'" [routerLink]="[getAccountLink(userSummary$ | async)]">
+			<i class="icon-arrow-circle"></i>
+			<ng-container *ngIf="(userSummary$ | async).isClubElevenElevenMember" i18n>Manage Account</ng-container>
+			<ng-container *ngIf="!(userSummary$ | async).isClubElevenElevenMember" i18n>Create Account</ng-container>
+		</button>
+<!-- PLEASE NOTE:
+	According to client this functionality should be removed for now(PPV2-3482),
+	might be back later, please do not remove actions and function for it
+		<button class="account-btn" *ngIf="parentContainer === 'loyalty'" (click)="onRemoveAccount($event);">
+			<i class="icon-plus-2 rotate-icon-90"></i>
+			<ng-container i18n>Remove</ng-container>
+		</button> -->
+
+		<button class="account-btn" *ngIf="parentContainer === 'loyalty'" (click)="onSendNumber($event);">
+			<i class="icon-envelope px-1"></i>
+			<ng-container i18n>Send Card Number</ng-container>
+		</button>
+
+	</div>
+</ng-template>
+
+<ng-template #bottomTemplate>
+	<div class="row" *ngIf="(userSummary$ | async) && (userSummary$ | async).isClubElevenElevenMember">
+		<div class="col-12">
+			<div class="separator full-width-separator"></div>
+		</div>
+		<div class="col-12 mb-3" *ngIf="parentContainer === 'orderConfirmation'">
+			<span [innerHTML]="determineText(parentContainer, (userSummary$ | async), (orderSummary$ | async), (accountBalance$ | async), (cartEarnings$ | async))"
+			 class="fw-semi-bold smaller-aa"></span>
+		</div>
+
+		<div class="col-6 col-md-4">
+			<ng-container *ngTemplateOutlet="pizzaPie"></ng-container>
+		</div>
+
+		<div class="col-6 col-md-8 club-rewards">
+			<ng-container *ngTemplateOutlet="clubRewards"></ng-container>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #justForYouFull>
+	<div class="row align-items-center h-100" *ngIf="(userSummary$ | async) && (userSummary$ | async).isClubElevenElevenMember">
+		<div class="col-6 col-md-4 p-0">
+			<ng-container *ngTemplateOutlet="pizzaPie"></ng-container>
+		</div>
+
+		<div class="col-6 col-md-8 club-rewards">
+			<ng-container *ngTemplateOutlet="clubRewards"></ng-container>
+		</div>
+	</div>
+	<div class="row align-items-center h-100" *ngIf="!(userSummary$ | async) || !(userSummary$ | async).isClubElevenElevenMember">
+		<div class="col-4 col-md-5 align-self-center club-eleven-eleven-image-wrap">
+			<img alt="club 11-11 logo" class="img-fluid pp-image-loaded" src="./static-files/images/club-eleven-eleven.png">
+		</div>
+		<div class="col-8 col-md-7 pl-0">
+			<ng-container [ngTemplateOutlet]="defaultLayout"></ng-container>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #nullBottom>
+</ng-template>
+
+<ng-template #inCartLayout>
+		<ng-container>
+				<div class="mb-2 fw-normal smaller-aa">
+					<span [innerHTML]="determineText(parentContainer, (userSummary$ | async), (orderSummary$ | async), (accountBalance$ | async), (cartEarnings$ | async))">
+					</span>
+				</div>
+			</ng-container>
+</ng-template>
+
+<ng-template #pizzaPie>
+	<img alt="" class="img-fluid pp-image-loaded" src="./static-files/images/club-mobile-nav.jpg" *ngIf="!(userSummary$ | async) || !(userSummary$ | async).isClubElevenElevenMember">
+
+	<div class="text-center d-flex align-items-center club-pizza-wrap pie"
+		*ngIf="(userSummary$ | async) && (userSummary$ | async).isClubElevenElevenMember">
+			<img alt="pizza base" class="img-fluid club-pizza-base {{parentContainer}} pp-image-loaded" src="./static-files/images/club-11/pizza_graph_base.png" />
+			<img  alt="pizza top" class="img-fluid club-pizza-top {{parentContainer}} pp-image-loaded" src="./static-files/images/club-11/slice1.png" *ngIf="(accountBalance$ | async).loyaltyPercentage === 20"/>
+			<img  alt="pizza top" class="img-fluid club-pizza-top {{parentContainer}} pp-image-loaded" src="./static-files/images/club-11/slice2.png" *ngIf="(accountBalance$ | async).loyaltyPercentage === 40"/>
+			<img  alt="pizza top" class="img-fluid club-pizza-top {{parentContainer}} pp-image-loaded" src="./static-files/images/club-11/slice3.png" *ngIf="(accountBalance$ | async).loyaltyPercentage === 60"/>
+			<img  alt="pizza top" class="img-fluid club-pizza-top {{parentContainer}} pp-image-loaded" src="./static-files/images/club-11/slice4.png" *ngIf="(accountBalance$ | async).loyaltyPercentage === 80"/>
+			<img  alt="pizza top" class="img-fluid club-pizza-top {{parentContainer}} pp-image-loaded" src="./static-files/images/club-11/slice5.png" *ngIf="(accountBalance$ | async).loyaltyPercentage === 100"/>
+	</div>
+</ng-template>
+
+<ng-template #clubRewards>
+	<ng-container *ngIf="(userSummary$ | async) && (userSummary$ | async).isClubElevenElevenMember">
+		<span class="label">
+			<ng-container i18n>Available</ng-container>:&nbsp;
+		</span>
+		<span class="value h2">
+			{{ (accountBalance$ | async).available | currency:'CAD':'symbol-narrow':'1.2' }}
+		</span>
+	</ng-container>
+
+	<ng-container *ngIf="parentContainer !== 'orderConfirmation' && parentContainer !== 'justForYou'">
+		<span [innerHTML]="determineText(parentContainer, (userSummary$ | async), (orderSummary$ | async), (accountBalance$ | async), (cartEarnings$ | async))">
+		</span>
+	</ng-container>
+
+	<ng-container *ngIf="parentContainer === 'orderConfirmation'">
+		<span class="label">
+			<ng-container i18n>Pending</ng-container>:&nbsp;
+		</span>
+		<span class="value h2">
+			{{ (accountBalance$ | async).earned | currency:'CAD':'symbol-narrow':'1.2' }}
+		</span>
+	</ng-container>
+
+	<ng-container *ngIf="parentContainer === 'justForYou' && (userSummary$ | async) && (userSummary$ | async).isClubElevenElevenMember">
+		<span class="label">
+			<ng-container>Earned</ng-container>:&nbsp;
+		</span>
+		<span class="value h2">
+			{{ (accountBalance$ | async).earned | currency:'CAD':'symbol-narrow':'1.2' }}
+		</span>
+	</ng-container>
+	<ng-container *ngIf="parentContainer === 'justForYou' && !(userSummary$ | async) || !(userSummary$ | async).isClubElevenElevenMember">
+			<span [innerHTML]="determineText(parentContainer, (userSummary$ | async), (orderSummary$ | async), (accountBalance$ | async), (cartEarnings$ | async))">
+			</span>
+	</ng-container>
+</ng-template>
+
+<div class="svg-wrapper">
+	<svg class="clip-svg">
+		<defs>
+			<clipPath id="polygon-clip-triangle-equilateral" clipPathUnits="objectBoundingBox">
+				<path d="M .5 0 L .5 .5 L 2.2 0" [attr.transform]="'rotate(' + i * 72 + ', .5, .5)'" *ngFor="let slice of determinePath((accountBalance$ | async).loyaltyPercentage); let i = index"></path>
+			</clipPath>
+		</defs>
+	</svg>
+</div>
+
+<ng-template #removeAccount let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal();" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+	<app-confirmation-modal
+		[data]="{
+			icon: 'icon-trash-can-one'
+		}"
+		title="Remove Card?"
+		i18n-title>
+		<ng-template>
+			<div class="col-12 mb-4">
+				<p i18n>Are you sure that you want to remove this Club 11-11 Card from your account?</p>
+			</div>
+			<div class="col-12 align-self-end">
+					<div class="row justify-content-center button-row">
+						<div class="col-12 col-md-5">
+							<button class="btn btn-lg btn-primary btn-white text-uppercase w-100"
+							(click)="closeModal()" i18n>
+								No
+							</button>
+						</div>
+						<div class="col-12 col-md-5">
+							<button class="btn btn-lg btn-primary text-uppercase w-100"
+							(click)="closeModal(); onDeleteConfirmed();" i18n>
+								Yes
+							</button>
+						</div>
+					</div>
+			</div>
+			<!-- Button Row -->
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+<ng-template #sendNumberModal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal()" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+	<app-prompt-modal
+			[data]="{
+					icon: 'icon-sign-in'
+				}"
+			title="Email Club 11-11 Card Number"
+			text="We will send an email to the address listed below right away. The email will include your Club 11-11 card number and PIN."
+			i18n-title
+			i18n-text>
+		<ng-template>
+			<div class="row">
+				<div class="col-12 col-md-8">
+					<p><strong i18n>Email on file</strong></p>
+					<p class="mb-0">{{(userSummary$ | async)?.email}}</p>
+				</div>
+				<div class="col-12 col-md-4">
+					<button (click)="sendClubNumber()" class="btn btn-primary w-100" i18n>Send</button>
+				</div>
+			</div>
+		</ng-template>
+	</app-prompt-modal>
+</ng-template>
+
+<ng-template #emailSent let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal();" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+	<app-prompt-modal
+			[data]="{
+					icon: 'icon-sign-in'
+				}"
+			title="Email has been sent"
+			text="We've sent your Club 11-11 card number and PIN to your registered email address. Please check your email to view your card information"
+			i18n-title
+			i18n-text>
+		<ng-template>
+			<div class="w-100 text-center continue-btn">
+				<button class="btn btn-primary sign-in-button"
+					[class.selected]="success"
+					[class.with-icon]="success"
+					(click)="closeModal()" i18n>
+					Continue
+				</button>
+			</div>
+		</ng-template>
+	</app-prompt-modal>
+</ng-template>

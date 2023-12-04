@@ -1,0 +1,51 @@
+<div class="configurator-modal-wrap">
+
+	<app-vertical-modal #configuratorVerticalModal (verticalModalComponentOutputEmitter)="handleCloseModalClick($event)"
+
+  >
+		<ng-template>
+			<div class="container py-5 product-combo-modal-container">
+				<div class="row justify-content-center">
+					<div class="col-12 col-md-4 text-center">
+						<p class="modal-top-title smaller fw-normal">
+							<span class="justify-content-center" i18n>
+								PIZZA ASSISTANT
+							</span>
+						</p>
+					</div>
+				</div>
+			</div>
+			<app-product-sub-header
+				[productSubHeaderContent]="{
+					itemPrice: (assistantOrderDescription$ | async).itemPrice
+				}"
+				itemConfigText="You're all done!"
+				[itemDescription]="(assistantOrderDescription$ | async).itemDescription"
+				[btnState]="btnState"
+				[isValid]="(assistantProducts$ | async) && (assistantProducts$ | async).length > 0"
+        [isVerticalModalOpen]="isVerticalModalOpen"
+				(onClickEventEmitter)="handleOnClickEventEmitter($event)"
+				i18n-itemConfigText>
+			</app-product-sub-header>
+
+			<div class="container product-combo-modal-container mt-5">
+				<div class="row justify-content-center">
+					<div class="col-12 col-lg-10" *ngIf="assistantProducts$ | async">
+						<ng-container *ngFor="let productItem of assistantProducts$ | async">
+							<app-product-item
+								[productItemInput]="productItem"
+								[isComboItem]="true"
+                [isVerticalModalOpen]="isVerticalModalOpen"
+								(productItemEventEmitter)="productListEventHandler($event)">
+							</app-product-item>
+						</ng-container>
+          </div>
+				</div>
+
+				<!-- <app-upsells></app-upsells> -->
+
+			</div>
+		</ng-template>
+	</app-vertical-modal>
+
+</div>

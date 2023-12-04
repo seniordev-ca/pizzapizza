@@ -1,0 +1,48 @@
+This is an explanation of what the Rules matrix does. The Rules Matrix is found in the orderlines with each object in a response from process 80.
+PlasticCart, stores them in a Global called Menu which is indexed via product code. You could find a Medium two topper's Rules Matrix via
+Menu.getRuleMatrix("MTWT") or even just Menu["MTWT"]
+
+/**
+     * @param productCode
+     * @param storeId
+     * @param language of the customer - from the session
+     * @return rulesMatrix
+     * RulesMatrix is of the following form:
+     *                 itemMatrix:
+     *                         product code
+     *                         product type:    single
+     *                                         gourmet
+     *                                         twin combined
+     *                                         twin regular
+     *                                         combo
+     *                         base price
+     *                         parent item code
+     *                         configurable
+     *                         free component selection:    Exact
+     *                                                     ExactPlus
+     *                                                     Inform
+     *                                                     No
+     *                 ingredientsMatrix:
+     *                         [0][0]    entry code 
+     *                         [1][0]    product code
+     *                         [2][i]    included quantity
+     *                         [3][0]    maximum quantity of the product
+     *                         [4][0]    mandatory Indicator : Y or N
+     *                         [5][0]    quantity that doesn't lower the price if taken off
+     *                         [6][0]    checked
+     *                         [7][0]    price of the item
+     *                         [8][0]    is chargeable
+     *                         [9][0]    substitutable categoryId
+     *                         [10][0]    default item flag
+     *                         [11][0]    same topping max count
+     *                         [12][0]    topping count
+     *                         [13][0]    mutually exclusive items list
+     *                         [14][0]    self exclusive flag
+     *                         [15][0] standard topping count
+     *                         [16][0] topping substitution count
+     *                         [17][0] quantity of defined toppings
+     *             
+     */
+
+
+     

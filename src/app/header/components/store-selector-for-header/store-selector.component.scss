@@ -1,0 +1,165 @@
+@import 'global-scss-mixing';
+
+.store-selector-container {
+	cursor: pointer;
+
+	span {
+		font-size: 14px;
+	}
+
+	i {
+		color: $white;
+	}
+
+	.action-link {
+		@include font-regular;
+		width: auto;
+		letter-spacing: .26px;
+		white-space: nowrap;
+		color: $white;
+		word-wrap: break-word;
+
+		.bold {
+			@include font-bold;
+		}
+
+		.reduced-text {
+			display: inline-block;
+			margin-bottom: 2px;
+			max-width: 100px;
+			overflow: hidden;
+			vertical-align: middle;
+			text-overflow: ellipsis;
+
+		}
+
+		.small {
+			@include font-regular;
+			display: block;
+			margin-top: 2px;
+		}
+	}
+
+	.icon-na {
+		padding-right: 8px;
+		font-size: 32px;
+	}
+
+	.icon-toggle {
+		display: none;
+		float: right;
+		transform: rotate(90deg);
+		font-size: 10px;
+	}
+}
+
+:host ::ng-deep {
+	.popover {
+		border-radius: 0;
+		width: 125%;
+
+		.popover-header {
+			display: flex;
+			justify-content: space-between;
+			border: 0;
+			background: transparent;
+			padding: 1rem 3rem 0 1rem;
+			font-size: 14px;
+			font-weight: 300;
+
+			.close-btn {
+				position: absolute;
+				top: .5rem;
+				right: .5rem;
+				border: 0;
+				background: transparent;
+				padding: 0;
+				font-size: 10px;
+			}
+		 }
+
+		.popover-body {
+			padding: 1rem;
+			font-size: 12px;
+
+			.btn-link {
+				padding: 0;
+				text-decoration: underline;
+				color: inherit;
+				font-size: 1em;
+			}
+		}
+	}
+}
+
+@include media-breakpoint-down(lg) {
+	.store-selector-container {
+
+		.icon-na {
+			font-size: 26px;
+		}
+
+		.pickup-address {
+			width: 100%;
+		}
+	}
+}
+
+@include media-breakpoint-only(md) {
+	.store-selector-container {
+		.action-link {
+			width: 118px;
+		}
+
+		i {
+			display: none;
+		}
+
+		.pickup-address {
+			width: 100%;
+		}
+
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.store-selector-container {
+		padding: 6%;
+		padding-left: 3%;
+
+		.action-link {
+			padding: 0;
+			width: auto;
+			line-height: 1.2em;
+
+			.reduced-text {
+				max-width: 100%;
+			}
+
+		}
+
+		.px2 {
+			margin-bottom: 2px;
+		}
+
+		.icon-toggle {
+			display: initial;
+			position: absolute;
+			top: 40%;
+			right: 6.5%;
+		}
+
+
+		.pickup-address {
+			width: 100%;
+		}
+	}
+
+	@include media-breakpoint-down(xs) {
+		.store-selector-container {
+			.reduced-text {
+				display: inline;
+			}
+		}
+	}
+}

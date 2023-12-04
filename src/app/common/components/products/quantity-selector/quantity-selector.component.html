@@ -1,0 +1,31 @@
+<!-- STYLES TO BE OVER-RIDDEN IN PARENT COMPONENT -->
+
+<div class="container-fluid p-0 quantity-selector-container">
+	<div class="row no-gutters product-quantity-price">
+		<div class="col-12">
+			<div class="d-flex justify-content-between quantity-wrap">
+				<button class="decrement-amount-btn"
+				[attr.aria-label]="'Remove one ' + quantitySelectorContentData.title + ' ' + (!isMinusActive ? ' button is disabled' : '')"
+				(click)="decrementItem()">
+					<i class="icon-stack icon-stacked-layers align-self-center" [class.active-incrementer]="isMinusActive">
+						<i class="icon icon-minus-1 icon-stack-base"></i>
+						<i class="icon icon-minus-2 icon-increment-layer"></i>
+					</i>
+				</button>
+
+				<span class="quantity-increment-number">
+					{{ quantitySelectorContentData.quantity }}
+				</span>
+
+				<button class="increment-amount-btn"
+				[attr.aria-label]="'Add one ' + quantitySelectorContentData.title + ' ' + (!isPlusActive ? ' button is disabled' : '')"
+				(click)="incrementItem()">
+					<i class="icon-stack icon-stacked-layers align-self-center icon-right" [class.active-incrementer]="isPlusActive">
+						<i class="icon icon-plus-1 icon-stack-base"></i>
+						<i class="icon icon-plus-2 icon-increment-layer"></i>
+					</i>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

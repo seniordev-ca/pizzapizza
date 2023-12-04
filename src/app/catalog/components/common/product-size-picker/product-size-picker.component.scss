@@ -1,0 +1,105 @@
+@import 'global-scss-mixing';
+
+$border-color: #ccd6d8;
+
+.product-size-picker-row {
+	// min-height: 110px;
+	overflow: hidden;
+	text-align: center;
+
+	.size-picker-wrapper {
+		border: 1px solid $border-color;
+		border-radius: 5px;
+		overflow: hidden;
+	}
+
+	.size-instance {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		outline: 0;
+		border: 0;
+		background-color: $white;
+		cursor: pointer;
+		padding: 10px 2px;
+
+		&.active {
+			border: 2px solid $pp-bg-maincolour;
+
+			.separator {
+				background-color: $pp-bg-maincolour;
+			}
+
+			.check-box-wrap {
+				display: block;
+			}
+		}
+
+		.check-box-wrap {
+			display: none;
+			position: absolute;
+			top: 5px;
+			right: 7px;
+			width: 20px;
+
+			i {
+				position: absolute;
+				font-size: 6px;
+			}
+		}
+
+		.icon-wrap {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 3rem;
+			height: 3rem;
+		}
+
+		i {
+			color: $pp-bg-maincolour;
+			font-size: 2.5rem;
+			font-style: inherit;
+
+			&.small {
+				font-size: 1.5rem;
+			}
+
+			&.medium {
+				font-size: 1.75rem;
+			}
+
+			&.large {
+				font-size: 2rem;
+			}
+
+			&.x-large {
+				font-size: 2.25rem;
+			}
+		}
+
+		.label {
+			@include font-semi-bold;
+			color: $pp-default-text-colour;
+			font-size: .75em;
+		}
+
+		.separator {
+			align-self: center;
+			margin-top: 2px;
+			background-color: $border-color;
+			width: 28px;
+			height: 2px;
+		}
+	}
+	}
+
+/**
+* Ghost styling
+*/
+.pp-ghost-container {
+	.product-size-picker-row {
+		background-color: $white;
+	}
+}

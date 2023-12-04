@@ -1,0 +1,39 @@
+<a [routerLink]="['/catalog/products', category?.seoTitle || '']"
+[attr.aria-label]="index &lt; 3 && category.image ? category.name + 'Made with 100% Canadian Mozzarella Cheese': category.name">
+<div
+  class="row p-0 m-0 h-100 category-card-container category {{
+    category.uiMetadata.style
+  }}"
+>
+
+  <div
+    class="col-12 d-flex justify-content-center align-items-center image-wrap"
+    tabindex="-1"
+  >
+    <img
+      class="p-0 m-0 ghost-hidden"
+      [src]="category.image"
+      [default]="setDefaultImg(category.uiMetadata.style)"
+      *ngIf="category.image"
+      tabindex="-1"
+    />
+  </div>
+  <div class="col-12 ghost-bg ghost-bg-dark category-wrap"
+  tabindex="-1">
+    <h3 class="p-0 m-0 ghost-bar ghost-white g-w-80">
+      {{ category.name }}
+    </h3>
+    <h3 class="ghost-visible-element ghost-bar ghost-white g-w-50"></h3>
+  </div>
+
+  <div class="horizontal-gradient" *ngIf="index &lt; 3 && category.image"
+  tabindex="-1">
+    <img src="https://i.ibb.co/pjwxTF7/cow.png" />
+    <p>Made with <br />100% Canadian <br />Mozzarella Cheese</p>
+    <div class="d-flex align-items-center justify-content-center more">
+      <i class="icon-arrow-slice"></i>
+    </div>
+  </div>
+
+</div>
+</a>

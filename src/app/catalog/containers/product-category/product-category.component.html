@@ -1,0 +1,70 @@
+<div class="products-container"
+	[class.pp-ghost-container]="categoryLoading$ | async">
+	<!-- Categories header -->
+	<app-product-header
+		[topBavContent]="{
+			backgroundImage: (topBavContent$ | async).backgroundImage,
+			hasBackgroundImage: (topBavContent$ | async).hasBackgroundImage,
+			textColor: '#FFFFFF',
+			iconColor: '#EE5A00',
+			backToLocation: '/'
+		}"
+		[title]="(topBavContent$ | async).title"
+		navText="Back to menu"
+		i18n-navText>
+	</app-product-header>
+
+	<div class="container mt-5" *ngIf="!(isAddressComplete$ | async)">
+		<app-in-page-message></app-in-page-message>
+	</div>
+
+	<!-- Sub categories selector -->
+	<div class="d-block sub-category-selection">
+		<app-sub-category-selector 
+			[subCategoriesArray]="subCategoriesArray$ | async"
+			[selected]="selectedSubCategorieChild$ | async"
+			[loading]="categoryLoading$ | async"
+			(subCategoriesClickEmitter)="subCategoriesClickHandler($event)"
+		>
+		</app-sub-category-selector>
+	</div>
+
+	<!-- Products list -->
+	<div class="container my-3 my-md-5 product-list-container"
+		[class.pp-ghost-container]="productListLoading$ | async">
+		<div class="row justify-content-center">
+			<div class="col-12 p-0 col-lg-10">
+
+				<!-- Render every product -->
+				<ng-container *ngFor="let productItem of productList$ | async">
+
+					<app-product-item
+						[isComboItem]="false"
+						[isQuickAddButtonLoading]="productItem.id && productItem.id === quickAddModalLoadingForProductId"
+						[productItemInput]="productItem"
+						(productItemEventEmitter)="productItemEventHandler($event)">
+						<!-- Quick add mini modal -->
+						<ng-template>
+							<app-quick-add-modal
+								*ngIf="productItem.id && productItem.id === openQuickAddModalForProductId"
+								[isLoading]="isQuickAddLoading"
+								(quickAddModalEventEmitter)="quickAddModalHandler($event)"
+								[configuratorProductInfo]="configuratorProductInfo$ | async"
+								[productSizePickerTabsArray]="productSizePickerTabsArray$ | async"
+							>
+							</app-quick-add-modal>
+						</ng-template>
+					</app-product-item>
+				</ng-container>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- Upsale component -->
+	<div class="container mb-5">
+		<app-upsells [parentContainer]="'productCategory'"></app-upsells>
+	</div>
+</div>
+
+<!-- Vertical modal with configurator -->

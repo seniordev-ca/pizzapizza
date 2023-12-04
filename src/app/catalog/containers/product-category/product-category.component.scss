@@ -1,0 +1,14 @@
+@import 'global-scss-mixing';
+
+$semi-transparent-white: rgba(255, 255, 255, .4);
+
+@include media-breakpoint-down(sm) {
+
+	.back-wrap::after {
+		display: block;
+		border-bottom: 1px solid $semi-transparent-white;
+		width: 100%;
+		height: 1px;
+		content: '';
+	}
+}

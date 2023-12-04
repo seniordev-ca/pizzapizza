@@ -1,0 +1,275 @@
+<div [class.pp-ghost-container]="comboConfigLoading$ | async">
+	<app-product-header
+		[topBavContent]="{
+				backgroundImage: (comboDetails$ | async).image,
+				textColor: '#FFFFFF',
+				iconColor: '#EE5A00',
+				hasBackgroundImage: true,
+				backToLocation: featuredCategorySlug
+		}"
+		[title]="(comboDetails$ | async).name"
+		navText="Back to specials"
+		i18n-navText *ngIf="!isProductEditMode">
+		<ng-template>
+			<ng-container *ngTemplateOutlet="comboHeaderTemplate"></ng-container>
+		</ng-template>
+	</app-product-header>
+	<app-product-header
+		[topBavContent]="{
+				backgroundImage: (comboDetails$ | async).image,
+				textColor: '#FFFFFF',
+				iconColor: '#EE5A00',
+				hasBackgroundImage: true,
+				backToLocation: '/checkout'
+		}"
+		[title]="(comboDetails$ | async).name"
+		navText="Back to cart"
+		i18n-navText *ngIf="isProductEditMode">
+		<ng-template>
+			<ng-container *ngTemplateOutlet="comboHeaderTemplate"></ng-container>
+		</ng-template>
+	</app-product-header>
+
+<ng-template #comboHeaderTemplate>
+	<app-product-sub-header
+		[quantitySelectorContent]="{
+			maxQuantity: productValidation.maxProductQuantity,
+			quantity: (comboDetails$ | async).quantity,
+			title: (comboDetails$ | async).name
+		}"
+		(quantitySelectorEventEmitter)="quantitySelectorEventHandler($event)"
+
+		[productSubHeaderContent]="{
+			backgroundImage: (comboDetails$ | async).image,
+			itemPrice: (comboDetails$ | async).price,
+			isComboPage: true,
+			itemCount: (comboDetails$ | async).nonConfigCount
+		}"
+		[isValid]="(comboDetails$ | async).isValid"
+		[btnState]="activeBtnState"
+		(onClickEventEmitter)="addBtnEventHandler($event)"
+		[itemDescription]="(comboDetails$ | async).description">
+	</app-product-sub-header>
+</ng-template>
+
+	<div class="container product-combo-sub-container  product-combo-items-container">
+		<div class="row justify-content-center py-5">
+			<div class="col-12 col-lg-10 px-0" *ngFor="let item of comboGroupedProducts$ | async">
+				<div class="row mx-0">
+					<div class="col-12 mb-3 product-combo-item">
+						<div class="row align-items-center justify-content-between">
+							<div class="col-12 col-md-auto d-flex align-items-center justify-content-start">
+								<div class="image-wrap mr-3 ghost-hidden">
+									<img alt="combo group image" src="{{ item.groupImage }}" width="58"
+										*ngIf="item.groupImage">
+								</div>
+								<h5 class="heading-wrap ff-display fw-extra-bold ghost-bar g-w-60">
+									{{ item.groupTitle }}
+								</h5>
+							</div>
+							<div class="col-auto" *ngIf="item.validationMsg">
+								{{item.validationMsg}}
+							</div>
+							<div class="col-md-2 align-self-end text-right">
+								<div
+								*ngIf="productComboNeedsReset(item)" class="fw-extra-bold reset-link"
+								(click)="onResetCombo(item)">
+									<ng-container i18n>Reset</ng-container>
+									<i class="ml-1 icon-reset"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<app-product-item
+					*ngFor="let productItem of item.products"
+					[isComboItem]="true"
+					[productItemInput]="productItem"
+					(productItemEventEmitter)="productComboEventHandler($event, item)">
+				</app-product-item>
+			</div>
+
+			<div class="col-12 col-lg-10">
+				<div class="row mx-0 my-3 align-items-center justify-content-between">
+					<div class="col-12 col-md-9 align-self-start align-self-md-center">
+						<h2 class="ff-display fw-black calorie-text ghost-bar g-w-70 cal-text">
+							{{ (comboDetails$ | async).calories }}
+						</h2>
+					</div>
+
+					<div class="col-12 col-md-3 button">
+						<app-add-product-btn
+              [btnAriaLabel]="'Add To Cart'"
+							[btnState]="activeBtnState"
+							[isInValid]="(comboDetails$ | async).isValid"
+							(onClickEventEmitter)="addBtnEventHandler($event)">
+						</app-add-product-btn>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- <div class="container mb-5">
+		<app-upsells></app-upsells>
+	</div> -->
+
+	<app-product-configurator
+		#verticalModalConfigurator
+		[isVerticalModalContainer]="true"
+		[editingComboId]="(comboDetails$ | async).id">
+	</app-product-configurator>
+</div>
+
+<ng-template #comboNotConfigModal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal();  onComboNotConfiguredOkClick()" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+		<app-confirmation-modal
+			[data]="{
+				icon: 'icon-bell'
+			}"
+			title="D'ough!"
+			subtitle='There are one or more items that require configuration'
+			i18n-title
+			i18n-subtitle>
+			<ng-template>
+				<button class="btn btn-primary" (click)="closeModal(); onComboNotConfiguredOkClick()" i18n>
+					Okay
+				</button>
+			</ng-template>
+		</app-confirmation-modal>
+</ng-template>
+<ng-template #comboFreeOptionModal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal(); onCancelClickHandler()" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+		<app-confirmation-modal
+			[data]="{
+				icon: 'icon-bell'
+			}"
+			title='Are You Sure?'
+			subtitle='Sorry some items are not configured. Are you sure you want to continue?'
+			i18n-title
+			i18n-subtitle>
+			<ng-template>
+				<div class="col-12 d-flex justify-content-center p-0 align-self-end">
+					<div class="col-6 col-lg-5 px-1">
+						<button class="btn btn-primary btn-white w-100" (click)="closeModal(); onCancelClickHandler()" i18n>
+								Cancel
+						</button>
+					</div>
+					<div class="col-6 col-lg-5 px-1">
+						<button class="btn btn-primary w-100" (click)="closeModal(); addDefaultConfigHandler($event)" i18n>
+							Yes
+						</button>
+					</div>
+				</div>
+			</ng-template>
+		</app-confirmation-modal>
+</ng-template>
+
+<ng-template #guardModalForNormal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal(); cancelLeaveAttempt();" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+	<app-confirmation-modal
+		[data]="{
+				icon: 'icon-bell'
+			}"
+		title="Are you sure?"
+		i18n-title>
+		<ng-template>
+			<div class="col-12 mb-4">
+				<p i18n>Are you sure you want to abandon all the delicious you've created?</p>
+			</div>
+			<div class="col-12 align-self-end">
+					<div class="row justify-content-center button-row">
+						<div class="col-6 col-md-5 px-1">
+							<button class="btn btn-lg btn-primary btn-white text-uppercase w-100"
+							(click)="closeModal(); cancelLeaveAttempt();" i18n>
+								Cancel
+							</button>
+						</div>
+						<div class="col-6 col-md-5 px-1">
+							<button class="btn btn-lg btn-primary text-uppercase w-100"
+							(click)="closeModal(); confirmLeaveAttempt();" i18n>
+								Okay
+							</button>
+						</div>
+					</div>
+			</div>
+			<!-- Button Row -->
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+<ng-template #guardModalForEdit let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal(); cancelLeaveAttempt();" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+	<app-confirmation-modal
+		[data]="{
+				icon: 'icon-bell'
+			}"
+		title="Are you sure?"
+		i18n-title>
+		<ng-template>
+			<div class="col-12 mb-4">
+				<p i18n>It seems you have made a change, we love what you did there. Please press update before you continue with add new item so you don't lose your masterpiece</p>
+			</div>
+			<div class="col-12 align-self-end">
+					<div class="row justify-content-center button-row">
+						<div class="col-6 col-md-5 px-1">
+							<button class="btn btn-lg btn-primary btn-white text-uppercase w-100"
+							(click)="closeModal(); cancelLeaveAttempt();" i18n>
+								Cancel
+							</button>
+						</div>
+						<div class="col-6 col-md-5 px-1">
+							<button class="btn btn-lg btn-primary text-uppercase w-100"
+							(click)="closeModal(); confirmLeaveAttempt();" i18n>
+								Okay
+							</button>
+						</div>
+					</div>
+			</div>
+			<!-- Button Row -->
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+<ng-template #looseConfigModal let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal()" aria-label="close button">
+		<i class="icon-close-bold"></i>
+	</button>
+	<app-confirmation-modal
+		[data]="{
+				icon: 'icon-bell'
+			}"
+		title="You Sure?"
+		i18n-title>
+		<ng-template>
+			<div class="col-12 mb-4">
+				<p i18n>By selecting this option, you’ll lose all the choices you made for your other item(s). You’ll have to start again.</p>
+			</div>
+			<div class="col-12 align-self-end">
+					<div class="row justify-content-center button-row">
+						<div class="col-6 col-md-5 px-1">
+							<button class="btn btn-lg btn-primary btn-white text-uppercase w-100"
+							(click)="closeModal();" i18n>
+								Cancel
+							</button>
+						</div>
+						<div class="col-6 col-md-5 px-1">
+							<button class="btn btn-lg btn-primary text-uppercase w-100"
+							(click)="closeModal(); confirmOpenConfig();" i18n>
+								Okay
+							</button>
+						</div>
+					</div>
+			</div>
+			<!-- Button Row -->
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>

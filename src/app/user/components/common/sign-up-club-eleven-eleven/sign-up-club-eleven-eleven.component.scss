@@ -1,0 +1,55 @@
+@import 'global-scss-mixing';
+
+$light-gray: #ccd6d8;
+
+.sign-up-club-eleven-eleven-container {
+	
+	.page-title {
+		@include font-regular;
+		font-size: 1.875em;
+	}
+
+	.img-fluid {
+		width: 100%;
+
+		&.club-eleven-eleven-image {
+			max-width: 448px;
+		}
+	}
+
+	.optional-inputs-row {
+
+		.alternate-label {
+			min-height: 26px;
+		}
+	}
+
+	.create-account-wrapper {
+		@include font-extra-bold;
+		font-size: 1em;
+
+		a {
+			color: $pp-bg-maincolour;
+		}	
+	}
+
+	.pp-form {
+		.invalid-text-alt {
+			display: inline-block;
+		}
+
+		.club-card-row {
+			.radio-group {
+				width: 100%;
+			}
+		}
+	}
+
+	.address-input {
+		.address-input-icon {
+			.find-me {
+				display: none;
+			}
+		}
+	}
+}

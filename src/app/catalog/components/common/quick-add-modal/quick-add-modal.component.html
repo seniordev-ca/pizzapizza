@@ -1,0 +1,63 @@
+<!-- Div Present for the BG Layover -->
+<div class="quick-add-bg"
+		(click)="closeQuickAddModal()">
+</div>
+
+<!-- Absolute Wrap Contains the Bootstrap Container within in a controlled width -->
+<div class="quick-add-modal-absolute-wrap">
+
+	<div class="container d-flex h-100">
+		<div>
+			<!-- Row For Header, and for Exit button -->
+			<div class="row align-items-start d-flex">
+				<div class="col-12 d-flex justify-content-end">
+					<button class="btn-no-style" (click)="closeQuickAddModal()">
+						<i class="mr-0 pr-0 mt-2 icon-close-bold close-button"></i>
+					</button>
+				</div>
+				<div class="col-12 d-flex justify-content-center">
+					<div class="quick-add-modal-header" i18n>
+						Add an Item
+					</div>
+				</div>
+			</div>
+
+			<!-- Row for separator -->
+			<div class="row d-flex align-items-start justify-content-center separator-row">
+				<div class="my-2 separator"></div>
+			</div>
+		</div>
+		<!-- Row that holds the size-picker component -->
+		<div class="mx-4">
+			<app-product-size-picker
+				[productSizePickerTabsArray]="productSizePickerTabsArray"
+				(productSizePickerTabClickEmitter)="productSizePickerEventHandler($event)">
+			</app-product-size-picker>
+		</div>
+
+
+		<!-- Row that holds the Price, and the Calorie Info Displayed on the modal -->
+		<div class="row my-2 d-flex flex-column align-items-center">
+			<div class="quick-add-modal-price">
+				{{ configuratorProductInfo.priceText.priceValue | currency:'CAD':'symbol-narrow':'1.2' }}
+			</div>
+			<div class="my-2 separator"></div>
+			<div class="quick-add-modal-cals text-uppercase" *ngIf="configuratorProductInfo.calText">
+					{{ configuratorProductInfo.calText.calValue }}
+			</div>
+		</div>
+
+		<!-- Button Row -->
+		<div class="row mb-1 d-flex flex-item align-items-end justify-content-center modal-btn-row">
+			<button class="btn btn-lg btn-primary quick-add-modal-button d-flex align-items-center justify-content-center"
+					[class.loading-state]="isLoading"
+					(click)="addToCart(configuratorProductInfo.id)" i18n>
+					ADD TO CART
+			</button>
+		</div>
+
+	</div>
+	<!-- Container -->
+
+</div>
+<!-- quick-add-modal-absolute-wrap -->

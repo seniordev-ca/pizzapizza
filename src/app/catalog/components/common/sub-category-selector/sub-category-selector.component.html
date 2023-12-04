@@ -1,0 +1,23 @@
+<div class="container sub-category-selector-container p-0"
+	[hidden]="subCategoriesArray.length === 1"
+>
+	<div class="row sub-category-row ghost-col-6" #subCategoryRow
+			 [attr.aria-label]="'Configuration menu with ' + subCategoriesArray.length + ' items'" tabindex="0">
+
+		<button class="col col-md-auto ghost-col-4 selector-option"
+			[class.active]="subCategorie.isSelected"
+			(click)="productSubCategoriesClick(subCategorie.id)"
+			*ngFor="let subCategorie of subCategoriesArray; let i = index"
+			id="subcategory{{i}}"
+			[style.min-width]="minWidth">
+				<h6 class="ghost-bar speed-50 text-capitalize">
+					{{ subCategorie.title | lowercase}}
+				</h6>
+		</button>
+
+		<span class="col select-arrow"
+				[ngStyle]="{'left' : selectPosString, 'width': selectWidth, 'min-width': minWidth}"
+				[class.d-none]="subCategoriesArray.length < 1"
+		></span>
+	</div>
+</div>

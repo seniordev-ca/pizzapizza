@@ -1,0 +1,153 @@
+@import 'global-scss-mixing';
+
+$text-color-dark: #3b210b;
+
+.club-eleven-container-header {
+	background-size: cover;
+	height: 240px;
+
+	.sub-header-navigation-container {
+		.title {
+			color: $white;
+		}
+	}
+
+	.mobile-sub-header-container {
+		margin-top: 30px;
+		white-space: nowrap;
+
+		.pp-button {
+			width: 49%;
+			max-width: 200px;
+		}
+	}
+}
+
+.club-eleven-container {
+	@include bg-opacity-gradient('/static-files/images/bg-club-eleven.jpg', 240px);
+
+	.overlap-row {
+		position: relative;
+		top: -80px;
+		margin-top: 0;
+		margin-bottom: -70px;
+	}
+
+	.image-col { 
+		text-align: left;
+
+		.club-eleven-eleven-image {
+			width: 100%;
+		}
+	}
+
+	.action-buttons {
+		white-space: nowrap;
+
+		.pp-button {
+			min-width: 180px;
+		}
+	}
+
+
+	.info-text {
+		h3 {
+			@include font-regular;
+			color: $pp-default-text-colour;
+			font-size: 1.875em;
+		}
+
+		h5 {
+			@include font-regular;
+			color: $text-color-dark;
+			font-size: 1em;
+		}
+	}
+
+}
+
+.club-eleven-actions-row {
+	margin-top: 20px;
+
+	.action-cart {
+		margin: 0;
+		padding: 0;
+
+		a:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+@include media-breakpoint-down(lg) {
+	.club-eleven-actions-row {
+		.action-cart-wrap {
+			h3 {
+				font-size: 1.1em;
+			}
+
+			h5 {
+				font-size: .8em;
+			}
+		} 
+	}
+}
+
+@include media-breakpoint-down(sm) {
+
+	.club-eleven-container-header {
+		height: 190px;
+	}
+
+	.club-eleven-container {
+
+		.image-col {
+			margin-top: 15px;
+			text-align: center;
+
+			.club-eleven-eleven-image {
+				margin-left: 5%;
+				width: 80%;
+				max-width: 400px;
+			}
+		}
+
+		.cart-buttons {
+			text-align: center;
+			font-size: 1em;
+
+			i {
+				font-size: 18px;
+			}
+		}
+
+		.info-text {
+			h3 {
+				margin-top: 30px;
+				font-size: 1.6em;
+			}
+
+			h5 {
+				font-size: .8em;
+			}
+		}
+
+		.action-buttons {
+			display: none;
+		}
+
+		.overlap-row {
+			top: 0;
+			margin-bottom: 0;
+		}
+	}
+}
+
+@include media-breakpoint-down(xs) { 
+	.club-eleven-actions-row {
+		.action-cart {
+			padding-right: 10px;
+			padding-left: 10px;
+		}
+	}
+}

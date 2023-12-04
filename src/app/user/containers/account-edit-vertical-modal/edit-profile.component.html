@@ -1,0 +1,261 @@
+
+<div class="container-fluid mx-0 px-0 edit-profile-modal-container">
+	<app-vertical-modal #editProfileVerticalModal (verticalModalOutputEmitter)="handleVerticalModalOutput($event)">
+		<ng-template>
+			<div class="close-btn-wrap"
+				*ngIf="isForcedEdit"
+				(click)="closeEditModal()">
+				<i class="icon-close-bold"></i>
+			</div>
+			<app-modal-info-header
+				[modalInfoHeaderContent]="{
+					fontKey: 'icon-sign-in'
+				}"
+				title="EDIT"
+				subTitle="PROFILE"
+				i18n-title
+				i18n-subTitle>
+				<ng-template>
+					<div class="col-12" *ngIf="isForcedEdit">
+						<span i18n>
+							We need a little more information from you before we can finish creating your account.
+						</span>
+					</div>
+				</ng-template>
+			</app-modal-info-header>
+
+			<ng-container *ngTemplateOutlet="editProfileModalForm">
+			</ng-container>
+		</ng-template>
+	</app-vertical-modal>
+
+</div>
+
+
+<ng-template #editProfileModalForm>
+	<app-sign-up-form-component
+		[signUpForm]="signUpFormStepOne"
+		[userImageDetails]="signUpDetailsData.userImage"
+		[isPasswordDisplayed]="isPasswordDisplayed"
+		submitBtn="Save"
+		[isEditForm]="true"
+		[isForcedEdit]="isForcedEdit"
+		[validDays]="validDays"
+		(signUpDetailsEventEmitter)="handleSignUpDetailsEventEmitter($event)"
+		i18n-submitBtn
+		*ngIf="signUpFormStepOne">
+	</app-sign-up-form-component>
+</ng-template>
+
+
+<ng-template #resetFormModal let-closeModal="close">
+		<i class="icon-close-bold prompt-modal-x" (click)="closeModal(); promptModalForm.reset();"></i>
+		<div [ngSwitch]="promptModalStatus" class="edit-profile-modal-container h-100">
+			<ng-container *ngSwitchCase="PromptModalStatusEnum.load">
+				<ng-container *ngTemplateOutlet="resetFormOnLoad"></ng-container>
+			</ng-container>
+			<ng-container *ngSwitchCase="PromptModalStatusEnum.sent">
+				<ng-container *ngTemplateOutlet="resetFormOnSent"></ng-container>
+			</ng-container>
+			<ng-container *ngSwitchCase="PromptModalStatusEnum.reset">
+				<ng-container *ngTemplateOutlet="resetFormOnReset"></ng-container>
+			</ng-container>
+			<ng-container *ngSwitchCase="PromptModalStatusEnum.success">
+				<ng-container *ngTemplateOutlet="resetFormOnSuccess"></ng-container>
+			</ng-container>
+		</div>
+	</ng-template>
+
+	<ng-template #resetFormOnLoad>
+		<app-prompt-modal
+				[data]="{
+					icon: 'icon-sign-in'
+				}"
+				title="Forgot your password?"
+				text="Don't worry, we know how hard it is to keep track of the millions of passwords we have for everything nowadays. Just enter your email below and we'll email your password right away."
+				i18n-title
+				i18n-text>
+			<ng-template>
+				<ng-container *ngTemplateOutlet="resetFormContent"></ng-container>
+			</ng-template>
+		</app-prompt-modal>
+	</ng-template>
+
+	<ng-template #resetFormOnSent>
+		<app-prompt-modal
+				[data]="{
+					icon: 'icon-sign-in'
+				}"
+				title="Forgot your password?"
+				text="We've Sent a password reset link to your email."
+				i18n-title
+				i18n-text>
+			<ng-template>
+				<ng-container *ngTemplateOutlet="resetFormContentPartTwo"></ng-container>
+			</ng-template>
+		</app-prompt-modal>
+	</ng-template>
+
+	<ng-template #resetFormOnReset>
+			<app-prompt-modal
+				[data]="{
+					icon: 'icon-sign-in'
+				}"
+				title="Change Password"
+				i18n-title>
+			<ng-template>
+				<ng-container *ngTemplateOutlet="resetFormContent"></ng-container>
+			</ng-template>
+		</app-prompt-modal>
+	</ng-template>
+
+	<ng-template #resetFormOnSuccess>
+			<app-prompt-modal
+				[data]="{
+					icon: 'icon-sign-in'
+				}"
+				title="Success!"
+				text="Your password has been updated. Please login with your new credentials."
+				i18n-title
+				i18n-text>
+				<ng-template>
+					<ng-container *ngTemplateOutlet="resetFormContentPartTwo"></ng-container>
+				</ng-template>
+			</app-prompt-modal>
+	</ng-template>
+
+
+	<ng-template #resetFormContent>
+		<form class="pp-form"
+		[formGroup]="promptModalForm"
+		(ngSubmit)="onResetFormSubmit(promptModalForm.value)">
+			<!-- Title + email input -->
+			<div class="form-row"
+			[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(promptModalForm.controls['emailAddress'])"
+			*ngIf="promptModalForm.controls['emailAddress']">
+				<div class="col-md-9 form-group">
+					<label for="emailAddress" class="alternate-label">
+						<ng-container i18n>Enter your email</ng-container>
+						<app-form-invalid-message
+							[control]="promptModalForm.controls['emailAddress']">
+						</app-form-invalid-message>
+					</label>
+					<input type="email" class="form-control text-lowercase" formControlName="emailAddress">
+				</div>
+
+				<div class="col-md-3 d-inline-flex align-items-center pl-2">
+					<button class="btn btn-lg btn-primary sign-in-button"
+						[disabled]="!promptModalForm.valid">
+						<span i18n>
+							Reset
+						</span>
+					</button>
+				</div>
+			</div>
+
+				<div class="form-row" *ngIf="promptModalForm.controls['passwords']"
+				[formGroup]="promptModalForm.controls['passwords']"
+				[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(promptModalForm.controls['passwords'])">
+					<div class="col-12 col-md-6 form-group">
+						<label for="new_password" class="alternate-label">
+							<ng-container i18n>New Password</ng-container>
+							<span class="optional-label-identifier" i18n>
+								(Must be 7 to 25 characters long)
+							</span>
+						</label>
+					<input [type]="isPasswordTypeDisplayed ? 'text' : 'password'" class="form-control password" formControlName="new_password" maxlength="25" autocomplete="new_password">
+					<span class="password-strength {{formValidationService.validatePasswordStrength(promptModalForm.controls['passwords'].controls['new_password'])  | lowercase}}">
+						{{formValidationService.validatePasswordStrength(promptModalForm.controls['passwords'].controls['new_password'])}}
+					</span>
+
+					<div class="form-group show-pasword pt-1">
+						<label class="checkbox-group">
+							<input name="show-password" type="checkbox" class="checkbox-group-input" [checked]="isPasswordTypeDisplayed"
+								(change)="isPasswordTypeDisplayed = !isPasswordTypeDisplayed">
+							<span class="select-el-wrapper">
+								<span class="select-el"></span>
+							</span>
+							<span class="local-show-pw-label" i18n>
+								Show Password
+							</span>
+						</label>
+					</div>
+				</div>
+				<div class="col-12 col-md-6 form-group">
+					<label for="confirm_password" class="alternate-label">
+						<ng-container i18n>Confirm Password</ng-container>
+						<app-form-invalid-message
+							[control]="promptModalForm.controls['passwords']"
+							[customValidation]="[{ errorName: 'noMatch', errorMessage: 'Passwords do not match'}]">
+						</app-form-invalid-message>
+						<span class="optional-label-identifier">
+							&nbsp;
+						</span>
+					</label>
+					<input [type]="isPassword2TypeDisplayed ? 'text' : 'password'" class="form-control" formControlName="confirm_password" maxlength="25" autocomplete="new_password">
+
+					<div class="form-group show-pasword pt-1">
+						<label class="checkbox-group">
+							<input name="show-password" type="checkbox" class="checkbox-group-input" [checked]="isPassword2TypeDisplayed"
+								(change)="isPassword2TypeDisplayed = !isPassword2TypeDisplayed">
+							<span class="select-el-wrapper">
+								<span class="select-el"></span>
+							</span>
+							<span class="local-show-pw-label" i18n>
+								Show Password
+							</span>
+						</label>
+					</div>
+				</div>
+				<div class="col-12 text-center">
+					<button class="btn btn-primary sign-in-button"
+						[disabled]="!promptModalForm.valid">
+						<span i18n>
+							Reset
+						</span>
+					</button>
+				</div>
+			</div>
+		</form>
+	</ng-template>
+
+	<ng-template #resetFormContentPartTwo>
+		<div class="w-100 text-center continue-btn">
+			<button class="btn btn-primary selected with-icon sign-in-button" (click)="promptModal.onCancel()" i18n>Continue</button>
+		</div>
+	</ng-template>
+
+<ng-template #closeEditModalRef let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal()" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+	<app-confirmation-modal
+		[data]="{
+			icon: 'icon-bell'
+		}"
+		title="D'ough!"
+		i18n-title>
+		<ng-template>
+			<div class="col-12 mb-4">
+				<p i18n>But you are almost done! By leaving this screen your account will not be created and you will be logged out.</p>
+			</div>
+			<div class="col-12 align-self-end">
+					<div class="row justify-content-center button-row">
+						<div class="col-12 col-md-5">
+							<button class="btn btn-lg btn-primary btn-white text-uppercase w-100"
+							(click)="closeModal()" i18n>
+								Cancel
+							</button>
+						</div>
+						<div class="col-12 col-md-5">
+							<button class="btn btn-lg btn-primary text-uppercase w-100"
+							(click)="closeModal(); onConfirmClose();" i18n>
+								Okay
+							</button>
+						</div>
+					</div>
+			</div>
+			<!-- Button Row -->
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>

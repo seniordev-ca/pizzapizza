@@ -1,0 +1,68 @@
+<div class="row product-sub-header-container-fluid"
+	[class.combo-page]="productSubHeaderContent.backgroundImage || productSubHeaderContent.isComboPage">
+	<div class="frosted-bg ghost-bg"
+		*ngIf="productSubHeaderContent.backgroundImage"
+		[ngStyle]="{'background-image':'url('+productSubHeaderContent.backgroundImage+')'}">
+	</div>
+	<!-- Container to hold sub-header within container margins -->
+	<div class="container product-sub-header-container">
+		<div class="row justify-content-center product-sub-header-container">
+			<div class="col-12 col-lg-10 mt-3 mt-lg-0">
+				<div class="row mx-0">
+					<div class="col-12 col-md-8 col-lg-9">
+						<div class="row h-100 pb-3">
+							<div class="col-12 align-self-start">
+								<h3 class="fw-extra-bold mb-0 ghost-bar ghost-white g-w-30" *ngIf="!itemConfigText">
+									<ng-container i18n>You've got</ng-container> {{productSubHeaderContent.itemCount}}
+									<ng-container *ngIf="productSubHeaderContent.itemCount !== 1" i18n>items</ng-container>
+									<ng-container *ngIf="productSubHeaderContent.itemCount === 1" i18n>item</ng-container>
+									<ng-container i18n> to configure</ng-container>
+								</h3>
+								<h3 class="fw-extra-bold mb-0 ghost-bar ghost-white g-w-30" *ngIf="itemConfigText">
+									{{ itemConfigText }}
+								</h3>
+							</div>
+							<div class="col-12 mt-4 align-self-end">
+								<p class="mb-0 ghost-bar ghost-white">
+									{{itemDescription}}
+								</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-12 col-md-4 col-lg-3">
+						<div class="row h-100 justify-content-center product-sub-header-price-quantity-container"
+							[class.justify-content-md-between]="quantitySelectorContent">
+							<div class="col-6 product-sub-header-item-quantity-selector h3 ghost-hidden p-0" *ngIf="quantitySelectorContent">
+								<app-quantity-selector
+									class="w-100"
+									[quantitySelectorContent]="quantitySelectorContent"
+									(quantitySelectorEventEmitter)="quantitySelectorEventHandler($event)">
+								</app-quantity-selector>
+							</div>
+							<div class="col-6 price text-right p-0">
+								<h3 class="fw-extra-bold m-0 ghost-bar ghost-white">
+									{{productSubHeaderContent.itemPrice | currency : 'CAD':'symbol-narrow':'1.2'}}
+								</h3>
+							</div>
+							<div class="col-12 align-self-end mt-2 pl-2 pr-0">
+									<app-add-product-btn
+										[isInValid]="isValid"
+                    [btnAriaLabel]="itemDescription ? 'Add ' + itemDescription + ' to Cart' : 'Add to cart'"
+										[btnState]="btnState"
+                    [isVerticalModalOpen]="isVerticalModalOpen"
+										(onClickEventEmitter)="btnClickEventHandler($event)">
+									</app-add-product-btn>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		<!-- row product-combo-list-header-container -->
+	</div>
+	<!-- container product-list-sub-header-container -->
+</div>
+<!-- product-sub-header-container-fluid -->

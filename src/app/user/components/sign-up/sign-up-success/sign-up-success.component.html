@@ -1,0 +1,17 @@
+<div class="container sign-up-success-component">
+	<div class="row pb-5">
+		<div class="col-12 success-message text-center">
+			{{ signUpSuccessData.message }}
+		</div>
+	</div>
+	<div class="row pb-5">
+		<div class="col-12 text-center">
+			<button class="btn btn-lg btn-primary"
+				(click)="onContinueClick($event)">
+				<span i18n>
+					Continue
+				</span>
+			</button>
+		</div>
+	</div>
+</div>

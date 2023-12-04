@@ -1,0 +1,28 @@
+<div class="container d-flex px-1 app-promotion-container">
+	<div class="container-fluid py-5 mb-2">
+		<!-- app promotion start -->
+		<div class="row h-100 d-flex justify-content-center align-items-center">
+			<div class="col-md-4 col-8 text-center">
+				<h2 class="title" i18n>ORDER ON OUR NEW APP!</h2>
+				<div class="app-buttons" *ngIf="appLinks">
+					<a href="{{appLinks.iTunes}}">
+						<img alt="app-store" class="app-link-img" src="./static-files/home/app-promotion/appstore.png">
+					</a>
+					<a href="{{appLinks.googlePlay}}">
+						<img alt="app-store" class="app-link-img" src="./static-files/home/app-promotion/google-play.png">
+					</a>
+				</div>
+				<div class="d-md-none text-left pt-2 description" i18n>
+					We've updated our Mobile App for the IPhone, iPad, iPod Touch and Android Smartphones. Download for great features including order tracking, easy repeat ordering & in-app payment.
+				</div>
+			</div>
+			<div class="col-md-4 col-4 text-center">
+				<img alt="app-promo" class="img-fluid" src="./static-files/home/app-promotion/app-promotion.png">
+			</div>
+			<div class="col-md-4 d-none d-md-flex text-center" i18n>
+				We've updated our Mobile App for the IPhone, iPad, iPod Touch and Android Smartphones. Download for great features including order tracking, easy repeat ordering & in-app payment.
+			</div>
+		</div>
+		<!-- app promotion end -->
+	</div>
+</div>

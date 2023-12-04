@@ -1,0 +1,266 @@
+@import 'global-scss-mixing';
+
+$error-border: #e1e7e9;
+$error-font: #6d7273;
+$pp-bg-secondcolor2: #fa4001;
+$pp-bg-maincolour2: #fa6103;
+$radial-gradient-from: #fa5e02;
+$radial-gradient-to: #fb7f00;
+
+$start-gradient-from1: #ef6200;
+$start-gradient-to1: #ef5400;
+$start-gradient-from2: #ef5400;
+$start-gradient-to2: #ff8200;
+
+
+.club-eleven-eleven-card-container {
+	@include font-bold;
+	border-radius: 9px;
+	background: linear-gradient(160.16deg, $start-gradient-from1 0%, $start-gradient-to1 17.11%, $start-gradient-from2 64.74%, $start-gradient-to2 100%);
+	padding: 15px;
+	line-height: 1em;
+	letter-spacing: .22px;
+	color: $white;
+
+	&.just-for-you-card {
+		border-radius: 0;
+		// background: none;
+	}
+
+	.user-details {
+		@include font-extra-bold;
+		word-wrap: break-word;
+
+		.user-card {
+			display: block;
+			margin-top: 5px;
+			letter-spacing: .22px;
+			font-weight: 100;
+		}
+	}
+
+	.eleven-eleven-logo {
+		max-width: 130px;
+	}
+
+	.card-eleven-top-part {
+		border-radius: 15px 15px 0 0;
+		background: radial-gradient(circle at center, $radial-gradient-from 20%, $radial-gradient-to 80%);
+		padding-top: 15px;
+		padding-bottom: 15px;
+	}
+
+
+	.card-bottom-part {
+		padding-top: 15px;
+
+		.pizza-on-card-11-11 {
+			max-width: 70%;
+		}
+	}
+
+	.club-pizza-wrap {
+		position: relative;
+		height: 100%;
+
+
+		.club-pizza-base {
+			min-width: 1px;
+			height: auto;
+		}
+
+		.club-pizza-top {
+
+			&.loyalty {
+				top: 0;
+			}
+
+			position: absolute;
+			left: 0;
+			max-height: 100%;
+		}
+
+
+
+	}
+
+	.navigate {
+		.account-btn,
+		.btn-primary {
+			@include font-semi-bold;
+			border: 0;
+			background-color: transparent;
+			cursor: pointer;
+			padding: 0;
+			min-width: auto;
+			height: auto;
+			text-transform: capitalize;
+			letter-spacing: .29px;
+			color: $white;
+			font-size: .825rem;
+
+			i {
+				font-size: 1.1rem;
+			}
+
+			.icon-envelope {
+				font-size: .9rem;
+			}
+
+			&:focus {
+				outline: none;
+			}
+
+			.rotate-icon-90:before {
+				transform: rotate(45deg);
+			}
+		}
+	}
+
+	.separator {
+		opacity: .5;
+		margin: 20px 0;
+		border-bottom: 1px solid $white;
+		width: 90%;
+	}
+
+
+	.full-width-separator {
+		width: 100%;
+	}
+
+	.eleven-eleven-earnings {
+		width: 100%;
+		font-weight: lighter;
+	}
+
+	@include media-breakpoint-down(md) {
+		.club-eleven-eleven-image-wrap {
+			text-align: center;
+		}
+	}
+
+	@include media-breakpoint-down(sm) {
+		// margin-top: 20px;
+
+		.club-eleven-eleven-image-wrap {
+
+			img {
+				width: 90%;
+			}
+		}
+
+
+		.separator {
+			margin: 10px 0;
+			width: 100%;
+		}
+
+		.club-rewards {
+			span {
+				&.value {
+					margin: 10px 0;
+					font-size: 1.3em;
+				}
+			}
+		}
+
+		.eleven-eleven-earnings {
+			margin-bottom: 0;
+			font-size: .87em;
+		}
+	}
+
+	&.has-error {
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+}
+
+.club-rewards {
+	span {
+		display: block;
+
+		width: 100%;
+		font-weight: 500;
+
+		&.label {
+			@include font-semi-bold;
+		}
+
+		&.value {
+			@include font-extra-bold;
+			margin: 10px 0;
+		}
+	}
+}
+
+.club-eleven-eleven-details-container {
+	.btn-primary {
+		background-color: transparent;
+		padding: 0;
+		min-width: auto;
+		height: auto;
+		text-align: right;
+		text-transform: capitalize;
+		font-weight: normal;
+	}
+}
+
+.horizontal-gradient {
+	background: linear-gradient(90deg,  $pp-bg-secondcolor2 4%,  $pp-bg-maincolour2 96%);
+}
+
+
+.club-eleven-eleven-error-container {
+	border: 1px solid $error-border;
+	border-bottom-left-radius: 9px;
+	border-bottom-right-radius: 9px;
+	color: $error-font;
+
+	h2 {
+		margin: 20px 0;
+		letter-spacing: .51px;
+	}
+
+	p {
+		letter-spacing: .22px;
+	}
+}
+
+.svg-wrapper {
+	height: 0;
+}
+
+.prompt-modal-x {
+	border: 0;
+	background-color: transparent;
+}
+
+.prompt-modal-x:focus {
+	outline: 0;
+}
+
+// sass-lint:disable no-vendor-prefixes
+@media all and (-ms-high-contrast: none)
+{
+	::-ms-backdrop,
+	.club-pizza-wrap {
+		height: auto !important; // sass-lint:disable-line no-important
+
+	}
+
+	.club-pizza-top {
+		top: 0;
+	}
+
+	.account {
+		top: 0;
+	}
+
+	// sass-lint:disable class-name-format
+	.justForYou {
+		top: 0;
+	}
+
+}

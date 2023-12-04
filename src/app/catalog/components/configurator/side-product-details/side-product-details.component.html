@@ -1,0 +1,98 @@
+<div class="container side-product-details-container">
+	<div class="row product-image-row">
+		<div class="col p-4">
+			<div class="product-image-wrap">
+					<img alt="Base Pizza" class="product-image" [src]="configuratorProductInfo.image" *ngIf="configuratorProductInfo && configuratorProductInfo.image">
+				<ng-container
+					*ngIf="configuratorProductInfo.isPizza">
+					<div class="side-wrapper center"
+						[ngStyle]="{'z-index': ingredients.zIndex}"
+						*ngFor="let ingredients of configuratorProductInfo.subText; trackBy: trackIngByFn">
+						<img alt="Your custom pizza with toppings" class="ingredient-overlay" [src]="ingredients.image" [default]="null" *ngIf="ingredients.image" id="{{ingredients.id}}-overlay">
+					</div>
+
+				</ng-container>
+			</div>
+		</div>
+	</div>
+	<!-- row product-image-row -->
+
+	<div class="row product-desription">
+		<div class="col">
+			<!-- If not combo than show description
+			<p class="text-center" *ngIf="!isCombo">
+				{{ configuratorProductInfo.description }}
+			</p>
+			-->
+			<!-- else Show selected ingredients -->
+			<p class="text-center text-capitalize">
+				<ng-container *ngFor="let option of configuratorProductInfo.subText; let i = index;">
+					{{option | formatConfigOption | lowercase}}<ng-container *ngIf="option.direction === HalfHalfOptionsEnum.left" i18n> (left)</ng-container><ng-container *ngIf="option.direction === HalfHalfOptionsEnum.right" i18n> (right)</ng-container>
+					<ng-container *ngIf="option.isGluten || option.isDipOnWings || option.isPremium"> (</ng-container>
+						<ng-container *ngIf="option.isPremium" i18n>extra charge</ng-container>
+						<ng-container *ngIf="option.isPremium && (option.isGluten || option.isDipOnWings)">, </ng-container>
+						<ng-container *ngIf="option.isGluten" i18n>contains gluten</ng-container>
+						<ng-container *ngIf="option.isGluten && option.isDipOnWings">, </ng-container>
+						<ng-container *ngIf="option.isDipOnWings" i18n>on wings</ng-container>
+					<ng-container *ngIf="option.isGluten || option.isDipOnWings || option.isPremium">)</ng-container>
+					<ng-container *ngIf="i + 1 < configuratorProductInfo.subText.length">, </ng-container>
+				</ng-container>
+			</p>
+		</div>
+	</div>
+
+	<!-- Product size picker -->
+	<div class="size-picker-wrapper">
+	<app-product-size-picker
+		[productSizePickerTabsArray]="productSizePickerTabsArray"
+		(productSizePickerTabClickEmitter)="productSizePickerTabClickHandler($event)">
+	</app-product-size-picker>
+	</div>
+
+	<!-- Product quantity and price -->
+	<div class="row my-3 mx-0 h2 justify-content-center product-quantity-price">
+		<div class="col-6 d-flex align-items-center justify-content-center pl-0">
+			<app-quantity-selector
+				class="w-100"
+
+				*ngIf="!isCombo && configuratorProductInfo.isQuantitySelectionAllowed"
+				[quantitySelectorContent]="quantitySelectorContent"
+				(quantitySelectorEventEmitter)="quantitySelectorEventHandler($event)">
+			</app-quantity-selector>
+		</div>
+		<div class="price p-0" [ngClass]="{
+			'col-12 text-center': isCombo || !configuratorProductInfo.isQuantitySelectionAllowed,
+			'col-6 text-right': !isCombo && configuratorProductInfo.isQuantitySelectionAllowed
+		}">
+			{{ configuratorProductInfo.priceText.priceValue | currency:'CAD':'symbol-narrow':'1.2' }}
+		</div>
+	</div>
+
+	<!-- Add to cart button -->
+	<div class="row mt-1">
+		<div class="col-12">
+			<span class="d-block w-100 text-center mb-3 product-validation" *ngIf="configuratorProductInfo.validationMsg">
+				{{configuratorProductInfo.validationMsg}}
+			</span>
+			<app-add-product-btn
+				[isInValid]="isValid"
+        [btnAriaLabel]="configurationUi.addToCartBtnState === 'active' ? getAriaLabelTextFromSubText(configuratorProductInfo.subText) : ''"
+				[btnState]="configurationUi.addToCartBtnState"
+				(onClickEventEmitter)="addToCartHandler($event)">
+			</app-add-product-btn>
+		</div>
+	</div>
+
+
+	<!-- Product cals disclaimer -->
+	<div class="row mt-4 justify-content-center">
+		<div class="col-12 p-0">
+			<h2 class="text-center product-cals-disclaimer text-uppercase cal-text" *ngIf="configuratorProductInfo.calText">
+				<ng-container *ngIf="configuratorProductInfo.calText.calValue">
+					{{ configuratorProductInfo.calText.calValue }}
+				</ng-container>
+			</h2>
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,145 @@
+@import 'global-scss-mixing';
+
+$border-color: #ccd6d8;
+$secondary-font-color: #3b210b;
+$light-gray: #eaf0f3;
+$dark-gray: #6d7273;
+
+.checkout-address-form-container {
+
+	.local-radio-label {
+		letter-spacing: .3px;
+		color: $secondary-font-color;
+		font-size: 1em;
+	}
+
+	.logged-in-actions {
+		@include font-extra-bold;
+		color: $pp-bg-maincolour;
+
+		span {
+			letter-spacing: .3px;
+			font-size: .813em;
+		}
+
+		i {
+			font-size: 1em;
+		}
+	}
+
+	.local-circle-radio-default {
+		color: $pp-default-text-colour;
+	}
+
+	.textarea-label {
+		letter-spacing: .3px;
+		color: $pp-default-text-colour;
+		font-family: 'proxima-nova';
+		font-size: 1em;
+		font-weight: 800;
+	}
+
+	.textarea-optional-label-identifier {
+		display: block;
+		letter-spacing: .3px;
+		color: $pp-default-text-colour;
+		font-size: .85em;
+		font-style: italic;
+	}
+
+	.no-results-found-row {
+
+		.no-results-found-title {
+			@include font-regular;
+			color: $dark-gray;
+			font-size: 1em;
+		}
+
+		i {
+			margin-left: -20px;
+			color: $light-gray;
+			font-size: 5em;
+		}
+	}
+
+	.contact-information-col {
+		@include font-bold;
+		color: $pp-default-text-colour;
+  }
+
+	.contact-list-delivery {
+		@include font-bold;
+		color: $pp-default-text-colour;
+  }
+
+	.checkbox-wrap {
+		transform: scale(2);
+		margin: 7px;
+	}
+
+	textarea {
+		&.form-control {
+			border-radius: 0;
+			width: 100%;
+		}
+	}
+
+	.checkout-add-btn {
+		@include font-extra-bold;
+		outline: 0;
+		border: 0;
+		background: transparent;
+		cursor: pointer;
+		padding: 0;
+		color: $pp-bg-maincolour;
+		font-size: .85em;
+
+		.user-activity-action-icon {
+			font-size: 1.3em;
+		}
+	}
+
+	.address-input {
+		.find-me {
+			display: none;
+		}
+	}
+
+	.invalid-text-alt {
+		display: inline-block;
+	}
+
+}
+
+@include media-breakpoint-down(md) {
+	.checkout-address-form-container {
+		button {
+			width: 100%;
+
+			&.checkout-add-btn {
+				width: auto;
+			}
+		}
+
+		.local-radio-label-special {
+			font-size: 1em;
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.checkout-address-form-container {
+
+		.textarea-label {
+			font-size: .8em;
+		}
+
+		.textarea-optional-label-identifier {
+			font-size: .69em;
+		}
+
+		.local-radio-label-special {
+			font-size: .85em;
+		}
+	}
+}

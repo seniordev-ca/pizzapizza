@@ -1,0 +1,80 @@
+<div class="seo-footer">
+	<div class="container footer-container pb-md-5" id="footer">
+		<div class="row pb-md-5 d-flex justify-content-between">
+			<div class="col-auto p-4 pt-md-5 pl-4 py-lg-5 px-lg-4 mx-lg-4 text-center">
+				<img alt="pizza pizza logo" class="img-fluid" src="./static-files/images/logo-footer.png">
+				<div class="store-locator-wrapper d-flex justify-content-left mt-3 mt-md-4 align-items-center">
+					<i class="icon-footer-store-locator pr-2"></i>
+					<a [routerLink]="['/restaurant-locator']" i18n>Restaurant Locator</a>
+				</div>
+				<div class="legal-menu-wrapper text-left">
+					<span class="d-block" *ngFor="let item of legalMenu$ | async">
+							<a [href]="item.url">{{item.label}}</a>
+					</span>
+				</div>
+				<div class="social-icons p-0 pt-5 d-flex justify-content-between" *ngIf="(socialLinks$ | async)">
+					<a [href]="(socialLinks$ | async).facebook" aria-label="facebook icon"><i
+							class="icon-facebook"></i></a>
+					<a [href]="(socialLinks$ | async).instagram" aria-label="instagram icon"><i
+							class="icon-instagram"></i></a>
+					<a [href]="(socialLinks$ | async).twitter" aria-label="twitter icon"><i
+							class="icon-twitter"></i></a>
+				</div>
+			</div>
+			<div class="col p-3 pt-md-5 d-none d-md-block">
+				<div class="row footer-menu-row" *ngIf="footerMenu$ | async">
+					<div class="col-12 col-md-3" *ngFor="let menu of footerMenu$ | async; let i = index">
+
+						<h2>{{menu.label}}
+						</h2>
+
+						<ul>
+						<li *ngFor="let item of menu.childItems">
+							<a [href]="item.url">{{item.title}}</a>
+						</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col p-3 pt-md-5 d-md-none d-block">
+				<div class="row footer-menu-row" *ngIf="footerMenu$ | async">
+					<div class="col-12 col-sm-7 col-md-3" *ngFor="let menu of footerMenu$ | async; let i = index">
+						<button class="footer-collapsed-menu-item px-0"
+						(click)="isCollapsed[i] = !isCollapsed[i]"
+						[attr.aria-expanded]="!isCollapsed[i]"
+						[attr.aria-controls]="menu.id">
+							<h2>{{menu.label}}</h2>
+						</button>
+						<i class="float-right icon-triangle"></i>
+						<ul [attr.id]="menu.id" [ngbCollapse]="!isCollapsed[i]">
+							<li *ngFor="let item of menu.childItems">
+								<a [href]="item.url">{{item.title}}</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row no-gutters">
+			<div class="col-12 col-md-9 ml-auto">
+				<p class="recaptcha-text">
+					<ng-container i18n>This site is protected by reCAPTCHA and the Google</ng-container>&nbsp;
+					<a href="https://policies.google.com/privacy" i18n>Privacy Policy</a>&nbsp;
+					<ng-container i18n>and</ng-container>&nbsp;
+					<a href="https://policies.google.com/terms" i18n>Terms of Service</a>&nbsp;
+					<ng-container i18n>apply.</ng-container>
+				</p>
+			</div>
+
+			<div class="col-12 text-center copyright">
+				<ng-container i18n>Copyright</ng-container> © Pizza Pizza 2019
+			</div>
+
+			<div class="col-12 text-center dev" [hidden]="!isDeploymentVersionVisible">
+				<p>{{ buildRevision }} <br/>
+				SDK version: {{ sdkVersion }}</p>
+			</div>
+
+		</div>
+	</div>
+</div>

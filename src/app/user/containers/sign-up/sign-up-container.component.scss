@@ -1,0 +1,16 @@
+@import 'global-scss-mixing';
+
+
+.pp-registration-loading {
+	color: $pp-bg-maincolour;
+	font-size: 6em;
+}
+
+.sign-up-header-wrapper {
+	.sub-header-navigation-container {
+		.title {
+			color: $white;
+		}
+	}
+}
+

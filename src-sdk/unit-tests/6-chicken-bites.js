@@ -1,0 +1,103 @@
+const sixChickenBites = {
+	testSuiteName: '6 chicken bites',
+	productSlug: '6-sauced-tossed-chicken-bites-product_12480',
+	testCases: [
+
+		{
+			testCaseName: "Valid configurator. One sauce was added. Price should stay the same 5.99",
+			addToCartRequest: {
+				store_id: 117,
+				is_delivery: true,
+				products: [{
+					product_id: 'product_12480',
+					quantity: 1,
+					product_option_id: 12480,
+					config_options: [
+						{
+							config_code: 'GW',
+							direction: 'whole',
+							quantity: 1
+						}
+					],
+					line_id: 1
+				}]
+
+			},
+			expectedJsResults: {
+				"errorCode": 0,
+				"productPrice": 5.99,
+				"productCalories": "490 to 530 Cals",
+				"validation": {
+					"isConfigValid": true,
+					"validationMsg": "",
+					"configurations": {
+						"sauceonwings": {
+							"isSelectionRequired": false,
+							"isMaximumAmountReached": true
+						}
+					}
+				}
+			}
+		},
+
+	]
+}
+
+describe(`Test suite: ${sixChickenBites.testSuiteName}`, () => {
+
+	let productSlug = sixChickenBites.productSlug;
+	let currentProductConfig = null;
+	/**
+	 * Fetch product config from local data fetched by nodeJs script before testing
+	 */
+	before(() => {
+		const isServer = typeof window === 'undefined';
+		if (isServer) {
+			require(`../dist/pp-sdk-bundle`);
+			return new Promise((resolve) => {
+				currentProductConfig = require(`../unit-tests-infrastructure/server-data/${productSlug}.json`);
+				const chai = require('chai');
+				expect = chai.expect;    // Using Expect style
+				resolve();
+			})
+		} else {
+			return new Promise((resolve) => {
+				$.get(`unit-tests-infrastructure/server-data/${productSlug}.json`, (data) => {
+					currentProductConfig = data;
+					resolve();
+				});
+			})
+		}
+	});
+
+	/**
+	 * Passing product config to SDK
+	 * SDK should return success message
+	 */
+	it(`Initiating SDK for product`, () => {
+		const sdkResult = ppSdk.initProduct(currentProductConfig.js_data, 'web', 'en');
+		const expectedJsResponse = {
+			errorCode: 0
+		};
+		expect(expectedJsResponse).to.deep.equal(sdkResult);
+	});
+
+	/**
+	 * Test every addToCart <-> expected results pairs for current product
+	 */
+	sixChickenBites.testCases.forEach((testCase) => {
+		const addToCartRequest = testCase.addToCartRequest;
+		const expectedJsResults = testCase.expectedJsResults;
+		it(`Test case: ${testCase.testCaseName}`, () => {
+			const sdkResult = ppSdk.getProductInfo(addToCartRequest);
+
+			// Ignore message because it needs to be changed
+			if (sdkResult && sdkResult.validation.product && sdkResult.validation.product.validationMsg) {
+				sdkResult.validation.product.validationMsg = '';
+			}
+
+			expect(sdkResult).to.deep.equal(expectedJsResults);
+		})
+	});
+})
+

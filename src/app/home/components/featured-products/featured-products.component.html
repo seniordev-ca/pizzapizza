@@ -1,0 +1,320 @@
+<div class="container mt-2 featured-products-container" [class.pp-ghost-container]="isLoading">
+	<!-- featured products start -->
+	<div class="row justify-content-center mt-3 my-md-3 mx-0">
+		<div class="col-12">
+			<div class="row align-items-center">
+				<div class="col col-md-auto content-title" i18n>
+					Featured Specials
+				</div>
+				<div class="col text-right content-navigate">
+					<a [routerLink]="['/catalog/products', featuredCategory.seo_title || '']"
+						*ngIf="featuredCategory" id="seeAllSpecials" class="fw-extra-bold">
+						<ng-container i18n>See all</ng-container>
+						<span class="icon-arrow-navigate"></span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+
+		<!-- SLIDER AFTER LOAD -->
+		<ng-container *ngIf="!isLoading">
+			<div class="swiper-container w-100"
+				[swiper]="config"
+				(indexChange)="showLegalPopOver(null)"
+				[class.is-error-state]="isError">
+
+				<div class="retry-overlay" *ngIf="isError">
+					<button class="btn btn-primary"
+							(click)="onRetryClick()" i18n>
+						Retry
+					</button>
+				</div>
+
+				<div class="swiper-wrapper">
+					<div class="swiper-slide"
+						*ngFor="let slide of slidesArray; let slideIndex = index;">
+						<div class="slide-wrapper ghost-bg h-100 light-slide"
+							[style.background-color]="slide.style?.colorBackground">
+							<ng-container [ngSwitch]="slide.template">
+								<!-- <ng-container
+										*ngSwitchCase="1"
+										[ngTemplateOutlet]="slideStyleOne"
+										[ngTemplateOutletContext]="{slide: slide, slideIndex: slideIndex}">
+								</ng-container>
+								<ng-container
+										*ngSwitchCase="2"
+										[ngTemplateOutlet]="slideStyleTwo"
+										[ngTemplateOutletContext]="{slide: slide, slideIndex: slideIndex}">
+								</ng-container>
+								<ng-container
+										*ngSwitchCase="3"
+										[ngTemplateOutlet]="slideStyleThree"
+										[ngTemplateOutletContext]="{slide: slide, slideIndex: slideIndex}">
+								</ng-container> -->
+								<ng-container
+										*ngSwitchDefault
+										[ngTemplateOutlet]="defaultSlide"
+										[ngTemplateOutletContext]="{slide: slide, slideIndex: slideIndex}">
+								</ng-container>
+							</ng-container>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="swiper-button-prev">
+					<i class="icon-arrow-slice-with-hole"></i>
+				</div>
+				<div class="swiper-button-next">
+					<i class="icon-arrow-slice-with-hole"></i>
+				</div>
+
+				<div class="swiper-pagination ghost-hidden"></div>
+
+			</div>
+			<!-- featured products end  -->
+		</ng-container>
+
+		<!-- GHOST SLIDER -->
+		<ng-container *ngIf="isLoading">
+			<div class="swiper-container w-100"
+				[swiper]="config"
+				(indexChange)="showLegalPopOver(null)"
+				[class.is-error-state]="isError">
+
+				<div class="retry-overlay" *ngIf="isError">
+					<button class="btn btn-primary"
+							(click)="onRetryClick()" i18n>
+						Retry
+					</button>
+				</div>
+
+				<div class="swiper-wrapper">
+					<div class="swiper-slide"
+						*ngFor="let slide of slidesArray; let slideIndex = index;">
+						<div class="slide-wrapper ghost-bg h-100" [ngClass]="slide.style">
+							<ng-container
+									[ngTemplateOutlet]="defaultSlide"
+									[ngTemplateOutletContext]="{slide: slide, slideIndex: slideIndex}">
+							</ng-container>
+						</div>
+					</div>
+				</div>
+
+				<div class="swiper-button-prev">
+					<i class="icon-arrow-slice-with-hole"></i>
+				</div>
+				<div class="swiper-button-next">
+					<i class="icon-arrow-slice-with-hole"></i>
+				</div>
+
+				<div class="swiper-pagination ghost-hidden"></div>
+
+			</div>
+			<!-- featured products end -->
+		</ng-container>
+	</div>
+</div>
+
+<ng-template #defaultSlide let-slide="slide" let-slideIndex="slideIndex">
+	<div class="row no-gutters h-100">
+		<div class="col-12 col-sm-6 image-col ghost-bg-dark d-flex justify-content-center align-items-center"
+			[style.background-image]="slide.image ? 'url(' + slide.image + ')' : ''">
+			<img alt="slide-image" class="img-fluid ghost-hidden" src="{{ slide.image }}" *ngIf="slide.image" [fallBackText]="null">
+		</div>
+		<div class="col-12 col-sm-6 text-col default" >
+			<div class="row h-100 justify-content-center">
+				<div class="col-11 h-100 d-flex justify-content-between slide-content">
+					<h1 class="ghost-bar g-w-40 fw-black text-uppercase slide-title mt-3">
+						{{slide.name}}
+					</h1>
+					<h6 class="ghost-bar g-w-75 speed-200 fw-bold slide-description">
+						<span class="slide-caption d-block">
+							{{slide.description}}
+						</span>
+						<span class="d-block">
+							{{slide.cal_text}}
+						</span>
+					</h6>
+					<p class="ghost-bar g-w-80 speed-200">
+						{{slide.sub_title}}
+					</p>
+					<h2 class="ghost-bar g-w-50 fw-extra-bold slide-big-price">
+						{{slide.price_text.price_value | currency:'CAD':'symbol-narrow':'1.2'}}
+					</h2>
+					<div class="btn-wrapper d-flex align-items-end justify-content-between">
+						<button class="btn btn-primary width-extended"
+						(click) = "handleTagAnalytics(slide)"
+						[routerLink]="[sliderOrderNowPath(slide)]" i18n
+            attr.aria-label="{{ slide.price_text.price_value +'$'}} {{slide.name}}  order now "
+            (focus)="handleButtonFocus()"
+>
+
+
+							Order now
+						</button>
+
+						<div class="legal-holder smaller ghost-hidden" *ngIf="slide.legal">
+							<span class="legal-popover" *ngIf="legalPopOverId === slideIndex">
+								{{slide.legal}}
+							</span>
+							<button type="button" class="btn btn-outline-secondary"
+							(mouseenter)="showLegalPopOver(slideIndex)"
+							(mouseleave)="showLegalPopOver(null)"
+							(click)="showLegalPopOver(slideIndex)" i18n>
+								Legal
+							</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #slideStyleOne let-slide="slide" let-slideIndex="slideIndex">
+	<div class="row no-gutters h-100">
+		<div class="col-12 col-sm-6 image-col ghost-bg-dark d-flex justify-content-center align-items-center"
+			[style.background-image]="slide.image ? 'url(' + slide.image + ')' : ''">
+			<img alt="slide-image" class="img-fluid ghost-hidden" src="{{ slide.image }}" *ngIf="slide.image" [fallBackText]="null">
+		</div>
+		<div class="col-12 col-sm-6 text-col">
+			<div class="row h-100 justify-content-center">
+				<div class="col-11 h-100 d-flex justify-content-between slide-content">
+					<h1 class="ghost-bar g-w-40 fw-black text-uppercase slide-title mt-3" [style.color]="slide.style.colorOne">
+						{{slide.name}}
+						<span class="fw-black h4 ghost-bar g-w-75 speed-200 sub-title d-block text-uppercase">
+							{{slide.sub_title}}
+						</span>
+					</h1>
+					<h6 class="fw-bold slide-description mt-2 mb-3" [style.color]="slide.style.colorTwo">
+						{{slide.description}}
+					</h6>
+					<h6 class="ghost-bar g-w-50 fw-bold slide-legal" [style.color]="slide.style.colorTwo">
+						{{slide.cal_text}}
+					</h6>
+					<div class="btn-wrapper d-flex align-items-end justify-content-between">
+						<a class="btn btn-primary width-extended"
+						(click) = "handleTagAnalytics(slide)"
+						[routerLink]="[sliderOrderNowPath(slide)]" i18n>
+							Order now
+						</a>
+
+						<div class="legal-holder smaller ghost-hidden" *ngIf="slide.legal">
+							<span class="legal-popover" *ngIf="legalPopOverId === slideIndex">
+								{{slide.legal}}
+							</span>
+							<button type="button" class="btn btn-outline-secondary"
+							(mouseenter)="showLegalPopOver(slideIndex)"
+							(mouseleave)="showLegalPopOver(null)"
+							(click)="showLegalPopOver(slideIndex)" i18n>
+								Legal
+							</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #slideStyleTwo let-slide="slide" let-slideIndex="slideIndex">
+	<div class="row no-gutters h-100">
+		<div class="col-12 col-sm-6 image-col ghost-bg-dark d-flex justify-content-center align-items-center"
+		[style.background-image]="slide.image ? 'url(' + slide.image + ')' : ''">
+			<img alt="slide-image" class="img-fluid ghost-hidden" src="{{ slide.image }}" *ngIf="slide.image" [fallBackText]="null">
+		</div>
+		<div class="col-12 col-sm-6 text-col">
+			<div class="row h-100 justify-content-center">
+				<div class="col-11 h-100 d-flex justify-content-between slide-content" [style.color]="slide.style.colorTwo">
+					<h1 class="ghost-bar g-w-40 fw-black text-uppercase slide-title mt-3">
+						<span [style.color]="slide.style.colorOne">{{getFirstWord(slide.name)}}</span> {{getRemainingString(slide.name)}}
+					</h1>
+					<h6 class="fw-bold slide-description">
+						<span class="ghost-bar g-w-75 speed-200 slide-caption d-block">
+							{{slide.sub_title}}
+						</span>
+						<span class="d-block">
+							{{slide.cal_text}}
+						</span>
+					</h6>
+					<p>
+						{{slide.description}}
+					</p>
+					<h2 class="ghost-bar g-w-50 fw-extra-bold mb-0 slide-big-price" [style.color]="slide.style.colorOne">
+						{{slide.price_text.price_value | currency:'CAD':'symbol-narrow':'1.2'}}
+					</h2>
+					<div class="btn-wrapper d-flex align-items-end justify-content-between">
+						<a class="btn btn-primary width-extended"
+						(click) = "handleTagAnalytics(slide)"
+						[routerLink]="[sliderOrderNowPath(slide)]" i18n>
+							Order now
+						</a>
+
+						<div class="legal-holder smaller ghost-hidden" *ngIf="slide.legal">
+							<span class="legal-popover" *ngIf="legalPopOverId === slideIndex">
+								{{slide.legal}}
+							</span>
+							<button type="button" class="btn btn-outline-secondary"
+							(mouseenter)="showLegalPopOver(slideIndex)"
+							(mouseleave)="showLegalPopOver(null)"
+							(click)="showLegalPopOver(slideIndex)" i18n>
+								Legal
+							</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #slideStyleThree let-slide="slide" let-slideIndex="slideIndex">
+	<div class="row no-gutters h-100">
+		<div class="col-12 col-sm-6 image-col ghost-bg-dark d-flex justify-content-center align-items-center"
+		[style.background-image]="slide.image ? 'url(' + slide.image + ')' : ''">
+			<img alt="slide-image" class="img-fluid ghost-hidden" src="{{ slide.image }}" *ngIf="slide.image" [fallBackText]="null">
+		</div>
+		<div class="col-12 col-sm-6 text-col">
+			<div class="row h-100 justify-content-center">
+				<div class="col-11 h-100 d-flex justify-content-between slide-content">
+					<h1 class="ghost-bar g-w-40 fw-black text-uppercase slide-title mt-3">
+						<span [style.color]="slide.style.colorOne">{{getFirstWord(slide.name)}}</span> {{getRemainingString(slide.name)}}
+					</h1>
+					<h6 class="fw-extra-bold slide-description mt-2 mb-1" [style.color]="slide.style.colorTwo">
+						{{slide.sub_title}}
+					</h6>
+					<p class="slide-description" [style.color]="slide.style.colorTwo">
+						{{slide.description}}
+					</p>
+					<div class="btn-wrapper d-flex align-items-end justify-content-between">
+						<a class="btn btn-primary width-extended"
+						(click) = "handleTagAnalytics(slide)"
+						[routerLink]="[sliderOrderNowPath(slide)]" i18n>
+							Order now
+						</a>
+
+						<div class="legal-holder smaller ghost-hidden" *ngIf="slide.legal">
+							<span class="legal-popover" *ngIf="legalPopOverId === slideIndex">
+								{{slide.legal}}
+							</span>
+							<button type="button" class="btn btn-outline-secondary"
+							(mouseenter)="showLegalPopOver(slideIndex)"
+							(mouseleave)="showLegalPopOver(null)"
+							(click)="showLegalPopOver(slideIndex)" i18n>
+								Legal
+							</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>

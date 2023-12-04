@@ -1,0 +1,49 @@
+<div [class.pp-ghost-container]="comboConfigLoading$ | async">
+	<app-product-header
+		[topBavContent]="{
+				backgroundImage: (comboDetails$ | async).image,
+				textColor: '#FFFFFF',
+				iconColor: '#EE5A00',
+				hasBackgroundImage: true
+		}"
+		[title]="(comboDetails$ | async).name"
+		navText="Back to menu"
+		i18n-navText>
+		<ng-template>
+			<app-product-sub-header 
+				[productSubHeaderContent]="{
+					backgroundImage: (comboDetails$ | async).image,
+					itemPrice: (comboDetails$ | async).price,
+					isComboPage: true
+				}"
+				[isValid]="(comboDetails$ | async).isValid"
+				[btnState]="activeBtnState"
+				(onClickEventEmitter)="addBtnEventHandler($event)"
+				[itemTitle]="(comboDetails$ | async).comboInfo"
+				[itemDescription]="(comboDetails$ | async).description"
+				itemConfigText="Your special comes with {{ (comboDetails$ | async).itemConfigText }} tasty-as-heck items."
+				i18n-itemConfigText>
+			</app-product-sub-header>
+		</ng-template>
+	</app-product-header>
+
+
+	<div class="container product-combo-sub-container  product-combo-items-container">
+		<div class="row justify-content-center py-5">
+			<div class="col-12 col-lg-10 px-0">
+				<app-product-item 
+					*ngFor="let productItem of comboProducts$ | async"
+					[isComboItem]="true"
+					[productItemInput]="productItem"
+					(productItemEventEmitter)="productComboEventHandler($event)">
+				</app-product-item>
+			</div>
+		</div>
+	</div>
+
+	<div class="container mb-5">
+		<app-upsells></app-upsells>
+	</div>
+
+</div>
+	

@@ -1,0 +1,66 @@
+<div class="add-item-modal-bg" (click)="closeItemModal($event)">
+</div>
+
+<div class="add-item-modal">
+	<div class="container">
+
+		<div class="row menu-header-row">
+			<div class="col-12 d-flex justify-content-end">
+				<div class="d-inline pl-4 py-1 close-btn">
+					<button class="btn-no-style" (click)="closeItemModal($event)" aria-label="Close" #closeBtnOnModal>
+						<i class="icon-close-bold"></i>
+					</button>
+				</div>
+			</div>
+			<div class="col-12 text-center">
+				<h3 i18n>
+					Add an Item
+				</h3>
+			</div>
+			<div class="col-12 d-flex justify-content-center">
+				<div class="separator">
+				</div>
+			</div>
+		</div>
+
+		<div class="row justify-content-center menu-body-row">
+			<div *ngIf="isLoading; else productListTemplate">
+				<div class="col-12 list-loading">
+					<img alt="loading image" src="./static-files/images/button-loader-updated.gif">
+				</div>
+			</div>
+		</div>
+		<!-- row menu-body-row -->
+
+	</div>
+	<!-- container -->
+</div>
+<!-- add-item-modal -->
+
+<ng-template #productListTemplate>
+
+	<ng-container *ngFor="let productGroup of addItemContent">
+		<div class="col-12 menu-container-data text-left">
+			<h4>
+				{{ productGroup.groupName }}
+			</h4>
+
+			<ng-container *ngFor="let groupMenu of productGroup.groupMenu; let i = index">
+				<div class="menu-product" tabindex="{{i}}">
+					<button class="d-flex w-100 justify-content-between align-items-center text-left btn-no-style btn-no-style"
+							(click)="onMenuClick($event, groupMenu.id, groupMenu.setTitle)">
+						<h2>
+							{{ groupMenu.title }}
+						</h2>
+
+						<span class="icon icon-toggle">
+						</span>
+					</button>
+				</div>
+
+			</ng-container>
+
+		</div>
+	</ng-container>
+  <div  id="lastGuard" (focus)="onFocusLastGuard()" tabindex="0"></div>
+</ng-template>

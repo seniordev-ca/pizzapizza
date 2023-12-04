@@ -1,0 +1,371 @@
+@import 'global-scss-mixing';
+
+$mid-grey: #dae9f0;
+$light-grey: #edf2f5;
+$border-grey: #e1e7e9;
+$not-active-btn-color: #6d7273;
+$ghost-loader-bg: #e1e7e9;
+$modal-bg: #000;
+$pp-green: #4e7026;
+$img-bg: #eaf2f6;
+
+.individual-product-row {
+	position: relative;
+	border: 1px solid $border-grey;
+	border-radius: 10px;
+	min-height: 200px;
+
+	i:before {
+		margin: 0;
+	}
+
+	// .h5 {
+	// 	display: block;
+	// }
+
+	// STYLING FOR QUANTITY SELECTOR CHILD COMPONENT
+	.quantity-selector-container {
+		.product-quantity-price {
+			.quantity-increment-number {
+				// margin-right: 15%;
+				// margin-left: 15%;
+				min-width: 2.2ch;
+				text-align: center;
+			}
+
+			.quantity-wrap {
+				width: 100%;
+			}
+		}
+	}
+
+	.individual-product-left {
+		@include gradient1;
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+		background-color: $img-bg;
+		overflow: hidden;
+
+		&.has-background-image {
+			z-index: 3;
+			background-repeat: no-repeat;
+			background-position: 50%;
+			background-size: cover;
+			min-height: 200px;
+
+			i,
+			span,
+			img {
+				visibility: hidden;
+			}
+
+			.individual-product-allergens-container {
+				.individual-product-allergens-content {
+					background: 0;
+				}
+			}
+		}
+
+		.product-image-wrapper {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			max-height: 200px;
+		}
+
+		.individual-product-image {
+			display: block;
+			width: auto;
+			height: 100%;
+			max-height: 200px;
+			overflow: hidden;
+			object-fit: contain;
+
+			&.pp-default-image {
+				width: 25%;
+				height: 30%;
+			}
+		}
+	}
+
+	&.ghost {
+		border-radius: 9px;
+		background: $mid-grey;
+
+		.bar {
+			display: block;
+			z-index: 15;
+			margin-top: 10px;
+			margin-bottom: 0;
+			background-color: $ghost-loader-bg;
+			overflow: hidden;
+			text-indent: -999px;
+		}
+
+		.btn-primary {
+			overflow: hidden;
+			text-indent: -999px;
+			font-size: 14px;
+		}
+
+		.individual-product-left {
+			background: $ghost-loader-bg;
+
+			&:before {
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 2;
+				background: $ghost-loader-bg;
+				width: 100%;
+				height: 100%;
+				content: ' ';
+			}
+		}
+	}
+
+	.active-checkmark {
+		display: none;
+	}
+
+	&.is-selected {
+		border: 3px solid $pp-green;
+
+		button {
+			background-color: $pp-green;
+			color: $white;
+		}
+
+		.active-checkmark {
+			display: block;
+			position: absolute;
+			top: 5px;
+			right: 15px;
+			color: $pp-green;
+
+			span {
+				@include font-extra-bold;
+
+				font-size: .7em;
+			}
+
+			i {
+				cursor: pointer;
+				color: $pp-green;
+				font-size: .68em;
+			}
+		}
+
+		.selected-text,
+		.individual-product-right {
+			color: $pp-green;
+		}
+
+		// STYLING FOR QUANTITY SELECTOR CHILD COMPONENT
+		.quantity-selector-container {
+			.product-quantity-price {
+				color: $pp-green;
+
+				.icon-stacked-layers {
+					.icon-increment-layer {
+						color: $not-active-btn-color;
+					}
+
+					&.active-incrementer {
+						.icon-stack-base {
+							opacity: 1;
+						}
+
+						.icon-increment-layer {
+							color: $pp-green;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.individual-product-badge-container {
+		@include font-black;
+		position: absolute;
+		top: 0;
+		left: 0;
+		padding: 15px;
+
+		.individual-product-badge-icon {
+			font-size: 1.25em;
+		}
+	}
+
+	.individual-product-image {
+		max-width: 100%;
+	}
+
+	.individual-product-allergens-container {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+	}
+
+	.allergens-wrap {
+		border-radius: 12px;
+		background-color: $white;
+		color: $pp-bg-maincolour;
+		font-size: .835rem;
+		font-weight: 600;
+	}
+
+	.individual-product-header {
+		text-transform: uppercase;
+	}
+
+	.individual-product-right {
+		border-top-right-radius: 10px;
+		border-bottom-right-radius: 10px;
+		background-color: $light-grey;
+		color: $pp-default-text-colour;
+
+		.product-description,
+		.individual-product-caption {
+			font-size: .9em;
+		}
+	}
+
+	// &.inactive-product {
+	// 	color: $not-active-btn-color;
+
+	// 	.individual-product-right {
+	// 		color: $not-active-btn-color;
+	// 	}
+	// }
+}
+
+@include media-breakpoint-down(lg) {
+	.product-list-container {
+		// STYLING FOR QUANTITY SELECTOR CHILD COMPONENT
+		.quantity-selector-container {
+			.product-quantity-price {
+				// margin-right: 5%;
+
+				.quantity-increment-number {
+					// margin-right: 15%;
+					// margin-left: 15%;
+					min-width: 2.2ch;
+				}
+			}
+		}
+	}
+}
+
+
+@include media-breakpoint-down(md) {
+	.product-list-container {
+		.individual-product-left-regular-layout {
+			border-radius: 0;
+
+			&.has-background-image {
+				background-size: cover;
+				overflow: hidden;
+				background-position-x: center;
+				object-fit: cover;
+			}
+		}
+
+		.individual-product-right {
+			border-radius: 0;
+		}
+
+		.individual-product-buttons {
+			.btn-wrap {
+				padding-left: 0;
+			}
+		}
+	}
+}
+
+
+@include media-breakpoint-down(sm) {
+	.individual-product-row {
+		border-radius: 0;
+
+		// STYLING FOR QUANTITY SELECTOR CHILD COMPONENT
+		.quantity-selector-container {
+			.product-quantity-price {
+				margin-right: 0;
+
+				.quantity-increment-number {
+					// margin-right: 10%;
+					// margin-left: 10%;
+					min-width: 2.2ch;
+				}
+			}
+		}
+
+		.individual-product-left {
+			border-radius: 0;
+			text-align: center;
+
+			.left-row {
+				flex-direction: column;
+				justify-content: center;
+			}
+
+			.product-image-wrapper {
+				height: auto;
+			}
+
+			.individual-product-image {
+				height: auto;
+
+				&.pp-default-image {
+					width: 60%;
+					height: 30%;
+				}
+			}
+
+			.pp-no-img-text {
+				font-size: .75em;
+			}
+
+		}
+
+		.individual-product-right {
+			border-radius: 0;
+		}
+	}
+}
+
+
+@include media-breakpoint-down(xs) {
+	.product-list-container {
+		// STYLING FOR QUANTITY SELECTOR CHILD COMPONENT
+		.quantity-selector-container {
+			.product-quantity-price {
+				.quantity-increment-number {
+					// margin-right: 10%;
+					// margin-left: 10%;
+					min-width: 2.2ch;
+				}
+			}
+		}
+
+		.individual-product-left-regular-layout {
+			&.has-background-image {
+				background-position: 75% 75%;
+				background-size: cover;
+			}
+		}
+
+		.btn-wrap {
+			.btn {
+				padding: 0;
+			}
+		}
+
+		.add-customize-item {
+			padding: 5px;
+			font-size: 14px;
+		}
+	}
+}

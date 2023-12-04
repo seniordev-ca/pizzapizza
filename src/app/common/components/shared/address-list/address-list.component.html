@@ -1,0 +1,125 @@
+<!-- Container That Holds this Entire Subcomponent -->
+<div class="container-fluid mx-0 px-0 my-2 address-list-parent-container">
+	<!-- Ng-Container That Gets Data from Input -->
+	<ng-container *ngFor="let savedAddress of savedAddresses; let i=index">
+		<a (click)="onSetDefault($event, savedAddress.addressId)" class="btn-no-style w-100 text-left" [id]="i">
+		<!-- Row That Holds Each Individual Looped Item -->
+		<div class="row mx-0 px-0 my-1 align-content-top justify-content-between address-list-item-row"
+			[class.is-default]="(!isCheckout && savedAddress.isDefault) || (isCheckout && savedAddress.addressId === selectedAddressIDForCheckout)">
+
+			<div class="col-8 col-lg-5 my-2">
+				<div class="row mx-0">
+					<!-- Column One - House Icon -->
+					<div class="col-2 p-0 mt-0 mt-lg-1 left-icon-col">
+						<i class="icon-pizza-locator pr-2"></i>
+					</div>
+					<!-- End of Column One -->
+					<!-- Column 2 - Holds Address Information -->
+					<div class="col-10 mt-lg-2 location-address-col">
+						<!-- Intersection -->
+						<div class="row location-address-intersection-row">
+							{{savedAddress.title}}
+						</div>
+						<!-- Address -->
+						<div class="row location-address-address-row">
+							{{savedAddress.address.streetNumber}} {{savedAddress.address.streetName}}, {{savedAddress.address.city}}, {{savedAddress.address.province}},
+							{{savedAddress.address.postalCode | uppercase}}
+						</div>
+						<!-- Apt Info -->
+						<div class="row location-apt-info-row">
+							<ng-container *ngIf="savedAddress.unitNumber">
+								{savedAddress.type, select, University {Room #{{savedAddress.unitNumber}}} Home {Apt #{{savedAddress.unitNumber}}} other {Apt #{{savedAddress.unitNumber}}}}&nbsp;
+							</ng-container>
+							<ng-container *ngIf="savedAddress.unitBuzzer">
+								<ng-container i18n>Buzzer</ng-container>
+								<ng-container> #{{savedAddress.unitBuzzer}}&nbsp;</ng-container>
+							</ng-container>
+							<ng-container *ngIf="savedAddress.entrance === 'Front Door'" i18n>
+								Front Door
+							</ng-container>
+							<ng-container *ngIf="savedAddress.entrance === 'Back Door'" i18n>
+								Back Door
+							</ng-container>
+						</div>
+					</div>
+					<!-- End of Column 2-->
+				</div>
+			</div>
+
+			<div class="col-4 d-block d-lg-none mt-2 justify-content-end text-right location-select-col">
+					<div class="location-select-row select-row-mobile"
+						*ngIf="(!isCheckout && !savedAddress.isDefault) || (isCheckout && savedAddress.addressId !== selectedAddressIDForCheckout)">
+						<ng-container *ngIf="isCheckout" i18n>Select</ng-container>
+						<ng-container *ngIf="!isCheckout" i18n>Set Default</ng-container>
+					</div>
+					<div class="location-selected-row selected-row-mobile"
+						*ngIf="(!isCheckout && savedAddress.isDefault) || (isCheckout && savedAddress.addressId === selectedAddressIDForCheckout)">
+						<ng-container *ngIf="!isCheckout" i18n>Default</ng-container>
+						<i class="icon-checkmark"></i>
+					</div>
+			</div>
+			<!-- Column 3 - Holds Hours Information -->
+			<div class="col-9 col-lg-4 my-2">
+				<div class="row mx-0">
+					<div class="col-2 p-0 mt-0 mt-lg-1 left-icon-col">
+						<i class="icon-phone pr-2"></i>
+					</div>
+					<div class="col-10 mt-lg-2 location-contact-info-col">
+						<div class="row location-contact-header-row" i18n>
+							Contact Information
+						</div>
+						<div class="row location-contact-phone-number-row">
+							{{savedAddress.contactInfo.phoneNumber | phone}}
+						</div>
+						<div class="row location-contact-extension-row" *ngIf="savedAddress.contactInfo.extension" >
+							<ng-container i18n>Extension</ng-container>
+							{{savedAddress.contactInfo.extension}}
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End of Column 3 -->
+
+			<!-- Column 4 - Holds Option to Select -->
+			<div class="col-lg-3 d-none d-lg-block my-2 text-right location-select-col">
+				<div class="location-select-row"
+					*ngIf="(!isCheckout && !savedAddress.isDefault) || (isCheckout && savedAddress.addressId !== selectedAddressIDForCheckout)">
+						<ng-container *ngIf="isCheckout" i18n>Select</ng-container>
+						<ng-container *ngIf="!isCheckout" i18n>Set Default</ng-container>
+				</div>
+				<div class="location-selected-row"
+					*ngIf="(!isCheckout && savedAddress.isDefault) || (isCheckout && savedAddress.addressId === selectedAddressIDForCheckout)">
+					<ng-container *ngIf="!isCheckout" i18n>Default</ng-container>
+					<i class="icon-checkmark"></i>
+				</div>
+			</div>
+			<!-- End of Column 4 -->
+
+			<!-- Column 5 - Holds Get Direction - col12 to make it appear on a new row -->
+			<div class="col-12 col-lg-5 mb-2">
+				<div class="row mx-0">
+					<div class="col-11 offset-1 location-user-actions-col">
+						<span
+							(click)="onEdit($event, savedAddress.addressId)">
+							<i class="align-self-center icon-edit action-icon"></i>
+							<span class="action-text" i18n>
+								Edit
+							</span>
+						</span>
+						<span class="ml-1"
+							*ngIf="!savedAddress.isDefault && !isCheckout"
+							(click)="onDelete($event, savedAddress.addressId)">
+							<i class="align-self-center icon-delete action-icon"></i>
+							<span class="action-text" i18n>
+								Delete
+							</span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End of Row That Holds Each Individual Looped Item -->
+	</a>
+	</ng-container>
+	<!-- Ng Container-->
+</div>

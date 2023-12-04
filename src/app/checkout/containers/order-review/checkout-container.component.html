@@ -1,0 +1,541 @@
+<div class="container checkout-container">
+	<div class="overlay" *ngIf="showAddCardLoader$ | async">
+		<div class="spinner spinner-border" role="status">
+			<span class="sr-only">Loading...</span>
+		</div>
+	</div>
+	<div class="row header-nav mb-md-5 mb-1">
+		<div class="col-12">
+			<app-sub-header-navigation
+				[subHeaderNavContent]="{
+					textColor: '#4c3017',
+					iconColor: '#EE5A00'
+				}"
+				title="Checkout"
+				navText="Back"
+				i18n-title
+				i18n-navText>
+			</app-sub-header-navigation>
+			<div class="col pt-md-4 pt-lg-5 d-flex justify-content-end h6 mb-0 fw-extra-bold items">
+				<span class="align-self-center">
+					{{ (productsInCart$ | async).length }}
+					<ng-container *ngIf="(productsInCart$ | async).length > 1 || (productsInCart$ | async).length < 1" i18n>
+						Items
+					</ng-container>
+					<ng-container *ngIf="(productsInCart$ | async).length === 1" i18n>
+						Item
+					</ng-container>
+				</span>
+				<i class="icon-cart"></i>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-12 col-md-8" id="top-anchor">
+			<ngb-accordion class="pp-accordion" activeIds="review"
+				[closeOthers]="true"
+				#checkoutAccordion="ngbAccordion"
+				(panelChange)="toggleAccordian($event)">
+
+				<!-- Cart product list -->
+				<ngb-panel id="review">
+					<ng-template ngbPanelTitle>
+						<div class="header d-flex justify-content-between align-items-center py-0"
+							[class.success]="checkoutAccordion.activeIds.indexOf('review') < 0 && (productsInCart$ | async).length > 0">
+							<div class="header-text" i18n>
+								1. Review Order
+								<i class="icon-checkmark smaller"
+									*ngIf="checkoutAccordion.activeIds.indexOf('review') < 0 && (productsInCart$ | async).length > 0">
+								</i>
+							</div>
+							<div>
+								<i class="icon-triangle">
+								</i>
+							</div>
+						</div>
+					</ng-template>
+
+					<ng-template ngbPanelContent>
+						<ng-container *ngTemplateOutlet="checkoutProductList">
+						</ng-container>
+
+						<div class="mt-5" *ngIf="(productsInCart$ | async).length < 25">
+							<app-upsells
+								[parentContainer]="'cart'">
+							</app-upsells>
+						</div>
+
+						<div class="d-flex justify-content-end next">
+
+							<button type="button" class="btn btn-lg btn-primary checkout-form-button"
+								(click)="checkoutNextStep('address')" i18n>
+								next
+							</button>
+						</div>
+						<span id="address-top"></span>
+					</ng-template>
+				</ngb-panel>
+
+
+				<!-- Address Tab -->
+				<ngb-panel id="address">
+					<ng-template ngbPanelTitle>
+						<div class="header d-flex justify-content-between align-items-center"
+							[class.success]="isAddressTabComplete((selectedAddressId$ | async), (isDelivery$ | async), (orderSummaryData$ | async), (selectedStoreId$ | async), (savedStores$ | async))">
+							<div class="header-text" i18n>
+								2. Address
+								<i class="icon-checkmark smaller"
+									*ngIf="isAddressTabComplete((selectedAddressId$ | async), (isDelivery$ | async), (orderSummaryData$ | async), (selectedStoreId$ | async), (savedStores$ | async))">
+								</i>
+							</div>
+							<div>
+								<i class="icon-triangle"
+									[class.close-accordian-view]="isAccordianOpen">
+								</i>
+							</div>
+						</div>
+					</ng-template>
+					<ng-template ngbPanelContent class="mx-0">
+						<app-checkout-address-form
+							[userState]="userSummary$ | async"
+
+							[selectedStoreHours]="selectedStoreHours$ | async"
+
+							[savedAddresses]="savedAddresses$ | async"
+
+							[savedStores]="savedStores$ | async"
+							[selectedStoreIdForCheckout]="selectedStoreId$ | async"
+							[selectedAddressIDForCheckout]="selectedAddressId$ | async"
+							(savedStoresEventEmitter)="handleStoreListEventEmitter($event)"
+							(storeSearchEmitter)="handleStoreSearchEmitter($event)"
+
+							[checkoutAddressForm]="checkoutUIData.checkoutAddressFormData"
+							[checkoutAddressUI]="checkoutUIData.checkoutAddressUI"
+
+							[universityList]="universityList$ | async"
+							[buildingList]="buildingList$ | async"
+
+							(checkoutAddressFormEventEmitter)="handleCheckoutAddressFormEventEmitter($event)"
+							[isNextBtnLoading]="checkoutUIData.isNextBtnLoading">
+						</app-checkout-address-form>
+
+						<span id="payment-top"></span>
+
+					</ng-template>
+				</ngb-panel>
+
+				<!-- Payment Methods tab-->
+				<ngb-panel id="payment"
+					[disabled]="!isPaymentTabEnabled((selectedStoreId$ | async), (selectedAddressId$ | async), (savedStores$ | async))">
+					<ng-template ngbPanelTitle>
+						<div class="header d-flex justify-content-between align-items-center" tabindex="0"
+							[class.success]="isCheckoutReady((selectedAddressId$ | async), (isDelivery$ | async), (selectedStoreId$ | async), (savedStores$ | async))">
+							<div class="header-text" i18n>
+								3. Payment Options
+								<i class="icon-checkmark smaller"
+									*ngIf="isCheckoutReady((selectedAddressId$ | async), (isDelivery$ | async), (selectedStoreId$ | async), (savedStores$ | async))">
+								</i>
+							</div>
+							<div>
+								<i class="icon-triangle"
+									[class.close-accordian-view]="isAccordianOpen">
+								</i>
+							</div>
+						</div>
+					</ng-template>
+					<ng-template ngbPanelContent>
+						<!-- MOVING FORM OUTSIDE OF THE ACCORDION -->
+					</ng-template>
+				</ngb-panel>
+			</ngb-accordion>
+
+			<!-- due to how bambora works the payment form needs to be built and remain built -->
+			<div [class.d-none]="!(checkoutAccordion.activeIds.indexOf('payment') > -1)">
+				<div [class.d-none]="checkoutUIData.checkoutPaymentUI.isOrderPaidInFull">
+					<app-redeem-modal
+						[isGiftCard]="true">
+					</app-redeem-modal>
+					<p></p>
+					<app-add-coupon-widget
+						class="w-100"
+						[parentContainer]="couponParentContainerEnum.Checkout"
+						(applyCouponEmitter)= "handleOnAddCouponEventEmitter($event)">
+					</app-add-coupon-widget>
+
+					<app-checkout-payment-method-form
+						#checkoutPaymentForm
+						[userState]="userSummary$ | async"
+						[isDelivery]="checkoutUIData.checkoutAddressUI.isDelivery"
+						[isContactLessValue]="checkoutUIData.checkoutAddressUI.isContactLessSelected"
+						[isFormCollapsed]="!checkoutUIData.isPaymentFormOpen"
+
+						[userPaymentMethods]="savedCards$ | async"
+						[selectedPaymentMethod]="!(selectedCard$ | async) ||
+						checkoutUIData.checkoutPaymentUI.isMasterPassSelected ||
+						checkoutUIData.checkoutPaymentUI.isVisaCheckoutSelected ? null : selectedCard$ | async"
+						(userPaymentMethodsEventEmitter)="handleUserPaymentMethodsEventEmitter($event)"
+
+						[checkoutPaymentMethodFormData]="checkoutUIData.checkoutPaymentForm"
+						[checkoutPaymentUI]="checkoutUIData.checkoutPaymentUI"
+						(checkoutPaymentMethodFormEventEmitter)="handleCheckoutPaymentMethodFormEventEmitter($event)"
+
+						[universities]="universitiesWithMealCard$ | async"
+						[allPaymentMethods]="(savedCards$ | async)"
+
+						[paymentOptions]="(selectedStorePayments$ | async)"
+						[bamboraValidation]="checkoutUIData.bamboraValidation"
+						[isVisaClickToPay]="isVisaClickToPay$ | async">
+					</app-checkout-payment-method-form>
+
+				</div>
+				<div class="no-payment-required text-center" [class.d-none]="!checkoutUIData.checkoutPaymentUI.isOrderPaidInFull">
+					<p i18n>No Payment Method Needed</p>
+					<i class="icon-credit-card"></i>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="col-12 col-md-4">
+			<div class="row">
+
+				<div class="col-12">
+					<app-club-11-11-card parentContainer="checkout">
+					</app-club-11-11-card>
+				</div>
+
+				<div class="col-12 my-3">
+					<app-order-summary
+						[orderSummaryUI]="{
+							isOrderReadyToPlace: isCheckoutReady((selectedAddressId$ | async), (isDelivery$ | async), (orderSummaryData$ | async), (selectedStoreId$ | async), (savedStores$ | async)),
+							isCartUpdating: isCartUpdating$ | async,
+							isPlaceOrderLoading: checkoutUIData.isPlaceOrderLoading,
+							isCheckoutStoreValid: checkoutUIData.isCheckoutStoreValid,
+							isVisaCheckoutSelected: checkoutUIData.checkoutPaymentUI.isVisaCheckoutSelected,
+							isMasterPassSelected: checkoutUIData.checkoutPaymentUI.isMasterPassSelected,
+							isDelivery: checkoutUIData.checkoutAddressUI.isDelivery,
+							isOrderHasWarning: isGhostWarningButton(),
+							isPayAtDoor: checkoutUIData.checkoutPaymentUI.isPayAtDoorSelected
+						}"
+						[isCouponValid]="isCouponValid$ | async"
+						[couponValidationMsg]="couponValidationMsg$ | async"
+						[userSummary]="userSummary$ | async"
+						[visaBtnUrl]="visaBtnUrl"
+
+						[orderSummaryData]="orderSummaryData$ | async"
+						(orderSummaryDataEventEmitter)="handleOrderSummaryDataEventEmitter($event)"
+						(addCouponEventEmitter)= "handleOnAddCouponEventEmitter($event)">
+					</app-order-summary>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+<!--
+Global error message
+-->
+<ng-template #globalErrorModal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal(); checkoutUIData.isGlobalError = false" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+	<app-confirmation-modal
+		[data]="{
+			icon: 'icon-bell'
+		}"
+		title="D'ough!"
+		i18n-title>
+		<ng-template>
+			<div class="col-12 text-center">
+				<p *ngIf="orderFailedReason$ | async">{{orderFailedReason$ | async}}</p>
+				<p *ngIf="!(orderFailedReason$ | async)" i18n>
+					Something went wrong, please try again later
+				</p>
+			</div>
+			<button class="btn btn-primary" (click)="closeModal(); checkoutUIData.isGlobalError = false" i18n>
+				Retry
+			</button>
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+<!--
+Coupon Invalid error message
+-->
+<ng-template #invalidCouponModal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal(); checkoutUIData.isCouponInvalidError = false" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+		<app-confirmation-modal
+			[data]="{
+				icon: 'icon-bell'
+			}"
+			title="D'ough!"
+			[subtitle]='checkoutUIData.couponErrorMsg'
+			i18n-title>
+			<ng-template>
+				<button class="btn btn-primary" (click)="closeModal(); checkoutUIData.isCouponInvalidError = false" i18n>
+					Ok
+				</button>
+			</ng-template>
+		</app-confirmation-modal>
+</ng-template>
+
+<!--
+Edit Address message
+-->
+<ng-template #editAddressModal let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal(); handleEditAddressConfirmation(false, true)" aria-label="close button">
+		<i class="icon-close-bold"></i>
+	</button>
+	<app-confirmation-modal
+		[data]="{
+			icon: 'icon-bell'
+		}"
+		title='Are you sure?'
+		subtitle="Would you like us to update the changes you've just made?"
+		i18n-title
+		i18n-subtitle>
+		<ng-template>
+			<div class="col-12 d-flex justify-content-center p-0 align-self-end">
+				<div class="col-6 col-lg-5 px-1">
+					<button class="btn btn-primary btn-white w-100" (click)="closeModal(); handleEditAddressConfirmation(false)" i18n>
+						Cancel
+					</button>
+				</div>
+				<div class="col-6 col-lg-5 px-1">
+					<button class="btn btn-primary w-100" (click)="closeModal(); handleEditAddressConfirmation(true)" i18n>
+						Okay
+					</button>
+				</div>
+			</div>
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+<!--
+Checkout Store error message
+-->
+<ng-template #checkoutStoreModal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal(); closeErrorMessage('address')" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+	<app-confirmation-modal
+		[data]="{
+			icon: 'icon-bell'
+		}"
+		title="D'ough!"
+		subtitle=""
+		i18n-title>
+		<ng-template>
+			<div class="col-12 text-center">
+				<p *ngIf="orderFailedReason$ | async">{{orderFailedReason$ | async}}</p>
+			</div>
+			<div class="col-6 d-flex justify-content-around">
+				<button class="btn btn-primary" (click)="closeModal(); closeErrorMessage('address')" i18n>
+					Okay
+				</button>
+			</div>
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+<!--
+Checkout Store Credit Card error message
+-->
+<ng-template #checkoutCreditCardModal let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal(); handleCreditCardFailure()" aria-label="close button">
+			<i class="icon-close-bold"></i>
+		</button>
+	<app-confirmation-modal
+		[data]="{
+			icon: 'icon-bell'
+		}"
+		title="Card Error"
+		subtitle=""
+		i18n-title>
+		<ng-template>
+			<div class="col-12 text-center">
+				<p *ngIf="newCardFailedMessage$ | async">{{newCardFailedMessage$ | async}}</p>
+			</div>
+			<div class="col-6 d-flex justify-content-around">
+				<button class="btn btn-primary" (click)="closeModal(); handleCreditCardFailure()" i18n>
+					Okay
+				</button>
+			</div>
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+<!--
+Add Store Modal
+-->
+<ng-template #searchModal let-closeModal="close">
+		<button class="store-modal-close" (click)="closeStoreSearch();" aria-label="close button">
+			<i class="icon-close-bold"></i>
+		</button>
+		<ng-container *ngTemplateOutlet="isLocationError || (isStoreSearchError$ | async) ? errorLocationLayout: defaultLayout "></ng-container>
+			<ng-template #defaultLayout>
+				<app-confirmation-modal
+					[data]="{
+						icon: 'icon-bell',
+						class: 'split-modal'
+					}"
+					title='Find the closest store'
+					i18n-title>
+					<ng-template>
+						<div class="container p-0">
+
+							<app-store-search-modal
+								[isLocationError]="isLocationError || (isStoreSearchError$ | async)"
+								[isLoading]="isStoreSearchLoading$ | async"
+								[storeSearchResults]="storeSearchResults$ | async"
+								(savedStoresEventEmitter)="handleStoreSearchEmitter($event)"
+								(retryLocationEventEmitter)="handleRetryLocationEmitter($event)">
+							</app-store-search-modal>
+
+						</div>
+					</ng-template>
+				</app-confirmation-modal>
+			</ng-template>
+			<ng-template #errorLocationLayout>
+				<app-confirmation-modal
+					[data]="{
+						icon: 'icon-bell',
+						class: 'split-modal'
+					}"
+					title='We are having trouble locating you'
+					i18n-title>
+					<ng-template>
+						<div class="container p-0">
+
+							<app-store-search-modal
+								[isLocationError]="isLocationError || (isStoreSearchError$ | async)"
+								[isLoading]="isStoreSearchLoading$ | async"
+								[storeSearchResults]="storeSearchResults$ | async"
+								(savedStoresEventEmitter)="handleStoreSearchEmitter($event)"
+								(retryLocationEventEmitter)="handleRetryLocationEmitter($event)">
+							</app-store-search-modal>
+
+						</div>
+					</ng-template>
+				</app-confirmation-modal>
+			</ng-template>
+
+</ng-template>
+
+<!--
+Surcharge Error message
+-->
+<ng-template #surchargeModal let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal();" aria-label="close button">
+		<i class="icon-close-bold"></i>
+	</button>
+	<app-confirmation-modal
+		[data]="{
+			icon: 'icon-bell'
+		}"
+		title='Order Minimum'
+		subtitle=""
+		i18n-title>
+		<ng-template>
+			<div class="col-12 text-center">
+				<p class="surcharge-message">
+					<ng-container *ngIf="checkoutUIData.checkoutAddressUI.isDelivery">
+						<ng-container i18n> A delivery order must be a minimum of </ng-container>
+						{{(orderSummaryData$ | async).orderComponent[0].value + (orderSummaryData$ | async).surchargeValue | currency:'CAD':'symbol-narrow':'1.2'}}
+						<ng-container i18n>(before taxes and delivery charge). If you proceed to place your order, an additional surcharge of </ng-container>
+						{{(orderSummaryData$ | async).surchargeValue | currency:'CAD':'symbol-narrow':'1.2'}}
+						<ng-container i18n>will be added to your total. This surcharge will be removed automatically if you add more items to your cart and bring the subtotal to at least </ng-container>
+						{{(orderSummaryData$ | async).orderComponent[0].value + (orderSummaryData$ | async).surchargeValue | currency:'CAD':'symbol-narrow':'1.2'}}.
+					</ng-container>
+					<ng-container *ngIf="!checkoutUIData.checkoutAddressUI.isDelivery">
+						<ng-container i18n> A pickup order must be a minimum of </ng-container>
+						{{(orderSummaryData$ | async).orderComponent[0].value + (orderSummaryData$ | async).surchargeValue | currency:'CAD':'symbol-narrow':'1.2'}}
+						<ng-container i18n>(before taxes). If you proceed to place your order, an additional surcharge of </ng-container>
+						{{(orderSummaryData$ | async).surchargeValue | currency:'CAD':'symbol-narrow':'1.2'}}
+						<ng-container i18n>will be added to your total. This surcharge will be removed automatically if you add more items to your cart and bring the subtotal to at least </ng-container>
+						{{(orderSummaryData$ | async).orderComponent[0].value + (orderSummaryData$ | async).surchargeValue | currency:'CAD':'symbol-narrow':'1.2'}}.
+					</ng-container>
+				</p>
+			</div>
+			<div class="col-12 d-flex justify-content-center p-0 align-self-end">
+				<div class="col-6 col-lg-5 px-1">
+					<button class="btn btn-primary btn-white w-100" (click)="closeModal(); onConfirmSurchargeClickHandler(false, false)" i18n>
+						Cancel
+					</button>
+				</div>
+				<div class="col-6 col-lg-5 px-1">
+					<button class="btn btn-primary w-100"
+						(click)="closeModal(); onConfirmSurchargeClickHandler(!(checkoutUIData.checkoutPaymentUI.isMasterPassSelected || checkoutUIData.checkoutPaymentUI.isVisaCheckoutSelected), true)" i18n>
+						Okay
+					</button>
+				</div>
+			</div>
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+</div>
+
+<ng-template #checkoutProductList>
+		<!-- <div class="row justify-content-end top-general-title">
+			<div class="d-none d-lg-flex col-md-1 p-0 justify-content-center column-name" i18n>
+				Quantity
+			</div>
+			<div class="d-none d-lg-flex p-0 col-md-2 justify-content-center column-name" i18n>
+					Item Total
+			</div>
+		</div> -->
+	<div class="container-fluid cart-checkout-container">
+		<div class="row item-display-row">
+			<div class="col-12 outline-bottom"
+					*ngFor="let product of productsInCart$ | async; let i = index">
+
+				<app-cart-item
+					[isCompact]="false"
+					[isFirst]="i === 0"
+					[isUpdating]="isCartUpdating$ | async"
+					[cartProduct]="product"
+					(cartProductEventEmitter)="cartProductEventHandler($event)">
+				</app-cart-item>
+
+			</div>
+		</div>
+
+	</div>
+</ng-template>
+
+<ng-template #maxReachedModal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal(); isMaxCardsReached = false" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+		<app-confirmation-modal
+			[data]="{
+				icon: 'icon-bell'
+			}"
+			title='Oops'
+			subtitle=""
+			i18n-title>
+			<ng-template>
+				<div class="row w-100 justify-content-center">
+					<div class="col-12 mb-3" i18n>
+						Sorry we can only accept 5 saved credit cards per account. Please remove one before trying to add a new one.
+					</div>
+				</div>
+				<div class="row w-100 justify-content-center">
+					<button class="btn btn-primary" (click)="closeModal(); isMaxCardsReached = false" i18n>
+						Okay
+					</button>
+				</div>
+			</ng-template>
+		</app-confirmation-modal>
+</ng-template>
+
+<div *ngIf="isMpRedirectLoading$ | async" class="action-loader">
+	<img alt="loading" src="./static-files/images/button-loader-updated.gif">
+</div>
+
+<app-redeem-modal
+	#editRedeemModal
+	[popupOnly]="true">
+</app-redeem-modal>

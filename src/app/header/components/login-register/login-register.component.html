@@ -1,0 +1,36 @@
+<div class="row login-register-container mx-0 align-center justify-content-start justify-content-md-end"
+  (click)="menuItemClickHandler()">
+  <ng-container *ngIf="!userDetails">
+    <div class="col-12 col-md-auto align-self-center p-0 d-md-none d-xl-block">
+      <i class="icon-sign-in"></i>
+    </div>
+    <div class="col-auto p-0 align-self-center action-link">
+      <a class="big" routerLink="/user/sign-in" (click)="handleCTASignInHeader()">
+				<span i18n>Sign In</span>
+        <i class="icon-toggle"></i>
+      </a>
+      <a class="bold block" (click)="handleCTASignUPHeader()" routerLink="/user/sign-up">
+				<span i18n>Create Account</span>
+        <i class="icon-toggle"></i>
+      </a>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="userDetails">
+    <div class="col-12 col-lg-auto d-flex px-0 px-md-1 justify-content-md-center"
+      [class.photo]="userDetails.profilePic">
+      <a routerLink="/user/account" class="align-self-center img-link d-md-none d-lg-block">
+        <span *ngIf="!userDetails.profilePic" class="no-image-span">
+          {{userDetails.firstName.charAt(0) + userDetails.lastName.charAt(0)}}
+        </span>
+        <img alt="user-image" class="img-fluid rounded-circle custom-nav-element pp-image-loaded"
+          src="{{userDetails.profilePic}}" [default]="null" *ngIf="userDetails.profilePic">
+      </a>
+    </div>
+    <div class="col-12 col-md-auto align-self-center action-link signed-in">
+      <a class="h6 profile reduced-text" routerLink="/user/account">
+        {{userDetails.firstName}}
+        <i class="icon-toggle"></i>
+      </a>
+    </div>
+  </ng-container>
+</div>

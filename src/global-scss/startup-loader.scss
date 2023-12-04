@@ -1,0 +1,136 @@
+@import 'global-scss-mixing';
+
+.loading {
+	position: fixed;
+	top: 0;
+	left: 0;
+
+	transition: opacity .8s ease-in-out;
+	opacity: 0;
+	z-index: -1;
+
+	background: $white;
+	
+	width: 100%;
+	height: 100%;
+
+	.pp-loading-icon {
+		color: $pp-bg-maincolour;
+		font-size: 6em;
+	}
+}
+
+/* .loading screen is visible when app is not bootstraped yet, .app-root is empty */
+app-root:empty + .loading {
+	opacity: 1;
+	z-index: 100;
+}
+
+// PPV2-2200 - loading icon on all browsers
+// sass-lint:disable no-vendor-prefixes
+.pp-loading-icon:before {
+	animation: loading 2s infinite linear;
+	-moz-animation: loading 2s infinite linear;
+	-webkit-animation: loading 2s infinite linear;
+}
+// Loading Icon Animation
+@-moz-keyframes loading {
+	0% {
+		content: '\e875';
+	}
+
+	20% {
+		content: '\e876';
+	}
+
+	40% {
+		content: '\e877';
+	}
+
+	60% {
+		content: '\e878';
+	}
+
+	80% {
+		content: '\e879';
+	}
+
+	100% {
+		content: '\e87a';
+	}
+}
+@-webkit-keyframes loading {
+	0% {
+		content: '\e875';
+	}
+
+	20% {
+		content: '\e876';
+	}
+
+	40% {
+		content: '\e877';
+	}
+
+	60% {
+		content: '\e878';
+	}
+
+	80% {
+		content: '\e879';
+	}
+
+	100% {
+		content: '\e87a';
+	}
+}
+@-ms-keyframes loading {
+	0% {
+		content: '\e875';
+	}
+
+	20% {
+		content: '\e876';
+	}
+
+	40% {
+		content: '\e877';
+	}
+
+	60% {
+		content: '\e878';
+	}
+
+	80% {
+		content: '\e879';
+	}
+
+	100% {
+		content: '\e87a';
+	}
+}
+@keyframes loading {
+	0% {
+		content: '\e875';
+	}
+
+	20% {
+		content: '\e876';
+	}
+
+	40% {
+		content: '\e877';
+	}
+
+	60% {
+		content: '\e878';
+	}
+
+	80% {
+		content: '\e879';
+	}
+
+	100% {
+		content: '\e87a';
+	}
+}

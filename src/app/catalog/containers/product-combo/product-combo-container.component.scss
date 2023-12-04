@@ -1,0 +1,77 @@
+@import 'global-scss-mixing';
+
+$mid-grey: #dae9f0;
+$light-grey: #edf2f5;
+$not-active-btn-color: #6d7273;
+$ghost-loader-bg: #e1e7e9;
+$modal-bg: #000;
+$pp-green: #4e7026;
+
+.product-combo-container {
+	.heading-wrap {
+		@include font-black;
+
+		color: $pp-bg-maincolour;
+	}
+
+	.calorie-text {
+		@include font-black;
+
+		color: $pp-default-text-colour;
+	}
+}
+
+.product-combo-items-container {
+	.image-wrap {
+		.pp-no-img-text {
+			display: none;
+		}
+	}
+
+	.heading-wrap {
+		text-transform: uppercase;
+		letter-spacing: .4px;
+		color: $pp-bg-maincolour;
+		font-size: 1.35em;
+	}
+
+	.reset-link {
+		cursor: pointer;
+		color: $pp-bg-maincolour;
+
+		.icon-reset {
+			font-size: 1.3em;
+		}
+	}
+
+	.calorie-text {
+		text-transform: uppercase;
+		letter-spacing: .4px;
+		color: $pp-default-text-colour;
+		font-size: 2em;
+	}
+
+	button {
+		text-transform: uppercase;
+	}
+
+	.product-combo-item {
+		position: relative;
+		z-index: 22;
+		margin-top: 16px;
+	}
+}
+
+@include media-breakpoint-down(xs) {
+	.product-combo-items-container {
+		.product-combo-item {
+			.heading-wrap {
+				line-height: 1em;
+			}
+		}
+
+		.calorie-text {
+			font-size: 1.5em;
+		}
+	}
+}

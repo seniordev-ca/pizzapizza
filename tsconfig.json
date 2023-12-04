@@ -1,0 +1,55 @@
+{
+	"compilerOptions": {
+    "downlevelIteration": true,
+		"target": "es2015",
+		"module": "esnext",
+		"declaration": false,
+		"moduleResolution": "node",
+		"sourceMap": false,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"allowJs": true,
+		"removeComments": false,
+		"noImplicitAny": false,
+		"suppressImplicitAnyIndexErrors": true,
+		"skipLibCheck": true,
+		"lib": [
+			"es2017",
+			"dom"
+		],
+		"outDir": "./dist/",
+		"typeRoots": [
+			"./node_modules/@types/",
+			"./src/pp-types.d.ts"
+		],
+		"baseUrl": "./src",
+		"paths": {
+			"@pp-universal/*": [
+				"../src-web-mw/src-shared/client/*"
+			],
+			"@pp/*": [
+				"../src/*"
+			]
+		},
+	},
+	"compileOnSave": false,
+	"buildOnSave": false,
+	"include": [
+		"./src/**/*"
+	],
+	"exclude": [
+		"node_modules/*",
+		"dist/*",
+		"**/*.spec.ts",
+		"./src/main.browser.aot.ts"
+	],
+	"awesomeTypescriptLoaderOptions": {
+		"forkChecker": true,
+		"useWebpackText": true,
+		"useCache": true
+	},
+	"angularCompilerOptions": {
+		"genDir": ".",
+		"skipMetadataEmit": true
+	}
+}

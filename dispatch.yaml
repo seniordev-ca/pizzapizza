@@ -1,0 +1,76 @@
+# Any route that isn't defined here, gets matched to the 'default' service.
+# Wordpress service is a 'default' service 
+
+dispatch:
+
+  # Angular website index page
+  - url: '*/'
+    service: angular-ssr
+
+  - url: '*/store/*'
+    service: angular-ssr
+
+  # Angular compiled assets
+  - url: '*/build/*'
+    service: angular-ssr
+
+  # Angular SDK
+  - url: '*/js-sdk/*'
+    service: angular-ssr
+
+  # Angular hosted android file & ios file
+  - url: '*/.well-known/*'
+    service: angular-ssr
+
+    # Angular hosted service worker
+  - url: '*/worker.js'
+    service: angular-ssr
+
+  # Angular static files
+  - url: '*/static-files/*'
+    service: angular-ssr
+
+  # Angular website base URLs
+  - url: '*/catalog/*'
+    service: angular-ssr
+
+  - url: '*/user/*'
+    service: angular-ssr
+
+  - url: '*/checkout*'
+    service: angular-ssr
+
+  - url: '*/restaurant-locator*'
+    service: angular-ssr
+
+  # French angular website index page
+  - url: '*/fr/'
+    service: angular-ssr
+
+  - url: '*/fr/store/*'
+    service: angular-ssr
+
+ # Angular compiled assets
+  - url: '*/fr/build/*'
+    service: angular-ssr
+
+  # Angular static files
+  - url: '*/fr/static-files/*'
+    service: angular-ssr
+
+  # Angular website base URLs
+  - url: '*/fr/catalog/*'
+    service: angular-ssr
+
+  - url: '*/fr/user/*'
+    service: angular-ssr
+
+  - url: '*/fr/checkout*'
+    service: angular-ssr
+
+  - url: '*/fr/restaurant-locator*'
+    service: angular-ssr
+
+# Web middleware path
+  - url: '*/ajax/*'
+    service: web-middleware

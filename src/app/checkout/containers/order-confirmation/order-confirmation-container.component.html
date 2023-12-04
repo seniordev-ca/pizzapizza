@@ -1,0 +1,104 @@
+<div class="container-fluid oc-header-container">
+	<div class="bg-image header-background"
+		[style.background-image]="'url(./static-files/images/order-confirmation/oc-header-bg-2.jpg)'">
+	</div>
+	
+
+	<div class="row pb-4 header-nav">
+
+		<div class="col-12 align-self-start">
+			<app-sub-header-navigation 
+				[subHeaderNavContent]="{
+					textColor: '#FFFFFF',
+					iconColor: '#EE5A00',
+					backToLocation: '/'
+				}"
+				title=""
+				navText="Back to Home"
+				i18n-navText>
+			</app-sub-header-navigation>
+		</div>
+		<div class="col-12 text-center">
+			<span class="title" i18n>Thank you for ordering!</span>
+			<span class="subtitle" *ngIf="activeStep">{{activeStep.title}}...</span>
+		</div>
+	</div>
+	<div class="header-background-color"></div>
+	<!-- Container -->
+
+</div>
+<!-- Container Fluid -->
+<div class="container oc-container">
+
+	<div class="row">
+		<div class="col-12 col-md-8">
+			<ng-container *ngIf="!(isOrderStatusError$ | async)">
+				<div class="row mx-0">
+					<div class="col-12 oc-process-image" *ngIf="activeStep">
+						<img *ngIf="activeStep.kind=='image' || activeStep.kind=='map'" alt="order status" [src]="activeStep.image" class="img-fluid" />
+						<span (click)="openFullscreen()" [ngClass]="{'tracker-img-wrapper': activeStep.kind==kindTracker}"
+							*ngIf="activeStep && activeStep.status==inProgressStatus &&  activeStep.kind==kindTracker">
+							<img alt="order status" [src]="imagePath" class="img-fluid" />
+							<div class="order-tracker-banner">visit order tracker</div>
+						</span>
+						<ng-container *ngIf="activeStep.kind === orderTrackerStatusKindEnum.MAP">
+							<i
+							[class.icon-pizza-locator]="(orderInfoData$ | async).orderType === orderTypeEnum.DELIVERY"
+							[class.icon-pp-speech-bubble]="(orderInfoData$ | async).orderType === orderTypeEnum.PICKUP">
+							</i>
+						</ng-container>
+						<ng-container *ngIf="activeStep.kind === orderTrackerStatusKindEnum.IMG">
+								<i class="icon-loader_01 pp-loading-icon"></i>
+						</ng-container>
+						<!-- <i class="icon-pizza-locator"></i> -->
+					</div>
+				</div>
+				<app-process-steps [processStepsArray]="processStepsArray" *ngIf="processStepsArray"></app-process-steps>
+			</ng-container>
+			<ng-container *ngIf="(isOrderStatusError$ | async)">
+				<div class="row mx-0 h-100 align-items-center">
+					<div class="col-12 text-center error-wrapper">
+						<i class="icon-bell"></i>
+						<h2 i18n>Pizza tracking seems to be down.</h2>
+						<p i18n>We are doing what we can to fix the issue, check back soon.</p>
+					</div>
+				</div>
+			</ng-container>
+		</div>
+		<div class="col-12 col-md-4">
+			<div class="row">
+				<div class="col-12 mb-3">
+					<app-order-info
+						*ngIf="orderInfoData$ | async"
+						[orderInfoData]="orderInfoData$ | async"
+						(orderInfoDataEventEmitter)="handleOrderInfoDataEventEmitter($event)">
+					</app-order-info>
+				</div>
+				<div class="col-12">
+						<app-club-11-11-card parentContainer="orderConfirmation">
+						</app-club-11-11-card>
+					</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<!-- Iframe for visit order tracker -->
+<div *ngIf="activeStep && activeStep.status==inProgressStatus && activeStep.kind==kindTracker" class="iframe-wrapper"
+	#fs fullscreen-able [class.is-active]="isActive">
+	<div class="sub-header-oc">
+		<h6 (click)="closeFullscreen()" *ngIf="isFullscreen"><i class="icon-back"
+				style="color: rgb(238, 90, 0);"></i><span style="color: rgb(76, 48, 23);"> Back </span></h6>
+		<h5>thank you for ordering!</h5>
+	</div>
+	<iframe [src]="urlSafe" width="100%" height="800"></iframe>
+</div>
+<app-order-confirmation-details-modal #orderDetailsVerticalModal
+	*ngIf="orderInfoData$ | async"
+	[orderDetails]="orderInfoData$ | async"
+	[activeOrder]="activeOrder$ | async">
+</app-order-confirmation-details-modal>
+
+<app-signed-out-modal #appSignedOutModal 
+	[openOnLoad]="openSignedOutModal">
+</app-signed-out-modal>

@@ -1,0 +1,60 @@
+# Uses node js server for server side rendering
+runtime: nodejs10
+service: angular-ssr
+
+instance_class: F2
+
+handlers:
+- url: /fr/build/(.*\.(gif|png|jpg|css|js|eot|woff2|woff|ttf|svg|)(|\.map))$
+  static_files: build-browser/fr/\1
+  upload: build-browser/fr/(.*)(|\.map)
+  secure: always
+  expiration: '1m'
+
+- url: /fr/static-files/(.*\.(gif|png|jpg|css|js|eot|woff2|woff|ttf|svg|ico|)(|\.map))$
+  static_files: build-browser/en/static-files/\1
+  upload: build-browser/en/static-files/(.*)(|\.map)
+  secure: always
+  expiration: '1m'
+
+- url: /fr/(.*)
+  secure: always
+  script: auto
+
+- url: /.well-known/apple-app-site-association
+  static_files: static-files/apple-app-site-association
+  upload: static-files/apple-app-site-association
+  secure: always
+
+- url: /.well-known/assetlinks.json
+  static_files: static-files/assetlinks.json
+  upload: static-files/assetlinks.json
+  secure: always
+
+- url: /build/(.*\.(gif|png|jpg|css|js|eot|woff2|woff|ttf|svg|)(|\.map))$
+  static_files: build-browser/en/\1
+  upload: build-browser/en/(.*)(|\.map)
+  secure: always
+  expiration: '1m'
+
+- url: /static-files/(.*\.(gif|png|jpg|css|js|eot|woff2|woff|ttf|svg|ico|)(|\.map))$
+  static_files: build-browser/en/static-files/\1
+  upload: build-browser/en/static-files/(.*)(|\.map)
+  secure: always
+  expiration: '1m'
+
+- url: /js-sdk/pp-sdk-bundle.js
+  static_files: build-sdk/pp-sdk-bundle.js
+  upload: build-sdk/pp-sdk-bundle.js
+  expiration: '6h'
+  secure: always
+
+- url: /worker.js
+  static_files: static-files/worker.js
+  upload: static-files/worker.js
+  secure: always
+  expiration: '1m'
+
+- url: /.*
+  secure: always
+  script: auto

@@ -1,0 +1,66 @@
+
+<app-header-alert>
+</app-header-alert>
+
+<div class="container-fluid m-0 p-0">
+	<div class="row m-0">
+
+		<div class="col-12 px-0 order-1">
+			<app-pizza-assistant
+				[userDetails]="loginUser$ | async">
+			</app-pizza-assistant>
+		</div>
+
+		<div class="col-12 px-0 order-3">
+			<app-featured-products
+				[slides]="featuredProductsSlider$ | async"
+				[loading]="featuredLoading$ | async"
+				[error]="featuredError$ | async"
+				[featuredCategory]="featuredCategory$ | async"
+				(sliderEventEmitter)="sliderEventHandler($event)"
+			>
+			</app-featured-products>
+		</div>
+
+		<div class="col-12 px-0 mt-4 order-4" *ngIf="!(isAddressComplete$ | async)">
+			<app-in-page-message></app-in-page-message>
+		</div>
+
+		<div class="col-12 px-0 order-5">
+			<app-menu-categories
+				[categories]="categoriesList$ | async"
+				[loading]="categoriesLoading$ | async"
+				[error]="categoriesError$ | async"
+				(retryEventEmitter)="categoryRetryHandler()">
+			</app-menu-categories>
+		</div>
+
+		<div class="col-12 px-0"
+			[class.order-4]="loginUser$ | async"
+			[class.order-7]="!(loginUser$ | async)">
+			<app-user-recommendations
+				[slides]="justForYouList$ | async"
+				[loading]="justForYouLoading$ | async"
+				[error]="justForYouError$ | async"
+				[loginUser]="loginUser$ | async"
+				(justforYouEventEmitter)="justForYouHandler($event)"
+				(retryEventEmitter)="justForYouRetryHandler()">
+			</app-user-recommendations>
+		</div>
+
+		<div class="col-12 mx-0 px-0 order-9">
+			<app-home-pizza-banner
+				[bannerList]="bannerList$ | async"
+				[loading]="bannerLoading$ | async"
+				[error]="bannerError$ | async"
+				(retryEventEmitter)="bannerRetryHandler()"
+			></app-home-pizza-banner>
+		</div>
+
+		<div class="col-12 px-0 order-11">
+			<app-promotion
+				[appLinks]="appLinks$ | async"></app-promotion>
+		</div>
+	</div>
+</div>
+

@@ -1,0 +1,38 @@
+<div class="container mx-0 accounts-kids-club-container">
+		<!-- Row that Holds Three Columns For Kids Club Title, Text and Register -->
+		<div class="row mt-3 mb-3 mt-md-3 mb-md-3 accounts-kids-club-row">
+
+			<!-- Column One - Title & Icon -->
+			<div class="col-12 col-lg-3 pl-0 pl-md-2 d-flex justify-content-start align-items-center accounts-kids-club-title-col">
+				<i class="icon-balloons-new">
+				</i>
+				<span class="ml-2 title-text" i18n>
+					Kids Club
+				</span>
+			</div>
+			<!-- End of Column One -->
+
+			<!-- Column Two - Holds Text Asking If Parents Want Their Kids to Sign Up -->
+			<div class="col-12 col-lg-7 mt-1 mb-3 mt-lg-0 mb-lg-0 d-flex align-items-center accounts-kids-club-text-col" i18n>
+				Would you like to register your children for Kids Club to receive a gift on his or her birthday?
+			</div>
+			<!-- d-none d-lg-flex -->
+			<!-- End of Column Two -->
+
+			<!-- Column Three - Register Button -->
+			<div class="col-12 col-lg-2 d-flex justify-content-end align-items-center accounts-kids-club-button-col">
+				<button class="btn btn-lg btn-primary w-100"
+					[class.loading-state]="isRegisterButtonLoading"
+					(click)="onRegisterAccount($event)" i18n
+          aria-label="Register Kids Club">
+
+						Register
+				</button>
+
+			</div>
+			<!-- End of Column Three -->
+
+		</div>
+		<!-- End of Row -->
+</div>
+<!-- End of Container -->

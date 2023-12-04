@@ -1,0 +1,251 @@
+<div class="row text-center cart-buttons-row justify-content-center balance-text">
+	<div class="col-auto col-sm-6 col-md-6 px-2"
+			(click)="clubElevenLandingVerticalModal.openModal(); onOpenModal();">
+		<ng-container i18n>Balance Check</ng-container>
+		<i class="icon-arrow-navigate"></i>
+	</div>
+	<div class="col-auto col-sm-6 col-md-6 px-2">
+		<a [href]="learnMoreLink$ | async" *ngIf="learnMoreLink$ | async">
+			<ng-container i18n>Learn More</ng-container>
+			<i class="icon-arrow-navigate"></i>
+		</a>
+	</div>
+</div>
+
+
+<div class="balance-vertical-modal-wrap">
+	<app-vertical-modal #clubElevenLandingVerticalModal>
+		<ng-template>
+
+			<div class="opacity-gradient-overlay">
+			</div>
+
+			<app-modal-info-header 
+				[modalInfoHeaderContent]="{
+					fontKey: 'icon-club-11-11'
+				}"
+				title="BALANCE CHECK"
+				subTitle="CLUB 11-11"
+				i18n-title
+				i18n-subTitle>
+			</app-modal-info-header>
+
+			<ng-container *ngIf="inputFormState !== balanceModalState.transactionsHistory">
+
+			<div class="container cart-input-container">
+				<div class="row">
+
+					<div class="col-1 d-none d-md-flex">
+					</div>
+
+					<div class="col-12 col-md-5 text-right">
+						<div class="club-eleven-img">
+							<img alt="club 11-11 logo" src="./static-files/images/club-eleven-eleven.png">
+						</div>
+					</div>
+
+					<div class="col-12 col-md-5 d-flex align-items-center input-wrap-form">
+						<form class="pp-form w-100" 
+							[formGroup]="cardInputForm">
+
+							<!-- Cart number input -->
+							<div class="form-row">
+								<div class="col-md-12 form-group" 
+									[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(cardInputForm.controls['cardNumber'])">
+									<label for="cardNumber" class="alternate-label">
+										<ng-container i18n>Club 11-11 Number</ng-container>:&nbsp;
+										<app-form-invalid-message 
+										[control]="cardInputForm.controls['cardNumber']">
+										</app-form-invalid-message>
+									</label>
+									<input class="form-control" formControlName="cardNumber">
+								</div>
+							</div>
+
+							<!-- Captcha code input -->
+							<div class="form-row">
+								<div class="col-md-12 form-group"
+									*ngIf="!(giftCardHistory$ | async)"
+									[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(cardInputForm.controls['cardPin'])">
+									<label for="cardPin" class="alternate-label">
+										<ng-container i18n>Enter Pin Number</ng-container>:&nbsp;
+										<app-form-invalid-message 
+										[control]="cardInputForm.controls['cardPin']">
+										</app-form-invalid-message>
+									</label>
+									<input type="text" class="form-control" 
+										formControlName="cardPin">
+								</div>
+								<div class="col-12 form-group" *ngIf="(giftCardHistory$ | async)">
+									<label for="cardNumber" class="alternate-label">
+										<ng-container i18n>Card Balance</ng-container>:&nbsp;
+									</label>
+									<span class="card-balance">
+										{{(giftCardHistory$ | async).balance | currency:'CAD':'symbol-narrow':'1.2'}}
+									</span>
+								</div>
+							</div>
+
+							<div class="form-row justify-content-between">
+								<div class="col-md-auto col-xs-12">
+									<button class="btn btn-primary"
+										(click)="onBalanceCheckClick()"
+										*ngIf="!(giftCardHistory$ | async)"
+										[disabled]="cardInputForm.invalid" i18n>
+										Check
+									</button>
+
+									<button class="btn btn-primary"
+										*ngIf="(giftCardHistory$ | async)"
+										(click)="clubElevenLandingVerticalModal.closeModal()" i18n>
+										Okay
+									</button>
+								</div>
+								<div class="col-auto" *ngIf="giftCardHistory$ | async">
+									<button class="btn btn-primary btn-transparent"
+										(click)="onViewHistoryClick($event)" i18n>
+										View Card History
+									</button>
+								</div>
+							</div>
+						</form>
+
+					</div>
+					<!-- col-12 col-md-5 -->
+
+					<div class="col-1 d-none d-md-flex">
+					</div>
+				</div>
+			</div>
+
+			</ng-container>
+
+
+			<ng-container *ngIf="inputFormState === balanceModalState.transactionsHistory">
+
+				<!--
+				<form class="pp-form">
+					<div class="form-row justify-content-center">
+						
+						<div class="col-8 col-md-4 col-lg-3 form-group">
+							<div class="select-wrapper">
+								<select class="form-control">
+									<option
+										*ngFor="let transactionType of clubElevenBalanceTableContent.transactionTypeArr"
+										id="{{ transactionType.id }}"
+									>
+										{{ transactionType.text }}
+									</option>
+									
+								</select>
+							</div>
+						</div>
+
+						<div class="col-4 col-md-2 col-lg-1 form-group">
+							<div class="select-wrapper">
+								<select class="form-control">
+									<option
+										*ngFor="let transactionYear of clubElevenBalanceTableContent.transactionYearArr"
+										id="{{ transactionYear.id }}"
+									>
+										{{ transactionYear.text }}
+									</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</form>
+				-->
+
+				<div class="container pp-table balance-table-container">
+
+					<div class="container">
+						<div class="row pp-table-pre-header-row">
+
+							<div class="col-12 text-left text-md-right right-title">
+								<ng-container i18n>Loyalty Transaction history for Card</ng-container>:&nbsp;
+								<span>
+									{{ cardInputForm.controls['cardNumber'].value }}
+								</span>
+							</div>
+						</div>
+
+						<div class="row pp-table-header-row d-none d-md-flex">
+							<div class="col" i18n>
+								Date
+							</div>
+							<div class="col" i18n>
+								Time
+							</div>
+							<div class="col" i18n>
+								Location
+							</div>
+							<div class="col" i18n>
+								Transaction
+							</div>
+							<div class="col text-center border-left" i18n>
+								Amount
+							</div>
+						</div>
+					</div>
+
+					<div class="container pp-empty-body-container" *ngIf="(giftCardHistory$ | async).transactions.length == 0">
+						<div class="row text-center">
+							<div class="col">
+								<div class="title" i18n>
+									No Transaction History
+								</div>
+								<i class="icon-rectangle-clock"></i>
+							</div>
+						</div>
+					</div>
+
+					<div class="container pp-table-body-container">
+						<div class="row pp-table-row" *ngFor="let transactions of (giftCardHistory$ | async).transactions">
+							<div class="col-6 col-md">
+								<h6 i18n>
+									Date
+								</h6>
+								{{ transactions.date }}
+							</div>
+							<div class="col-6 col-md">
+								<h6 i18n>
+									Time
+								</h6>
+								{{ transactions.time }}
+							</div>
+							<div class="col-6 col-md">
+								<h6 i18n>
+									Location
+								</h6>
+								{{ transactions.location }}
+							</div>
+							<div class="col-6 col-md">
+								<h6 i18n>
+									Transaction
+								</h6>
+								{{ transactions.type }}
+							</div>
+
+							<div class="col-12 d-block d-md-none border-split">
+								&nbsp;
+							</div>
+
+							<div class="col-6 col-md border-left-right text-left text-md-center">
+								<h6 i18n>
+									Amount
+								</h6>
+								{{ transactions.amount | currency:'CAD':'symbol-narrow':'1.2' }}
+							</div>
+						</div>
+					</div>
+					<!-- container pp-table-body-container -->
+
+				</div>
+				<!-- container balance-table-container -->
+
+			</ng-container>
+
+		</ng-template>
+	</app-vertical-modal>
+</div>

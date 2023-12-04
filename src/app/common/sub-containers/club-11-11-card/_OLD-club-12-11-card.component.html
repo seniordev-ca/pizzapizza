@@ -1,0 +1,229 @@
+<!--
+<ng-container
+	*ngTemplateOutlet="clubElevenElevenData.isLoyaltyPage ? loyaltyPage : confirmationPageCard; context:clubElevenElevenData">
+</ng-container>
+
+<ng-template #loyaltyPage>
+-->
+
+
+<!--
+	[class.has-error]="clubElevenElevenData.isAccountError
+		&& clubElevenElevenData.userPersonalDetails.isClubElevenElevenMember"
+-->
+<div class="row club-eleven-eleven-card-container horizontal-gradient mx-0 w-100 pt-0">
+	<div class="col-12 p-0">
+
+		<div class="row align-items-center card-eleven-top-part">
+			<div class="col-4 col-md-5 align-self-center text-center club-eleven-eleven-image-wrap">
+				<img alt="club 1111 logo" class="img-fluid eleven-eleven-logo" src="./static-files/images/11-11_logo.png">
+			</div>
+
+
+			<div class="col-8 col-md-7">
+				<p class="smaller mb-0">
+					Sign in or create an account to save your info and earn $0.65 on this order.
+				</p>
+				<p class="text-right mb-0 pt-2 navigate">
+					<button class="account-btn"
+
+						(click)="onCreateAccount($event, clubElevenElevenData.userId)">
+						<i class="icon-arrow-circle"></i>
+						Create Account
+					</button>
+				</p>
+			</div>
+
+
+			<div class="col-8 col-md-7 p-0">
+				<p class="mb-0">
+
+					<!--
+						clubElevenElevenData.userPersonalDetails.isClubElevenElevenMember
+					-->
+
+					<span class="user-details">
+						<span class="user-card">
+
+						</span>
+					</span>
+				</p>
+				<p class="text-left mb-0 pt-2 navigate">
+					<!--
+					<button class="account-btn p-0"
+						*ngIf="clubElevenElevenData.userPersonalDetails.isClubElevenElevenMember"
+						(click)="onEditAccount($event, clubElevenElevenData.userId);">
+						<i class="icon-edit"></i>
+						Edit
+					</button>
+					-->
+				</p>
+			</div>
+
+		</div>
+
+		<!--
+		<div class="row card-bottom-part"
+			*ngIf="clubElevenElevenData.userPersonalDetails.isClubElevenElevenMember
+				&& !clubElevenElevenData.isAccountError">
+			<div class="col-12">
+
+
+			</div>
+			<div class="col-4 col-md-5 align-self-center text-center club-eleven-eleven-image-wrap">
+				<img class="img-fluid pizza-on-card-11-11" src="./static-files/temp-assets/club1111/club1111-pizza.png" />
+			</div>
+			<div class="col-7 p-0 club-rewards">
+				<span class="label">
+					Available:
+				</span>
+				<span class="value h2">
+						{{ (accountBalance$ | async).available | currency:'CAD':'symbol-narrow':'1.2' }}
+				</span>
+				<div class="separator"></div>
+
+				<span class="label">
+					Pending:
+				</span>
+				<span class="value h2">
+					$6.47
+				</span>
+
+				<p class="fw-normal eleven-eleven-earnings">
+					You earned
+						<strong>
+							$0.68
+						</strong>
+					so far, only
+						<strong>
+							2
+						</strong>
+					more purchases to go.
+				</p>
+
+			</div>
+
+		</div>
+			-->
+
+
+	</div>
+</div>
+
+<!--
+</ng-template>
+-->
+<!--
+<div class="row mx-0 club-eleven-eleven-error-container"
+	*ngIf="clubElevenElevenData.userPersonalDetails.isClubElevenElevenMember
+		&& clubElevenElevenData.isConfirmationPage
+		&& clubElevenElevenData.isAccountError">
+	<div class="col-12 card-body text-center fw-normal">
+		<img src="./static-files/temp-assets/club1111/club1111-error.png" width="90" />
+		<h2 class="club-error">Something went wrong.</h2>
+		<p>Please check back later.</p>
+	</div>
+</div>
+-->
+
+<!--
+<ng-template #confirmationPageCard >
+		<div class="row club-eleven-eleven-card-container mx-0 w-100"
+		[class.has-error]="clubElevenElevenData.isAccountError
+			&& clubElevenElevenData.userPersonalDetails.isClubElevenElevenMember">
+		<div class="col-12 ">
+
+			<div class="row align-items-center">
+				<div class="col-4 col-md-5 align-self-center club-eleven-eleven-image-wrap">
+					<img class="img-fluid" src="./static-files/images/club-mobile-nav.jpg">
+				</div>
+
+				<div class="col-8 col-md-7"
+					*ngIf="!clubElevenElevenData.userPersonalDetails.isClubElevenElevenMember">
+					<p class="smaller mb-0">
+						Sign in or create an account to save your info and earn $0.65 on this order.
+					</p>
+					<p class="text-right mb-0 pt-2 navigate">
+						<button class="account-btn"
+							*ngIf="!clubElevenElevenData.userPersonalDetails.isClubElevenElevenMember"
+							(click)="onCreateAccount($event, clubElevenElevenData.userId)">
+							<i class="icon-arrow-circle"></i>Create Account
+						</button>
+					</p>
+				</div>
+
+				<div class="col-8 col-md-7" [class.px-lg-2]="!clubElevenElevenData.isLoyaltyPage">
+
+
+					<p class="mb-0">
+						<span class="user-details" *ngIf="(userSummary$ | async)">
+								{{ (userSummary$ | async).firstName }} {{ (userSummary$ | async).lastName }}
+							<span class="user-card">
+								TODO card number
+							</span>
+						</span>
+
+						<span [innerHTML]="(accountBalance$ | async).earnedText">
+						</span>
+
+					</p>
+
+					<p class="text-right mb-0 pt-2 navigate">
+						<button class="account-btn"
+							*ngIf="clubElevenElevenData.userPersonalDetails.isClubElevenElevenMember
+								&& !clubElevenElevenData.isLoyaltyPage"
+							(click)="onManageAccount($event, clubElevenElevenData.userId)">
+							<i class="icon-arrow-circle"></i>Manage Account
+						</button>
+						<button class="account-btn"
+							*ngIf="clubElevenElevenData.userPersonalDetails.isClubElevenElevenMember
+								&& clubElevenElevenData.isLoyaltyPage"
+							(click)="onEditAccount($event, clubElevenElevenData.userId);">
+							<i class="icon-arrow-circle"></i>Edit
+						</button>
+					</p>
+
+				</div>
+			</div>
+			-->
+			<!--
+			<div class="row"
+				*ngIf="clubElevenElevenData.userPersonalDetails.isClubElevenElevenMember
+					&& clubElevenElevenData.isConfirmationPage
+					&& !clubElevenElevenData.isAccountError">
+				<div class="col-12">
+					<div class="separator full-width-separator"></div>
+					<p class="text-center fw-semi-bold eleven-eleven-earnings">
+						You're earning
+						<span class="fw-bold">
+							$0.68
+						</span>
+						today, only 2 more visits needed.
+					</p>
+				</div>
+				<div class="col-6 p-0 text-center">
+					<img class="img-fluid" src="./static-files/temp-assets/club1111/club1111-pizza.png" />
+				</div>
+				<div class="col-6 p-0 club-rewards">
+					<span class="label">
+						Available:
+					</span>
+					<span class="value h2">
+						$0
+					</span>
+
+					<span class="label">
+						Pending:
+					</span>
+					<span class="value h2">
+						$6.47
+					</span>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+</ng-template>
+
+-->

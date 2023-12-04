@@ -1,0 +1,159 @@
+<div class="container mt-4 recommendations-container">
+	<div class="row my-3 mx-0 justify-content-center">
+		<div class="col-12">
+			<div class="row mx-0">
+				<div class="col col-md-auto p-0 content-title" i18n>
+					just for you
+				</div>
+				<div class="col p-0 text-right content-navigate">
+					<a routerLink="/catalog/just-for-you">
+						<ng-container i18n>See all</ng-container>
+						<span class="icon-arrow-navigate"></span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container mb-5 recommendations-container" 
+		[class.pp-ghost-container]="isLoading"
+		[class.is-error]="isError">
+
+	<div class="row" 
+			*ngIf="isError">
+		<div class="col-12 error-state">
+			<button class="btn btn-primary"
+					(click)="onRetryClick()" i18n>
+				Retry
+			</button>
+		</div>
+	</div>
+
+	<div class="row">
+	<!-- swiper container start -->
+	<div class="swiper-container mx-1 w-100" 
+			[swiper]="config">
+		<div class="swiper-wrapper">
+				<ng-container
+					[ngSwitch]="slide.template"
+					*ngFor="let slide of slideData">
+					<!-- repeat last order start -->
+					<div class="swiper-slide"
+						*ngSwitchCase="RecommendationTemplateEnum.LastOrder">
+						<div class="row mx-0 img slide-image repeat-last">
+							<div class="col-8 px-0 h-100 d-flex align-self-end justify-content-end border-right">
+								<img alt="repeat order image one" class="repeat-order-one" src="./static-files/home/just-for-you/repeat-last-order-1.png" width="289">
+							</div>
+							<div class="col-4 px-0">
+								<div class="row h-100 no-gutters">
+									<div class="col-12 h-50 px-0 d-flex align-items-center justify-content-center">
+										<img alt="repeat order image two" class="img-fluid" src="./static-files/home/just-for-you/repeat-last-order-2.png" width="36">
+									</div>
+									<div class="col-12 h-50 px-0 d-flex align-items-center justify-content-center border-top">
+										<img alt="repeat order image three" class="img-fluid" src="./static-files/home/just-for-you/repeat-last-order-3.png" width="185">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row mx-0">
+							<a class="col-12 d-flex py-2 px-3 caption align-items-center" (click)="onRepeatLastOrder(slide.id); handleTagAnalytics(slide)">
+								<div class="mr-auto p-2" i18n>
+									repeat last order
+								</div>
+								<div class="d-flex">
+									<i class="icon-arrow-navigate"></i>
+								</div>
+							</a>
+						</div>
+					</div>
+					<!-- repeat last order end -->
+			
+					<!-- club 11/11 start -->
+					<div class="swiper-slide"
+						*ngSwitchCase="RecommendationTemplateEnum.ClubElevenEleven">
+						<div class="row mx-0 h-100">
+							<div class="col-12 p-0 img slide-image align-items-center club1111 club-eleven-eleven-card-container club-just-for-you-card">
+								<app-club-11-11-card [parentContainer]="'justForYou'" class="w-100"></app-club-11-11-card>
+							</div>
+							<a class="col-12 d-flex py-2 px-3 caption align-items-center" routerLink="/user/club-eleven-eleven" (click) ="handleTagAnalytics(slide)">
+								<div class="mr-auto p-2 ghost-bar g-w-70" i18n>
+									{{ slide.title }}
+								</div>
+								<div class="d-flex">
+									<i class="icon-arrow-navigate"></i>
+								</div>
+							</a>
+						</div>
+					</div>
+					<!-- club 11/11 end  -->
+
+					<!-- Coupon Wallet -->
+					<div class="swiper-slide ghost-bg"
+						*ngSwitchCase="RecommendationTemplateEnum.CouponWallet">
+						<div class="row mx-0 h-100">
+							<div alt="" class="col-12 slide-image px-0 ghost-bg ghost-bg-dark coupon-wallet-card">
+								<img alt="{{slide.title}}" [src]="slide.image" *ngIf="slide.image" class="default-slide-image" />
+								<span class="overlay">
+									<span class="overlay-text" *ngIf="!loginUser" i18n>LOGIN TO ADD A COUPON</span>
+									<span class="overlay-text coupon-text text-center" *ngIf="loginUser && slide.couponCount > 0">
+										<ng-container i18n>YOU HAVE</ng-container>
+										<span class="coupon-count d-block">{{ slide.couponCount }}</span>
+										<ng-container *ngIf="slide.couponCount > 1" i18n>COUPONS</ng-container>
+										<ng-container *ngIf="slide.couponCount < 2" i18n>COUPON</ng-container>
+									</span>
+									<span class="overlay-text" *ngIf="loginUser && !slide.couponCount" i18n>ADD A COUPON</span>
+								</span>
+							</div>
+
+							<a class="col-12 d-flex py-2 px-3 caption align-items-center" [routerLink]="determineCouponWalletLink()" (click) ="handleTagAnalytics(slide)">
+								<div class="mr-auto p-2 ghost-bar g-w-70">
+									{{ slide.title }}
+								</div>
+								<div class="d-flex align-items-center">
+									<i class="icon-arrow-navigate"></i>
+								</div>
+							</a>
+						</div>
+					</div>
+					<!-- default end -->
+
+
+					<!-- Default -->
+					<div class="swiper-slide ghost-bg"
+						*ngSwitchDefault>
+						<div class="row mx-0 h-100">
+							<div alt="" class="col-12 slide-image px-0 ghost-bg ghost-bg-dark">
+								<img alt="{{slide.title}}" [src]="slide.image" *ngIf="slide.image" class="default-slide-image" />
+							</div>
+
+							<a class="col-12 d-flex py-2 px-3 caption align-items-center" [routerLink]="determineLink(slide)" (click) ="handleTagAnalytics(slide)">
+								<div class="mr-auto p-2 ghost-bar g-w-70">
+									{{ slide.title }}
+								</div>
+								<div class="d-flex align-items-center">
+									<i class="icon-arrow-navigate"></i>
+								</div>
+							</a>
+						</div>
+					</div>
+					<!-- default end -->
+				</ng-container>
+
+		</div>
+
+		<div class="swiper-button-prev">
+			<div class="slider-nav-prev-bg">
+				<i class="icon-arrow-slice"></i>
+			</div>
+		</div>
+		<div class="swiper-button-next">
+			<div class="slider-nav-next-bg">
+				<i class="icon-arrow-slice"></i>
+			</div>
+		</div>
+	</div>
+	<!-- swiper container end -->
+
+	</div>
+</div>

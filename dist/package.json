@@ -1,0 +1,21 @@
+{
+	"name": "pp-web-node",
+	"description": "",
+	"version": "0.0.1",
+	"private": true,
+	"license": "Apache-2.0",
+	"author": "Plastic Mobile",
+	"engines": {
+		"node": "10.x.x"
+	},
+	"scripts": {
+		"deploy": "gcloud app deploy app-node.yaml --project=pp-pizzapizza-web-dev --version=0001",
+		"start": "node server.js"
+	},
+	"dependencies": {
+		"express": "^4.16.3"
+	},
+	"devDependencies": {
+		"@google-cloud/nodejs-repo-tools": "^3.0.0"
+	}
+}

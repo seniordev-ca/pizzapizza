@@ -1,0 +1,283 @@
+<div class="products-container" [class.pp-ghost-container]="productListLoading$ | async">
+	<!-- Categories header -->
+	<app-product-header
+		[topBavContent]="{
+			backgroundImage: (justForYousMeta$ | async).backgroundImage,
+			hasBackgroundImage: (justForYousMeta$ | async).hasBackgroundImage,
+			textColor: '#FFFFFF',
+			iconColor: '#EE5A00',
+			backToLocation: '/'
+		}"
+		[title]="(justForYousMeta$ | async).title"
+		navText="Back to menu"
+		i18n-navText>
+	</app-product-header>
+
+	<!-- Products list -->
+	<div class="container my-3 my-md-5 product-list-container"
+		[class.pp-ghost-container]="productListLoading$ | async">
+		<div class="row justify-content-center">
+			<div class="col-12 p-0 col-lg-10">
+
+				<!-- Render every product -->
+				<ng-container
+					[ngSwitch]="slide.template"
+					*ngFor="let slide of productList$ | async">
+					<!-- repeat last order start -->
+					<div class="swiper-slide"
+						*ngSwitchCase="RecommendationTemplateEnum.LastOrder">
+						<ng-container [ngTemplateOutlet]="repeatItem" [ngTemplateOutletContext]="{slide: slide}"></ng-container>
+					</div>
+					<!-- repeat last order end -->
+
+					<!-- club 11/11 start -->
+					<div class="swiper-slide"
+						*ngSwitchCase="RecommendationTemplateEnum.ClubElevenEleven">
+						<ng-container [ngTemplateOutlet]="clubItem" [ngTemplateOutletContext]="{slide: slide}"></ng-container>
+					</div>
+					<!-- club 11/11 end  -->
+
+					<!-- club 11/11 start -->
+					<div class="swiper-slide"
+						*ngSwitchCase="RecommendationTemplateEnum.CouponWallet">
+						<ng-container [ngTemplateOutlet]="couponWallet" [ngTemplateOutletContext]="{slide: slide}"></ng-container>
+					</div>
+					<!-- club 11/11 end  -->
+
+					<!-- Default -->
+					<div class="ghost-bg"
+						*ngSwitchDefault>
+						<ng-container [ngTemplateOutlet]="listItem" [ngTemplateOutletContext]="{slide: slide}"></ng-container>
+					</div>
+					<!-- default end -->
+				</ng-container>
+
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<ng-template #listItem let-slide="slide">
+		<div class="row mb-3 mx-0 mx-md-2 individual-product-row single-product" id = "{{slide.seoTitle}}">
+
+		<div class="col-4 text-center individual-product-left individual-product-left-regular-layout ghost-bg-dark has-background-image"
+				[ngStyle]="{'background-image': 'url('+ slide.image +')'}">
+		</div>
+
+		<div class="col-8 individual-product-right ghost-bg pt-4 pb-3 pl-lg-4">
+			<div class="row h-100">
+
+				<div class="col-12 align-self-center individual-product-header">
+					<h4 class="fw-black mb-md-0 bar ghost-bar">
+						{{ slide.title }}
+					</h4>
+				</div>
+
+				<div class="col-12 align-self-end indvidual-product-bottom">
+					<div class="row">
+						<div class="col-12">
+							<p class="ghost-bar g-w-90 product-description">
+								{{slide.promoText}}
+							</p>
+						</div>
+					</div>
+
+					<div class="row no-gutters align-items-end justify-content-between">
+						<div class="col-12 col-lg-5 text-left">
+
+						</div>
+
+						<div class="col-12 col-lg-7 align-self-end text-right">
+							<div class="row btn-row align-items-center justify-content-center justify-content-md-end no-gutters">
+								<div class="col-12 col-md-7 px-2 my-2 my-md-0">
+									<button class="btn btn-lg btn-primary w-100 add-customize-item"
+													[attr.aria-label]="slide.template === RecommendationTemplateEnum.MyPizzas ? 'View for ' + slide.title : 'Customize for ' + slide.title"
+									(click)="onButtonClick(slide)">
+										<ng-container *ngIf="slide.template === RecommendationTemplateEnum.MyPizzas" i18n>
+											View
+										</ng-container>
+										<ng-container *ngIf="slide.template !== RecommendationTemplateEnum.MyPizzas" i18n>
+											Customize
+										</ng-container>
+									</button>
+								</div>
+							</div>
+							<!-- Button Row -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #repeatItem let-slide="slide">
+		<div class="row mb-3 mx-0 mx-md-2 individual-product-row single-product">
+
+		<div class="col-4 text-center individual-product-left individual-product-left-regular-layout ghost-bg-dark">
+			<div class="row h-100">
+					<div class="col-12 px-0 border-bottom d-flex align-items-center justify-content-center">
+						<img alt="" class="img-fluid repeat-order-one" src="./static-files/home/just-for-you/repeat-last-order-1.png" width="289">
+					</div>
+					<div class="col-12 px-0">
+						<div class="row no-gutters h-100">
+							<div class="col-6 border-right d-flex align-items-center justify-content-center">
+								<img alt="" class="img-fluid pp-image-loaded" src="./static-files/home/just-for-you/repeat-last-order-2.png" width="36">
+							</div>
+							<div class="col-6 d-flex align-items-center justify-content-center">
+								<img alt="" class="img-fluid pp-image-loaded" src="./static-files/home/just-for-you/repeat-last-order-3.png"  width="185">
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+
+		<div class="col-8 individual-product-right ghost-bg pt-4 pb-3 pl-lg-4">
+			<div class="row h-100">
+
+				<div class="col-12 align-self-center individual-product-header">
+					<h4 class="fw-black mb-md-0 bar ghost-bar">
+						{{ slide.title }}
+					</h4>
+				</div>
+
+				<div class="col-12 align-self-end indvidual-product-bottom">
+					<div class="row">
+						<div class="col-12">
+							<p class="ghost-bar g-w-90 product-description">
+								{{slide.promoText}}
+							</p>
+						</div>
+					</div>
+
+					<div class="row no-gutters align-items-end justify-content-between">
+						<div class="col-12 col-lg-5 text-left">
+							<span class="h5 fw-extra-bold ghost-bar g-w-40 mb-0"
+								*ngIf="slide.orderTotal">
+								{{ slide.orderTotal | currency:'CAD':'symbol-narrow':'1.2'}}
+							</span>
+						</div>
+
+						<div class="col-12 col-lg-7 align-self-end text-right">
+							<div class="row btn-row align-items-center justify-content-center justify-content-md-end no-gutters">
+								<div class="col-12 col-md-7 px-2 my-2 my-md-0">
+									<button class="btn btn-lg btn-primary w-100 add-customize-item"
+													[attr.aria-label]="'Add to cart for ' + slide.title"
+									(click)="onButtonClick(slide)" i18n>
+										Add To Cart
+									</button>
+								</div>
+							</div>
+							<!-- Button Row -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #clubItem let-slide="slide">
+		<div class="row mb-3 mx-0 mx-md-2 individual-product-row single-product">
+
+		<div class="col-4 text-center individual-product-left individual-product-left-regular-layout is-club-1111 ghost-bg-dark">
+			<app-club-11-11-card [parentContainer]="'justForYou'" [isPizzaOnly]="true"></app-club-11-11-card>
+		</div>
+
+		<div class="col-8 individual-product-right ghost-bg pt-4 pb-3 pl-lg-4">
+			<div class="row h-100">
+
+				<div class="col-12 align-self-center individual-product-header">
+					<h4 class="fw-black mb-md-0 bar ghost-bar">
+						{{ slide.title }}
+					</h4>
+				</div>
+
+				<div class="col-12 align-self-end indvidual-product-bottom">
+						<div class="row no-gutters align-items-end justify-content-between">
+							<div class="col-12 col-lg-5 text-left">
+									<app-club-11-11-card [parentContainer]="'justForYou'" [isRewardsOnly]="true"></app-club-11-11-card>
+							</div>
+
+							<div class="col-12 col-lg-7 align-self-end text-right">
+								<div class="row btn-row align-items-center justify-content-center justify-content-md-end no-gutters">
+									<div class="col-12 col-md-7 px-2 my-2 my-md-0">
+										<button class="btn btn-lg btn-primary w-100 add-customize-item"
+														[attr.aria-label]="(userSummary$ | async) && (userSummary$ | async).isClubElevenElevenMember ? 'Redeem for Club 11/11' : 'Sign up for Club 11/11'"
+										(click)="onButtonClick(slide)">
+											<ng-container *ngIf="(userSummary$ | async) && (userSummary$ | async).isClubElevenElevenMember" i18n>Redeem</ng-container>
+											<ng-container *ngIf="!((userSummary$ | async) && (userSummary$ | async).isClubElevenElevenMember)" i18n>Sign Up</ng-container>
+										</button>
+									</div>
+								</div>
+								<!-- Button Row -->
+							</div>
+						</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</ng-template>
+
+
+<ng-template #couponWallet let-slide="slide">
+	<div class="row mb-3 mx-0 mx-md-2 individual-product-row single-product" id = "{{slide.seoTitle}}">
+
+		<div class="col-4 text-center individual-product-left individual-product-left-regular-layout ghost-bg-dark has-background-image"
+				[ngStyle]="{'background-image': 'url('+ slide.image +')'}">
+		</div>
+
+		<div class="col-8 individual-product-right ghost-bg pt-4 pb-3 pl-lg-4">
+			<div class="row h-100">
+
+				<div class="col-12 align-self-center individual-product-header">
+					<h4 class="fw-black mb-md-0 bar ghost-bar">
+						{{ slide.title }}
+					</h4>
+				</div>
+
+				<div class="col-12 align-self-end indvidual-product-bottom">
+					<div class="row">
+						<div class="col-12">
+							<p class="ghost-bar g-w-90 product-description">
+								{{slide.promoText}}
+							</p>
+						</div>
+					</div>
+
+					<div class="row no-gutters align-items-end justify-content-between">
+						<div class="col-12 col-lg-5 text-left">
+							<span class="overlay-text" *ngIf="!(userSummary$ | async)" i18n>LOGIN TO ADD A COUPON</span>
+							<span class="overlay-text coupon-text text-center" *ngIf="(userSummary$ | async) && slide.couponCount > 0">
+								<ng-container i18n>YOU HAVE</ng-container>
+								<span class="coupon-count fw-black"> {{ slide.couponCount }} </span>
+								<ng-container *ngIf="slide.couponCount > 1" i18n>COUPONS</ng-container>
+								<ng-container *ngIf="slide.couponCount < 2" i18n>COUPON</ng-container>
+							</span>
+							<span class="overlay-text" *ngIf="(userSummary$ | async) && !slide.couponCount" i18n>ADD A COUPON</span>
+						</div>
+
+						<div class="col-12 col-lg-7 align-self-end text-right">
+							<div class="row btn-row align-items-center justify-content-center justify-content-md-end no-gutters">
+								<div class="col-12 col-md-7 px-2 my-2 my-md-0">
+									<button class="btn btn-lg btn-primary w-100 add-customize-item"
+													[attr.aria-label]="!(userSummary$ | async) ? 'Sign In for ' + slide.title : 'Coupons for ' + slide.title"
+									(click)="onButtonClick(slide)">
+										<ng-container *ngIf="(userSummary$ | async)" i18n>Coupons</ng-container>
+										<ng-container *ngIf="!(userSummary$ | async)" i18n>Sign In</ng-container>
+									</button>
+								</div>
+							</div>
+							<!-- Button Row -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</ng-template>

@@ -1,0 +1,83 @@
+<div class="row sign-in-form-row mx-0">
+	<div class="col-md-12">
+		<form class="pp-form" [formGroup]="signInForm" (ngSubmit)="onFormSubmit(signInForm.value)">
+			<!-- Title + email input -->
+			<div class="form-row">
+				<div class="col-md-12 form-group"
+					[class.invalid-entry]="formValidator.isInputInvalidOrEmpty(signInForm.controls['emailAddress']) || signInFailure">
+					<label for="emailAddress" class="alternate-label">
+						<ng-container i18n>Email Address </ng-container>
+						<div class="invalid-text-alt" 
+							*ngIf="signInFailure && !formValidator.isInputInvalidOrEmpty(signInForm.controls['emailAddress'])">
+								<span i18n>Invalid</span>
+						</div>
+						<app-form-invalid-message
+							[control]="signInForm.controls['emailAddress']">
+						</app-form-invalid-message>
+					</label>
+					<input type="email" class="form-control text-lowercase" #emailAddress formControlName="emailAddress" maxlength="254" name="emailAddress" id="emailAddress" autocomplete="username">
+				</div>
+			</div>
+			<!-- Password input -->
+			<div class="form-row">
+				<div class="col-md-12 form-group"
+					[class.invalid-entry]="formValidator.isInputInvalidOrEmpty(signInForm.controls['password']) || signInFailure">
+					<label for="passwordInput" class="alternate-label">
+						<ng-container i18n>Password </ng-container>
+						<div class="invalid-text-alt" 
+							*ngIf="signInFailure && !formValidator.isInputInvalidOrEmpty(signInForm.controls['password'])">
+							<span i18n>Invalid</span>
+						</div>
+						<app-form-invalid-message
+							[control]="signInForm.controls['password']">
+						</app-form-invalid-message>
+					</label>
+					<input [type]="isPasswordDisplayed ? 'text' : 'password'" 
+						class="form-control" #passwordInput
+						formControlName="password" name="password" id="passwordInput" autocomplete="current-password">
+				</div>
+			</div>
+			<!-- Links -->
+			<div class="form-row ">
+				<div class="col-6">
+					<!-- Custom checkbox -->
+					<div class="form-group show-pasword">
+						<label class="checkbox-group">
+							<input name="show-password" type="checkbox" id="showPassword" class="checkbox-group-input" 
+								[checked]="isPasswordDisplayed"
+								(change)="onShowPassword($event)">
+							<div class="select-el-wrapper">
+								<div class="select-el"></div>
+							</div>
+							<span i18n>Show Password</span>
+						</label>
+					</div>
+				</div>
+				<div class="col-6 text-right">
+					<a href="#" id="forgot-password" class="forgot-password" 
+						(click)="onOpenPromptModal($event)" i18n>Forgot your password?</a>
+				</div>
+			</div>
+			<!-- Sign in btn + Create account -->
+			<div class="form-row pt-4">
+				<div class="col-12 col-lg-5" [class]="isCheckout ? 'col-lg-12' : ''">
+					<button class="btn btn-lg btn-primary sign-in-button"
+						[class.loading-state]="isSignInLoading"
+						[disabled]="!signInForm.valid">
+						<span i18n *ngIf="!isCheckout">
+							Sign In
+						</span>
+						<span i18n *ngIf="isCheckout">
+							Checkout
+						</span>
+					</button>
+				</div>
+				<div class="col-12 col-lg-7 d-flex align-items-center create-account-wrapper pt-4 pt-lg-0 pl-3" *ngIf="!isCheckout">
+					<span i18n>Don’t have an account?</span>
+					<a id="create-account" class="pl-2" [routerLink]="['/user/sign-up']" (click)='handleCreateAccClick()' i18n>Create one here.</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- End of Container -->

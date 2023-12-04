@@ -1,0 +1,77 @@
+<div class="header-alert-wrapper">
+
+	<ngb-alert *ngIf="isOrderConfirmationShown" type="success" [dismissible]="false">
+		<div class="container">
+			<div class="row justify-content-between align-items-center">
+				<div class="col-12 col-lg-auto text-center text-lg-left">
+					<h4 class="fw-black text-uppercase" i18n>
+						Order Status
+					</h4>
+				</div>
+				<div class="col-12 col-lg-auto my-3 my-lg-0">
+					<h4 class="fw-normal text-center">
+						{{ (activeOrder$ | async).currentOrderStatusLabel }}
+					</h4>
+				</div>
+				<div class="col-12 col-lg-auto d-flex justify-content-center justify-content-lg-right">
+					<button class="btn btn-primary selected" *ngIf="(activeOrder$ | async).orderId" [routerLink]="['/checkout/order-confirmation/', (activeOrder$ | async).orderId]" i18n>
+						View Tracker
+						<i class="icon-back"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+	</ngb-alert>
+
+
+	<ngb-alert *ngIf="isClubInviteShown" type="warning" [dismissible]="false">
+		<div class="container">
+			<div class="row justify-content-between align-items-center">
+				<div class="col-12 col-lg-8 d-flex align-items-center mb-2 mb-lg-0">
+					<img alt="club 11-11 logo" class="img-fluid" src="./static-files/images/club-mobile-nav.jpg">
+
+					<h4 class="fw-black text-uppercase mb-0 mx-lg-3" i18n>
+						Club 11-11 members earn dough towards discounts on your bill!
+					</h4>
+				</div>
+				<div class="col d-flex justify-content-between justify-content-lg-end">
+					<button class="btn btn-primary transparent text-capitalize text-right" routerLink="/user/sign-in">
+						<span class="d-lg-block" i18n>Already a member?</span>
+						<span class="d-lg-block" i18n>Sign in</span>
+					</button>
+
+					<button class="btn btn-primary transparent btn-w-auto" (click)="closeAlert()" aria-label="close button">
+						<i class="icon-close-bold"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+	</ngb-alert>
+
+
+	<ngb-alert *ngIf="isClubRedeemShown" type="warning" [dismissible]="false">
+		<div class="container loggedIn">
+			<div class="row justify-content-between align-items-center">
+				<div class="col-12 col-lg-6 d-flex align-items-center mb-2 mb-lg-0">
+					<img alt="club 11-11 logo" class="img-fluid" src="./static-files/images/club-mobile-nav.jpg">
+
+					<h4 class="fw-black text-uppercase mb-0 mx-lg-3">
+						{{clubEarningsBannerText}}
+					</h4>
+
+				</div>
+				<div class="col d-flex justify-content-between justify-content-lg-end">
+
+					<button class="btn btn-primary transparent text-capitalize text-right" i18n [routerLink]="['/user/club-eleven-eleven/loyalty']">
+						Apply your discount now
+						<i class="icon-arrow-navigate orange-icon"></i>
+					</button>
+					<button class="btn btn-primary transparent btn-w-auto" (click)="closeAlert()" aria-label="close button">
+						<i class="icon-close-bold"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+	</ngb-alert>
+
+</div>

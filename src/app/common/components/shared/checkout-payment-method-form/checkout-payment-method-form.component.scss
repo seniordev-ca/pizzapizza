@@ -1,0 +1,296 @@
+@import 'global-scss-mixing';
+
+$secondary-font-color: #3b210b;
+$mid-grey: #dae9f0;
+$light-grey: #edf2f5;
+$border-color: #ccd6d8;
+$dark-header-text: #6d7273;
+$ghost-loader-bg: #e1e7e9;
+$modal-bg: #000;
+$pp-green: #4e7026;
+$modal-header-bg: #eaf0f3;
+$error-color: #f00;
+$location-scrollbar-primary-color: #c3c5c5;
+$shadow-color: rgba(0, 0, 0, .36);
+
+.payment-method-form-container {
+
+	.pay-option {
+		min-height: 30px;
+	}
+
+	.local-radio-label {
+		color: $secondary-font-color;
+		font-size: 1em;
+	}
+
+	.invalid-text-alt {
+		display: inline-block;
+	}
+
+	.logged-in-actions {
+		@include font-extra-bold;
+		color: $pp-bg-maincolour;
+
+		span {
+			font-size: .813em;
+		}
+
+		i {
+			font-size: 1em;
+		}
+	}
+
+	.add-btn {
+		@include font-extra-bold;
+		background: transparent;
+		color: $pp-bg-maincolour;
+		font-size: .85em;
+	}
+
+	.cvv-icon {
+		color: $pp-bg-maincolour;
+	}
+
+	.debit-class {
+		position: relative;
+
+		.local-radio-sub-text {
+			display: block;
+			margin: -10px 0 0 36px;
+			color: $pp-default-text-colour;
+			font-size: .813em;
+			font-style: italic;
+		}
+	}
+
+	.location-selected-row {
+		@include font-extra-bold;
+
+		display: flex;
+		justify-content: flex-end;
+		color: $pp-green;
+		font-size: .875em;
+
+		i {
+			color: $pp-green;
+			font-size: .875em;
+		}
+	}
+
+	.quickpay-box {
+		@include font-extra-bold;
+
+		margin-bottom: 10px;
+		border: 2px solid $ghost-loader-bg;
+		border-radius: 4.5px;
+		padding: 10px;
+		color: $dark-header-text;
+
+		.payment-btn {
+			@include font-extra-bold;
+
+			outline: none;
+			border: 0;
+			background: transparent;
+			cursor: pointer;
+			color: $pp-bg-maincolour;
+			font-size: .875em;
+		}
+
+		&.selected {
+			border-color: $pp-green;
+			color: $pp-green;
+		}
+	}
+
+	.cvv-group {
+		.tooltip-inner {
+			box-shadow: 1px 5px 10px 1px $shadow-color;
+			background: $ghost-loader-bg;
+			padding-top: 5px;
+			padding-bottom: 5px;
+			text-align: left;
+			line-height: 1.2;
+			color: $pp-default-text-colour;
+			font-size: .813em;
+		}
+
+		.arrow:before {
+			border-top-color: $ghost-loader-bg;
+		}
+
+		.security-code-box {
+
+			.icon-question-mark {
+				color: $pp-bg-maincolour;
+			}
+		}
+	}
+
+	.large-icon {
+		color: $pp-green;
+		font-size: 1.5rem;
+
+		&.orange {
+			color: $pp-bg-maincolour;
+		}
+	}
+
+	h6 {
+		margin-bottom: 1rem;
+	}
+
+	.separator {
+		background-color: $border-color;
+		height: 1px;
+
+		&.dotted {
+			position: relative;
+			top: .7rem;
+			z-index: -1;
+			background-image: linear-gradient(to right, $pp-bg-maincolour 30%, $white 0%);
+			background-size: 6px 3px;
+
+			&+h6 {
+				display: inline-block;
+				z-index: 100;
+				background-color: $white;
+				padding-right: 20px;
+				padding-left: 20px;
+			}
+		}
+	}
+
+	&.checkout {
+		.pay-option {
+			border: 1px solid $border-color;
+			border-radius: 9px;
+			padding: 15px;
+
+			.label-bottom-border {
+				border-top: 1px solid $border-color;
+			}
+		}
+	}
+}
+
+@include media-breakpoint-down(xl) {
+	.payment-method-form-container {
+
+		.payment-logo {
+			img {
+				width: 1500px;
+				height: 100px;
+			}
+
+		}
+	}
+}
+
+@include media-breakpoint-up(lg) {
+	.payment-method-form-container {
+
+		.payment-logo {
+			img {
+				width: 1700px;
+				height: 40px;
+			}
+
+		}
+	}
+}
+
+@include media-breakpoint-down(md) {
+	.payment-method-form-container {
+
+		.save-btn {
+			width: 100%;
+		}
+
+		.radio-group-md-local {
+			.select-el-wrapper {
+				margin-right: 0;
+				width: 26px;
+				min-width: 26px;
+				height: 26px;
+			}
+
+			.cards-image {
+				width: 80%;
+				height: auto;
+			}
+
+			span {
+				@include font-extra-bold;
+			}
+
+			.select-el {
+				border-bottom: 3px solid $orange;
+				border-left: 3px solid $orange;
+				width: 7px;
+				height: 4px;
+			}
+
+			&.radio-group-circle {
+				.select-el {
+					width: 10px;
+					height: 10px;
+				}
+			}
+		}
+
+		.radio-group-sm-local {
+			.select-el-wrapper {
+				margin-right: 0;
+				width: 18px;
+				min-width: 18px;
+				height: 18px;
+			}
+
+			.select-el {
+				border-bottom: 3px solid $orange;
+				border-left: 3px solid $orange;
+				width: 7px;
+				height: 4px;
+			}
+		}
+
+		.debit-class {
+			position: relative;
+
+			.local-radio-sub-text {
+				position: relative;
+				top: 5px;
+				left: 0;
+				color: $pp-default-text-colour;
+				font-style: italic;
+			}
+		}
+
+		.payment-logo {
+			img {
+				width: 200px;
+				height: 40px;
+			}
+
+		}
+
+		.cvv-group {
+			.arrow:before {
+				border-top-color: transparent;
+				border-right-color: $ghost-loader-bg;
+			}
+		}
+	}
+}
+
+// sass-lint:disable no-vendor-prefixes
+@media all and (-ms-high-contrast: none)
+{
+	.pp-form {
+		.card-number {
+			background-position: 100px -5px;
+		}
+	}
+}

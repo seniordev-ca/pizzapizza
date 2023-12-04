@@ -1,0 +1,235 @@
+@import 'global-scss-mixing';
+$start-gradient-from1: rgba(255, 255, 255, 0);
+$start-gradient-to1: rgba(0, 0, 0, .52);
+$start-gradient-from2: #000;
+$start-gradient-to2: #ff8200;
+
+.category-card-container {
+
+	.horizontal-gradient {
+		display: flex;
+		position: absolute;
+		bottom: 0;
+		opacity: .9;
+		margin-bottom: 4px;
+		border-bottom-left-radius: 10px;
+		border-bottom-right-radius: 10px;
+		// background: linear-gradient(to right, $from-gray, $to-offwhite);
+		background: linear-gradient(270deg, $start-gradient-from1 0%, $start-gradient-to1 46.05%, $start-gradient-from2 100%);
+		width: calc(96% - 1px);
+		height: 65px;
+
+		p {
+			margin: 5px 1px;
+			color: $white;
+			font-size: 12px;
+			font-weight: 800;
+		}
+
+		img {
+			margin: 8px;
+			width: 30px;
+			height: 50px;
+
+		}
+	}
+
+	@include gradient1;
+	border-radius: 9px;
+	height: 100%;
+
+	img {
+		min-height: 1px;
+	}
+
+	.category-wrap {
+		padding-top: 20px;
+	}
+
+	h3 {
+		@include font-black;
+		text-transform: uppercase;
+		line-height: .875em;
+		letter-spacing: .33px;
+		color: $pp-default-text-colour;
+		font-size: 2em;
+		word-break: break-word;
+	}
+
+	.more {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		transform: rotate(180deg);
+		margin: .7em;
+		border-radius: 40px;
+		background-color: $pp-bg-maincolour;
+		width: 40px;
+		height: 40px;
+
+		i {
+			font-size: 12px;
+		}
+
+		.icon-arrow-slice {
+			color: $white;
+
+			&:before {
+				margin-left: -.2em;
+			}
+		}
+	}
+
+	&.gradient-default {
+		background: $white;
+	}
+
+	&.gradient-navy {
+		@include gradient2;
+
+		h3,
+		.pp-no-img-text {
+			color: $white;
+		}
+	}
+
+	&.gradient-clay {
+		@include gradient3;
+
+		h3,
+		.pp-no-img-text {
+			color: $white;
+		}
+	}
+
+	&.gradient-jade {
+		@include gradient4;
+
+		h3,
+		.pp-no-img-text {
+			color: $white;
+		}
+	}
+
+	&.gradient-teal {
+		@include gradient5;
+
+		h3,
+		.pp-no-img-text {
+			color: $white;
+		}
+	}
+
+	&.gradient-black {
+		@include gradient6;
+
+		h3,
+		.pp-no-img-text {
+			color: $white;
+		}
+	}
+
+	&.gradient-gray {
+		@include gradient7;
+	}
+
+	&.gradient-green {
+		@include gradient8;
+
+		h3,
+		.pp-no-img-text {
+			color: $white;
+		}
+	}
+
+	@include media-breakpoint-down(lg) {
+		h3 {
+			line-height: .909em;
+			font-size: 1.4em;
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		.horizontal-gradient {
+			display: flex;
+			position: absolute;
+			bottom: 0;
+			opacity: .9;
+			margin-bottom: 4px;
+			border-bottom-left-radius: 10px;
+			border-bottom-right-radius: 10px;
+			// background: linear-gradient(to right, $from-gray, $to-offwhite);
+			background: linear-gradient(270deg, $start-gradient-from1 0%, $start-gradient-to1 46.05%, $start-gradient-from2 100%);
+			width: calc(96% - 2px);
+			height: 65px;
+
+			p {
+				margin: 12px 1px;
+				font-size: 12px;
+			}
+
+			}
+
+		.more {
+			margin: .8em;
+			width: 30px;
+			height: 30px;
+
+			i {
+				font-size: 10px;
+			}
+		}
+
+		h3 {
+			line-height: 1.053em;
+			font-size: 1.2em;
+		}
+	}
+
+	@include media-breakpoint-down(sm) {
+		.horizontal-gradient {
+			display: flex;
+			position: absolute;
+			bottom: 0;
+			opacity: .9;
+			margin-bottom: 4px;
+			border-bottom-left-radius: 10px;
+			border-bottom-right-radius: 10px;
+			// background: linear-gradient(to right, $from-gray, $to-offwhite);
+			background: linear-gradient(270deg, $start-gradient-from1 0%, $start-gradient-to1 46.05%, $start-gradient-from2 100%);
+			width: calc(96% - 2px);
+			height: 65px;
+
+			p {
+				margin: 12px 1px;
+				font-size: 12px;
+				}
+		}
+
+		.category-wrap {
+			padding-top: 10px;
+		}
+
+		.more {
+			margin: .7em;
+			width: 20px;
+			height: 20px;
+
+			i {
+				font-size: 8px;
+			}
+		}
+
+		h3 {
+			line-height: 1.053em;
+			font-size: 1.2em;
+		}
+	}
+
+	@include media-breakpoint-only(xs) {
+		h3 {
+			line-height: .882em;
+			font-size: 1.1em;
+		}
+	}
+}

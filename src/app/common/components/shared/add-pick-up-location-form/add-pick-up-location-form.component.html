@@ -1,0 +1,23 @@
+<div class="container-fluid mx-0 px-0 accounts-add-pick-up-location-form-container">
+
+	<form class="pp-form">
+
+		<div class="form-row">
+
+			<div class="col-12 form-group">
+				<!-- <label for="addressSearch" class="address-label">Search Address, City, Intersection or Postal Code</label> -->
+				<app-address-autocomplete
+					class="w-100"
+					[minimumRequirements]="[]"
+					(addressSearchEmitter)="handleAddressSearchEmitter($event)"
+					labelName="Enter your address, main intersection or postal code"
+					i18n-labelName>
+				</app-address-autocomplete>
+			</div>
+
+		</div>
+
+	</form>
+
+</div>
+<!-- End of Container -->

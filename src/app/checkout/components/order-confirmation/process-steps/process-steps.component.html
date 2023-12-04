@@ -1,0 +1,16 @@
+<div class="row m-0">
+	<div class="col-12">
+		<div class="oc-order-process-steps">
+			<div class="oc-process-step" 
+				*ngFor="let step of processStepsArray;"
+				[ngClass]="{
+					'active' : step.status === processStatusEnum.onActive,
+					'complete' : step.status === processStatusEnum.onComplete,
+					'error' : step.status === processStatusEnum.onError
+				}">
+				<h3>{{step.title}}</h3>
+				<strong>{{step.subtitle}}</strong>
+			</div>
+		</div>
+	</div>
+</div>

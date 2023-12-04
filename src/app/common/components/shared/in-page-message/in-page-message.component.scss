@@ -1,0 +1,11 @@
+@import 'global-scss-mixing';
+
+$black: #000;
+
+:host ::ng-deep {
+	.alert-pp-ipm {
+		border-color: $black;
+		background-color: $black;
+		color: $white;
+	}
+}

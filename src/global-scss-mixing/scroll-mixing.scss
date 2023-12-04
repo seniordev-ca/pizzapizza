@@ -1,0 +1,35 @@
+$gray: rgba(0, 0, 0, .5);
+$light-gray: #eaf0f3;
+// sass-lint:disable no-vendor-prefixes
+@mixin scrollbar($size, $primary, $secondary: lighten($primary, 25%)) {
+	&::-webkit-scrollbar {
+		width:  $size;
+		height: $size;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		border-radius: $size;
+		background: $primary;
+	}
+
+	&::-webkit-scrollbar-track {
+		border-radius: $size;
+		background: $secondary;
+	}
+}
+@mixin scrollbar-hidden() {
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+@mixin scrollbar-visible() {
+	&::-webkit-scrollbar {
+		appearance: none;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		border: 4px solid $light-gray;
+		border-radius: 8px;		
+		background-color: $gray;
+	}
+}

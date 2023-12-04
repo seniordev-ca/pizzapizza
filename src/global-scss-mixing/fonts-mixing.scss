@@ -1,0 +1,25 @@
+
+@mixin font-regular {
+	font-family: 'proxima-nova', sans-serif;
+	font-weight: normal;
+}
+
+@mixin font-semi-bold {
+	font-family: 'proxima-nova', sans-serif;
+	font-weight: 600;
+}
+
+@mixin font-extra-bold {
+	font-family: 'proxima-nova', sans-serif;
+	font-weight: 800;
+}
+
+@mixin font-black {
+	font-family: 'proxima-nova', sans-serif;
+	font-weight: 900;
+}
+
+@mixin font-bold {
+	font-family: 'proxima-nova', sans-serif;
+	font-weight: bold;
+}

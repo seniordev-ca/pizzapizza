@@ -1,0 +1,184 @@
+<div class="kids-club-modal-wrap">
+
+	<app-vertical-modal #kidsClubVerticalModal>
+		<ng-template>
+			<app-modal-info-header 
+				[modalInfoHeaderContent]="{
+					fontKey: 'icon-balloons-new'
+				}"
+				title="REGISTER"
+				subTitle="KIDS CLUB"
+				i18n-title
+				i18n-subTitle>
+			</app-modal-info-header>
+
+			<ng-container *ngTemplateOutlet="kidsClubModalContent">
+			</ng-container>
+		</ng-template>
+	</app-vertical-modal>
+
+</div>
+
+<ng-template #kidsClubModalContent>
+<div class="container sign-up-form-container mb-5 mt-4">
+	<div class="row justify-content-center form-row">
+
+		<div class="col-12 col-lg-8">
+			<form class="pp-form" [formGroup]="signUpForm">
+				<div class="form-row justify-content-around">
+
+					<div class="col-12 col-lg-5">
+						<div class="form-row">
+							<div class="col-12 form-group">
+								<label class="alternate-label" for="firstName" i18n>
+									First Name
+								</label>
+								<input class="form-control" type="text" formControlName="firstName" maxlength="30">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col-12 form-group">
+								<label class="alternate-label" for="lastName" i18n>
+									Last Name
+								</label>
+								<input class="form-control" type="text" formControlName="lastName" maxlength="30">
+							</div>
+						</div>
+					
+					
+					</div>
+
+					<div class="col-12 col-lg-5">
+						<div class="form-row" formGroupName="dateOfBirth">
+							<div class="col-12"
+							[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(signUpForm.controls['dateOfBirth'])">
+								<label class="alternate-label" for="userBirthday" i18n>
+									Date of Birth 
+								</label>
+							</div>
+							<div class="col-4 col-md-3 col-lg-3 form-group">
+								<app-dropdown
+									[inputControl]="signUpForm.controls['dateOfBirth']['controls']['day']"
+									[options]="validDays"
+									[selectedValue]="signUpForm.controls['dateOfBirth']['controls']['day']['value']">
+								</app-dropdown>
+							</div>
+							<div class="col-4 col-md-3 col-lg-3 form-group">
+								<app-dropdown
+									[inputControl]="signUpForm.controls['dateOfBirth']['controls']['month']"
+									[options]="monthOptions"
+									[selectedValue]="signUpForm.controls['dateOfBirth']['controls']['month']['value']">
+								</app-dropdown>
+							</div>
+							<div class="col-4 col-md-3 col-lg-3 form-group">
+								<app-dropdown
+									[inputControl]="signUpForm.controls['dateOfBirth']['controls']['year']"
+									[options]="yearOptions"
+									[selectedValue]="signUpForm.controls['dateOfBirth']['controls']['year']['value']">
+								</app-dropdown>
+								
+							</div>
+							<div class="col-12">
+								<app-form-invalid-message [control]="signUpForm.controls['dateOfBirth']"
+									[customValidation]="[{ errorName: 'incorrect', errorMessage: signUpForm.get('dateOfBirth').errors?.incorrect}]"
+									#dateBirthValidaion>
+								</app-form-invalid-message>
+							</div>
+						</div>
+						<div class="form-row py-2">
+							<div class="col-12 form-group"
+								[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(signUpForm.controls['gender'])">
+								<label class="alternate-label promotion-label">
+								<ng-container i18n>Gender</ng-container>
+								<app-form-invalid-message
+									[control]="signUpForm.controls['gender']">
+								</app-form-invalid-message>
+								</label>
+							</div>
+
+							<div class="ml-1 mt-2">
+								<label class="radio-group radio-group-md mr-4">
+									<input name="gender" type="radio" value="M" class="radio-group-input"
+									[checked]="signUpForm.controls['gender'].value === 'M'"
+									formControlName="gender">
+									<span class="select-el-wrapper">
+										<span class="select-el"></span>
+									</span>
+									<span class="local-radio-col" i18n>Male</span>
+								</label>
+								<label class="radio-group radio-group-md">
+									<input name="gender" type="radio" value="F" class="radio-group-input"
+									[checked]="signUpForm.controls['gender'].value === 'F'"
+									formControlName="gender">
+									<span class="select-el-wrapper">
+										<span class="select-el"></span>
+									</span>
+									<span class="local-radio-col" i18n>Female</span>
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="form-row mt-3 justify-content-lg-start justify-content-lg-center">
+							<div class="col-6 col-md-4 col-lg-3">
+								<button class="btn btn-primary btn-lg w-100" 
+									(click)="onSaveKidsClubUser()"
+									[disabled]="!signUpForm.valid">
+									<span class="btn-text" *ngIf="signUpForm.get('id').value" i18n>
+										Update
+									</span>
+									<span class="btn-text" *ngIf="!signUpForm.get('id').value" i18n>
+										Save
+									</span>
+								</button>
+							</div>
+							<div class="col-6 col-md-4 col-lg-3" *ngIf="signUpForm.valid && signUpForm.get('id').value">
+								<button class="btn btn-primary btn-white btn-lg w-100"
+								(click)="unsubscribe()" i18n>
+									Delete
+								</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</ng-template>
+
+<ng-template #confirmUnsubscribe let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal(); giftCardForm.reset()" aria-label="close button">
+				<i class="icon-close-bold"></i>
+			</button>
+	<app-confirmation-modal
+		[data]="{
+			icon: 'icon-trash-can-one'
+		}"
+		title="Are you sure?"
+		i18n-title>
+		<ng-template>
+			<div class="col-12 mb-4">
+				<p i18n>Are you sure that you want to unsubscribe from Kids Club?</p>
+			</div>
+			<div class="col-12 align-self-end">
+					<div class="row justify-content-center button-row">
+						<div class="col-6 col-md-5 px-1">
+							<button class="btn btn-lg btn-primary btn-white text-uppercase w-100"
+							(click)="closeModal()" i18n>
+								No
+							</button>
+						</div>
+						<div class="col-6 col-md-5 px-1">
+							<button class="btn btn-lg btn-primary text-uppercase w-100"
+							(click)="closeModal(); onConfirmUnsubscribe();" i18n>
+								Yes
+							</button>
+						</div>
+					</div>
+			</div>
+			<!-- Button Row -->
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>

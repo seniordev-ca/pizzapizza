@@ -1,0 +1,377 @@
+<div tabindex="-1"></div>
+<div class="container h-100" *ngIf="!isUserChangeStore" aria-modal="true">
+	<div class="location-modal-header">
+			<!-- Row that holds Modal header -->
+			<div class="row location-modal-header-row">
+				<!-- Close Button -->
+				<div class="location-modal-x-col" tabindex="0" aria-label="X to Close Modal"
+					(click)="closeModal(true)" (keydown.enter)="closeModal(true)" >
+					<i class="icon-close-bold location-modal-x"></i>
+				</div>
+				<!-- Delivery Button -->
+				<div class="col-6 d-flex align-items-center justify-content-end location-modal-header-col" tabindex="0"
+        (keydown.enter)="onDeliveryClick()">
+					<span class="d-flex pr-0 pr-md-4 align-items-center location-modal-header-item delivery-header"
+						(click)="onDeliveryClick()"
+
+						[class.selected]="isActiveDelivery">
+
+						<i class="d-none d-md-inline-block icon-pizza-locator"></i>
+						<span class="pl-0 pr-1 pr-md-0 pl-md-3" i18n>
+							Delivery
+						</span>
+
+					</span>
+				</div>
+				<!-- Pick-Up Button -->
+				<div class="col-6 d-flex align-items-center justify-content-start location-modal-header-col" tabindex="0"
+             aria-label="Change order to pickup button"
+             (keydown.enter)="onPickUpClick()"
+        >
+					<span class="d-flex pl-0 pl-md-1 align-items-center location-modal-header-item pick-up-header"
+						(click)="onPickUpClick()"
+
+						[class.selected]="!isActiveDelivery">
+						<i class="d-none d-md-inline-block icon-pp-logo-bg"></i>
+						<span class="pl-3 pl-md-3" i18n>
+							Pickup
+						</span>
+					</span>
+				</div>
+			</div>
+	</div>
+
+	<div class="row h-100 location-modal-body-row">
+		<div class="col-12 location-modal-body">
+
+			<!-- Modal body row -->
+			<div class="row h-100 m-0 align-items-center">
+				<div class="col-12 mt-2 p-0 px-md-3 text-center">
+					<ng-container *ngIf="!(isFromCheckout$ | async)">
+						<h3 class="fw-normal w-100"
+						*ngIf="isActiveDelivery && !isManualAddress && selectedStore && (!isLocationError || (isLocationError && errorMsg))" i18n>
+							Where are we delivering to?
+						</h3>
+						<h3 class="fw-normal w-100"
+							*ngIf="!isActiveDelivery && !isManualAddress && !isLocationError" i18n>
+							Find your local Pizza Pizza!
+						</h3>
+					</ng-container>
+					<ng-container *ngIf="(isFromCheckout$ | async)">
+						<h3 class="fw-normal w-100"
+						*ngIf="isActiveDelivery && !isManualAddress && selectedStore && (!isLocationError || (isLocationError && errorMsg))" i18n>
+							Before we get started on your order, where are we delivering to?
+						</h3>
+						<h3 class="fw-normal w-100"
+							*ngIf="!isActiveDelivery && !isManualAddress && !isLocationError" i18n>
+							Before we get started on your order, where will you be picking it up?
+						</h3>
+					</ng-container>
+					<p i18n>Provide your address to see your local Pizza Pizza menu and pricing.</p>
+					<p>
+						<button class="btn btn-primary width-extended" (click)="handleChangeStore(true);" aria-label="Use geolocation to find me button" i18n>Find Me</button>
+						<br />
+						<button class="btn btn-link smaller fw-bold" (click)="handleChangeStore(false)">
+							<i class="d-inline-block icon-footer-store-locator mr-2"></i>
+							<ng-container i18n>Enter Address</ng-container>
+						</button>
+					</p>
+
+				</div>
+				<ng-container *ngIf="!(isFromCheckout$ | async) && !(loginUser$ | async)">
+				<div class="col-12 mb-auto">
+					<p class="border-top w-100"></p>
+				</div>
+				<div class="col-12 mb-auto text-center">
+					<h3 class="fw-normal w-100" i18n>
+						Or sign in to see your saved addresses
+					</h3>
+					<button class="btn btn-primary width-extended" routerLink="/user/sign-in" (click)="closeModal(true)">
+						<ng-container i18n>Sign in</ng-container>
+					</button>
+				</div>
+				</ng-container>
+			</div>
+
+		</div>
+		<div class="col-12 location-modal-footer" *ngIf="(isFromCheckout$ | async) || (loginUser$ | async)">
+			<!-- Modal Bottom Row - Holds Bottom Immage or Bottom Pickup Dropdown List depending on Modal State -->
+			<div class="row location-modal-image-row">
+				<img alt="delivery background" src="./static-files/home/location-modal/location-modal-delivery-image.png" class="bg-image" />
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Container that holds the Modal -->
+<div class="container h-100" *ngIf="isUserChangeStore"
+	[class.is-active-pick-up]="!isActiveDelivery">
+
+	<div class="location-modal-header">
+		<!-- Row that holds Modal header -->
+		<div class="row location-modal-header-row">
+			<!-- Close Button -->
+			<div class="location-modal-x-col" tabindex="0" aria-label="X to Close Modal"
+				(click)="closeModal(true)" (keydown.enter)="closeModal(true)" >
+				<i class="icon-close-bold location-modal-x"></i>
+			</div>
+			<!-- Delivery Button -->
+			<div class="col-6 d-flex align-items-center justify-content-end location-modal-header-col" tabindex="0">
+				<span class="d-flex pr-0 pr-md-4 align-items-center location-modal-header-item delivery-header"
+					(click)="onDeliveryClick()"
+					[class.selected]="isActiveDelivery">
+
+					<i class="d-none d-md-inline-block icon-pizza-locator"></i>
+					<span class="pl-0 pr-1 pr-md-0 pl-md-3" i18n>
+						Delivery
+					</span>
+
+				</span>
+			</div>
+			<!-- Pick-Up Button -->
+			<div class="col-6 d-flex align-items-center justify-content-start location-modal-header-col" tabindex="0"
+           aria-label="Change order to pickup button"
+      >
+				<span class="d-flex pl-0 pl-md-1 align-items-center location-modal-header-item pick-up-header"
+					(click)="onPickUpClick()"
+					[class.selected]="!isActiveDelivery">
+					<i class="d-none d-md-inline-block icon-pp-logo-bg"></i>
+					<span class="pl-3 pl-md-3" i18n>
+						Pickup
+					</span>
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="row h-100 location-modal-body-row">
+
+		<div class="col-12 location-modal-body"
+			[class.show-stores]="storesListAvailable && isActiveDelivery">
+
+			<!-- Modal body row -->
+			<div class="row h-100 m-0">
+
+				<div class="col-12 d-flex align-items-center location-modal-title-col text-center p-0">
+					<h3 class="fw-normal w-100"
+						*ngIf="isActiveDelivery && !isManualAddress && selectedStore && (!isLocationError || (isLocationError && errorMsg))" i18n>
+						Where are we delivering to?
+					</h3>
+					<h3 class="fw-normal w-100"
+						*ngIf="!isActiveDelivery && !isManualAddress && !isLocationError" i18n>
+						Find your local Pizza Pizza!
+					</h3>
+					<h3 class="fw-normal w-100"
+						*ngIf="isManualAddress && !isLocationError" i18n>
+						Enter your address manually
+					</h3>
+					<h3 class="fw-normal w-100"
+						*ngIf="isLocationError && !errorMsg" i18n>
+						Hmm. We can’t seem to find you.
+					</h3>
+				</div>
+				<ng-container *ngIf="isLocationError; else defaultForm">
+					<ng-container *ngTemplateOutlet="errorMsg ? locationUnavailable : locationError"></ng-container>
+				</ng-container>
+				<div class="col-12 mt-2 p-0 px-md-3" *ngIf="isLocationError">
+				</div>
+			</div>
+
+		</div>
+
+		<div class="col-12 location-modal-footer" (scroll)="handleStoreListScroll($event)"
+			[class.show-stores]="(storesListAvailable && !isActiveDelivery && !isLocationError) || (isLocationError && similarAddresses)"
+			#locationModalFooter
+			*ngIf="!isManualAddress">
+			<!-- Modal Bottom Row - Holds Bottom Immage or Bottom Pickup Dropdown List depending on Modal State -->
+			<div class="row location-modal-image-row"
+				[class.d-none]="(storesListAvailable && !isActiveDelivery && !isLocationError) || (isLocationError && similarAddresses)">
+				<img alt="delivery background" src="./static-files/home/location-modal/location-modal-delivery-image.png" class="bg-image" *ngIf="isActiveDelivery" />
+				<img alt="pickup background" src="./static-files/home/location-modal/location-modal-pick-up-image.png" class="bg-image" *ngIf="!isActiveDelivery" />
+			</div>
+			<!-- Pick Up Wrap - Wraps Image & ubcomponent for Pick Up -->
+			<div class="modal-bottom-pick-up-wrap"
+				*ngIf="storesListAvailable && !isActiveDelivery && !isLocationError">
+				<div class="row location-modal-pick-up-list-row">
+					<app-location-pick-up-list
+						class="w-100"
+						[storeList]="storeList$ | async"
+						[selectedStore]="pickupStoreSelf"
+						(storeListEventEmitter)="storeListEventEmitterHandler($event)">
+					</app-location-pick-up-list>
+
+				</div>
+			</div>
+			<div class="modal-bottom-pick-up-wrap" *ngIf="isLocationError && similarAddresses">
+				<div class="similar-address row align-items-center mx-0 py-3 border-bottom" *ngFor="let address of similarAddresses | filterByCity:cityFilterForm.controls['city']['value']" (click)="submitSimilarAddress(address)">
+					<div class="col-auto p-0 left-icon-col h3">
+						<i class="icon-pizza-locator"></i>
+					</div>
+					<div class="col-10 text-capitalize h5">
+						{{address.street_name | lowercase}}, {{address.city | lowercase}}, {{address.province | lowercase}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+<div tabindex="0" aria-hidden="true"></div>
+<!-- Container -->
+<ng-template #defaultForm>
+	<div class="col-12 mt-2 p-0 px-md-3">
+
+	<!-- Modal Input Row - Holds Searchbar, Button & Title + HTML For class error -->
+	<div class="row align-items-end location-modal-input-row">
+		<!-- Location Form -->
+		<div class="col-12 col-md-10 form-group input-line" [class.col-md-12]="isManualAddress" [class.pl-md-0]="!isManualAddress">
+			<div class="row">
+				<!-- Conditional form labels -->
+				<!-- <div class="col-12 location-modal-input-label-col">
+					<span class="col-12 pl-0 mb-0 delivery-form-label-col">
+						Enter your address, intersection or postal code
+					</span>
+				</div> -->
+				<!-- End of condtional labels -->
+				<!-- Form Searchbar -->
+				<app-address-autocomplete
+					#autocomplete
+					class="w-100"
+					[isManualToggleAllowed]="isActiveDelivery"
+					[manualAddressForm]="manualAddressForm"
+					[isHeaderSearch]="true"
+					[minimumRequirements]="[]"
+					[placeholder]="placeHolderInput$ | async"
+					(manualToggleEmitter)="handleManualToggleEmitter($event)"
+					(addressSearchEmitter)="handleAddressSearchEmitter($event)"
+					labelName="Enter your address, main intersection or postal code"
+					i18n-labelName>
+				</app-address-autocomplete>
+			</div>
+		</div>
+		<!-- End of Form -->
+		<div class="col-12 col-md-2 mb-3 pl-md-0" [class.ml-auto]="isManualAddress">
+			<button type="submit" class="btn btn-primary delivery-button w-100" tabindex="0"
+							[ngClass]="{
+								'disabled': manualAddressForm.invalid
+							}"
+				*ngIf="isManualAddress"
+							[attr.aria-label]="isButtonDisabled ?
+					'Go button disabled, please enter address' : 'Go'"
+				(click)="manualFormSubmission(manualAddressForm.value)" i18n>
+					Go
+			</button>
+			<button type="submit" class="btn btn-primary delivery-button w-100" tabindex="0"
+							[ngClass]="{
+								'disabled': isButtonDisabled
+							}"
+				(click)="!isButtonDisabled ? closeModal() : {}"
+				*ngIf="!isManualAddress"
+				[class.loading-state]="isButtonLoading"
+				[attr.aria-label]="isButtonDisabled ?
+					'Go button disabled, please enter address' :
+					(userAddress?.formatted_address ?
+						((isActiveDelivery ? 'Delivery to ' : 'Pickup at ') + userAddress?.formatted_address) :
+						'')"
+				 i18n>
+				Go
+			</button>
+		</div>
+	</div>
+	</div>
+</ng-template>
+
+<ng-template #locationError>
+	<div class="col-12 mt-2 p-0 px-md-3">
+		<div class="row align-items-center justify-content-center location-error-row">
+			<div class="col-3">
+				<button class="btn btn-primary w-100 retry-btn"
+					(click)="handleRetryBtnClick()" i18n>
+					Retry
+				</button>
+			</div>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #locationUnavailable>
+	<div class="col-12 mt-2 p-0 px-md-3">
+
+	<div class="row align-items-center justify-content-center location-error-row">
+		<div class="col-12 text-center">
+			<p class="invalid-text">
+				{{errorMsg}}
+			</p>
+			<p *ngIf="!similarAddresses">
+				<ng-container i18n>Switch to</ng-container>
+				<button (click)="onPickUpClick()" class="transparent-btn" i18n>Pickup</button>
+				<ng-container i18n>or enter a new</ng-container>
+				<button (click)="handleRetryBtnClick()" class="transparent-btn" i18n>Delivery</button>
+				<ng-container i18n>address</ng-container>
+			</p>
+			<p *ngIf="similarAddresses" i18n>
+				We were unable to find your street name in our system but found the following similar matches. Please select a street name from the list below.
+			</p>
+		</div>
+	</div>
+	<div class="similar-address-filter row" *ngIf="similarAddresses && similarAddresses.length > 1">
+		<div class="col-12">
+			<p>
+			<span class="pl-2" i18n>Filter By City</span>
+			<app-dropdown
+				[inputControl]="cityFilterForm.controls['city']"
+				[options]="cityOptions">
+			</app-dropdown>
+			</p>
+		</div>
+	</div>
+	</div>
+</ng-template>
+
+<ng-template #selectedStoreContent>
+	<!-- <div>
+		{{ selectedStore | json }}
+	</div> -->
+<!-- Container That Holds this Entire Subcomponent -->
+<div class="col-12 rounded py-2 mb-2 select-active">
+	<div class="row">
+
+		<!-- Column One - Store Icon -->
+		<div class="col-2 col-md-1 d-flex left-icon-col">
+			<i class="icon-pp-logo-bg"></i>
+		</div>
+		<!-- End of Column One -->
+
+		<!-- Column 2 - Holds Address Information -->
+		<div class="col-8 location-address-col">
+
+			<!-- Intersection -->
+			<div class="row location-address-intersection-row text-left fw-bold">
+				{{selectedStore.address}}
+			</div>
+			<!-- Address -->
+			<div class="row location-address-address-row small">
+				{{selectedStore.city}},
+				{{selectedStore.province}}, {{selectedStore.postal_code}}
+			</div>
+			<!-- Phone Number -->
+			<div class="row location-address-phone-number-row small">
+				{{selectedStore.market_phone_number | phone}}
+			</div>
+
+		</div>
+		<!-- End of Column 2-->
+
+		<!-- Column 4 - Holds Option to Select -->
+		<div class="col-2 ml-auto location-select-col">
+			<div class="row location-select-row no-gutters justify-content-end">
+				<i class="icon-checkmark small"></i>
+			</div>
+		</div>
+		<!-- End of Column 4 -->
+	</div>
+	<!-- End of Row That Holds Each Individual Looped Item -->
+
+</div>
+<!-- Container-->
+</ng-template>

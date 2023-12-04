@@ -1,0 +1,45 @@
+<div class="container product-configuration-tabs-container"
+		[hidden]="productConfigurationTabsArray.length === 1 || productConfigurationTabsArray.length === 0">
+	<div class="row justify-content-center">
+
+		<div class="col-md-12 col-lg-11 selection-tabs-wrap">
+			<div class="row selection-tabs align-items-center" id="selection-tabs" #selectTabs
+					 [attr.aria-label]="'Configuration menu with ' + productConfigurationTabsArray.length + ' items'" tabindex="0">
+				<div class="col selector-option select-bg ghost-hidden"
+					[ngStyle]="{'left' : selectPosString, 'width': selectWidth}"
+					[class.d-none]="!productConfigurationTabsArray">
+				</div>
+				<ng-container *ngFor="let configurationTab of productConfigurationTabsArray; let tabIndex = index">
+
+					<div class="col text-center selector-option"
+							*ngIf="configurationTab.isAvailableForProduct"
+							[class.active]="configurationTab.isSelected"
+							(click)="configurationTabClick(configurationTab.id)"
+              (keydown.enter)="configurationTabClick(configurationTab.id)"
+              tabindex="0"
+              attr.aria-label="{{ configurationTab.tabText}} button"
+							[style.max-width]="selectWidth"
+							id="configTab{{tabIndex}}">
+							<div class="tab-title d-flex align-items-center justify-content-center">
+								<!-- tab selection icon -->
+								<!-- Create enums for icons after establishing service model -->
+								<div class="px-2 icon-wrapper align-items-center" *ngIf="configurationTab.fontKey">
+									<i class="server-font-icon"
+										[innerHTML]="configurationTab.fontKey | pp_convertfontkey">
+									</i>
+								</div>
+								<div class="title-wrapper text-capitalize"
+                >
+									{{ tabIndex + 1 }}. {{ configurationTab.tabText | lowercase }}
+								</div>
+							</div>
+					</div>
+					<!-- selector-option -->
+
+				</ng-container>
+			</div>
+		</div>
+
+	</div>
+
+</div>

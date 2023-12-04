@@ -1,0 +1,433 @@
+<div class="container-fluid club-eleven-loyalty-container club-eleven-loyalty-container-header">
+	<div class="row pb-4">
+		<div class="col-12 align-self-start">
+			<app-sub-header-navigation [subHeaderNavContent]="{
+					textColor: '#4c3017',
+					iconColor: '#EE5A00',
+					backToLocation: '/'
+				}" title="Club 11/11" navText="Back to Home" i18n-navText i18n-title>
+			</app-sub-header-navigation>
+		</div>
+	</div>
+
+	<div class="row pb-lg-4 club-eleven-loyalty-header-middle">
+
+		<div class="col-12">
+			<div class="container">
+				<div class="row justify-content-center align-items-center">
+					<div class="col-12 col-md-4 align-self-center text-center ml-auto">
+						<h2 class="fw-normal" i18n>Loyalty</h2>
+					</div>
+					<div class="col-12 col-md-auto col-lg-4 align-self-end text-right h5">
+						<button class="btn btn-primary btn-transparent account-activity"
+							routerLink="/user/club-eleven-eleven/activity">
+							<ng-container i18n>Account Activity</ng-container>
+							<i class="icon-arrow-navigate"></i>
+						</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+	<div class="row club-eleven-loyalty-header-bottom">
+
+		<div class="col-12">
+			<div class="container">
+				<div class="row justify-content-end">
+					<div class="col-12 col-lg-5">
+						<div class="row justify-content-center">
+							<div class="col-12 px-0">
+								<app-club-11-11-card parentContainer="loyalty">
+								</app-club-11-11-card>
+							</div>
+						</div>
+
+						<app-balance-vertical-modal>
+						</app-balance-vertical-modal>
+
+						<div class="row pt-3 justify-content-end align-items-center">
+							<div class="col-6">
+								<ng-container *ngIf="(redeemedAmountInCart$ | async) > 0">
+									<p class="smaller green-text" i18n>
+										<strong>Congrats!</strong>
+									</p>
+									<span class="balance-text h1 mb-0 d-block green-text">
+										{{ (redeemedAmountInCart$ | async) | currency:'CAD':'symbol-narrow':'1.2' }}
+									</span>
+									<strong class="smaller d-block green-text" i18n>
+										has been added to your cart
+									</strong>
+								</ng-container>
+								<ng-container *ngIf="(redeemedAmountInCart$ | async) === 0">
+									<div class="smaller" i18n>
+										Use your available balance:
+									</div>
+									<span class="balance-text h1 mb-0">
+										{{ (accountBalance$ | async).available | currency:'CAD':'symbol-narrow':'1.2' }}
+									</span>
+								</ng-container>
+							</div>
+							<div class="col-6 text-right">
+								<app-redeem-modal [editAmount]="redeemedAmountInCart$ | async"></app-redeem-modal>
+							</div>
+						</div>
+					</div>
+					<!-- left side -->
+
+					<div class="col-lg-1 d-none d-lg-flex"></div>
+
+					<div class="col-12 col-lg-6 align-self-end pt-5 pt-lg-0">
+
+						<h4 class="fw-extra-bold accordion-header text-uppercase py-4" i18n>Manage My Cards</h4>
+
+						<ngb-accordion #acc="ngbAccordion" class="pp-accordion" [closeOthers]="true"
+							(panelChange)="handleAccordionToggle($event)">
+							<ngb-panel id="add-funds" [disabled]="!(addFundsSettings$ | async)">
+								<ng-template ngbPanelTitle>
+									<div class="header d-flex justify-content-between align-items-center">
+										<div class="header-text" i18n>
+											Add Funds
+										</div>
+										<div>
+											<i class="icon-triangle">
+											</i>
+										</div>
+									</div>
+								</ng-template>
+
+								<ng-template ngbPanelContent>
+									<form class="pp-form">
+										<app-add-funds [parentForm]="addFundsForm"
+											[settings]="addFundsSettings$ | async"></app-add-funds>
+										<app-payment-info [parentForm]="addFundsForm"
+											[bamboraValidation]="bamboraValidation"
+											(isOpenEvent)="handleOpenPaymentForm($event)">
+										</app-payment-info>
+										<app-confirm-email [emailForm]="emailForm">
+										</app-confirm-email>
+
+										<div class="d-block text-right">
+											<button class="btn btn-primary text-uppercase"
+												[class.loading-state]="isAddFundsLoading"
+												[class.disabled]="!isAddFundsValid()"
+												(click)="handleAddFundsFormSubmission(false)" i18n>
+												Proceed with Reload
+											</button>
+										</div>
+									</form>
+								</ng-template>
+							</ngb-panel>
+
+							<ngb-panel id="auto-reload" [disabled]="!autoReloadSettings">
+								<ng-template ngbPanelTitle>
+									<div class="header d-flex justify-content-between align-items-center">
+										<div class="header-text" i18n>
+											Automatic Reload
+										</div>
+										<div>
+											<i class="icon-triangle" [class.close-accordian-view]="isAccordianOpen">
+											</i>
+										</div>
+									</div>
+								</ng-template>
+								<ng-template ngbPanelContent>
+									<form class="pp-form">
+										<app-add-funds [parentForm]="autoReloadFundsForm" [isAutoReload]="true"
+											[settings]="addFundsSettings$ | async">
+										</app-add-funds>
+
+										<div class="col-12 d-flex p-0 justify-content-between">
+											<h4 class="form-row-heading" i18n>Payment Information</h4>
+											<button class="card-toggle-btn transparent-btn"
+												(click)="toggleAutoReloadAddCard(savedCards)"
+												*ngIf="savedCards && savedCards.length > 0">
+												{{ autoReloadAddCard ? locale === 'en-US' ? 'Cancel' : 'Annuler' : locale === 'en-US' ? 'Add' : 'Ajouter'}}
+												<i [class.icon-plus-2]="!autoReloadAddCard"
+													[class.icon-delete]="autoReloadAddCard"></i>
+											</button>
+										</div>
+										<app-payment-info
+											*ngIf="autoReloadAddCard || (!savedCards || savedCards.length < 1)"
+											[isAutoReload]="true" [parentForm]="autoReloadFundsForm"
+											[bamboraValidation]="bamboraValidation"
+											(isOpenEvent)="handleOpenPaymentForm($event)">
+										</app-payment-info>
+
+										<app-payment-method [isAccountPage]="false" [userPaymentMethods]="savedCards"
+											[selectedToken]="autoReloadFundsForm.get('savedToken')"
+											(userPaymentMethodsEventEmitter)="handleUserPaymentMethodsEventEmitter($event)">
+										</app-payment-method>
+
+										<app-confirm-email [emailForm]="emailForm"></app-confirm-email>
+										<div class="col-12 mt-2">
+											<div class="row justify-content-end"
+												[class.justify-content-between]="autoReloadSettings && autoReloadSettings.enabled">
+												<button
+													class="btn btn-primary btn-white bordered hoverable col-12 col-md-5"
+													(click)="removeAutoReload()"
+													*ngIf="autoReloadSettings && autoReloadSettings.enabled" i18n>
+													Remove
+												</button>
+												<button class="btn btn-primary text-uppercase col-12"
+													[class.col-md-5]="autoReloadSettings && autoReloadSettings.enabled"
+													[class.col-md-auto]="!autoReloadSettings || !autoReloadSettings.enabled"
+													[class.loading-state]="isAddFundsLoading"
+													[disabled]="!isAddFundsValid()"
+													(click)="handleAddFundsFormSubmission(true)">
+													{{ autoReloadSettings && autoReloadSettings.enabled ? locale === 'en-US' ? 'Edit' : 'modifier' :
+													locale === 'en-US' ?'Setup Automatic Reload' : 'Configuration du rechargement automatique'  }}
+												</button>
+											</div>
+										</div>
+									</form>
+								</ng-template>
+							</ngb-panel>
+
+						</ngb-accordion>
+
+
+						<div class="row no-gutters">
+							<div class="d-flex align-items-center add-card-col">
+								<div class="col">
+									<h5 i18n>Have Another Card?</h5>
+									<p i18n>Add it to your Club 11-11 Account</p>
+								</div>
+								<div class="col-auto">
+									<button class="btn btn-primary" (click)="handleTransferBalanceClick(transferModal)"
+										i18n>
+										Add
+									</button>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!-- right side -->
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<app-coupon-wallet-container></app-coupon-wallet-container>
+
+<ng-template #formModal let-closeModal="close">
+	<button class="prompt-modal-x" (click)="collapseAll(); closeModal()" aria-label="close button">
+		<i class="icon-close-bold"></i>
+	</button>
+	<!-- <i class="icon-close-bold prompt-modal-x" (click)="collapseAll(); closeModal()"></i> -->
+	<app-confirmation-modal [data]="{
+					icon: 'icon-club-11-11 icon-clip',
+					class: 'split-modal'
+				}" [title]="isAddFundsSuccess ? 'Congrats!' : 'Card Error'" i18n-title>
+		<ng-template>
+			<div class="col-12 pp-orange" *ngIf="!isAutoReload">
+				<p class="reload-amount mb-0 h1 fw-extra-bold" *ngIf="isAddFundsSuccess">
+					{{addFundsForm.get('amount').value | currency:'CAD':'symbol-narrow':'1.2'}}</p>
+				<p class="mb-0 fw-extra-bold">
+					<ng-container *ngIf="isAddFundsSuccess" i18n>has been added to your card</ng-container>
+					<ng-container *ngIf="!isAddFundsSuccess" i18n>There seems to be an error processing this transaction
+					</ng-container>
+				</p>
+			</div>
+			<div class="col-12 pp-orange" *ngIf="isAutoReload">
+				<p class="mb-0 fw-extra-bold">
+					<ng-container *ngIf="autoReloadSettings.enabled" i18n>Auto load is now set up!</ng-container>
+					<ng-container *ngIf="!autoReloadSettings.enabled" i18n>Auto load is now turned off.</ng-container>
+				</p>
+			</div>
+			<div class="row justify-content-center button-row w-100">
+				<div class="col-12 col-md-5 prompt-modal-button-col align-self-end">
+					<button class="btn btn-lg btn-secondary prompt-modal-okay-button"
+						(click)="collapseAll(); closeModal();">
+						<span class="btn-text">
+							<span class="button-inner-text" i18n>
+								OKAY
+							</span>
+						</span>
+					</button>
+				</div>
+			</div>
+			<!-- Button Row -->
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+<ng-template #transferModal let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal()" aria-label="close button">
+		<i class="icon-close-bold"></i>
+	</button>
+	<app-confirmation-modal [data]="{
+			icon: 'icon-club-11-11-refresh-card-1 icon-clip',
+			class: 'split-modal'
+		}" [title]="(isTransferComplete$ | async) ? 'Transfer Successful' : 'Transfer Balance'"
+		[subtitle]="(isTransferComplete$ | async) ? 'Your balance has been combined and can now be accessed through Club 11-11 account' : 'Transfer funds from a Gift Card or a Club 11-11 card right into your card number below.'"
+		i18n-title i18n-subtitle>
+		<ng-template>
+			<ng-container *ngIf="!(isTransferComplete$ | async)">
+				<div class="modal-card-pill" *ngIf="(transferCardBalance$ | async) !== null">
+					<ng-container i18n>Card #:</ng-container>
+					<strong>{{transferForm.controls['cardNumber'].value}}</strong>
+				</div>
+				<form class="pp-form w-100 p-3" [formGroup]="transferForm">
+					<div class="form-row justify-content-center col-11 m-auto"
+						[class.d-none]="(transferCardBalance$ | async) !== null"
+						[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(transferForm.controls['cardNumber'])">
+						<div class="col-8 form-group text-left mb-0">
+							<div class="d-flex flex-row">
+								<label for="cardNumber" class="alternate-label pr-2" i18n>
+									Card number
+								</label>
+								<br />
+								<app-form-invalid-message [control]="transferForm.controls['cardNumber']">
+
+								</app-form-invalid-message>
+							</div>
+							<input type="text" class="form-control" formControlName="cardNumber" maxlength="19">
+						</div>
+						<div class="col-4 form-group text-left mb-0"
+							[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(transferForm.controls['pin'])">
+							<div class="d-flex flex-row">
+								<label for="pin" class="alternate-label pr-2" i18n>
+									PIN
+								</label>
+								<br />
+								<app-form-invalid-message [control]="transferForm.controls['pin']">
+								</app-form-invalid-message>
+							</div>
+							<input type="text" class="form-control" formControlName="pin" maxlength="3">
+						</div>
+					</div>
+					<div class="form-row justify-content-center col-11 m-auto" *ngIf="(transferCardBalance$ | async) !== null">
+						<ng-container *ngIf="!(isTransferCardLoading$ | async)">
+							<div class="col-6 col-lg-3 form-group mb-0">
+								<label for="availableBalance" class="alternate-label" i18n>
+									Available
+								</label>
+								<span class="availableAmount d-block h2 fw-extra-bold">
+									{{(transferCardBalance$ | async) | currency:'CAD':'symbol-narrow':'1.2'}}
+								</span>
+							</div>
+							<div class="col-auto d-none d-md-inline-block separator">
+								&nbsp;
+							</div>
+							<div class="col-6 col-lg-3 form-group text-left mb-0">
+								<label for="transferAmount" class="alternate-label" i18n>
+									Transfer Amount
+								</label>
+								<app-form-invalid-message [control]="transferForm.controls['transferAmount']"
+									#transferAmountValidation
+									[customValidation]="[{ errorName: 'incorrect', errorMessage: transferForm.get('transferAmount').errors?.incorrect}]">
+
+								</app-form-invalid-message>
+								<input type="text" class="form-control" formControlName="transferAmount">
+							</div>
+						</ng-container>
+					</div>
+				</form>
+				<div class="col-12">
+					<div class="row justify-content-center button-row">
+						<div class="col-12 col-md-5">
+							<button class="btn btn-lg btn-primary text-uppercase" (click)="continueTransfer()"
+								[class.loading-state]="isTransferCardLoading$ | async"
+								[disabled]="formValidationService.isInputInvalidOrEmptyOrUntouched(transferForm.controls['cardNumber']) || formValidationService.isInputInvalidOrEmptyOrUntouched(transferForm.controls['pin'])"
+								*ngIf="(transferCardBalance$ | async) === null" i18n>
+								Continue
+							</button>
+							<button class="btn btn-lg btn-primary text-uppercase" (click)="submitTransfer()"
+								[disabled]="transferForm.controls['transferAmount'].value > (transferCardBalance$ | async)"
+								[class.loading-state]="isTransferCardLoading$ | async"
+								*ngIf="(transferCardBalance$ | async) !== null" i18n>
+								Transfer
+							</button>
+						</div>
+					</div>
+				</div>
+				<!-- Button Row -->
+			</ng-container>
+			<ng-container *ngIf="(isTransferComplete$ | async)">
+				<div class="col-12">
+					<div class="row justify-content-center button-row">
+						<div class="col-12 col-md-5">
+							<button class="btn btn-lg btn-primary text-uppercase" (click)="closeModal()" i18n>
+								Okay
+							</button>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+<app-vertical-modal #clubElevenEditVerticalModal>
+	<ng-template>
+
+		<div class="opacity-gradient-overlay">
+		</div>
+
+		<app-modal-info-header [modalInfoHeaderContent]="{
+				fontKey: 'icon-club-11-11'
+			}" title="EDIT" subTitle="CLUB 11-11 PROFILE" i18n-title i18n-subTitle>
+		</app-modal-info-header>
+
+		<!-- Sign Up Club 11-11 -->
+		<app-sign-up-club-eleven-eleven 
+			[signUpClubElevenElevenForm]="clubElevenElevenForm"
+			[signUpClugElevenElevenUI]="signUpClubElevenElevenUI"
+			(signUpClubElevenElevenEventEmitter)="handleSignUpClubElevenElevenEventEmitter($event)"
+			*ngIf="clubElevenElevenForm">
+		</app-sign-up-club-eleven-eleven>
+
+	</ng-template>
+</app-vertical-modal>
+
+<ng-template #maxReachedModal let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal(); isMaxReached = false" aria-label="close button">
+		<i class="icon-close-bold"></i>
+	</button>
+	<app-confirmation-modal [data]="{
+				icon: 'icon-bell'
+			}" title='Oops' i18n-title>
+		<ng-template>
+			<div class="row w-100 justify-content-center">
+				<div class="col-12 mb-3" i18n>
+					Sorry we can only accept 5 saved credit cards per account. Please select from your existing
+					cards
+				</div>
+			</div>
+			<div class="row w-100 justify-content-center">
+				<button class="btn btn-primary" (click)="closeModal(); isMaxReached = false" i18n>
+					Okay
+				</button>
+			</div>
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+<!--
+Checkout Store Credit Card error message
+-->
+<ng-template #autoReloadCardFailure let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal(); handleAutoReloadFailure()" aria-label="close button">
+		<i class="icon-close-bold"></i>
+	</button>
+	<app-confirmation-modal [data]="{
+				icon: 'icon-bell'
+			}" title="Card Error" subtitle="" i18n-title>
+		<ng-template>
+			<div class="col-12 text-center">
+				<p *ngIf="autoReloadCardFailedMessage$ | async">{{autoReloadCardFailedMessage$ | async}}</p>
+			</div>
+			<div class="col-6 d-flex justify-content-around">
+				<button class="btn btn-primary" (click)="closeModal(); handleAutoReloadFailure()" i18n>
+					Okay
+				</button>
+			</div>
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>

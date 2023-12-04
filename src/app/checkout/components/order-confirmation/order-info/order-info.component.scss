@@ -1,0 +1,97 @@
+@import 'global-scss-mixing';
+
+$bg: #edf2f5;
+$border: #e1e7e9;
+$font-color2: #3b210b;
+$cart-checkout-button-bg: #dbe4ea;
+$cart-button-font-color: #6d7273;
+$valid-bg: #4e7026;
+$pp-error-color: #f00;
+
+.order-info-container {
+	margin-right: auto;
+	margin-left: auto;
+	border: 1px solid $border;
+	border-radius: 9px;
+	background: $bg;
+	padding-right: 15px;
+	padding-left: 15px;
+	width: 100%;
+
+	.submission-missing-info {
+		@include font-extra-bold;
+		color: $pp-error-color;
+		font-size: .813em;
+	}
+
+	.title {
+		@include font-extra-bold;
+		padding: 0;
+		color: $pp-default-text-colour;
+		font-size: 1.25em;
+	}
+
+	.line-item {
+		padding-bottom: 8px;
+
+		span {
+			display: block;
+		}
+
+		.customer-name {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+
+	.label {
+		@include font-regular;
+		padding: 0 0 5px;
+		color: $pp-default-text-colour;
+		font-size: .813em;
+	}
+
+	.bold-label {
+		@include font-extra-bold;
+		padding: 0;
+		color: $pp-default-text-colour;
+		font-size: .813em;
+	}
+
+	.value {
+		@include font-regular;
+		padding: 0 0 5px;
+		color: $font-color2;
+		font-size: 1em;
+	}
+
+	.total {
+		@include font-extra-bold;
+		color: $pp-default-text-colour;
+		font-size: 2.25em;
+	}
+
+	.checkout {
+		width: 100%;
+	}
+
+	.guarantee-text {
+		color: $pp-default-text-colour;
+		font-size: .75em;
+	}
+
+	.separator {
+		border-bottom: 1px solid $pp-default-text-colour;
+		padding-top: 20px;
+	}
+}
+
+@include media-breakpoint-only(md) {
+	.order-summary-container {
+		.total {
+			font-size: 1.3em;
+		}
+		
+	}
+}

@@ -1,0 +1,150 @@
+<div class="container-fluid accounts-activities-container">
+
+			<!-- Ng Container - Holds all Logic -->
+			<ng-container *ngFor="let userActivity of userActivities">
+
+				<!-- Individual Activity Row - Holds Each Activity in a row with it's subcomponent -->
+				<div class="row mb-0 mx-0 px-0 individual-account-activities-row">
+
+					<ng-container *ngTemplateOutlet="activityHeader;context:{activity: userActivity}"></ng-container>
+
+					<div class="col-12 mx-0 px-0"
+						*ngIf="userActivity.type === userActivitiesEnum.paymentMethods">
+						<div class="row justify-content-center" *ngIf="!userPaymentMethods && (userState && userState.isUserHasWallet)">
+							<button class="btn-primary btn-white loading-state"></button>
+						</div>
+						<app-checkout-payment-method-form
+							[userState]="userState"
+							[isFormCollapsed]="userActivity.isCollapsed"
+							[userPaymentMethods]="userPaymentMethods"
+							[universities]="universitiesWithMealCard"
+							(userPaymentMethodsEventEmitter)="handleUserPaymentMethodEventEmitter($event)"
+
+							[checkoutPaymentMethodFormData]="addPaymentCardFormData"
+							[checkoutPaymentUI]="userPaymentMethodsUI"
+							(checkoutPaymentMethodFormEventEmitter)="handleCheckoutPaymentMethodFormEventEmitter($event)"
+
+							[bamboraValidation]="bamboraValidation">
+						</app-checkout-payment-method-form>
+					</div>
+
+					<div class="col-12 mx-0 px-0"
+						*ngIf="!userActivity.isCollapsed && userActivity.type === userActivitiesEnum.savedAddresses">
+						<app-add-address-form
+							[universityList]="universityList"
+							[buildingList]="buildingList"
+
+							[addressFormData]="addressFormData"
+							(addressFormEventEmitter)="handleAddressFormEventEmitter($event)">
+						</app-add-address-form>
+					</div>
+
+					<div class="col-12 mx-0 px-0"
+						*ngIf="userActivity.type === userActivitiesEnum.savedAddresses">
+						<div class="row justify-content-center" *ngIf="!savedAddresses">
+							<button class="btn-primary btn-white loading-state"></button>
+						</div>
+						<app-address-list
+							[savedAddresses]="savedAddresses"
+							(savedAddressesEventEmitter)="handleSavedAddressesEventEmitter($event)">
+						</app-address-list>
+					</div>
+
+					<div class="col-12 mx-0 px-0"
+						*ngIf="userActivity.type === userActivitiesEnum.savedPickUpLocations">
+						<div class="row justify-content-center" *ngIf="!savedStores">
+							<button class="btn-primary btn-white loading-state"></button>
+						</div>
+						<app-store-list
+						[savedStores]="savedStores"
+						(savedStoresEventEmitter)="handleStoreListEventEmitter($event)">
+						</app-store-list>
+					</div>
+					<div class="col-12"
+						*ngIf="userActivity.type === userActivitiesEnum.orderHistory">
+						<div class="row justify-content-center" *ngIf="!orderHistoryItems">
+							<button class="btn-primary btn-white loading-state"></button>
+						</div>
+						<app-order-history-items
+						[orderHistoryItems]="orderHistoryItems"
+						(orderHistoryEventEmitter)="handleOrderHistoryEventEmitter($event)">
+						</app-order-history-items>
+					</div>
+					</div>
+				<!-- End of Individual Activity Row -->
+
+			</ng-container>
+			<!-- End of Ng Container -->
+
+		</div>
+		<!-- End of Container -->
+
+<ng-template #addBtn
+	let-type="type"
+	let-isCancel="isCancelButtonDisplayed"
+	let-actionText="actionText"
+	let-alternateActionText="alternateActionText"
+	let-actionIcon="actionIcon"
+	let-actionIconColor="actionIconColor"
+	let-alternateActionIcon="alternateActionIcon">
+<!-- Main Column Right Side - Saved Addresses -->
+<div class="d-flex align-items-center"
+	[class.activity-main-column-right-default]="type !== userActivitiesEnum.orderHistory">
+  <button
+	class="transparent-btn d-flex align-items-center"
+	(click)="onAdd($event, type, savedAddresses, savedStores, orderHistoryItems, userPaymentMethods)">
+		<span class="user-activity-action-span"
+    [attr.aria-label]="!isCancel && type == userActivitiesEnum.paymentMethods ? 'Add Payment Method' : !isCancel && type == userActivitiesEnum.savedAddresses? 'Add Address': !isCancel && type == userActivitiesEnum.savedPickUpLocations ?'Add Pickup Location': ''"
+			*ngIf="!isCancel && type !== userActivitiesEnum.orderHistory" i18n>
+			Add
+		</span>
+		<span class="user-activity-action-span"
+			*ngIf="isCancel && type !== userActivitiesEnum.orderHistory" i18n>
+			Cancel
+		</span>
+		<span class="user-activity-action-span order-history-action-span"
+			*ngIf="!isCancel && (type === userActivitiesEnum.orderHistory && orderHistoryItems.length > 0)" i18n>
+			See All
+		</span>
+		<span class="user-activity-action-span order-history-action-span" *ngIf="!isCancel && (type === userActivitiesEnum.orderHistory && orderHistoryItems.length < 1)" i18n>
+			See Menu
+		</span>
+		<i class="{{actionIcon}} user-activity-action-icon"
+			[class.order-history-action-icon]="type === userActivitiesEnum.orderHistory"
+			*ngIf="!isCancel">
+		</i>
+		<i class="{{alternateActionIcon}} user-activity-action-icon"
+			[class.order-history-action-icon]="type === userActivitiesEnum.orderHistory"
+			*ngIf="isCancel">
+		</i>
+	</button>
+</div>
+<!-- End of Main Column Right Side -->
+</ng-template>
+
+<ng-template #activityHeader let-userActivity="activity">
+	<!-- Main Column - Holds Activity Title, Icons & Call to Actions -->
+	<div class="col-1 mt-3 mb-3 p-0 text-center icon-column">
+		<!-- Main Column Left Side - Contains Activity Title & Icon -->
+		<i class="{{userActivity.mainIcon}} user-activity-main-icon">
+		</i>
+		<!-- End of Main Column Left Side -->
+	</div>
+
+	<div class="col-11 mt-3 mb-3 d-flex pr-0 align-items-center justify-content-between">
+		<!-- Main Column Left Side - Activity Title -->
+		<span class="user-activity-title-text">
+			<ng-container [ngSwitch]="userActivity.type">
+				<ng-container *ngSwitchCase="userActivitiesEnum.orderHistory" i18n>Order History</ng-container>
+				<ng-container *ngSwitchCase="userActivitiesEnum.paymentMethods" i18n>Payment Method</ng-container>
+				<ng-container *ngSwitchCase="userActivitiesEnum.savedAddresses" i18n>Saved Addresses</ng-container>
+				<ng-container *ngSwitchCase="userActivitiesEnum.savedPickUpLocations" i18n>Saved Pickup Locations</ng-container>
+			</ng-container>
+		</span>
+		<!-- End of Main Column Left Side -->
+
+		<!-- Main Column Right Side - Saved Addresses -->
+		<ng-container *ngTemplateOutlet="addBtn;context:userActivity"></ng-container>
+		<!-- End of Main Column Right Side -->
+	</div>
+</ng-template>

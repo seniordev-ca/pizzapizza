@@ -1,0 +1,17 @@
+<div class="vertical-modal-wrap"
+	#verticalModalWrap
+	[class.is-open]="inModalOpen">
+	<div class="container-fluid">
+		<div class="close-btn-wrap" tabindex="0"
+         aria-label="Close"
+         (keydown.enter)="onModalCloseBtnClick()"
+				(click)="onModalCloseBtnClick()">
+			<i class="icon-close-bold"></i>
+		</div>
+	</div>
+
+	<ng-container *ngTemplateOutlet="childrenTemplate">
+
+	</ng-container>
+
+</div>

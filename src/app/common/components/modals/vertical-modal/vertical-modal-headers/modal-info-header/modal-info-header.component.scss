@@ -1,0 +1,41 @@
+@import 'global-scss-mixing';
+
+$bg: #edf2f5;
+
+.modal-info-header {
+	background-color: $bg;
+	padding: 15px;
+
+	i {
+		margin-top: -20px;
+		margin-bottom: -20px;
+		color: $pp-bg-maincolour;
+		font-size: 80px;
+
+		&:before {
+			width: 2em;
+		}
+	}
+
+	.title {
+		@include font-regular;
+		margin-top: -20px;
+		color: $pp-bg-maincolour;
+		font-size: .875em;
+	}
+
+	.sub-title {
+		@include font-black;
+		font-size: 1.875em;
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.icon-wrap {
+		margin-top: -20px;
+	}
+
+	.sub-title {
+		font-size: 1.25em;
+	}
+}

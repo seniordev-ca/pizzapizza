@@ -1,0 +1,206 @@
+<div [class.no-cals]="!(calorieText$ | async)">
+	<app-dev-menu>
+	</app-dev-menu>
+
+	<app-header></app-header>
+
+	<!--
+		Full screen global loading indicator
+	-->
+	<div *ngIf="isLazyModuleLoading" class="loader">
+		<div class="container-fluid h-100">
+			<div class="row h-100">
+				<div class="col d-flex justify-content-center align-items-center">
+					<!-- <img class="img-fluid" src="./static-files/images/loader.gif"> -->
+					<i class="icon-loader_01 pp-loading-icon"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!--
+		Global error message
+	-->
+	<ng-template #globalError let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal(); onRetryClickHandler()" aria-label="close button">
+			<i class="icon-close-bold"></i>
+		</button>
+		<app-confirmation-modal [data]="{
+			icon: 'icon-bell'
+		}"
+		title="D'ough!"
+		subtitle='Something went wrong, please try again later'
+		i18n-title
+		i18n-subtitle>
+		<ng-template>
+			<button class="btn btn-primary" (click)="closeModal(); onRetryClickHandler()">
+				Retry
+			</button>
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+
+	<!--
+		Cart Update error message
+	-->
+	<ng-template #cartFailedModal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal(); onAcceptCartUpdateFailure()" aria-label="close button">
+			<i class="icon-close-bold"></i>
+		</button>
+		<app-confirmation-modal [data]="{
+				icon: 'icon-bell'
+			}" title="D'ough!" subtitle='Something went wrong, please try again later' i18n-title i18n-subtitle>
+			<ng-template>
+				<button class="btn btn-primary" (click)="closeModal(); onAcceptCartUpdateFailure()">
+					Retry
+				</button>
+			</ng-template>
+		</app-confirmation-modal>
+	</ng-template>
+
+	<!--
+		Cart error message
+	-->
+	<ng-template #cartInvalidModal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal(); onCancelChangeClickHandler()" aria-label="close button">
+			<i class="icon-close-bold"></i>
+		</button>
+		<app-confirmation-modal [data]="{
+				icon: 'icon-bell'
+			}" title='Cart Update!' subtitle='' i18n-title>
+			<ng-template>
+				<div class="col-12">
+					<p class="invalid-cart-message">
+						<ng-container i18n>Updating your address or store selection may update the price of your order.</ng-container>
+						<ng-container *ngIf="invalidCartProducts$ | async" i18n>
+							Also due to product or topping availability at the newly selected store or address, the following items will be removed from your cart.
+						</ng-container>
+						<span class="invalid-products">{{invalidCartProducts$ | async}}</span>
+					</p>
+				</div>
+				<div class="col-12 d-flex justify-content-center p-0 align-self-end">
+					<div class="col-6 col-lg-5 px-1">
+						<button class="btn btn-primary btn-white w-100" (click)="closeModal(); onCancelChangeClickHandler()" i18n>
+							Cancel
+						</button>
+					</div>
+					<div class="col-6 col-lg-5 px-1">
+						<button class="btn btn-primary w-100" (click)="closeModal(); onConfirmChangeClickHandler(null, true)" i18n>
+							Continue
+						</button>
+					</div>
+				</div>
+			</ng-template>
+		</app-confirmation-modal>
+	</ng-template>
+
+	<!--
+		Cart full error message
+	-->
+	<ng-template #cartFullModal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal()" aria-label="close button">
+			<i class="icon-close-bold"></i>
+		</button>
+		<app-confirmation-modal [data]="{
+				icon: 'icon-bell'
+			}" title="D'ough!"
+			subtitle='Your cart is too full of deliciousness to add more. You’ll need to remove an item to add a new one.'
+			i18n-title i18n-subtitle>
+			<ng-template>
+				<div class="col-12 text-center">
+					<button class="btn btn-primary" (click)="closeModal(); onCloseCartFull()" i18n>
+						Okay
+					</button>
+				</div>
+			</ng-template>
+		</app-confirmation-modal>
+	</ng-template>
+
+	<!--
+		Card validation modal
+	-->
+	<ng-template #cardValidationModal let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal(); onAgeVerifyHandler(false)" aria-label="close button">
+			<i class="icon-close-bold"></i>
+		</button>
+		<app-confirmation-modal
+			*ngIf="validationDetails"
+			[data]="{
+				icon: 'icon-bell'
+			}"
+			[title]='validationDetails.error_title'
+			[subtitle]='validationDetails.error_msg'
+		>
+			<ng-template>
+				<div *ngIf="validationDetails.error_code===ValidateErrorCodeEnum.alcohol_age_verification" class="col-12 d-flex justify-content-center p-0 align-self-end">
+					<div class="col-6 col-md-5 px-1">
+						<button class="btn btn-primary" (click)="closeModal(); onAgeVerifyHandler(false)" i18n>
+							NO
+						</button>
+					</div>
+					<div class="col-6 col-md-5 px-1">
+						<button class="btn btn-primary" (click)="closeModal(); onAgeVerifyHandler(true)" i18n>
+							YES
+						</button>
+					</div>
+        </div>
+
+				<div *ngIf="validationDetails.error_code!==ValidateErrorCodeEnum.alcohol_age_verification" class="col-12 d-flex justify-content-center p-0 align-self-end">
+					<button class="btn btn-primary" (click)="closeModal(); onConfirmChangeClickHandler(verifyStore)" i18n>
+						Okay
+					</button>
+				</div>
+			</ng-template>
+
+		</app-confirmation-modal>
+	</ng-template>
+
+	<!--
+		Address Save Error *placed here because it could be from account or checkout
+	-->
+	<ng-template #addressSavedError let-closeModal="close">
+		<button class="prompt-modal-x" (click)="closeModal()" aria-label="close button">
+			<i class="icon-close-bold"></i>
+		</button>
+		<app-confirmation-modal [data]="{
+				icon: 'icon-bell'
+			}"
+			title="D'ough!"
+			[subtitle]=errorMessage
+			i18n-title>
+			<ng-template>
+				<div class="col-12 text-center">
+					<p *ngIf="!errorMessage" i18n>Something went wrong, please try again later</p>
+					<button class="btn btn-primary" (click)="closeModal();" i18n>
+						Okay
+					</button>
+				</div>
+			</ng-template>
+		</app-confirmation-modal>
+	</ng-template>
+
+
+	<!--
+		Please rotate you screen message
+	-->
+	<app-mobile-landscape-message></app-mobile-landscape-message>
+
+	<!--
+		Application page content
+	-->
+	<router-outlet></router-outlet>
+
+<!--
+	Footer
+-->
+<app-footer></app-footer>
+
+<!--
+	Cart overlay
+-->
+	<app-global-cart-overlay *ngIf="!isCartOverlayHidden" [showCheckoutCart]="!showPartialCart" >
+	</app-global-cart-overlay>
+
+</div>

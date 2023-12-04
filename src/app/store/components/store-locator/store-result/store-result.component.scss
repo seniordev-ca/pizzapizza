@@ -1,0 +1,193 @@
+@import 'global-scss-mixing';
+
+$black: #000;
+$green: #4e7026;
+$red: #f00;
+$light-blue: #eaf0f3;
+$dark-blue: #6d7273;
+$border-color: #ccd6d8;
+$border-color2: #e1e7e9;
+
+.search-results-row {
+	margin-bottom: 30px;
+
+	.store-map {
+		position: relative;
+
+		i {
+			position: absolute;
+			top: calc(50% - 35px);
+			left: calc(50% - 33px);
+			z-index: 2;
+			color: $pp-bg-maincolour;
+			font-size: 3em;
+
+			&:before {
+				margin: 0;
+				background-color: $white;
+				width: auto;
+				height: 40px;
+			}
+		}
+
+		.express-marker {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			z-index: 2;
+			margin-top: -29px;
+			margin-left: -33px;
+			width: 58px;
+		}
+
+		.map-image {
+			border: 1px solid $border-color2;
+			border-radius: 9px;
+
+			&.pp-default-image {
+				margin: 0 auto;
+				border: 0;
+				width: 100%;
+			}
+		}
+
+		@include media-breakpoint-down(sm) {
+			padding: 0;
+
+			img {
+				border-radius: 0;
+				width: 100%;
+			}
+		}
+	}
+
+	&.nearby-store {
+		border: 1px solid $border-color;
+		border-radius: 9px;
+
+		.store-map {
+			i {
+				top: calc(50% - 2rem);
+				left: calc(50% - 1.5rem);
+				font-size: 2rem;
+
+				&:before {
+					margin: 0;
+					background-color: $white;
+					width: auto;
+					height: 1.5rem;
+				}
+			}
+
+			img {
+				position: absolute;
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+				height: 100%;
+			}
+		}
+	}
+
+	.store-details {
+		border-bottom: 1px solid $border-color;
+		padding: 0 0 20px;
+
+		.status-indicator {
+			&.open {
+				color: $green;
+			}
+
+			&.closed {
+				color: $red;
+			}
+		}
+
+		p {
+			margin-bottom: 0;
+			font-size: .813em;
+		}
+
+		h2 {
+			margin-bottom: 0;
+			font-size: 1.875em;
+
+			a {
+				color: inherit;
+			}
+
+			a:hover {
+				text-decoration: none;
+			}
+		}
+
+		h6 {
+			a {
+				color: inherit;
+			}
+
+			a:hover {
+				text-decoration: none;
+			}			
+		}
+
+		a {
+			display: block;
+			padding: 10px 0;
+		}
+
+		&.single-store {
+			border-bottom: 0;
+			padding: 0 15px;
+
+			a {
+				padding: 5px 0;
+			}
+		}
+
+		.store-hours {
+			.hours-header {
+				justify-content: flex-end;
+			}
+
+			i {
+				&:before {
+					margin-left: -.2em;
+				}
+			}
+
+			.days-break-down {
+				font-size: .813em;
+			}
+		}
+
+		@include media-breakpoint-down(sm) {
+			margin-top: 20px;
+			border-bottom: 0;
+			padding: 0 15px 20px;
+
+			h2 {
+				font-size: 1.375em;
+			}
+
+			.store-hours {
+				.hours-header {
+					border-top: 1px solid $border-color;
+					padding-top: 10px;
+				}
+			}
+		}
+
+
+		@include media-breakpoint-down(lg) {
+			.store-hours {
+				.hours-header {
+					justify-content: flex-start;
+				}
+			}
+		}
+	}
+
+	@include media-breakpoint-down(lg) {
+		align-items: flex-start;
+	}
+}

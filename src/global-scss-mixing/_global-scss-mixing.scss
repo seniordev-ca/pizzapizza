@@ -1,0 +1,8 @@
+@import '../../node_modules/bootstrap/scss/functions';
+@import '../../node_modules/bootstrap/scss/variables';
+@import '../../node_modules/bootstrap/scss/mixins';
+// Only mixins import is allowed in this file
+@import './color-variables';
+@import './fonts-mixing';
+@import './gradients-mixing';
+@import './scroll-mixing';

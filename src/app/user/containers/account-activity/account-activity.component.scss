@@ -1,0 +1,21 @@
+@import 'global-scss-mixing';
+
+.account-activity-component {
+	background-image: url('/static-files/images/bg-account-activity.jpg');
+	background-size: 120px;
+}
+
+.orange {
+	color: $pp-bg-maincolour;
+}
+
+@include media-breakpoint-down(sm) {
+	.account-activity-component {
+		
+		.nav-container {
+			background-color: $white;
+		}
+
+	}
+	
+}

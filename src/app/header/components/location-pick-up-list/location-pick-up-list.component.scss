@@ -1,0 +1,259 @@
+@import 'global-scss-mixing';
+
+$mid-grey: #dae9f0;
+$light-grey: #edf2f5;
+$dark-header-text: #6d7273;
+$ghost-loader-bg: #e1e7e9;
+$modal-bg: #000;
+$pp-green: #4e7026;
+$modal-header-bg: #eaf0f3;
+$error-color: #f00;
+$location-scrollbar-primary-color: #c3c5c5;
+
+.locations-parent-container {
+	overflow: hidden;
+
+	.scroll-hold {
+		width: 100%;
+	}
+
+	.no-results-row {
+		color: $dark-header-text;
+
+		h3 {
+			margin-bottom: -25px;
+		}
+
+		i {
+			margin-left: -.25em;
+			color: $modal-header-bg;
+			font-size: 10em;
+		}
+	}
+
+	.individual-location-pick-up-list-row {
+		position: relative;
+		border: 2px solid $ghost-loader-bg;
+		border-radius: 4.5px;
+
+		&.select-active {
+			border: 2px solid $pp-green;
+
+			.location-select-col {
+				i {
+					color: $pp-green;
+					font-size: .8em;
+				}
+			}			
+
+			.location-address-col {
+				.location-address-intersection-row {
+					color: $pp-green;
+				}
+
+				.location-address-address-row,
+				.location-address-phone-number-row,
+				.location-address-distance-row {
+					color: $pp-green;
+				}
+
+			}
+
+			.location-hours-col {
+				.location-hours-header-row {
+					color: $pp-green;
+				}
+
+				.location-hours-weekday-row,
+				.location-hours-weekend-row {
+					color: $pp-green;
+				}
+
+				.location-hours-options-row {
+					color: $pp-green;
+				}
+			}
+
+			.left-icon-col {
+				color: $pp-green;
+			}
+		}
+
+		.left-icon-col {
+			color: $dark-header-text;
+			font-size: 1.2em;
+		}
+
+		.location-address-col {
+			.location-address-intersection-row {
+				@include font-bold;
+				margin-bottom: 1.5%;
+				line-height: 1.29;
+				letter-spacing: .3px;
+				color: $dark-header-text;
+				font-size: .92em;
+			}
+
+			.location-address-address-row,
+			.location-address-phone-number-row,
+			.location-address-distance-row {
+				line-height: 1.38;
+				letter-spacing: .2px;
+				color: $dark-header-text;
+				font-size: .72em;
+			}
+		}
+
+		.location-hours-col {
+
+			.location-hours-header-row {
+				@include font-bold;
+				margin-bottom: 1.5%;
+				line-height: 1.29;
+				letter-spacing: .3px;
+				color: $dark-header-text;
+				font-size: .92em;
+			}
+
+			.location-hours-weekday-row,
+			.location-hours-weekend-row {
+				line-height: 1.38;
+				letter-spacing: .2px;
+				color: $dark-header-text;
+				font-size: .72em;
+			}
+
+			.location-hours-options-row {
+				line-height: 1.38;
+				color: $dark-header-text;
+				font-size: .72em;
+				font-weight: 600;
+			}
+		}
+
+		.location-select-col {
+			.location-select-row {
+				@include font-extra-bold;
+				z-index: 10;
+				cursor: pointer;
+				letter-spacing: .3px;
+				color: $pp-bg-maincolour;
+				font-size: .813em;
+			}
+
+			.location-selected-row {
+				display: none;
+			}
+		}
+
+		.location-address-get-directions-col {
+			margin-left: 5.5%;
+			color: $pp-bg-maincolour;
+
+			a {
+				color: $pp-bg-maincolour;
+			}
+
+			i {
+				font-size: .85em;
+			}
+
+			.get-directions-text {
+				font-size: .72em;
+				font-weight: 600;
+			}
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.locations-parent-container {
+		margin-top: 1%;
+		margin-left: 0;
+		padding-left: 0;
+
+		.individual-location-pick-up-list-row {
+
+			.location-address-col {
+				padding-top: 1.5%;
+			}
+
+			.location-hours-col {
+				padding-top: 1%;
+			}
+
+			.location-select-col {
+
+				.select-row-mobile,
+				.location-selected-row {
+					position: absolute;
+					top: 5px;
+					right: 20px;
+				}
+
+				.location-select-row {
+					padding-right: 10px;
+				}
+			}
+
+			.location-address-get-directions-col {
+				margin-left: 12.5%;
+				color: $pp-bg-maincolour;
+			}
+		}
+	}
+}
+
+@include media-breakpoint-down(xs) {
+	.locations-parent-container {
+		.individual-location-pick-up-list-row {
+			.location-address-col {
+				.location-address-intersection-row {
+					font-size: .75em;
+				}
+
+				.location-address-address-row,
+				.location-address-phone-number-row,
+				.location-address-distance-row {
+					font-size: .6em;
+				}
+			}
+
+			.location-hours-col {
+				.location-hours-header-row {
+					font-size: .75em;
+				}
+
+				.location-hours-weekday-row,
+				.location-hours-weekend-row {
+					font-size: .6em;
+				}
+
+				.location-hours-options-row {
+					font-size: .6em;
+				}
+			}
+
+			.location-select-col {
+				.location-select-row {
+					font-size: .65em;
+				}
+
+				.location-selected-row {
+					display: none;
+				}
+			}
+
+			.location-address-get-directions-col {
+
+				i {
+					font-size: .71em;
+				}
+
+				.get-directions-text {
+					font-size: .6em;
+				}
+			}
+		}
+	}
+}

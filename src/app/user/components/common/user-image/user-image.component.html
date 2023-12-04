@@ -1,0 +1,64 @@
+<!-- Image NOT Exists -->
+<div class="user-image-wrapper user-image-add-wrapper form-group" [class.invalid-entry]="isImageInvalid"
+	*ngIf="!userImageDetails.userImageData
+	&& userImageState !== userImageStateEnum.isStateUserImageUpload
+	&& userImageState !== userImageStateEnum.isStateUserImageSave">
+	<div class="circle" [class.no-image]="isDisplayOnly">
+		<div class="user-image-text" (click)="onUserImageAdd($event)" *ngIf="!isDisplayOnly">
+			<i class="icon icon-plus-2"></i>
+			<span class="d-block w-100 mt-1" i18n>
+				Add a profile photo
+			</span>
+			<span class="d-block w-100">
+				<i i18n>(Optional)</i>
+			</span>
+		</div>
+		<div class="user-initials" *ngIf="isDisplayOnly">
+			{{userInitials}}
+		</div>
+	</div>
+	<label class="alternate-label" *ngIf="isImageInvalid" i18n>Wrong file type or file too large</label>
+</div>
+
+<!-- Image Exists -->
+<div class="user-image-wrapper user-image-save-wrapper"
+*ngIf="userImageDetails.userImageData
+	&& userImageState !== userImageStateEnum.isStateUserImageUpload">
+	<div class="circle">
+		<img class="img-fluid user-profile-image" [src]="userImageDetails.userImageData" alt="user profile image" [default]="null">
+		<div class="user-image-text" (click)="onUserImageClear($event)" *ngIf="!isDisplayOnly">
+			<span class="d-block mt-2" i18n>
+				Clear
+			</span>
+		</div>
+	</div>
+	<div class="user-image-action" (click)="onUserImageAdd($event)" *ngIf="!isDisplayOnly">
+		<i class="icon-edit"></i>
+		<span i18n>
+			Edit
+		</span>
+	</div>
+</div>
+
+<!-- Image NOT Exists / Upload image -->
+<div class="user-image-wrapper user-image-upload-wrapper" *ngIf="userImageState == userImageStateEnum.isStateUserImageUpload && !isDisplayOnly">
+	<i class="icon-close-bold" (click)="onUserImageClose($event)"></i>
+
+	<input type="file" (change)="changeListener($event)" class="img-upload" name="img-upload">
+
+	<div class="circle">
+		<div class="user-image-text">
+			<i class="icon icon-sign-up-profile"></i>
+			<span class="d-block w-100 px-4" i18n>
+				Drag file to upload
+			</span>
+		</div>
+	</div>
+	<div class="user-image-action">
+		<i class="icon-arrow-up-circle"></i>
+		<span i18n>
+			Choose File
+		</span>
+	</div>
+</div>
+<canvas #canvas hidden></canvas>

@@ -1,0 +1,114 @@
+<!-- Container That Holds this Entire Subcomponent -->
+<div class="col-12 locations-parent-container pl-3">
+	<!-- Ng-Container That Gets Data from Simulation Data of Pickup Locations -->
+	<ng-container *ngFor="let locationPickUpListItem of storeList; let i = index">
+		<!-- Row That Holds Each Individual Looped Item -->
+		<a (click)="selectActive(locationPickUpListItem)" class="btn-no-style w-100" title="Select Store">
+
+			<div class="row mb-1 individual-location-pick-up-list-row" id="{{ locationPickUpListItem.store_id }}"
+				[class.select-active]="isStoreSelected(locationPickUpListItem)">
+
+				<div class="col-12 d-flex d-md-none mt-2 justify-content-end location-select-col">
+					<div class="row pr-1 location-select-row select-row-mobile">
+						<ng-container *ngIf="!isStoreSelected(locationPickUpListItem)" i18n>Select</ng-container>
+						<ng-container *ngIf="isStoreSelected(locationPickUpListItem)">
+							<i class="icon-checkmark"></i>
+						</ng-container>
+					</div>
+				</div>
+
+				<!-- Column One - Store Icon -->
+				<div class="col-2 col-md-1 d-flex mt-0 mt-md-1 left-icon-col">
+					<i class="icon-pp-logo-bg"></i>
+				</div>
+				<!-- End of Column One -->
+
+				<!-- Column 2 - Holds Address Information -->
+				<div class="col-8 col-md-4 ml-1 ml-md-0 mt-0 mt-md-2 mx-md-0 location-address-col">
+
+					<!-- Intersection -->
+					<div class="row location-address-intersection-row text-left">
+						{{locationPickUpListItem.address}}
+					</div>
+					<!-- Address -->
+					<div class="row location-address-address-row">
+						{{locationPickUpListItem.city}},
+						{{locationPickUpListItem.province}}, {{locationPickUpListItem.postal_code}}
+					</div>
+					<!-- Phone Number -->
+					<div class="row location-address-phone-number-row">
+						{{locationPickUpListItem.market_phone_number | phone}}
+					</div>
+					<!-- Distance -->
+					<div class="row location-address-distance-row">
+						{{locationPickUpListItem.distance | number:'1.0-1'}} km
+					</div>
+
+				</div>
+				<!-- End of Column 2-->
+
+				<div class="col-2 col-md-1 d-flex mt-1 left-icon-col">
+					<i class="icon-clock-account-sized"></i>
+				</div>
+
+
+				<!-- Column 3 - Holds Hours Information -->
+				<div class="col-8 col-md-4 ml-1 ml-md-0 mt-2 location-hours-col">
+
+					<div class="row location-hours-header-row" i18n>
+						Hours
+					</div>
+					<div class="row location-hours-weekday-row">
+						<span *ngFor="let dayObject of locationPickUpListItem.operating_hours"
+							class="w-100 d-block text-left">
+							{{dayObject.label}} {{dayObject.start_time}} - {{dayObject.end_time}}
+						</span>
+					</div>
+					<div class="row location-hours-options-row">
+						{{ getStoreFeatures(locationPickUpListItem) }}
+					</div>
+
+				</div>
+				<!-- End of Column 3 -->
+
+				<!-- Column 4 - Holds Option to Select -->
+				<div class="col-auto d-none d-md-block ml-0 ml-md-auto mt-2 location-select-col">
+					<div class="row location-select-row no-gutters justify-content-end">
+						<ng-container *ngIf="!isStoreSelected(locationPickUpListItem)" i18n>Select</ng-container>
+						<ng-container *ngIf="isStoreSelected(locationPickUpListItem)">
+							<i class="icon-checkmark"></i>
+						</ng-container>
+					</div>
+				</div>
+				<!-- End of Column 4 -->
+
+				<!-- Column 5 - Holds Get Direction - col12 to make it appear on a new row -->
+				<div class="col-12 mb-2 d-flex align-items-center location-address-get-directions-col">
+					<span>
+						<a href="{{getFullAddress(locationPickUpListItem)}}" target="_blank">
+							<i class="align-self-center icon-location"></i>
+							<span class="get-directions-text" i18n>
+								Get Directions
+							</span>
+						</a>
+					</span>
+				</div>
+
+			</div>
+			<!-- End of Row That Holds Each Individual Looped Item -->
+		</a>
+
+	</ng-container>
+	<!-- Ng Container-->
+	<ng-container *ngIf="storeList.length === 0">
+
+		<div class="row no-results-row justify-content-center">
+			<div class="col-12 text-center">
+				<h3 class="fw-normal w-100" i18n>No results found</h3>
+				<i class="icon-pp-speech-bubble"></i>
+			</div>
+		</div>
+
+	</ng-container>
+</div>
+<!-- Container-->

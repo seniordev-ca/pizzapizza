@@ -1,0 +1,101 @@
+<div class="order-confirmation-modal-wrap">
+
+	<app-vertical-modal #orderConfirmationVerticalModal>
+		<ng-template>
+			<app-modal-simple-header
+				title="View Order"
+				subTitle="Order Details"
+				i18n-title
+				i18n-subTitle>
+			</app-modal-simple-header>
+
+			<ng-container *ngTemplateOutlet="orderDetailsContent">
+			</ng-container>
+		</ng-template>
+	</app-vertical-modal>
+
+</div>
+
+<ng-template #orderDetailsContent>
+
+	<div class="container">
+			<div class="row" *ngIf="activeOrder">
+				<div class="col-lg-9 col-12 modal-details">
+					<div class="row cart-detail-header pt-4">
+						<div class="col-md-4 col-6 fw-extra-bold">
+							{{activeOrder.orderDate | date: 'longDate'}}
+						</div>
+						<div class="col-md-4 col-12 text-center">
+							<span class="fw-extra-bold delivery-pickup-title">
+								{{activeOrder.orderType}} to {{activeOrder.orderLocationName ? activeOrder.orderLocationName : 'Given Address'}}
+							</span>
+						</div>
+						<div class="col text-right d-none d-sm-inline-block" i18n>
+							Quantity
+						</div>
+						<div class="col text-right d-none d-sm-inline-block" i18n>
+							Item Total
+						</div>
+						<div class="col-12">
+							<div class="separator"></div>
+						</div>
+					</div>
+					<div class="row cart-detail-wrapper mx-0">
+						<div class="col-12">
+							<!-- MOVE THE BELOW TO A COMMON COMPONENT! TO BE USED IN THE ORDER CONFIRMATION MODAL AS WELL -->
+							<div class="row cart-details" 
+								*ngFor="let item of activeOrder.cartItems; let n = index">
+								<div class="col-3 col-sm-2 d-flex align-items-center item-img text-center">
+									<img src="{{item.image}}"/>
+								</div>
+								<div class="col-9 col-sm-10">
+									<div class="row h-100">
+										<div class="col-12">
+											<div class="item-title fw-black text-uppercase">
+											{{item.name}}
+											</div>
+											<div class="item-description" [innerHTML]="item.description" >
+												
+											</div>
+										</div>
+										<div class="col-12 col-sm-8 align-self-end">
+											<!-- <span class="fw-extra-bold expired-text" *ngIf="n === 0 && i === 1">Offer Expired</span>
+											<span class="fw-extra-bold different-text" *ngIf="n === 0 && i === 2">Something is Different</span> -->
+										</div>
+										<div class="col align-self-end text-right fw-extra-bold item-quantity">
+											<span class="d-block d-sm-none sm-label" i18n>
+												Quantity
+											</span>
+											{{item.quantity}}
+										</div>
+										<div class="col align-self-end text-right fw-extra-bold item-price">
+											<span class="d-block d-sm-none sm-label" i18n>
+												Item Total
+											</span>
+											{{item.price | currency:'CAD':'symbol-narrow'}}
+										</div>
+									</div>
+								</div>
+								<div class="col-12 p-0">
+									<div class="separator"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-12 order-summary-wrap">
+						<app-order-summary [orderSummaryData]="activeOrder" [orderSummaryUI]="{isPastOrder:true}"></app-order-summary>
+				</div>
+				<div class="col-12">
+					<div class="separator"></div>
+				</div>
+			</div>
+	</div>
+
+	<div class="container order-confirmation-component-container you-may-like-spacer">
+	</div>
+
+	<div class="container order-confirmation-component-container footer-spacer">
+	</div>
+
+</ng-template>

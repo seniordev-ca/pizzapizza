@@ -1,0 +1,71 @@
+@import 'global-scss-mixing';
+
+$ghost-label: #e1e7e9;
+$border: #e1e7e9;
+$light-blue: #edf2f5;
+
+.kids-club-modal-wrap {
+	padding-top: 50px;
+
+	.form-row {
+		padding-top: 20px;
+	}
+
+	.pp-form {
+		.select-wrapper {
+			select {
+				padding: 0 30px 0 0;
+			}
+		}
+
+		.alternate-label {
+			padding-left: 0;
+		}
+
+		.invalid-text-alt {
+			display: inline-block;
+			padding: 0;
+		}
+
+		.btn-white {
+			background-color: $white;
+			color: $pp-bg-maincolour;
+		}
+	}
+
+	&.is-ghost {
+		.modal-title {
+			height: 40px;
+
+			&:after {
+				position: absolute;
+				left: 50%;
+				margin-left: -50px;
+				background-color: $ghost-label;
+				width: 100px;
+				height: 20px;
+				content: '';
+			}
+		}
+
+		.modal-sub-title {
+			height: 40px;
+
+			&:after {
+				position: absolute;
+				left: 50%;
+				margin-left: -80px;
+				background-color: $ghost-label;
+				width: 160px;
+				height: 20px;
+				content: '';
+			}
+		}
+	}
+}
+
+/*
+@include media-breakpoint-down(sm) { 
+
+}
+*/

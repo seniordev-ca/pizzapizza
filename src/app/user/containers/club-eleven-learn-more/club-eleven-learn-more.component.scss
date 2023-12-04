@@ -1,0 +1,40 @@
+@import 'global-scss-mixing';
+
+$border-color: #ccd6d8;
+$items-border: #e1e7e9;
+$fill-color: #edf2f5;
+
+.club-eleven-learn-more-content-container {
+	color: $pp-default-text-colour;
+
+	.pp-accordion {
+		.card-body {
+			padding-left: 0;
+		}
+
+		table {
+			width: 100%;
+
+			th {
+				padding: 10px 0;
+			}
+
+			tbody {
+				border-top: 1px solid $border-color;
+				border-bottom: 1px solid $border-color;
+
+				tr:first-of-type {
+					td {
+						padding-top: 20px;
+					}
+				}
+
+				tr:last-of-type {
+					td {
+						padding-bottom: 20px;
+					}
+				}
+			}
+		}
+	}
+}

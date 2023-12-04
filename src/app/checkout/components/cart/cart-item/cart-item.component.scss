@@ -1,0 +1,297 @@
+@import 'global-scss-mixing';
+
+$img-bg-gradient: rgba(220, 240, 246, .15);
+$dark-gray: #6e6e6e;
+$border-gray: #ccd6db;
+
+.cart-item-container {
+	transition: .5s opacity;
+	border-radius: 4.5px;
+	background: $white;
+
+	&.is-removed {
+		opacity: .4;
+	}
+
+	&.is-added-but-not-customized {
+		.item-title,
+		.item-description,
+		.price {
+			color: $dark-gray;
+		}
+
+		.selection-flag {
+			@include font-extra-bold;
+
+			letter-spacing: .2px;
+			color: $pp-dark-maincolour;
+
+			span {
+				font-size: .875em;
+			}
+
+			i {
+				font-size: 1.2em;
+			}
+		}
+
+		// Styling for over ride of quantity-selector
+		.quantity-selector-container {
+			.product-quantity-price {
+				color: $dark-gray;
+
+				.icon-stacked-layers {
+					.icon-increment-layer {
+						color: $dark-gray;
+					}
+
+					&.active-incrementer {
+						.icon-increment-layer {
+							color: $dark-gray;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// Styling for over ride of quantity-selector
+	.quantity-selector-container {
+		.product-quantity-price {
+			max-width: 100%;
+
+			.quantity-increment-number {
+				min-width: 2ch; // min width so that spacing is consistant regardless of qty
+				min-height: 37px;
+			}
+
+			.quantity-wrap {
+				width: 100%;
+			}
+		}
+	}
+
+	.image-wrap {
+		flex-direction: column;
+		background: url('/static-files/images/texture/pattern3.png'), $img-bg-gradient;
+		background-position: 50%;
+		background-size: cover;
+		padding: 10px;
+
+		img {
+			display: block;
+			margin: 0 auto;
+			max-height: 100px;
+
+			&.pp-default-image {
+				width: 80%;
+				max-width: 70px;
+			}
+		}
+
+		.pp-no-img-text {
+			line-height: 1;
+			font-size: .65em;
+		}
+	}
+
+	.item-title {
+		@include font-black;
+
+		text-transform: uppercase;
+		line-height: 1;
+		letter-spacing: .3px;
+		color: $pp-default-text-colour;
+		font-size: 1em;
+	}
+
+	.label {
+		line-height: 1.385em;
+		letter-spacing: .2px;
+		color: $pp-default-text-colour;
+		font-size: .813em;
+	}
+
+	.description {
+		@include font-regular;
+
+		line-height: 1.385em;
+		letter-spacing: .2px;
+		color: $pp-default-text-colour;
+		font-size: .813em;
+	}
+
+	.remove,
+	.edit {
+		@include font-semi-bold;
+
+		cursor: pointer;
+		letter-spacing: .29px;
+		color: $pp-dark-maincolour;
+		font-size: .94em;
+
+		&.smaller {
+			font-size: .7em;
+		}
+	}
+
+	.price {
+		@include font-extra-bold;
+
+		letter-spacing: .35px;
+		color: $pp-default-text-colour;
+		font-size: 1.438em;
+	}
+
+	@include media-breakpoint-down(lg) {
+		&.is-added-but-not-customized {
+			.selection-flag {
+				span {
+					font-size: .79em;
+				}
+
+				i {
+					font-size: .9em;
+				}
+			}
+		}
+	}
+
+
+	@include media-breakpoint-only(md) {
+		.remove,
+		.edit {
+			font-size: .875em;
+		}
+
+		.price {
+			font-size: 1em;
+		}
+
+		.mobile-qty {
+			position: relative;
+		}
+
+		// Styling for over ride of quantity-selector
+		.quantity-selector-container {
+			position: relative;
+			left: 30%;
+
+			.product-quantity-price {
+				font-size: 1em;
+
+				.quantity-increment-number {
+					min-height: auto;
+				}
+
+				.quantity-wrap {
+					width: 100%;
+				}
+			}
+		}
+	}
+
+
+	@include media-breakpoint-down(sm) {
+		&.is-added-but-not-customized {
+			.selection-flag {
+				span {
+					font-size: .7em;
+				}
+
+				i {
+					font-size: .88em;
+				}
+			}
+		}
+
+		.qty-selector {
+			display: none;
+		}
+
+		// Styling for over ride of quantity-selector
+		.quantity-selector-container {
+			position: relative;
+			left: 50%;
+
+			.product-quantity-price {
+				font-size: 1.25em;
+
+				.quantity-increment-number {
+					min-height: auto;
+				}
+
+				.quantity-wrap {
+					width: 100%;
+				}
+			}
+		}
+
+		.price {
+			font-size: 1.25em;
+		}
+	}
+
+
+	@include media-breakpoint-down(xs) {
+		&.is-added-but-not-customized {
+			.selection-flag {
+				span {
+					font-size: .6em;
+				}
+
+				i {
+					font-size: .8em;
+				}
+			}
+		}
+
+		.item-title {
+			font-size: .85em;
+		}
+
+		.description {
+			font-size: .69em;
+		}
+
+		.remove,
+		.edit {
+			font-size: .793em;
+		}
+
+		.price {
+			font-size: .85em;
+		}
+
+		// Styling for over ride of quantity-selector
+		.quantity-selector-container {
+			left: 55%;
+
+			.product-quantity-price {
+				font-size: .95em;
+
+				.quantity-increment-number {
+					min-height: auto;
+				}
+
+				.quantity-wrap {
+					width: 100%;
+				}
+			}
+		}
+	}
+}
+
+.added-but-not-customized-header-row {
+	@include font-extra-bold;
+
+	border-bottom: 1px solid $border-gray;
+	letter-spacing: .3px;
+	color: $pp-bg-maincolour;
+	font-size: 1em;
+
+	// sass-lint:disable mixins-before-declarations
+	@include media-breakpoint-down(xs) {
+		font-size: .85em;
+	}
+}

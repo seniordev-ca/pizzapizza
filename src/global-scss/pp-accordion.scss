@@ -1,0 +1,73 @@
+@import 'global-scss-mixing';
+
+.pp-accordion {
+
+	.accordion-header {
+		margin-bottom: 1px;
+		border-bottom: 1px solid $pp-light-gray;
+		padding-bottom: 15px;
+		color: $pp-bg-maincolour;
+		font-size: 1.5em;
+	}
+
+	.card {
+		border: 0;
+		background-color: transparent;
+
+		.card-header {
+			margin-bottom: 0;
+			border-bottom: 1px solid $pp-light-gray;
+			background: transparent;
+			padding-left: 0;
+
+			.btn-link {
+				width: 100%;
+
+				&:focus {
+					text-decoration: none;
+				}
+			}
+
+			:hover {
+				text-decoration: none;
+			}
+
+			.collapsed {
+				.header {
+					.header-text {
+						color: $pp-default-text-colour;
+					}
+
+					.icon-triangle {
+						transform: none;
+					}
+				}
+			}
+
+			.header {
+				padding-top: 15px;
+				padding-bottom: 15px;
+
+				.header-text {
+					@include font-extra-bold;
+					letter-spacing: .39px;
+					color: $pp-dark-maincolour;
+					font-size: 1.25em;
+				}
+
+				.icon-triangle {
+					display: inline-block;
+					transform: rotate(180deg);
+					color: $pp-dark-maincolour;
+					font-size: .85em;
+				}
+
+				&.success {
+					.header-text {
+						color: $green;
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,59 @@
+# Not USED in CI
+# Here only for incase we need to deploy version without SSR
+# Servers static files without web application server
+# To make that version works update disaptch.yaml because all request to root path are pointed to angular-ssr
+runtime: python27
+api_version: 1
+threadsafe: true
+service: angular-static-client
+
+#Script handlers
+handlers:
+# Dev version revision
+
+- url: /fr/build/(.*\.(gif|png|jpg|css|js|eot|woff2|woff|ttf|svg|)(|\.map))$
+  static_files: build-browser/fr/\1
+  upload: build-browser/fr/(.*)(|\.map)
+  secure: always
+  expiration: '1m'
+
+- url: /fr/static-files/(.*\.(gif|png|jpg|css|js|eot|woff2|woff|ttf|svg|)(|\.map))$
+  static_files: build-browser/en/static-files/\1
+  upload: build-browser/en/static-files/(.*)(|\.map)
+  secure: always
+  expiration: '1m'
+
+- url: /fr/(.*)
+  static_files: build-browser/fr/index.html
+  upload: build-browser/fr/index.html
+  secure: always
+  expiration: '1m'
+
+- url: /build/(.*\.(gif|png|jpg|css|js|eot|woff2|woff|ttf|svg|)(|\.map))$
+  static_files: build-browser/en/\1
+  upload: build-browser/en/(.*)(|\.map)
+  secure: always
+  expiration: '1m'
+
+- url: /static-files/(.*\.(gif|png|jpg|css|js|eot|woff2|woff|ttf|svg|)(|\.map))$
+  static_files: build-browser/en/static-files/\1
+  upload: build-browser/en/static-files/(.*)(|\.map)
+  secure: always
+  expiration: '1m'
+
+- url: /(.*)
+  static_files: build-browser/en/index.html
+  upload: build-browser/en/index.html
+  secure: always
+  expiration: '1m'
+
+# Serve google confirmation file without auth
+- url: /google7ef56efdb9e8283f.html
+  static_files: google7ef56efdb9e8283f.html
+  upload: google7ef56efdb9e8283f.html
+  secure: always
+
+# Server robots txt
+- url: /robots.txt
+  static_files: robots.txt
+  upload: robots.txt

@@ -1,0 +1,53 @@
+@import 'global-scss-mixing';
+
+$light-gray: #ccd6d8;
+
+.sign-in-form-row {
+	.pp-form {
+		.alternate-label {
+			padding-left: 0;
+		}
+
+		.sign-in-button {
+			width: 100%;
+		}
+
+		.invalid-text-alt {
+			display: inline-block;
+		}
+	}
+
+	.create-account-wrapper {
+
+		@include font-extra-bold;
+		justify-content: flex-end;
+		font-size: 1em;
+
+		a {
+			color: $pp-bg-maincolour;
+		}
+		
+	}
+
+	.forgot-password {
+		@include font-bold;
+		color: $pp-bg-maincolour;
+		font-size: .84em;
+	}
+
+	.show-pasword {
+		margin-top: 2px;
+
+		label {
+			@include font-bold;
+			color: $pp-bg-maincolour;
+			font-size: .84em;
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		.create-account-wrapper {
+			justify-content: center;
+		}
+	}
+}

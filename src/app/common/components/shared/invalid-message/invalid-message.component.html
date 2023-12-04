@@ -1,0 +1,11 @@
+<div class="invalid-text-alt">
+	<span *ngIf="isInputEmpty()" class="ml-1">
+		{{emptyText}}
+	</span>
+	<span *ngIf="isInputInvalid() && !isInputCustomInvalid()" class="ml-1">
+		{{invalidText}}
+	</span>
+	<span *ngIf="isInputCustomInvalid()" class="ml-1">
+		{{customError}}
+	</span>
+</div>

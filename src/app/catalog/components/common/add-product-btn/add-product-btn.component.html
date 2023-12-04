@@ -1,0 +1,44 @@
+
+<button class="btn btn-primary cart-update-btn w-100"
+[attr.tabindex]="isVerticalModalOpen ? '-1' : '0'"
+		(click)="addToCartHandler()"
+		[ngClass]="{
+			'selected with-icon': btnState == addToCartBtnEnum.added || btnState == addToCartBtnEnum.updateSuccess,
+			'disabled': btnState == addToCartBtnEnum.notActive || !isInValid,
+			'loading-state': btnState == addToCartBtnEnum.loading
+		}"
+        [attr.aria-label]="btnState == addToCartBtnEnum.notActive || !isInValid ? 'Add order to cart button is disabled' : btnAriaLabel"
+>
+	<ng-container [ngSwitch]="btnState">
+		<span class="active-state"
+			*ngSwitchCase="addToCartBtnEnum.update" i18n>
+				Update
+		</span>
+
+		<span class="active-state"
+			*ngSwitchCase="addToCartBtnEnum.updateSuccess" i18n>
+				Updated
+		</span>
+
+		<span class="addded-state"
+			*ngSwitchCase="addToCartBtnEnum.added" i18n>
+				Added
+		</span>
+
+		<span class="addded-state"
+			*ngSwitchCase="addToCartBtnEnum.nextComboProduct" i18n>
+				Next
+		</span>
+
+		<span class="active-state"
+			*ngSwitchCase="addToCartBtnEnum.nextTwin" i18n>
+				Next twin
+		</span>
+
+		<span class="active-state"
+			*ngSwitchDefault i18n>
+			add to cart
+		</span>
+	</ng-container>
+
+</button>

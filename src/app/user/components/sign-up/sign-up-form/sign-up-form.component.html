@@ -1,0 +1,322 @@
+<div class="container sign-up-form-container mb-5 mt-4">
+	<div class="row">
+		<div class="col-12">
+			<form class="pp-form" [formGroup]="signUpForm" (ngSubmit)="onFormSubmit()">
+
+				<div class="form-row">
+					<!-- Column One -->
+					<div class="col-12 col-lg-2">
+						<app-user-image [userImageDetails]="userImageDetails"
+							(userImageEventEmitter)="userImageEventEmitterHandler($event)">
+						</app-user-image>
+					</div>
+
+					<!-- Column Two -->
+					<div class="col-12 col-lg-5 px-0 px-lg-5">
+						<div class="form-row">
+							<div class="col-12 form-group"
+								[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(signUpForm.controls['firstName'])">
+								<label for="firstName" class="alternate-label">
+									<ng-container i18n>First Name</ng-container>
+									<br/>
+									<app-form-invalid-message [control]="signUpForm.controls['firstName']">
+									</app-form-invalid-message>
+								</label>
+								<input type="text" class="form-control" formControlName="firstName" maxlength="25"
+											 id="firstName" autocomplete="off"
+											 [attr.aria-label]="!signUpForm.controls['firstName'].value || signUpForm.controls['firstName'].invalid ?
+											 'Field to enter your first name' : 'Field to enter your first name ' + signUpForm.controls['firstName'].value + ' in field'">
+							</div>
+						</div>
+
+						<div class="form-row">
+							<div class="col-12 form-group"
+								[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(signUpForm.controls['lastName'])">
+								<label for="lastName" class="alternate-label">
+									<ng-container i18n>Last Name</ng-container>
+									<br/>
+									<app-form-invalid-message [control]="signUpForm.controls['lastName']">
+									</app-form-invalid-message>
+								</label>
+								<input type="text" class="form-control" formControlName="lastName" maxlength="25"
+											 id="lastName" autocomplete="off"
+											 [attr.aria-label]="!signUpForm.controls['lastName'].value || signUpForm.controls['lastName'].invalid ?
+											 'Field to enter your last name' : 'Field to enter your last name ' + signUpForm.controls['lastName'].value + ' in field'">
+							</div>
+						</div>
+
+						<div class="form-row" *ngIf="signUpForm.controls['emailAddress']">
+							<div class="col-12 form-group"
+								[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(signUpForm.controls['emailAddress'])">
+								<label for="emailAddress" class="alternate-label">
+									<ng-container i18n>Email Address</ng-container>
+									<br/>
+									<app-form-invalid-message [control]="signUpForm.controls['emailAddress']"
+										[customValidation]="[{
+										errorName: 'emailTaken', errorMessage:
+										locale === 'en-US'? 'Email Exists': 'Adresse e-mail déjà prise'}]">
+									</app-form-invalid-message>
+								</label>
+								<input type="email" class="form-control text-lowercase" id="emailAddress" formControlName="emailAddress"
+									maxlength="254" autocomplete="username">
+							</div>
+						</div>
+
+						<div class="form-row" *ngIf="!isEditForm">
+							<div class="col-12 form-group"
+								[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(signUpForm.controls['password'])">
+								<label for="changePassword" class="alternate-label">
+									<ng-container i18n>Choose a Password</ng-container>
+									<app-form-invalid-message [control]="signUpForm.controls['password']">
+									</app-form-invalid-message>
+									<span class="optional-label-identifier" i18n>
+										(Must be 7 to 25 characters long)
+									</span>
+								</label>
+								<input type="text" class="form-control password" id="changePassword"
+									[type]="isPasswordDisplayed ? 'text' : 'password'" formControlName="password" autocomplete="new-password">
+								<span
+									class="password-strength {{formValidationService.validatePasswordStrength(signUpForm.controls['password'])  | lowercase}}">
+									{{formValidationService.validatePasswordStrength(signUpForm.controls['password'])}}
+								</span>
+								<div class="form-group show-pasword pt-1">
+									<label class="checkbox-group">
+										<input name="show-password" type="checkbox" class="checkbox-group-input"
+											[checked]="isPasswordDisplayed" (change)="onShowPassword($event)">
+										<span class="select-el-wrapper">
+											<span class="select-el"></span>
+										</span>
+										<span class="local-show-pw-label" i18n>
+											Show Password
+										</span>
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-row pb-4" *ngIf="isEditForm"
+								 role="radiogroup"
+						>
+							<label class="radio-group radio-group-md mr-4"
+							>
+								<input name="phoneType" type="radio" value="Home" class="radio-group-input"
+									[checked]="signUpForm.controls['phoneType'].value === PhoneTypeEnum.Home"
+											 [attr.aria-checked]="signUpForm.controls['phoneType'].value === PhoneTypeEnum.Home"
+											 [attr.tabindex]="signUpForm.controls['phoneType'].value === PhoneTypeEnum.Home ? 0 : -1"
+											 role="radio"
+											 formControlName="phoneType">
+								<span class="select-el-wrapper">
+									<span class="select-el"></span>
+								</span>
+								<span class="local-radio-col" i18n>
+									Home
+								</span>
+							</label>
+							<label class="radio-group radio-group-md"
+							>
+								<input name="phoneType" type="radio" value="Mobile" class="radio-group-input"
+									formControlName="phoneType"
+											 role="radio"
+											 [checked]="signUpForm.controls['phoneType'].value === PhoneTypeEnum.Mobile"
+											 [attr.aria-checked]="signUpForm.controls['phoneType'].value === PhoneTypeEnum.Mobile"
+											 [attr.tabindex]="signUpForm.controls['phoneType'].value === PhoneTypeEnum.Mobile ? 0 : -1"
+								>
+								<span class="select-el-wrapper">
+									<span class="select-el"></span>
+								</span>
+								<span class="local-radio-col" i18n>
+									Mobile
+								</span>
+							</label>
+						</div>
+
+						<div class="form-row prone-row" *ngIf="isEditForm">
+							<div class="col-8 form-group"
+								[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(signUpForm.controls['phoneNumber'])">
+								<label for="phoneNumber" class="alternate-label">
+									<ng-container i18n>Phone Number</ng-container>
+									<app-form-invalid-message [control]="signUpForm.controls['phoneNumber']">
+									</app-form-invalid-message>
+								</label>
+								<input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber"
+									placeholder="(      )" [textMask]="{mask: mask}" (keyup)="checkLength($event)">
+							</div>
+
+							<div class="col-4 form-group" [class.invalid-entry]="formValidationService.isInputInvalid(signUpForm.controls['phoneExtension'])">
+								<label for="phoneNumberExt" class="alternate-label">
+									<ng-container i18n>Extension</ng-container>
+									<app-form-invalid-message [control]="signUpForm.controls['phoneExtension']">
+									</app-form-invalid-message>
+									<span class="optional-label-identifier" i18n>(Optional)</span>
+								</label>
+								<input type="text" class="form-control" #phoneNumberExt formControlName="phoneExtension"
+									maxlength="5">
+							</div>
+						</div>
+					</div>
+
+					<!-- Column Three -->
+					<div class="col-12 col-lg-5 p-0 px-lg-5">
+
+						<div class="form-row pb-4" *ngIf="!isEditForm" >
+							<label class="radio-group radio-group-md mr-4">
+								<input name="phoneType" type="radio" value="Home" class="radio-group-input"
+									[checked]="signUpForm.controls['phoneType'].value === PhoneTypeEnum.Home"
+                  [attr.tabindex]="signUpForm.controls['phoneType'].value === PhoneTypeEnum.Home ? 0 : -1"
+
+                       aria-label="Home selected"
+									formControlName="phoneType">
+								<span class="select-el-wrapper">
+									<span class="select-el"></span>
+								</span>
+								<span class="local-radio-col" i18n>
+									Home
+								</span>
+							</label>
+							<label class="radio-group radio-group-md">
+								<input name="phoneType" type="radio" value="Mobile" class="radio-group-input"
+									formControlName="phoneType"
+									[checked]="signUpForm.controls['phoneType'].value === PhoneTypeEnum.Mobile"
+											 [attr.tabindex]="signUpForm.controls['phoneType'].value === PhoneTypeEnum.Mobile ? 0 : -1"
+                       aria-label="Mobile selected"
+								>
+								<span class="select-el-wrapper">
+									<span class="select-el"></span>
+								</span>
+								<span class="local-radio-col" i18n>
+									Mobile
+								</span>
+							</label>
+						</div>
+
+						<div class="form-row prone-row" *ngIf="!isEditForm">
+							<div class="col-8 form-group"
+								[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(signUpForm.controls['phoneNumber'])">
+								<label for="phoneNumber" class="alternate-label">
+									<ng-container i18n>Phone Number</ng-container>
+									<app-form-invalid-message [control]="signUpForm.controls['phoneNumber']">
+									</app-form-invalid-message>
+								</label>
+								<input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber"
+									placeholder="(      )" [textMask]="{mask: mask}" (keyup)="checkLength($event)">
+							</div>
+
+							<div class="col-4 form-group" [class.invalid-entry]="phoneExtValidation.isInputInvalid()">
+								<label for="phoneNumberExt" class="alternate-label" aria-label="Field to enter your phone extension if applicable">
+									<ng-container i18n>Extension</ng-container>
+									<app-form-invalid-message [control]="signUpForm.controls['phoneExtension']"
+										#phoneExtValidation>
+									</app-form-invalid-message>
+									<span class="optional-label-identifier" i18n>(Optional)</span>
+								</label>
+								<input type="text" class="form-control" id="phoneNumberExt" #phoneNumberExt formControlName="phoneExtension"
+									maxlength="5">
+							</div>
+						</div>
+
+						<div class="form-row" formGroupName="dateOfBirth">
+							<div class="col-12">
+								<label for="userBirthday" class="alternate-label">
+									<ng-container i18n>Date of Birth</ng-container>
+									<span class="optional-label-identifier" i18n>(Optional)</span>
+								</label>
+							</div>
+							<div class="col-4 col-md-3 col-lg-3 form-group">
+								<app-dropdown [inputControl]="signUpForm.controls['dateOfBirth']['controls']['day']"
+									[options]="validDays" [selectedValue]="signUpForm.controls['dateOfBirth']['controls']['day']['value']">
+								</app-dropdown>
+							</div>
+							<div class="col-4 col-md-3 col-lg-3 form-group">
+								<app-dropdown [inputControl]="signUpForm.controls['dateOfBirth']['controls']['month']"
+									[options]="monthOptions"
+									[selectedValue]="signUpForm.controls['dateOfBirth']['controls']['month']['value']">
+								</app-dropdown>
+							</div>
+							<div class="col-4 col-md-3 col-lg-3 form-group">
+								<app-dropdown [inputControl]="signUpForm.controls['dateOfBirth']['controls']['year']"
+									[options]="yearOptions"
+									[selectedValue]="signUpForm.controls['dateOfBirth']['controls']['year']['value']">
+								</app-dropdown>
+							</div>
+							<div class="col-12">
+								<app-form-invalid-message [control]="signUpForm.controls['dateOfBirth']"
+									[customValidation]="[{ errorName: 'incorrect', errorMessage: signUpForm.get('dateOfBirth').errors?.incorrect}]"
+									#dateBirthValidation>
+								</app-form-invalid-message>
+							</div>
+						</div>
+
+						<div class="form-row py-4" role="radiogroup" aria-describedby="label-for-radiogroup-1">
+							<div class="col-12 form-group"
+								[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(signUpForm.controls['ppPromotions'])">
+								<label class="alternate-label promotion-label" id="label-for-radiogroup-1">
+									<ng-container i18n>Send me information about Pizza Pizza Promotions, contests & offers</ng-container>
+									<app-form-invalid-message [control]="signUpForm.controls['ppPromotions']">
+									</app-form-invalid-message>
+								</label>
+							</div>
+
+							<div class="ml-1 mt-2" 		 role="radiogroup" tabindex="0" aria-label="Send me information about Pizza Pizza Promotions, contests & offers">
+								<label class="radio-group radio-group-md mr-4">
+									<input name="ppPromotions" type="radio" value="no" class="radio-group-input"
+										[checked]="signUpForm.controls['ppPromotions'].value === 'no' "
+												 [attr.aria-checked]="signUpForm.controls['ppPromotions'].value === 'no'"
+												 [attr.tabindex]="0"
+												 role="radio"
+                         [attr.aria-label]="signUpForm.controls['ppPromotions'].value === 'no' ? 'selected [No] to Send me information about Pizza Pizza Promotions, contests & offers':'select [No] to Send me information about Pizza Pizza Promotions, contests & offers'"
+										formControlName="ppPromotions">
+									<span class="select-el-wrapper">
+										<span class="select-el"></span>
+									</span>
+									<span class="local-radio-col" i18n>No</span>
+								</label>
+								<label class="radio-group radio-group-md">
+									<input name="ppPromotions" type="radio" value="yes" class="radio-group-input"
+										[checked]="signUpForm.controls['ppPromotions'].value === 'yes'"
+												 [attr.aria-checked]="signUpForm.controls['ppPromotions'].value === 'yes'"
+												 tabindex="0"
+                         [attr.aria-label]="signUpForm.controls['ppPromotions'].value === 'yes'? 'selected [Yes] to Send me information about Pizza Pizza Promotions, contests & offers':'select [Yes] to Send me information about Pizza Pizza Promotions, contests & offers'"
+												 role="radio"
+										formControlName="ppPromotions">
+									<span class="select-el-wrapper">
+										<span class="select-el"></span>
+									</span>
+									<span class="local-radio-col" i18n>Yes</span>
+								</label>
+							</div>
+						</div>
+
+						<div class="form-row" *ngIf="signUpForm.controls['ppPromotions'].value === 'yes'">
+							<div class="col-6 form-group">
+								<label for="userLanguagePreference" class="alternate-label" i18n>Language for
+									Promotions</label>
+								<app-dropdown [inputControl]="signUpForm.controls['language']"
+									[options]="['English', 'French']"
+									[selectedValue]="signUpForm.controls['language'].value">
+								</app-dropdown>
+							</div>
+						</div>
+
+						<div class="form-row mt-3 align-items-center" [class.justify-content-between]="isEditForm">
+							<div class="col-12 col-lg-6" *ngIf="isEditForm && !isForcedEdit">
+								<button class="btn btn-transparent text-uppercase fw-extra-bold p-0"
+									(click)="onShowPassword($event)" i18n>
+									Change Password
+								</button>
+							</div>
+							<div class="col-12 col-lg-6" [class.text-right]="isEditForm">
+								<button class="btn btn-primary btn-lg"
+												[attr.aria-label]="!signUpForm.valid ? (submitBtn ? submitBtn + ' button is disabled' : 'Continue button is disabled') : ''"
+									[class.disabled]="!signUpForm.valid">
+									<span class="btn-text">
+										<ng-container *ngIf="submitBtn">{{submitBtn}}</ng-container>
+										<ng-container *ngIf="!submitBtn" i18n>Continue</ng-container>
+									</span>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

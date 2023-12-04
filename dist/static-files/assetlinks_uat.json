@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.pizzapizza.uat",
+    "sha256_cert_fingerprints":
+    ["67:AA:64:96:CC:5C:BB:6D:C2:1A:51:1A:C9:1E:71:13:ED:2B:05:75:7E:89:EC:AC:9C:44:61:85:D3:9E:C8:32"]
+  }
+}]

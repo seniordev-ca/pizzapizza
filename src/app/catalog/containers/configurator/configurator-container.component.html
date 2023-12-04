@@ -1,0 +1,698 @@
+<ng-container *ngTemplateOutlet="isVerticalModal ? configModalContent : configuratorContent">
+</ng-container>
+
+<!--
+	If configurator is in vertical modal
+-->
+<ng-template #configModalContent>
+	<div class="configurator-modal-wrap">
+		<app-vertical-modal #configuratorVerticalModal (verticalModalOutputEmitter)="handleCloseModalClick($event)"
+    (verticalModalOutputEmitter)="handleCloseSimpleModalClick($event)"
+>
+			<ng-template>
+				<app-modal-simple-header [title]="(configuratorProductInfo$ | async).name">
+				</app-modal-simple-header>
+
+				<ng-container *ngTemplateOutlet="configuratorContent">
+				</ng-container>
+			</ng-template>
+		</app-vertical-modal>
+	</div>
+</ng-template>
+
+<!--
+	If configurator is a separate page
+-->
+<ng-template #configuratorContent>
+	<div [class.pp-ghost-container]="isConfiguratorGhost$ | async">
+
+		<!--
+		[configuratorHeaderContent]="configuratorHeaderContent"
+		-->
+		<ng-container *ngTemplateOutlet="configHeader"></ng-container>
+
+		<app-configurator-options-list [configurationUi]="configurationUi"
+			[configuratorProductInfo]="configuratorProductInfo$ | async"
+			[productOptionListArray]="productOptionListArray$ | async"
+			(productListEventEmitter)="productListEventHandler($event)"
+			[productSizePickerTabsArray]="productSizePickerTabsArray$ | async"
+			(productSizePickerTabClickEmitter)="productSizePickerTabClickHandler($event)" [quantitySelectorContent]="{
+				maxQuantity: productValidation.maxProductQuantity,
+				quantity: (configuratorProductInfo$ | async).quantity,
+				title: (configuratorProductInfo$ | async).name
+			}" (quantitySelectorEventEmitter)="quantitySelectorEventHandler($event)"
+			(sideMenuEventEmitter)="configuratorHeaderEventHandler($event)" [isHeaderStrippedVersion]="isVerticalModal"
+			[maxQtyForTopping]="maxQtyForTopping$ | async" [subCategories]="subCategoriesArray$ | async"
+			[selectedSubCategory]="selectedSubCategory$ | async" [personalizationForm]="personalizationForm"
+			[personalizationTemplate]="activePersonalizationTemplate$ | async" [loading]="isConfiguratorGhost$ | async"
+			[isPizzaAssistant]="isPizzaAssistant">
+		</app-configurator-options-list>
+
+
+		<ng-container *ngIf="(getExtraProducts$ | async) && (getExtraProducts$ | async).length > 0">
+			<div class="container extra-products-container">
+				<div class="row px-1 px-sm-4">
+					<div class="col-12 p-0">
+						<h2 class="mb-0 extra-product-title" i18n>Comes With</h2>
+					</div>
+				</div>
+				<div class="row p-1 p-sm-4 extra-product-row">
+					<ng-container *ngFor="let product of (getExtraProducts$ | async)">
+						<div class="extra-product col-12 col-md-4">
+							<div class="row h-100 no-gutters align-items-center">
+								<!-- Image wrap -->
+								<div class="image-wrap col-6 text-center">
+									<img alt="product image" src="{{ product.image }}" class="img-fluid">
+								</div>
+								<div class="info-wrap col-6 text-left">
+									<div class="option-label ghost-bar text-capitalize">
+										{{ product.name | lowercase}}
+									</div>
+
+									<div class="separator">
+									</div>
+
+									<div class="calories-label ghost-bar g-w-80 cal-text" *ngIf="product.calText">
+										<ng-container *ngIf="product.calText.calValue" i18n>
+											{{ product.calText.calValue }} cals
+										</ng-container>
+										<ng-container *ngIf="product.calText.calScale">
+											/ {{ product.calText.calScale }}
+										</ng-container>
+									</div>
+								</div>
+							</div>
+						</div>
+					</ng-container>
+				</div>
+			</div>
+		</ng-container>
+
+		<!-- Config Legend -->
+		<div class="container mt-5 config-legend" *ngIf="(legendFlags$ | async)">
+			<div class="row">
+				<div class="col-12 col-lg-9">
+					<span class="d-inline-block legend-item" *ngIf="(legendFlags$ | async).isSmallOnly">
+						<i class="icon-smlonly"></i>
+						<span class="pr-2">
+							<ng-container i18n>Small Only</ng-container>
+						</span>
+					</span>
+					<span class="d-inline-block legend-item" *ngIf="(legendFlags$ | async).isMediumOnly">
+						<i class="icon-med"></i>
+						<span class="pr-2">
+							<ng-container i18n>Medium Only</ng-container>
+						</span>
+					</span>
+					<span class="d-inline-block legend-item" *ngIf="(legendFlags$ | async).isPremium">
+						<i class="icon-dollar icon-border"></i>
+						<span class="pr-2">
+							<ng-container i18n>Premium Charge</ng-container>
+						</span>
+					</span>
+					<span class="d-inline-block legend-item" *ngIf="(legendFlags$ | async).isGluten">
+						<i class="icon-wheat icon-border"></i>
+						<span class="pr-2">
+							<ng-container i18n>Contains Gluten</ng-container>
+						</span>
+					</span>
+					<span class="d-inline-block legend-item" *ngIf="(legendFlags$ | async).isDipOnWings">
+						<i class="icon-wing"></i>
+						<span class="pr-2">
+							<ng-container i18n>Sauce on Wings</ng-container>
+						</span>
+					</span>
+				</div>
+			</div>
+		</div>
+
+		<ng-container *ngIf="calorieText$ | async">
+			<div class="container mt-3">
+				<div class="row">
+					<div class="col-12 col-lg-9 smaller config-description">
+						<p *ngIf="calorieText$" [innerHtml]="calorieText$ | async"></p>
+					</div>
+				</div>
+			</div>
+		</ng-container>
+
+		<div class="container configurator-component-container you-may-like-spacer">
+		</div>
+
+		<div class="container" *ngIf="!isVerticalModal">
+			<app-upsells [parentContainer]="'configurator'"></app-upsells>
+		</div>
+
+		<div class="container configurator-component-container footer-spacer">
+		</div>
+
+	</div>
+</ng-template>
+
+<!--
+Global error message
+-->
+<ng-template #globalErrorModal let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal(); onRetryClickHandler()" aria-label="close button">
+		<i class="icon-close-bold"></i>
+	</button>
+	<app-confirmation-modal [data]="{
+			icon: 'icon-bell'
+		}" title="D'ough!" subtitle='Something went wrong, please try again later' i18n-title i18n-subtitle>
+		<ng-template>
+			<button class="btn btn-primary" (click)="closeModal(); onRetryClickHandler()" i18n>
+				Retry
+			</button>
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+<!--
+Max Qty error message
+-->
+<ng-template #maxQtyErrorModal let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal(); onCloseMaxQtyHandler()" aria-label="close button">
+		<i class="icon-close-bold"></i>
+	</button>
+	<app-confirmation-modal [data]="{
+			icon: 'icon-bell'
+		}" title="D'ough!" subtitle='Sorry. In order to add that item, you need to remove one that you’ve already chosen.'
+		i18n-title i18n-subtitle>
+		<ng-template>
+			<button class="btn btn-primary" (click)="closeModal(); onCloseMaxQtyHandler()" i18n>
+				Okay
+			</button>
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+<!--
+Upsizing Modal message
+-->
+<ng-template #upsizingModal let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal(); handleUpSizingModal()" aria-label="close button">
+		<i class="icon-close-bold"></i>
+	</button>
+	<app-confirmation-modal [data]="{
+				icon: 'icon-arrow-up-circle'
+			}" title='Ready for an Upgrade?' [subtitle]='upSizing.message' i18n-title>
+		<ng-template>
+			<div class="col-12 d-flex justify-content-center p-0 align-self-end">
+				<div class="col-6 col-lg-5 px-1">
+					<button class="btn btn-primary btn-white w-100" (click)="closeModal(); handleUpSizingModal()" i18n>
+						No, Thanks
+					</button>
+				</div>
+				<div class="col-6 col-lg-5 px-1">
+					<button class="btn btn-primary w-100" (click)="closeModal(); handleUpSizingModal(true)" i18n>
+						Oh Yeah!
+					</button>
+				</div>
+			</div>
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+<!--
+Personal Message Modal message
+-->
+<ng-template #personalMessageModal let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal(); handlePersonalMessageModal()" aria-label="close button">
+		<i class="icon-close-bold"></i>
+	</button>
+	<app-confirmation-modal [data]="{
+				icon: 'icon-speechbubble'
+			}" title='Send a Message?' i18n-title>
+		<ng-template>
+			<div class="col-12 mb-4">
+				<p class="prompt-modal-subtitle" i18n>Want to add a personal message to your pizza?</p>
+			</div>
+			<div class="col-12 d-flex justify-content-center p-0 align-self-end">
+				<div class="col-6 col-lg-5 px-1">
+					<button class="btn btn-primary btn-white w-100" (click)="closeModal(); handlePersonalMessageModal()"
+						i18n>
+						No, Thanks
+					</button>
+				</div>
+				<div class="col-6 col-lg-5 px-1">
+					<button class="btn btn-primary w-100" (click)="closeModal(); handlePersonalMessageModal(true)" i18n>
+						Yes Please!
+					</button>
+				</div>
+			</div>
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+<!--7.99 pizza modal-->
+<ng-template #addOneMorePizza let-closeModal="close">
+  <button class="prompt-modal-x" (click)="closeModal();" aria-label="close button">
+		<i class="icon-close-bold"></i>
+  </button>
+  <app-confirmation-modal [data]="{
+    icon: 'icon-bell'
+  }" title="Add one more" subtitle='There is a minimum of 2 pizzas for the special you selected. Please choose the toppings for your second pizza now.'
+  i18n-title i18n-subtitle>
+  <ng-template>
+    <button class="btn btn-primary" (click)="closeModal(); resetPizzaConfig()" i18n>
+      Okay
+    </button>
+  </ng-template>
+</app-confirmation-modal>
+
+<!--
+  <div class="col-12 mb-4">
+    <p class="prompt-modal-subtitle" i18n>Want to add one more pizza?</p>
+  </div>
+  <div class="col-12 mb-4">
+    <button class="btn btn-primary btn-white w-100" (click)="closeModal();" i18n>Ok</button>
+  </div> -->
+</ng-template>
+
+<!--7.99 promodeal modal for quantity > 2-->
+<ng-template #popUpForPromoPizzaMoreThanTwo let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal(); cancelLeaveAttempt()" aria-label="close button">
+		<i class="icon-close-bold"></i>
+	</button>
+	<app-confirmation-modal [data]="{
+				icon: 'icon-bell'
+			}" title='Do you want to add another pizza?' i18n-title>
+		<ng-template>
+			<div class="col-12 mb-4">
+				<p class="prompt-modal-subtitle" i18n>With this special, you can add unlimited medium 2-topping pizzas for $7.99 each.</p>
+			</div>
+			<div class="col-12 d-flex justify-content-center p-0 align-self-end">
+				<div class="col-6 col-lg-5 px-1">
+					<button class="btn btn-primary btn-white w-100" (click)="closeModal(); confirmLeave();" i18n>
+						No, Thanks
+					</button>
+				</div>
+				<div class="col-6 col-lg-5 px-1">
+					<button class="btn btn-primary w-100" (click)="closeModal(); resetPizzaConfig()" i18n>
+						Yes Please!
+					</button>
+				</div>
+			</div>
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+<!--
+Unavailable Toppings Modal
+-->
+<ng-template #noToppingsModal let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal(); handleUnavailableToppings(false)" aria-label="close button">
+		<i class="icon-close-bold"></i>
+	</button>
+	<app-confirmation-modal [data]="{
+			icon: 'icon-bell'
+		}" title="D'ough!" i18n-title>
+		<ng-template>
+			<div class="col-12 mb-3">
+				<p i18n>
+					Some of the items you’ve chosen aren’t available in the size you selected. They’ll be updated or
+					removed if you continue
+				</p>
+				<p><strong>
+						{{ (unavailableToppings$ | async)?.join(', ') }}
+					</strong></p>
+			</div>
+			<div class="col-12 d-flex justify-content-center p-0 align-self-end">
+				<div class="col-6 col-lg-5 px-1">
+					<button class="btn btn-primary btn-white w-100" (click)="closeModal(); handleUnavailableToppings(false)"
+						i18n>
+						Cancel
+					</button>
+				</div>
+				<div class="col-6 col-lg-5 px-1">
+					<button class="btn btn-primary w-100" (click)="closeModal(); handleUnavailableToppings(true)" i18n>
+						Continue
+					</button>
+				</div>
+			</div>
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+<ng-template #configHeader>
+	<div class="container-fluid m-0 ghost-bg configurator-head-container"
+		[ngClass]="{ 'header-striped-version': isVerticalModal }">
+		<div class="container">
+			<div class="row pb-0 pb-md-4">
+				<div class="col-12 align-self-start pl-0 pr-0" *ngIf="!isVerticalModal">
+					<app-sub-header-navigation [subHeaderNavContent]="{
+						textColor: '#4c3017',
+						iconColor: '#EE5A00',
+						backToLocation:'/'
+					}" [title]="(configuratorProductInfo$ | async).name"
+						navText="Back To Menu"
+						i18n-navText *ngIf="isProductEditMode">
+					</app-sub-header-navigation>
+					<app-sub-header-navigation [subHeaderNavContent]="{
+						textColor: '#4c3017',
+						iconColor: '#EE5A00',
+						backToLocation: null
+					}" [title]="(configuratorProductInfo$ | async).name" navText="Back"
+						i18n-navText *ngIf="!isProductEditMode">
+					</app-sub-header-navigation>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<!--
+				Products top slider
+			-->
+			<div class="row header-content align-items-end align-items-md-center justify-content-center">
+
+				<app-configurator-header #headerSlider [isHeaderStrippedVersion]="isVerticalModal"
+					[configuratorProductInfo]="configuratorProductInfo$ | async"
+					[configuratorProductsSlider]="configuratorProductsSlider$ | async"
+					(configuratorHeaderEventEmitter)="configuratorHeaderEventHandler($event)">
+				</app-configurator-header>
+				<!-- Add new item button and modal -->
+				<div class="col-md-4 col-lg-4 col-xl-3 d-none d-md-flex justify-content-center">
+
+					<div class="configurator-upsale-modal"
+						*ngIf="isUpsellModalOpen && ((recommendations$ | async) && (recommendations$ | async).length > 0)">
+						<div class="close-btn" (click)="closeUpsaleModal()" (keydown.enter)="closeUpsaleModal()" tabindex="0" attr.aria-label="close button">
+							<i class="icon-close-bold"></i>
+						</div>
+						<app-upsells [parentContainer]="'miniModal'"></app-upsells>
+					</div>
+
+					<div class="add-new-item text-center" *ngIf="!(configuratorProductInfo$ | async).isCoupon"
+            [class.inactive]="isNewItemModalInactive"
+						[class.faded]="isSliderScrollActive && configuratorProductsSlider.length > 1"
+						(click)="openItemModal(isNewItemModalInactive)" tabindex="0" aria-label="Add a new item to cart"
+            (keydown.enter)="openItemModal( isNewItemModalInactive)">
+
+						<!-- Upsale mini modal -->
+						<!--
+							<app-configurator-upsale-modal
+								*ngIf="configuratorHeaderContent.isUpSaleModalOpen"
+								[upsaleModalContent] = "upsaleModalContent"
+								(upsaleModalEventEmitter) = "upsaleModalEventHandler($event)"
+							>
+							</app-configurator-upsale-modal>
+							-->
+
+						<i class="icon-new-item"></i>
+						<div class="text" i18n>
+							New Item
+						</div>
+					</div>
+
+					<!-- Add item menu mini modal -->
+					<app-add-item-modal *ngIf="configurationUi.isQuickAddModalOpen"
+						[isLoading]="configurationUi.isQuickAddModalLoading"
+						[addItemContent]="addItemCategories$ | async"
+						(addItemEventEmitter)="addItemEventHandler($event)">
+					</app-add-item-modal>
+
+				</div>
+
+				<!-- Product image and action box -->
+				<div class="col-md-8 col-lg-8 col-xl-9">
+					<div class="row d-flex align-content-center product-summary-row justify-content-md-end justify-content-center"
+						[class.mobile-margin-extra]="(productSizePickerTabsArray$ | async).length > 0">
+						<!-- Action box -->
+						<div class="col-12 col-md-6 col-lg-6 action-box"
+							[class.faded]="isSliderScrollActive && configuratorProductsSlider.length > 1">
+							<ng-container *ngTemplateOutlet="productHeaderActionBoxTemplate">
+							</ng-container>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- Ingredients added to product-->
+			<div class="row item-description">
+				<div class="col">
+					<p class="text-center ghost-bar g-w-20 ghost-center text-capitalize">
+						<ng-container *ngFor="let option of (configuratorProductInfo$ | async).subText; let i = index">
+							{{option | formatConfigOption | lowercase}}<ng-container *ngIf="option.direction === HalfHalfOptionsEnum.left" i18n> (left)</ng-container><ng-container *ngIf="option.direction === HalfHalfOptionsEnum.right" i18n> (right)</ng-container>
+							<ng-container *ngIf="option.isGluten || option.isDipOnWings || option.isPremium"> (</ng-container>
+							<ng-container *ngIf="option.isPremium" i18n>extra charge</ng-container>
+							<ng-container *ngIf="option.isPremium && (option.isGluten || option.isDipOnWings)">, </ng-container>
+							<ng-container *ngIf="option.isGluten" i18n>contains gluten</ng-container>
+							<ng-container *ngIf="option.isGluten && option.isDipOnWings">, </ng-container>
+							<ng-container *ngIf="option.isDipOnWings" i18n>on wings</ng-container>
+							<ng-container *ngIf="option.isGluten || option.isDipOnWings || option.isPremium">)</ng-container>
+							<ng-container *ngIf="i + 1 < (configuratorProductInfo$ | async).subText.length">, </ng-container>
+						</ng-container>
+					</p>
+				</div>
+			</div>
+
+			<!-- Slider indicator -->
+
+			<div class="row ghost-hidden">
+
+				<div class="custom-swiper-pagination" [hidden]="(configuratorProductsSlider$ | async).length < 2">
+					<div *ngFor="let paginationIndicator of configuratorProductsSlider$ | async; let i = index"
+						class="page-icon" [class.active]="headerSlider.currentSliderIndex === i"
+						(click)="headerSlider.onCustomPageClick(i)">
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+		<!-- container -->
+		<div class="container visible-mobile-collapsed">
+			<div class="row mt-1">
+				<div class="col-12 cart-update-btn-wrap">
+					<app-add-product-btn
+            [btnAriaLabel]="getAriaLabelTextFromSubText((configuratorProductInfo$ | async).subText)"
+						[isInValid]="(configuratorProductInfo$ | async).isValid && personalizationForm.valid"
+						[btnState]="configurationUi.addToCartBtnState"
+						(onClickEventEmitter)="configuratorHeaderEventHandler($event)">
+					</app-add-product-btn>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="configuration-categories"
+		[hidden]="(productConfigurationTabsArray$ | async).length === 1 || (productConfigurationTabsArray$ | async).length === 0">
+		<!-- Configurator group options -->
+		<div class="product-configurator-tabs-wrap">
+
+			<app-product-configurator-tabs [productConfigurationTabsArray]="productConfigurationTabsArray$ | async"
+				(productConfigurationClickEmitter)="productConfigurationClickHandler($event)"
+				[selected]="selectedConfigurationTabId$ | async">
+			</app-product-configurator-tabs>
+
+		</div>
+
+		<!-- Configurator options -->
+		<div class="product-sub-categories-wrap">
+			<app-sub-category-selector [subCategoriesArray]="subCategoriesArray$ | async"
+				(subCategoriesClickEmitter)="subCategoriesClickHandler($event)"
+				[selected]="selectedSubCategory$ | async" [loading]="isConfiguratorGhost$ | async">
+			</app-sub-category-selector>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #productHeaderActionBoxTemplate>
+	<!-- Product size picker -->
+	<div class="row product-size-picker-wrap px-3">
+		<div class="col-12">
+			<app-product-size-picker [productSizePickerTabsArray]="productSizePickerTabsArray$ | async"
+				(productSizePickerTabClickEmitter)="productSizePickerTabClickHandler($event)">
+			</app-product-size-picker>
+		</div>
+	</div>
+
+	<!-- Product description visible only on mobile -->
+	<div class="row item-description item-description-mobile mt-2 mt-md-4 mb-2">
+		<div class="col">
+			<p class="text-center ghost-bar g-w-20 ghost-center text-capitalize">
+				<ng-container *ngFor="let option of (configuratorProductInfo$ | async).subText; let i = index">
+					{{option | formatConfigOption | lowercase}}<ng-container *ngIf="option.direction === HalfHalfOptionsEnum.left" i18n> (left)</ng-container><ng-container *ngIf="option.direction === HalfHalfOptionsEnum.right" i18n> (right)</ng-container>
+					<ng-container *ngIf="option.isGluten || option.isDipOnWings || option.isPremium"> (</ng-container>
+					<ng-container *ngIf="option.isPremium" i18n>extra charge</ng-container>
+					<ng-container *ngIf="option.isPremium && (option.isGluten || option.isDipOnWings)">, </ng-container>
+					<ng-container *ngIf="option.isGluten" i18n>contains gluten</ng-container>
+					<ng-container *ngIf="option.isGluten && option.isDipOnWings">, </ng-container>
+					<ng-container *ngIf="option.isDipOnWings" i18n>on wings</ng-container>
+					<ng-container *ngIf="option.isGluten || option.isDipOnWings || option.isPremium">)</ng-container>
+					<ng-container *ngIf="i + 1 < (configuratorProductInfo$ | async).subText.length">, </ng-container>
+				</ng-container>
+			</p>
+		</div>
+	</div>
+
+	<!-- Product quantity and price -->
+	<div class="row h2 py-3 m-0 product-quantity-price justify-content-between">
+		<div class="col-5 px-0 d-flex align-items-center justify-content-center">
+			<app-quantity-selector class="w-100" *ngIf="(configuratorProductInfo$ | async).isQuantitySelectionAllowed"
+				[quantitySelectorContent]="{
+					maxQuantity: productValidation.maxProductQuantity,
+					quantity: (configuratorProductInfo$ | async).quantity,
+					title: (configuratorProductInfo$ | async).name
+				}" (quantitySelectorEventEmitter)="quantitySelectorEventHandler($event)">
+			</app-quantity-selector>
+		</div>
+		<div class="col-6 text-right align-items-center p-0 price-label">
+			<h1 class="m-0 ghost-bar speed-200">
+				{{ (configuratorProductInfo$ | async).priceText.priceValue | currency:'CAD':'symbol-narrow':'1.2' }}
+			</h1>
+		</div>
+	</div>
+
+	<!-- Add to cart button -->
+	<div class="row mt-1">
+		<div class="col-12 cart-update-btn-wrap" id="headerProductBtn">
+			<span class="d-block w-100 text-center mb-3 product-validation"
+				*ngIf="(configuratorProductInfo$ | async).validationMsg">
+				{{(configuratorProductInfo$ | async).validationMsg}}
+			</span>
+			<app-add-product-btn [isInValid]="(configuratorProductInfo$ | async).isValid && personalizationForm.valid"
+													 [btnAriaLabel]="getAriaLabelTextFromSubText((configuratorProductInfo$ | async).subText)"
+				[btnState]="configurationUi.addToCartBtnState"
+				(onClickEventEmitter)="configuratorHeaderEventHandler($event)">
+			</app-add-product-btn>
+		</div>
+	</div>
+
+	<!-- Product cals disclaimer -->
+	<div class="row mt-4">
+		<div class="col-12">
+			<h4 class="text-center product-cals-disclaimer fw-black ghost-bar g-w-80 ghost-center text-uppercase cal-text"
+				*ngIf="(configuratorProductInfo$ | async).calText">
+				{{ (configuratorProductInfo$ | async).calText.calValue ?  (configuratorProductInfo$ | async).calText.calValue : ''}}
+			</h4>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #confirmationModalDataForUpdate let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal()" aria-label="close button">
+		<i class="icon-close-bold"></i>
+	</button>
+	<app-confirmation-modal [data]="{
+				icon: 'icon-bell'
+			}" title="Are you sure?" i18n-title>
+		<ng-template>
+			<div class="col-12 mb-4">
+				<p i18n>It seems you have made a change, we love what you did there. Please press update before you
+					continue with add new item so you don't lose your masterpiece</p>
+			</div>
+			<div class="col-12 align-self-end">
+				<div class="row justify-content-center button-row ">
+					<div class="col-6 col-md-5 px-1">
+						<button class="btn btn-lg btn-primary btn-white text-uppercase w-100" (click)="closeModal()"
+							i18n>
+							Cancel
+						</button>
+					</div>
+					<div class="col-6 col-md-5 px-1">
+						<button class="btn btn-lg btn-primary text-uppercase w-100"
+							(click)="closeModal(); dispatchAddItemGetCategories();" i18n>
+							Okay
+						</button>
+					</div>
+				</div>
+			</div>
+			<!-- Button Row -->
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+<ng-template #confirmationModalDataForAdd let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal()" aria-label="close button">
+		<i class="icon-close-bold"></i>
+	</button>
+	<app-confirmation-modal [data]="{
+				icon: 'icon-bell'
+			}" title="Are you sure?" i18n-title>
+		<ng-template>
+			<div class="col-12 mb-4">
+				<p i18n>That looks delicious! Please add your current item to cart before you continue adding another
+					item</p>
+			</div>
+			<div class="col-12 align-self-end">
+				<div class="row justify-content-center button-row">
+					<div class="col-6 col-md-5 px-1">
+						<button class="btn btn-lg btn-primary btn-white text-uppercase w-100" (click)="closeModal()"
+							i18n>
+							Cancel
+						</button>
+					</div>
+					<div class="col-6 col-md-5 px-1">
+						<button class="btn btn-lg btn-primary text-uppercase w-100"
+							(click)="closeModal(); dispatchAddItemGetCategories();" i18n>
+							Okay
+						</button>
+					</div>
+				</div>
+			</div>
+			<!-- Button Row -->
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+<ng-template #guardModalForNormal let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal(); cancelLeaveAttempt()" aria-label="close button">
+		<i class="icon-close-bold"></i>
+	</button>
+	<app-confirmation-modal [data]="{
+				icon: 'icon-bell'
+			}" title="Trash Your Order?" i18n-title>
+		<ng-template>
+			<div class="col-12 mb-4">
+				<p i18n>Sure you want to give up all the deliciousness you just created?</p>
+			</div>
+			<div class="col-12 align-self-end">
+				<div class="row justify-content-center button-row">
+					<div class="col-6 col-md-5 px-1">
+						<button class="btn btn-lg btn-primary btn-white text-uppercase w-100"
+							(click)="closeModal(); cancelLeaveAttempt();" i18n>
+							Cancel
+						</button>
+					</div>
+					<div class="col-6 col-md-5 px-1">
+						<button class="btn btn-lg btn-primary text-uppercase w-100"
+							(click)="closeModal(); confirmLeaveAttempt();" i18n>
+							Okay
+						</button>
+					</div>
+				</div>
+			</div>
+			<!-- Button Row -->
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+<ng-template #guardModalForEdit let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal(); cancelLeaveAttempt()" aria-label="close button">
+		<i class="icon-close-bold"></i>
+	</button>
+	<app-confirmation-modal [data]="{
+				icon: 'icon-bell'
+			}" title="Are you sure?" i18n-title>
+		<ng-template>
+			<div class="col-12 mb-4">
+				<p i18n>It seems you have made a change, we love what you did there. Please press update before you
+					continue with add new item so you don't lose your masterpiece</p>
+			</div>
+			<div class="col-12 align-self-end">
+				<div class="row justify-content-center button-row">
+					<div class="col-6 col-md-5 px-1">
+						<button class="btn btn-lg btn-primary btn-white text-uppercase w-100"
+							(click)="closeModal(); cancelLeaveAttempt();" i18n>
+							Cancel
+						</button>
+					</div>
+					<div class="col-6 col-md-5 px-1">
+						<button class="btn btn-lg btn-primary text-uppercase w-100"
+							(click)="closeModal(); confirmLeaveAttempt();" i18n>
+							Okay
+						</button>
+					</div>
+				</div>
+			</div>
+			<!-- Button Row -->
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>

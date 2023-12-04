@@ -1,0 +1,488 @@
+@import 'global-scss-mixing';
+
+$text-color: #3b210b;
+$valid-bg: #4e7026;
+$invalid-bg: #f00;
+$invalid-input-bg: #900;
+$coupon-open-bg: #eb5600;
+$coupon-open-font-color: #fdaa7f;
+
+$box-shadow-from: rgba(0, 0, 0, .2);
+$box-shadow-to: rgba(0, 0, 0, .19);
+
+.add-coupon-container {
+	/**
+		Styling for different parent container/components
+	*/
+	&.header {
+		@include media-breakpoint-only(md) {
+
+			min-width: 130px;
+			font-size: .8em;
+		}
+		text-align: center;
+
+		.validation-msg {
+			position: absolute;
+			right: -50%;
+			left: -50%;
+			white-space: nowrap;
+		}
+	}
+
+	&.checkout,
+	&.wallet {
+		@include media-breakpoint-down(sm) {
+			width: 165px;
+		}
+
+		margin-left: auto;
+		width: 300px;
+		text-align: center;
+
+		button {
+			border: 1px solid $pp-bg-maincolour;
+			color: $pp-bg-maincolour;
+
+			&:focus {
+				border-color: $pp-bg-maincolour;
+			}
+		}
+
+		.valid-button {
+			border: 0;
+			background: $valid-bg;
+			color: $white;
+		}
+
+		.coupon-open {
+			background-color: $pp-bg-maincolour;
+			width: 100%;
+			color: $white;
+		}
+
+		.invalid-msg {
+			position: relative;
+			bottom: 0;
+			color: $invalid-input-bg;
+		}
+
+		.invalid-button {
+			color: $white;
+		}
+
+		input:not(:focus),
+		input:focus {
+			&.invalid-input {
+				background-color: $white;
+				color: $text-color;
+			}
+		}
+
+		.reset-invalid {
+			background-color: $white;
+		}
+
+		.add-coupon-input {
+			color: $text-color;
+		}
+	}
+
+	&.wallet {
+		.add-coupon-input {
+			position: relative;
+			right: -4px;
+			border: 1px solid $coupon-open-bg;
+			border-right: 0;
+		}
+
+		input:not(:focus),
+		input:focus {
+			&.invalid-input {
+				border-color: $coupon-open-bg;
+			}
+		}
+	}
+
+	// &.header {
+	// }
+	// &.mobileNav {
+	// }
+
+	.add-coupon-input {
+		// width: auto;
+		height: 42px;
+	}
+
+	.add-coupon-btn {
+		padding: 0;
+		padding-right: 25px;
+		padding-left: 25px;
+		height: 42px;
+		font-size: 16px;
+	}
+
+	.validation-msg {
+		text-align: center;
+	}
+
+	// sass-lint:disable no-vendor-prefixes
+	input::-ms-clear {
+		display: none;
+	}
+	// sass-lint:enable no-vendor-prefixes
+
+	.coupon-input {
+		position: relative;
+		height: 100%;
+
+		i {
+			position: absolute;
+			top: 40%;
+			right: 0;
+			cursor: pointer;
+		}
+
+		&.has-placeholder::after {
+			position: absolute;
+			top: 23%;
+			left: 30px;
+			color: $input-placeholder-color;
+			content: 'Enter Code';
+			pointer-events: none;
+		}
+	}
+
+	input {
+		@include font-regular;
+		border-radius: 0;
+		border-top-left-radius: .28em;
+		border-bottom-left-radius: .28em;
+		height: 45px;
+		text-transform: uppercase;
+		letter-spacing: .27px;
+		color: $text-color;
+		caret-color: $pp-bg-maincolour;
+	}
+
+	input:focus {
+		border: 0;
+		border-color: none;
+		box-shadow: none;
+
+		&.invalid-input {
+			border-top: 1px solid $white;
+			border-bottom: 1px solid $white;
+			border-left: 1px solid $white;
+			background: $invalid-input-bg;
+			color: $white;
+		}
+	}
+
+	input:not(:focus) {
+		border: 0;
+
+		&.invalid-input {
+			border-top: 1px solid $white;
+			border-bottom: 1px solid $white;
+			border-left: 1px solid $white;
+			background: $invalid-input-bg;
+			color: $white;
+		}
+	}
+
+	.icon-close-bold {
+		background: $white;
+		padding-right: 3%;
+		color: $pp-bg-maincolour;
+		font-size: 10px;
+	}
+
+	.reset-invalid {
+		background: $invalid-input-bg;
+	}
+
+	button {
+		@include font-extra-bold;
+		border: 1px solid $white;
+		border-radius: .28em;
+		background: none;
+		cursor: pointer;
+		padding-top: 16px;
+		padding-bottom: 16px;
+		text-transform: uppercase;
+		line-height: .9em;
+		letter-spacing: .016em;
+		color: $white;
+
+		&:hover,
+		&:active,
+		&:not([disabled]):not(.disabled):active {
+			background-color: $pp-bg-maincolour;
+			color: $white;
+		}
+	}
+
+	.coupon-open {
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+		padding: 0;
+		width: 100%;
+		min-width: 70px;
+	}
+
+	button:focus {
+		outline: 0;
+		border: 1px solid $white;
+		box-shadow: none;
+
+		&.valid-button {
+			border: 0;
+		}
+	}
+
+	.valid-button {
+		border: 0;
+		background: $valid-bg;
+		width: 200px;
+		color: $white;
+	}
+
+	.invalid-button {
+		border-top-left-radius: 0;
+		border-top-right-radius: 2px;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 2px;
+		background: $invalid-bg;
+		// font-size: .8em;
+	}
+
+	.invalid-msg {
+		@include font-bold;
+		position: absolute;
+		left: 0;
+		padding-top: 5px;
+		width: 100%;
+		line-height: .9rem;
+		color: $white;
+	}
+
+	@include media-breakpoint-only(md) {
+		.coupon-input {
+			display: none;
+		}
+
+		.coupon-open {
+			border-radius: .28em;
+			min-width: 70px;
+			// background: $coupon-open-bg;
+			// color: $coupon-open-font-color;
+
+			&:not(:focus) {
+				border: 1px solid $coupon-open-font-color;
+			}
+
+			&:focus {
+				border: 1px solid $coupon-open-font-color;
+			}
+		}
+	}
+
+	@include media-breakpoint-down(sm) {
+		.invalid-msg {
+			position: initial;
+			margin-top: 8px;
+			margin-left: 3px;
+		}
+
+		.coupon-btn {
+			width: 100%;
+
+			button {
+				width: 100%;
+			}
+
+			&.mobile-active {
+				width: auto;
+			}
+		}
+	}
+
+	&.checkout {
+		.md-add-coupon {
+			@include media-breakpoint-only(md) {
+				left: 0;
+				margin-left: 0;
+				width: 100%;
+			}
+		}
+	}
+
+}
+
+.click-to-open {
+	cursor: pointer;
+}
+
+.md-add-coupon {
+	@include media-breakpoint-only(md) {
+		display: block;
+		position: absolute;
+		z-index: 22;
+		margin-top: 12px;
+		margin-left: -100px;
+		border-radius: .28em;
+		box-shadow: 0 4px 8px 0 $box-shadow-from, 0 6px 20px 0 $box-shadow-to;
+		background: $white;
+		width: 330px;
+
+		.arrow-top {
+			display: block;
+			position: absolute;
+			top: -9.5%;
+			right: 50%;
+			border-right: 10px solid transparent;
+			border-bottom: 10px solid $white;
+			border-left: 10px solid transparent;
+			width: 0;
+			height: 0;
+			content: '';
+		}
+
+		input {
+			@include font-regular;
+			border-radius: 0;
+			border-top-left-radius: .28em;
+			border-bottom-left-radius: .28em;
+			border-color: $pp-bg-maincolour;
+			height: 100%;
+			text-transform: uppercase;
+			letter-spacing: .27px;
+			color: $text-color;
+			caret-color: $pp-bg-maincolour;
+		}
+
+		input:focus {
+			border-top: 1px solid $pp-bg-maincolour;
+			border-right: 0;
+			border-bottom: 1px solid $pp-bg-maincolour;
+			border-left: 1px solid $pp-bg-maincolour;
+			box-shadow: none;
+
+			&.invalid-input {
+				border: 0;
+				background: $invalid-input-bg;
+				color: $white;
+			}
+		}
+
+		input:not(:focus) {
+			border-top: 1px solid $pp-bg-maincolour;
+			border-right: 0;
+			border-bottom: 1px solid $pp-bg-maincolour;
+			border-left: 1px solid $pp-bg-maincolour;
+
+			&.invalid-input {
+				border: 0;
+				background: $invalid-input-bg;
+				color: $white;
+			}
+		}
+
+		.icon-close-bold {
+			display: flex;
+			align-items: center;
+
+			border-top: 1px solid $pp-bg-maincolour;
+			border-right: 1px solid $pp-bg-maincolour;
+			border-bottom: 1px solid $pp-bg-maincolour;
+			border-top-right-radius: .28em;
+			border-bottom-right-radius: .28em;
+
+			background: $white;
+			padding-right: 3%;
+			color: $pp-bg-maincolour;
+			font-size: 10px;
+		}
+
+		.reset-invalid {
+			border-top: 1px solid $invalid-input-bg;
+			border-bottom: 1px solid $invalid-input-bg;
+			background: $invalid-input-bg;
+		}
+
+		button {
+			@include font-extra-bold;
+
+			border: 1px solid $pp-bg-maincolour;
+			border-radius: .28em;
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			background: $pp-bg-maincolour;
+			height: 100%;
+			text-transform: uppercase;
+			line-height: .9em;
+			letter-spacing: .016em;
+			color: $white;
+		}
+
+		.coupon-open {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+
+		button:focus {
+			border: 1px solid $white;
+			box-shadow: none;
+
+			&.valid-button {
+				border: 0;
+			}
+
+			&.invalid-button {
+				border: 1px solid $invalid-bg;
+				border-left: 1px solid $white;
+			}
+		}
+
+		.valid-button {
+			border: 0;
+			background: $valid-bg;
+		}
+
+		.invalid-button {
+			border: 1px solid $invalid-bg;
+			border-left: 1px solid $white;
+			background: $invalid-bg;
+		}
+
+		.invalid-msg {
+			@include font-bold;
+			position: absolute;
+			bottom: 13px;
+			line-height: 1.385em;
+			letter-spacing: .25px;
+			color: $invalid-bg;
+		}
+	}
+
+	display: none;
+}
+
+// sass-lint:disable no-vendor-prefixes
+@media all and (-ms-high-contrast: none)
+{
+	.header-inner-container {
+		// sass-lint:disable force-element-nesting
+		.add-coupon-container.header {
+			width: 225px;
+		}
+	}
+
+	.order-summary-container {
+		// sass-lint:disable force-element-nesting
+		.add-coupon-container.checkout {
+			width: 300px;
+		}
+	}
+ }

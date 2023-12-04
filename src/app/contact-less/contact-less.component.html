@@ -1,0 +1,21 @@
+<div class="container" style="padding-left: 0px !important; padding-right: 0px !important;">
+    <div class="container-fluid text-center"  style="padding-left: 0px !important; padding-right: 0px !important;width:100%;">
+      <a class="text-center img-display" href={{imageLink}}>
+             <img
+             class="img-responsive center-block"
+             style="max-height:450px;padding-bottom:10px;width:100%;"
+             src= {{imageUrl}}
+             alt="In markets where a curfew is in effect, delivery remains available as per regular hours of operation. For details on pick-up availability please click on Find Out More."
+             ></a>
+
+      <div class="text-center" style="padding-bottom:10px;">
+      <button class ="center-block" type="button" id="close-btn"
+       class="btn btn-primary text-center"
+       (click)="dismissModal('Close click')"
+       aria-label="Close and Continue to Homepage">
+        {{label}}
+      </button>
+    </div>
+    </div>
+
+  </div>

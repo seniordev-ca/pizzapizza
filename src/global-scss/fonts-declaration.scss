@@ -1,0 +1,37 @@
+// Icon font
+@font-face {
+	font-family: 'pizzapizza';
+	font-weight: normal;
+	font-style: normal;
+	src: url('/static-files/fonts/icons/pizzapizza.eot?62510518#iefix') format('embedded-opentype'),
+	url('/static-files/fonts/icons/pizzapizza.woff?62510518') format('woff'),
+	url('/static-files/fonts/icons/pizzapizza.ttf?62510518') format('truetype'),
+	url('/static-files/fonts/icons/pizzapizza.svg?62510518#pizzapizza') format('svg');
+}
+
+// Custom global styling for icons from Font
+.icon-stack {
+	display: inline-block; // So we get the crispest icons possible at all times
+	position: relative; // To allow for nudging icons up and down for vertical alignment
+	font-family: 'pizzapizza';
+	font-size: inherit; // So icon adapts to the size of its parent
+
+	.icon {
+		position: absolute; // Icons within the stack are positioned one on top of the other
+		top: 0;
+		left: 0;
+	}
+
+	.icon-stack-base {
+		position: relative; // One of the icons needs to be identified as a base so it won't be positioned absolutely
+	}
+}
+
+// Server Font default styling
+.server-font-icon {
+	display: inline-block;
+	padding: 0 5px;
+	vertical-align: baseline;
+	line-height: 1;
+	font-size: inherit;
+}

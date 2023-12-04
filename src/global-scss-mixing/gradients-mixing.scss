@@ -1,0 +1,83 @@
+@import './color-variables';
+
+$transparent: rgba(255, 255, 255, 0);
+
+@mixin bg-opacity-gradient($image-url, $position-top: 0) {
+
+	&:before {
+		position: absolute;
+		top: $position-top;
+		left: 0;
+		z-index: 0;
+		background-image: linear-gradient(0deg, $white 13%, $transparent 84%);
+		width: 100%;
+		height: 570px;
+		content: ' ';
+	}
+
+	&:after {
+		position: absolute;
+		top: $position-top;
+		left: 0;
+		z-index: -1;
+		background-image: url($image-url);
+		width: 100%;
+		height: 570px;
+		content: ' ';
+	}
+}
+
+// sass-lint:disable no-color-literals
+@mixin gradient1 {
+	background: url('/static-files/images/texture/pattern1.png'), rgba(220, 240, 246, .15);
+}
+
+// sass-lint:disable no-color-literals
+@mixin gradient2 {
+	background: url('/static-files/images/texture/pattern2.png'), linear-gradient(90deg, #525d70 8%, #1c2339 97%);
+}
+
+// sass-lint:disable no-color-literals
+@mixin gradient3 {
+	background: url('/static-files/images/texture/pattern3.png'), linear-gradient(134deg, #b29693 15%, #362823 100%);
+}
+
+// sass-lint:disable no-color-literals
+@mixin gradient4 {
+	background: url('/static-files/images/texture/pattern2.png'), linear-gradient(90deg, #2c736a 8%, #17463e 97%);
+}
+
+// sass-lint:disable no-color-literals
+@mixin gradient5 {
+	background: url('/static-files/images/texture/pattern1.png'), linear-gradient(104deg, #4fa1ab 6%, #25636e 99%);
+}
+
+// sass-lint:disable no-color-literals
+@mixin gradient6 {
+	background-image: url('/static-files/images/texture/pattern2.png'), linear-gradient(134deg, #595754 0%, #181510 84%);
+}
+
+// sass-lint:disable no-color-literals
+@mixin gradient7 {
+	background-image: url('/static-files/images/texture/pattern1.png'), linear-gradient(131deg, #fff 0%, #a4a4a4 100%);
+}
+
+// sass-lint:disable no-color-literals
+@mixin gradient8 {
+	background-image: url('/static-files/images/texture/pattern2.png'), linear-gradient(131deg, #3b7e3d 0%, #004314 100%);
+}
+
+// sass-lint:disable no-color-literals
+@mixin gradient9 {
+	background: url('/static-files/images/texture/pattern1.png'), #eaf2f6;
+}
+
+// sass-lint:disable no-color-literals
+@mixin gradient10 {
+	background: linear-gradient(-42deg, $pp-bg-secondcolor 14%, $pp-bg-maincolour 69%);
+}
+
+// sass-lint:disable no-color-literals
+@mixin gradient11 {
+	background: linear-gradient(160.16deg, #ef6200 0%, #ef5400 17.11%, #ef5400 64.74%, #ff8200 100%);
+}

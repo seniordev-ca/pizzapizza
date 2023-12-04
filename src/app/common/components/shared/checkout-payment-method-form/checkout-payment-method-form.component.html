@@ -1,0 +1,777 @@
+<!-- Gift Card sub module -->
+<ng-content></ng-content>
+<div class="separator my-4"></div>
+<div class="container-fluid mx-0 px-0 payment-method-form-container checkout" *ngIf="isCheckoutOutPage">
+
+	<div class="row no-gutters">
+		<div class="col-12 my-2 px-0"
+		*ngIf="(userPaymentMethods && userPaymentMethods.length > 0) && (paymentOptions && paymentOptions.online_credit)">
+			<h4 i18n>Your saved payment methods</h4>
+			<app-payment-method [isAccountPage]="!isCheckoutOutPage"
+				[userPaymentMethods]="userPaymentMethods" [selectedPaymentMethod]="selectedPaymentMethod"
+				(userPaymentMethodsEventEmitter)="handleUserPaymentMethodEventEmitter($event)">
+			</app-payment-method>
+		</div>
+	</div>
+
+	<!-- Parent Row -->
+	<div class="row">
+
+		<!-- Parent Col -->
+		<div class="col-12 pp-form">
+			<h4 i18n *ngIf="userState">Add a new payment method</h4>
+
+			<!-- Form Row One - Holds Radio Buttons -->
+			<div class="form-row my-3 d-flex flex-md-row flex-column" [formGroup]="paymentType"
+      aria-label="Choose payment options" tabindex="0">
+				<div class="form-group col-12 pay-option">
+					<label class="radio-group radio-group-circle radio-group-lg radio-group-md-local w-100 mb-0">
+						<input name="paymentOption" type="radio" class="radio-group-input" value="creditCard"
+							(click)="onCreditCardSelected($event)" formControlName="paymentOption" tabindex="0">
+						<span class="select-el-wrapper">
+							<span class="select-el"></span>
+						</span>
+						<span class="px-2 d-flex justify-content-center">
+							<img alt="student card" class="img img-fluid px-0 px-lg-2 cards-image pp-image-loaded"
+								src="./static-files/images/user/payment-methods/account-payment-student-card.png">
+						</span>
+						<span class="d-flex flex-md-column flex-row">
+							<ng-container *ngIf="!isCheckoutOutPage">
+								<span class="d-block label-text-special" i18n>
+									Credit&nbsp;
+								</span>
+								<span class="d-block label-text-special" i18n>
+									Card
+								</span>
+							</ng-container>
+							<ng-container *ngIf="isCheckoutOutPage">
+								<span class="d-block label-text-special" i18n>
+									Pay Online
+								</span>
+							</ng-container>
+						</span>
+						<span class="ml-auto">
+							<img alt="Visa Checkout" width="150" class="img img-fluid cards-image pp-image-loaded"
+								role="button" src="./static-files/images/CC-logos.png" />
+						</span>
+					</label>
+
+					<div class="row label-bottom-border my-3" *ngIf="(checkoutUI.isCreditCardSelected && !checkoutUI.isVisaCheckoutSelected) && !selectedPaymentMethod"></div>
+					<form class="pp-form mb-2 px-1"
+						[class.d-none]="!checkoutUI.isCreditCardSelected || checkoutUI.isVisaCheckoutSelected || ((checkoutUI.isCreditCardSelected || checkoutUI.isVisaCheckoutSelected) && selectedPaymentMethod) || (paymentOptions && !paymentOptions.online_credit)"
+						[formGroup]="checkoutForm">
+						<div class="form-row">
+							<div class="col-12">
+								<h6 i18n>Enter your credit card details</h6>
+							</div>
+						</div>
+						<div class="form-row align-items-baseline">
+							<div class="col-12 col-lg-9 form-group"
+								[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(checkoutForm.controls['nameOnCreditCard'])">
+								<label for="nameOnCreditCard" class="alternate-label">
+									<ng-container i18n>Name on card</ng-container>
+									<app-form-invalid-message [control]="checkoutForm.controls['nameOnCreditCard']">
+									</app-form-invalid-message>
+								</label>
+								<input type="text" class="form-control" id="nameOnCreditCard"
+									formControlName="nameOnCreditCard" placeholder="John Doe" maxlength="50"
+									autocomplete="off">
+							</div>
+							<div class="col-12 col-lg-5 form-group"
+								[class.invalid-entry]="bamboraValidation['card-number'].error">
+								<label for="card-number" class="alternate-label">
+									<ng-container i18n>Card number</ng-container>
+									<div class="invalid-text-alt" *ngIf="bamboraValidation['card-number'].error">
+										<span>
+											&nbsp; {{bamboraValidation['card-number'].error}}
+										</span>
+									</div>
+								</label>
+								<div class="input form-control card-number" id="card-number"
+									[style.background-image]="bamboraValidation['card-number'].background"></div>
+								<div class="feedback-icon"></div>
+							</div>
+
+							<div class="col-6 col-lg-2 form-group cvv-group"
+								[class.invalid-entry]="bamboraValidation['cvv'].error">
+								<label for="cvv" class="alternate-label">
+									<ng-container i18n>CVV</ng-container>
+									<span [ngbTooltip]="tipContent" placement="right" class="d-inline-block d-lg-none">
+										<i class="icon-question-mark cvv-icon"></i>
+									</span>
+									<span [ngbTooltip]="tipContent" placement="top" class="d-lg-inline-block d-none">
+										<i class="icon-question-mark cvv-icon"></i>
+									</span>
+								</label>
+								<div class="input form-control mb-2" id="cvv"></div>
+								<div class="alternate-label">
+									<div class="invalid-text-alt" *ngIf="bamboraValidation['cvv'].error">
+										<span>
+											{{bamboraValidation['cvv'].error}}
+										</span>
+									</div>
+								</div>
+								<ng-template #tipContent>
+									<div class="security-code-box">
+										<div class="d-flex justify-content-between align-items-start">
+											<div>
+												<i class="icon-question-mark"></i>
+											</div>
+											<div>
+												<strong i18n>Security Code</strong>
+												<p class="mb-0" i18n>
+													The security code is the last three digits on the signature strip on
+													the
+													rear of the card.
+												</p>
+											</div>
+										</div>
+									</div>
+								</ng-template>
+							</div>
+
+							<div class="col-6 col-lg-2 form-group"
+								[class.invalid-entry]="bamboraValidation['expiry'].error">
+								<label for="expiryDate" class="alternate-label" i18n>Expiry</label>
+								<div class="input form-control mb-2" name="expiry" id="expiry"></div>
+								<div class="feedback-icon"></div>
+								<div class="alternate-label">
+									<div class="invalid-text-alt" *ngIf="bamboraValidation['expiry'].error">
+										<span>
+											{{bamboraValidation['expiry'].error}}
+										</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="col align-self-start mb-0 mt-2 form-group" *ngIf="userState">
+								<button class="btn btn-primary save-btn" (click)="onSavePayment($event)"
+									[disabled]="!isFormValid(allPaymentMethods)" i18n>Save</button>
+							</div>
+						</div>
+					</form>
+					<!-- End of Credit Card Form -->
+				</div>
+
+				<div class="form-group col-12 pay-option"
+					*ngIf="(!isContactLessValue) && ((isDelivery && (paymentOptions && !paymentOptions.delivery_cashless)) || (!isDelivery && (paymentOptions && !paymentOptions.pickup_cashless)))">
+					<label class="radio-group radio-group-circle radio-group-lg radio-group-md-local w-100 mb-0" tabindex="0">
+						<input name="paymentOption" type="radio" class="radio-group-input" value="payAtDoor"
+							(click)="onPayAtDoorSelected($event)" formControlName="paymentOption">
+						<span class="select-el-wrapper">
+							<span class="select-el"></span>
+						</span>
+						<span class="px-2 d-flex justify-content-center">
+							<img alt="student-card" class="img img-fluid px-0 px-lg-2 cards-image pp-image-loaded"
+								src="./static-files/images/user/payment-methods/account-payment-student-card.png">
+						</span>
+						<span class="d-flex flex-md-column flex-row">
+							<span class="d-block label-text-special">
+								<ng-container
+									*ngIf="isDelivery && (paymentOptions && !paymentOptions.delivery_cashless)" i18n>Pay
+									at Door</ng-container>
+								<ng-container *ngIf="!isDelivery && (paymentOptions && !paymentOptions.pickup_cashless)"
+									i18n>Pay at Restaurant</ng-container>
+							</span>
+						</span>
+					</label>
+					<div class="row label-bottom-border my-3" *ngIf="checkoutUI.isPayAtDoorSelected && !isContactLessValue && ((isDelivery && (paymentOptions && !paymentOptions.delivery_cashless)) || !isDelivery && (paymentOptions && !paymentOptions.pickup_cashless))"></div>
+
+					<div class="col-12 px-0">
+						<div class="pp-form"
+							*ngIf="checkoutUI.isPayAtDoorSelected && !isContactLessValue && ((isDelivery && (paymentOptions && !paymentOptions.delivery_cashless)) || !isDelivery && (paymentOptions && !paymentOptions.pickup_cashless))"
+							[formGroup]="checkoutForm">
+							<div class="form-row py-2">
+
+								<div class="col-6 col-md-6 col-lg-2 form-group mb-lg-0">
+									<label class="radio-group radio-group-md radio-group-sm-local">
+										<input name="paymentMethodAtDoor" type="radio" class="radio-group-input"
+											formControlName="paymentMethodAtDoor" value="Cash">
+										<span class="select-el-wrapper">
+											<span class="select-el"></span>
+										</span>
+										<span class="local-radio-label local-radio-label-sm" i18n>
+											Cash
+										</span>
+									</label>
+								</div>
+
+								<div class="col-6 col-md-6 col-lg-3 form-group mb-lg-0"
+									*ngIf="(isDelivery && paymentOptions && paymentOptions.atdoor_credit) || !isDelivery">
+									<label class="radio-group radio-group-md radio-group-sm-local">
+										<input name="paymentMethodAtDoor" type="radio" class="radio-group-input"
+											formControlName="paymentMethodAtDoor" value="Credit">
+										<span class="select-el-wrapper">
+											<span class="select-el"></span>
+										</span>
+										<span class="local-radio-label local-radio-label-sm" i18n>
+											Credit Card
+										</span>
+									</label>
+								</div>
+
+								<div class="col-6 col-md-6 col-lg-3 debit-class form-group mb-lg-0"
+									*ngIf="(isDelivery && paymentOptions && paymentOptions.atdoor_debit) || !isDelivery">
+									<label class="radio-group radio-group-md radio-group-sm-local">
+										<input name="paymentMethodAtDoor" type="radio" class="radio-group-input"
+											formControlName="paymentMethodAtDoor" value="Debit">
+										<span class="select-el-wrapper">
+											<span class="select-el"></span>
+										</span>
+										<span class="local-radio-label local-radio-label-sm" i18n>
+											Debit Card
+										</span>
+									</label>
+									<span class="local-radio-sub-text local-radio-label-sm"
+										*ngIf="(isDelivery && paymentOptions && paymentOptions.debit_charge_applied)"
+										i18n>
+										($1.00 Charge applies)
+									</span>
+								</div>
+
+								<div class="col-6 col-md-6 col-lg-4 form-group mb-lg-0"
+									*ngIf="(isDelivery && paymentOptions && paymentOptions.atdoor_pizzacard) || !isDelivery">
+									<label class="radio-group radio-group-md radio-group-sm-local">
+										<input name="paymentMethodAtDoor" type="radio" class="radio-group-input"
+											formControlName="paymentMethodAtDoor" value="Club-11-11">
+										<span class="select-el-wrapper">
+											<span class="select-el"></span>
+										</span>
+										<span class="local-radio-label local-radio-label-sm" i18n>
+											Club 11-11/ Pizza Card
+										</span>
+									</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group col-12 d-flex flex-column pay-option"
+					*ngIf="(paymentOptions && paymentOptions.online_pizzacard)">
+					<label class="radio-group radio-group-circle radio-group-lg radio-group-md-local w-100 mb-0">
+						<input name="paymentOption" type="radio" class="radio-group-input" value="studentCard"
+							(click)="onStudentCardSelected($event)" formControlName="paymentOption">
+						<span class="select-el-wrapper">
+							<span class="select-el"></span>
+						</span>
+						<span class="px-2 d-flex justify-content-center">
+							<img alt="student card" class="img img-fluid px-0 px-lg-2 cards-image pp-image-loaded"
+								src="./static-files/images/user/payment-methods/account-payment-student-card.png">
+						</span>
+						<span class="d-flex flex-md-column flex-row">
+							<span class="d-block label-text-special" i18n>
+								Student Meal Card
+							</span>
+						</span>
+					</label>
+
+					<div class="row label-bottom-border my-3" *ngIf="checkoutUI.isStudentCardSelected"></div>
+
+					<!-- Student Card Form -->
+					<form class="pp-form" *ngIf="checkoutUI.isStudentCardSelected" [formGroup]="checkoutForm">
+
+						<div class="form-row">
+
+							<div class="col-12 col-lg-9 form-group" *ngIf="universityList">
+								<label for="selectedSchool" class="alternate-label" i18n>
+									Select School
+								</label>
+								<div class="select-wrapper">
+									<app-dropdown [inputControl]="checkoutForm.controls['studentCardKey']"
+										[options]="universityList" [selectedValue]="getSelectedUniversity()">
+									</app-dropdown>
+								</div>
+
+							</div>
+
+							<div class="col-12 col-lg-9 form-group"
+								[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(checkoutForm.controls['nameOnCreditCard'])">
+
+								<label for="nameOnCreditCard" class="alternate-label">
+									<ng-container i18n>Name on card</ng-container>
+									<app-form-invalid-message [control]="checkoutForm.controls['nameOnCreditCard']">
+									</app-form-invalid-message>
+								</label>
+								<input type="text" class="form-control" id="nameOnMealCard"
+									formControlName="nameOnCreditCard" placeholder="John Smith" maxlength="50">
+							</div>
+
+							<div class="col-12 col-lg-5 form-group"
+								[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(checkoutForm.controls['nameOnCreditCard'])">
+
+								<label for="studentCardNumber" class="alternate-label">
+									<ng-container i18n>Card number</ng-container>
+									<app-form-invalid-message [control]="checkoutForm.controls['studentCardNumber']"
+										#studentCardNumberValidation>
+									</app-form-invalid-message>
+								</label>
+								<input type="text" class="form-control" id="studentCardNumber"
+									formControlName="studentCardNumber" placeholder="1234-1234-1234-1234">
+							</div>
+
+							<div class="col-12 col-lg-2 mt-3 mt-lg-none align-items-end justify-self-end submit-col"
+								*ngIf="!isCheckoutOutPage">
+								<button class="btn btn-primary justify-self-end save-btn"
+									[disabled]="checkoutForm.invalid" (click)="onSavePayment($event)">
+									<span class="btn-text" i18n>
+										SAVE
+									</span>
+								</button>
+							</div>
+						</div>
+
+					</form>
+					<!-- End of Student Card Form -->
+				</div>
+
+				<div class="form-group col-12 d-flex align-items-center pay-option">
+					<label class="radio-group radio-group-circle radio-group-lg radio-group-md-local w-100 mb-0">
+						<input name="paymentOption" type="radio" class="radio-group-input"
+							(click)="onFastCheckout(true)" formControlName="paymentOption" value="visa">
+						<span class="select-el-wrapper">
+							<span class="select-el"></span>
+						</span>
+						<ng-container *ngIf="isVisaClickToPay">
+							<span class="px-2 d-flex justify-content-center">
+								<img class="pr-2 pp-image-loaded img img-fluid px-0 px-lg-2"
+								src="./static-files/images/user/payment-methods/account-payment-visa-clicktopay.png"
+								alt="clicktopay" />
+							</span>
+							<span class="label-text-special" i18n>Click to pay</span>
+						</ng-container>
+						<ng-container *ngIf="!isVisaClickToPay">
+							<span class="px-2 d-flex justify-content-center">
+							<img class="pr-2 pp-image-loaded img img-fluid px-0 px-lg-2"
+								src="./static-files/images/user/payment-methods/account-payment-visa-checkout.png"
+								alt="visacheckout" />
+							</span>
+							<span class="label-text-special" i18n>VisaCheckout</span>
+						</ng-container>
+					</label>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+	<!-- End of Partent row-->
+
+</div>
+<!-- End of Container -->
+
+<div class="container-fluid mx-0 px-0 payment-method-form-container" *ngIf="!isCheckoutOutPage">
+
+	<!-- Parent Row -->
+	<div class="row">
+
+		<!-- Parent Col -->
+		<div class="col-12 pp-form" [class.d-none]="isFormCollapsed && !isCheckoutOutPage">
+			<!-- Form Row One - Holds Radio Buttons -->
+			<div class="form-row my-3 d-flex flex-md-row flex-column" [formGroup]="paymentType">
+				<div class="form-group col-12 col-md-6 col-lg-4 d-flex align-items-center pay-option"
+					*ngIf="(isCheckoutOutPage) || !isCheckoutOutPage">
+					<label class="radio-group radio-group-circle radio-group-lg radio-group-md-local">
+						<input name="paymentOption" type="radio" class="radio-group-input" value="creditCard"
+							(click)="onCreditCardSelected($event)" formControlName="paymentOption">
+						<span class="select-el-wrapper">
+							<span class="select-el"></span>
+						</span>
+						<span class="px-2 d-flex justify-content-center">
+							<img alt="student card" class="img img-fluid px-0 px-lg-2 cards-image pp-image-loaded"
+								src="./static-files/images/user/payment-methods/account-payment-student-card.png">
+						</span>
+						<span class="d-flex flex-md-column flex-row">
+							<ng-container *ngIf="!isCheckoutOutPage">
+								<span class="d-block label-text-special" i18n>
+									Credit&nbsp;
+								</span>
+								<span class="d-block label-text-special" i18n>
+									Card
+								</span>
+							</ng-container>
+							<ng-container *ngIf="isCheckoutOutPage">
+								<span class="d-block label-text-special" i18n>
+									Pay Online
+								</span>
+							</ng-container>
+						</span>
+					</label>
+				</div>
+
+				<div class="form-group col-12 col-md-6 col-lg-4 d-flex align-items-center pay-option"
+					*ngIf="(isCheckoutOutPage && !isContactLessValue) && ((isDelivery && (paymentOptions && !paymentOptions.delivery_cashless)) || (!isDelivery && (paymentOptions && !paymentOptions.pickup_cashless)))">
+					<label class="radio-group radio-group-circle radio-group-lg radio-group-md-local">
+						<input name="paymentOption" type="radio" class="radio-group-input" value="payAtDoor"
+							(click)="onPayAtDoorSelected($event)" formControlName="paymentOption">
+						<span class="select-el-wrapper">
+							<span class="select-el"></span>
+						</span>
+						<span class="px-2 d-flex justify-content-center">
+							<img alt="student-card" class="img img-fluid px-0 px-lg-2 cards-image pp-image-loaded"
+								src="./static-files/images/user/payment-methods/account-payment-student-card.png">
+						</span>
+						<span class="d-flex flex-md-column flex-row">
+							<span class="d-block label-text-special">
+								<ng-container
+									*ngIf="isDelivery && (paymentOptions && !paymentOptions.delivery_cashless)" i18n>Pay
+									at Door</ng-container>
+								<ng-container *ngIf="!isDelivery && (paymentOptions && !paymentOptions.pickup_cashless)"
+									i18n>Pay at Restaurant</ng-container>
+							</span>
+						</span>
+					</label>
+				</div>
+
+				<div class="form-group col-12 col-md-6 col-lg-4 d-flex align-items-center pay-option"
+					*ngIf="(isCheckoutOutPage && paymentOptions && paymentOptions.online_pizzacard) || !isCheckoutOutPage">
+					<label class="radio-group radio-group-circle radio-group-lg radio-group-md-local">
+						<input name="paymentOption" type="radio" class="radio-group-input" value="studentCard"
+							(click)="onStudentCardSelected($event)" formControlName="paymentOption">
+						<span class="select-el-wrapper">
+							<span class="select-el"></span>
+						</span>
+						<span class="px-2 d-flex justify-content-center">
+							<img alt="student card" class="img img-fluid px-0 px-lg-2 cards-image pp-image-loaded"
+								src="./static-files/images/user/payment-methods/account-payment-student-card.png">
+						</span>
+						<span class="d-flex flex-md-column flex-row">
+							<span class="d-block label-text-special" i18n>
+								Student&nbsp;
+							</span>
+							<span class="d-block label-text-special" i18n>
+								Meal Card
+							</span>
+						</span>
+					</label>
+				</div>
+
+				<div class="col-12 my-2"
+					*ngIf="(isDelivery && (checkoutUI.isCreditCardSelected || checkoutUI.isStudentCardSelected || (paymentOptions && !paymentOptions.online_credit)))">
+					<app-checkout-tips-form>
+					</app-checkout-tips-form>
+				</div>
+			</div>
+
+			<div class="separator my-4" *ngIf="isCheckoutOutPage"></div>
+			<!-- Gift Card sub module -->
+			<ng-content></ng-content>
+			<div class="separator my-4"></div>
+
+			<!-- End of Row One -->
+			<div class="row" *ngIf="
+					checkoutUI.isCreditCardSelected &&
+					isCheckoutOutPage &&
+					(userPaymentMethods && userPaymentMethods.length > 0)">
+
+				<div class="col-12 text-right">
+					<button class="btn white-btn add-btn" (click)="onAddNewCard(!isFormCollapsed)">
+						<ng-container *ngIf="isFormCollapsed" i18n>Add</ng-container>
+						<ng-container *ngIf="!isFormCollapsed" i18n>Cancel</ng-container>
+
+						<i [ngClass]="isFormCollapsed ? 'icon-plus-2' : 'icon-delete'"></i>
+					</button>
+				</div>
+			</div>
+			<form class="pp-form mb-2"
+				[class.d-none]="!checkoutUI.isCreditCardSelected || isFormCollapsed || (paymentOptions && !paymentOptions.online_credit)"
+				[formGroup]="checkoutForm">
+				<div class="form-row">
+					<div class="col-12">
+						<h6 i18n>Enter your credit card details</h6>
+						<span class="label-text-special" i18n>
+							We accept the following cards
+						</span>
+						<div class="p-3">
+							<img alt="Visa Checkout" class="img img-fluid cards-image pp-image-loaded" role="button"
+								src="./static-files/images/CC-logos.png" />
+						</div>
+					</div>
+				</div>
+				<div class="form-row align-items-baseline">
+					<div class="col-12 col-lg-9 form-group"
+						[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(checkoutForm.controls['nameOnCreditCard'])">
+						<label for="nameOnCreditCard" class="alternate-label">
+							<ng-container i18n>Name on card</ng-container>
+							<app-form-invalid-message [control]="checkoutForm.controls['nameOnCreditCard']">
+							</app-form-invalid-message>
+						</label>
+						<input type="text" class="form-control" id="nameOnCreditCard" formControlName="nameOnCreditCard"
+							placeholder="John Doe" maxlength="50" autocomplete="off">
+					</div>
+					<div class="col-12 col-lg-5 form-group"
+						[class.invalid-entry]="bamboraValidation['card-number'].error">
+						<label for="card-number" class="alternate-label">
+							<ng-container i18n>Card number</ng-container>
+							<div class="invalid-text-alt" *ngIf="bamboraValidation['card-number'].error">
+								<span>
+									&nbsp; {{bamboraValidation['card-number'].error}}
+								</span>
+							</div>
+						</label>
+						<div class="input form-control card-number" id="card-number"
+							[style.background-image]="bamboraValidation['card-number'].background"></div>
+						<div class="feedback-icon"></div>
+					</div>
+
+					<div class="col-6 col-lg-2 form-group cvv-group"
+						[class.invalid-entry]="bamboraValidation['cvv'].error">
+						<label for="cvv" class="alternate-label">
+							<ng-container i18n>CVV</ng-container>
+							<span [ngbTooltip]="tipContent" placement="right" class="d-inline-block d-lg-none">
+								<i class="icon-question-mark cvv-icon"></i>
+							</span>
+							<span [ngbTooltip]="tipContent" placement="top" class="d-lg-inline-block d-none">
+								<i class="icon-question-mark cvv-icon"></i>
+							</span>
+						</label>
+						<div class="input form-control mb-2" id="cvv"></div>
+						<div class="alternate-label">
+							<div class="invalid-text-alt" *ngIf="bamboraValidation['cvv'].error">
+								<span>
+									{{bamboraValidation['cvv'].error}}
+								</span>
+							</div>
+						</div>
+						<ng-template #tipContent>
+							<div class="security-code-box">
+								<div class="d-flex justify-content-between align-items-start">
+									<div>
+										<i class="icon-question-mark"></i>
+									</div>
+									<div>
+										<strong i18n>Security Code</strong>
+										<p class="mb-0" i18n>
+											The security code is the last three digits on the signature strip on the
+											rear of the card.
+										</p>
+									</div>
+								</div>
+							</div>
+						</ng-template>
+					</div>
+
+					<div class="col-6 col-lg-2 form-group" [class.invalid-entry]="bamboraValidation['expiry'].error">
+						<label for="expiryDate" class="alternate-label" i18n>Expiry</label>
+						<div class="input form-control mb-2" name="expiry" id="expiry"></div>
+						<div class="feedback-icon"></div>
+						<div class="alternate-label">
+							<div class="invalid-text-alt" *ngIf="bamboraValidation['expiry'].error">
+								<span>
+									{{bamboraValidation['expiry'].error}}
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="col align-self-start mb-0 mt-2 form-group" *ngIf="userState">
+						<button class="btn btn-primary save-btn" (click)="onSavePayment($event)"
+							[disabled]="!isFormValid(allPaymentMethods)" i18n>Save</button>
+					</div>
+				</div>
+			</form>
+			<!-- End of Credit Card Form -->
+
+			<!-- Student Card Form -->
+			<form class="pp-form" *ngIf="checkoutUI.isStudentCardSelected" [formGroup]="checkoutForm">
+
+				<div class="form-row">
+
+					<div class="col-12 col-lg-9 form-group" *ngIf="universityList">
+						<label for="selectedSchool" class="alternate-label" i18n>
+							Select School
+						</label>
+						<div class="select-wrapper">
+							<app-dropdown [inputControl]="checkoutForm.controls['studentCardKey']"
+								[options]="universityList" [selectedValue]="getSelectedUniversity()">
+							</app-dropdown>
+						</div>
+
+					</div>
+
+					<div class="col-12 col-lg-9 form-group"
+						[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(checkoutForm.controls['nameOnCreditCard'])">
+
+						<label for="nameOnCreditCard" class="alternate-label">
+							<ng-container i18n>Name on card</ng-container>
+							<app-form-invalid-message [control]="checkoutForm.controls['nameOnCreditCard']">
+							</app-form-invalid-message>
+						</label>
+						<input type="text" class="form-control" id="nameOnMealCard" formControlName="nameOnCreditCard"
+							placeholder="John Smith" maxlength="50">
+					</div>
+
+					<div class="col-12 col-lg-5 form-group"
+						[class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(checkoutForm.controls['nameOnCreditCard'])">
+
+						<label for="studentCardNumber" class="alternate-label">
+							<ng-container i18n>Card number</ng-container>
+							<app-form-invalid-message [control]="checkoutForm.controls['studentCardNumber']"
+								#studentCardNumberValidation>
+							</app-form-invalid-message>
+						</label>
+						<input type="text" class="form-control" id="studentCardNumber"
+							formControlName="studentCardNumber" placeholder="1234-1234-1234-1234">
+					</div>
+
+					<div class="col-12 col-lg-2 mt-3 mt-lg-none align-items-end justify-self-end submit-col"
+						*ngIf="!isCheckoutOutPage">
+						<button class="btn btn-primary justify-self-end save-btn" [disabled]="checkoutForm.invalid"
+							(click)="onSavePayment($event)">
+							<span class="btn-text" i18n>
+								SAVE
+							</span>
+						</button>
+					</div>
+				</div>
+
+			</form>
+			<!-- End of Student Card Form -->
+		</div>
+
+		<div class="col-12 my-2"
+			*ngIf="!checkoutUI.isPayAtDoorSelected && (userPaymentMethods && userPaymentMethods.length > 0) && (paymentOptions && paymentOptions.online_credit)|| !isCheckoutOutPage">
+			<app-payment-method [isAccountPage]="!isCheckoutOutPage" [userPaymentMethods]="userPaymentMethods"
+				[selectedPaymentMethod]="selectedPaymentMethod"
+				(userPaymentMethodsEventEmitter)="handleUserPaymentMethodEventEmitter($event)">
+			</app-payment-method>
+		</div>
+
+		<div class="col-12">
+			<div class="pp-form"
+				*ngIf="checkoutUI.isPayAtDoorSelected && !isContactLessValue && ((isDelivery && (paymentOptions && !paymentOptions.delivery_cashless)) || !isDelivery && (paymentOptions && !paymentOptions.pickup_cashless))"
+				[formGroup]="checkoutForm">
+				<div class="form-row py-2">
+
+					<div class="col-6 col-md-6 col-lg-2 form-group">
+						<label class="radio-group radio-group-md radio-group-sm-local">
+							<input name="paymentMethodAtDoor" type="radio" class="radio-group-input"
+								formControlName="paymentMethodAtDoor" value="Cash">
+							<span class="select-el-wrapper">
+								<span class="select-el"></span>
+							</span>
+							<span class="local-radio-label local-radio-label-sm" i18n>
+								Cash
+							</span>
+						</label>
+					</div>
+
+					<div class="col-6 col-md-6 col-lg-3 form-group"
+						*ngIf="(isDelivery && paymentOptions && paymentOptions.atdoor_credit) || !isDelivery">
+						<label class="radio-group radio-group-md radio-group-sm-local">
+							<input name="paymentMethodAtDoor" type="radio" class="radio-group-input"
+								formControlName="paymentMethodAtDoor" value="Credit">
+							<span class="select-el-wrapper">
+								<span class="select-el"></span>
+							</span>
+							<span class="local-radio-label local-radio-label-sm" i18n>
+								Credit Card
+							</span>
+						</label>
+					</div>
+
+					<div class="col-6 col-md-6 col-lg-3 debit-class form-group"
+						*ngIf="(isDelivery && paymentOptions && paymentOptions.atdoor_debit) || !isDelivery">
+						<label class="radio-group radio-group-md radio-group-sm-local">
+							<input name="paymentMethodAtDoor" type="radio" class="radio-group-input"
+								formControlName="paymentMethodAtDoor" value="Debit">
+							<span class="select-el-wrapper">
+								<span class="select-el"></span>
+							</span>
+							<span class="local-radio-label local-radio-label-sm" i18n>
+								Debit Card
+							</span>
+						</label>
+						<span class="local-radio-sub-text local-radio-label-sm"
+							*ngIf="(isDelivery && paymentOptions && paymentOptions.debit_charge_applied)" i18n>
+							($1.00 Charge applies)
+						</span>
+					</div>
+
+					<div class="col-6 col-md-6 col-lg-4 form-group"
+						*ngIf="(isDelivery && paymentOptions && paymentOptions.atdoor_pizzacard) || !isDelivery">
+						<label class="radio-group radio-group-md radio-group-sm-local">
+							<input name="paymentMethodAtDoor" type="radio" class="radio-group-input"
+								formControlName="paymentMethodAtDoor" value="Club-11-11">
+							<span class="select-el-wrapper">
+								<span class="select-el"></span>
+							</span>
+							<span class="local-radio-label local-radio-label-sm" i18n>
+								Club 11-11/ Pizza Card
+							</span>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!-- End of Partent row-->
+
+	<div class="row" *ngIf="checkoutUI.isCreditCardSelected">
+		<div class="col-12 p-4 text-center">
+			<div class="separator dotted"></div>
+			<h6 i18n>OR</h6>
+		</div>
+	</div>
+
+	<div class="row" *ngIf="(!isCheckoutOutPage) || checkoutUI.isCreditCardSelected">
+		<div class="col-12">
+			<h6 i18n *ngIf="!isCheckoutOutPage">Select one of the payment methods below</h6>
+
+			<button class="btn-no-style w-100 text-left" (click)="onFastCheckout(true)">
+				<div class="row quickpay-box no-gutters justify-content-between"
+					[class.selected]="checkoutUI.isVisaCheckoutSelected">
+					<div class="col-auto">
+						<ng-container *ngIf="isVisaClickToPay">
+							<img class="pr-2 pp-image-loaded"
+								src="./static-files/images/user/payment-methods/account-payment-visa-clicktopay.png"
+								alt="clicktopay" />
+							<ng-container i18n>Click to pay</ng-container>
+						</ng-container>
+						<ng-container *ngIf="!isVisaClickToPay">
+							<img class="pr-2 pp-image-loaded"
+								src="./static-files/images/user/payment-methods/account-payment-visa-checkout.png"
+								alt="visacheckout" />
+							<ng-container i18n>VisaCheckout</ng-container>
+						</ng-container>
+					</div>
+					<div class="col-auto">
+						<span *ngIf="!checkoutUI.isVisaCheckoutSelected" class="payment-btn">
+							<ng-container *ngIf="!isCheckoutOutPage" i18n>Set Default</ng-container>
+							<ng-container *ngIf="isCheckoutOutPage" i18n>Select</ng-container>
+						</span>
+						<span class="location-selected-row" *ngIf="checkoutUI.isVisaCheckoutSelected">
+							<ng-container *ngIf="!isCheckoutOutPage" i18n>Default</ng-container>
+							<i class="icon-checkmark"></i>
+						</span>
+					</div>
+				</div>
+
+			</button>
+			<button class="btn-no-style w-100 text-left" *ngIf="!isCheckoutOutPage"
+				(click)="onFastCheckout(null, true)">
+				<div class="row quickpay-box no-gutters justify-content-between" [class.selected]="!isDefaultSelected">
+					<div class="col-auto" i18n>
+						<i class="icon-credit-card user-activity-main-icon large-icon"
+							[class.orange]="isDefaultSelected"></i>
+						No Payment Method
+					</div>
+					<div class="col-auto">
+						<span *ngIf="isDefaultSelected" class="payment-btn">
+							<ng-container i18n>Set Default</ng-container>
+						</span>
+						<span class="location-selected-row" *ngIf="!isDefaultSelected">
+							<ng-container i18n>Default</ng-container>
+							<i class="icon-checkmark"></i>
+						</span>
+					</div>
+				</div>
+
+			</button>
+		</div>
+	</div>
+
+</div>
+<!-- End of Container -->

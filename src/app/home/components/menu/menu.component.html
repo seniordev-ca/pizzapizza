@@ -1,0 +1,53 @@
+<div class="container menu-container" [class.pp-ghost-container]="isLoading">
+	<!-- menu start -->
+	<div class="row my-md-3 mx-0 justify-content-center">
+		<div class="col-12 content-title" i18n tabindex="0">
+			MENU
+		</div>
+	</div>
+
+	<div class="row justify-content-center px-0 my-md-3 mx-0">
+
+		<div class="col-12 px-2 error-state" *ngIf="isError">
+			<button class="btn btn-primary" (click)="onRetryClick()" i18n>
+				Retry
+			</button>
+		</div>
+
+		<div class="col-12 px-2" *ngIf="!isError" tabindex="-1">
+			<ng-container *ngFor="let category of categories;let Index = index">
+				<ng-template [ngIf]="category.uiMetadata.size === 'small'">
+
+						<div class="col-6 col-md-3 float-left category-small">
+							<app-menu-category-card [category]="category" [index]=Index >
+							</app-menu-category-card>
+						</div>
+
+				</ng-template>
+
+
+				<ng-template [ngIf]="category.uiMetadata.size === 'medium'">
+
+						<div class="col-6 col-md-3 float-left category">
+							<app-menu-category-card [category]="category" [index]=Index>
+							</app-menu-category-card>
+						</div>
+
+				</ng-template>
+
+
+				<ng-template [ngIf]="category.uiMetadata.size === 'large'">
+
+						<div class="col-12 col-md-6 float-left category large">
+							<app-menu-category-card [category]="category" [index]=Index>
+							</app-menu-category-card>
+						</div>
+
+				</ng-template>
+
+			</ng-container>
+		</div>
+
+	</div>
+	<!-- menu end -->
+</div>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>
+    PP SDK tests
+  </title>
+  <link href="./unit-tests-infrastructure/libs/mocha.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div id="mocha"></div>
+
+  <!--
+    Libs: jQuery, mocha, chai
+    -->
+  <script src="./unit-tests-infrastructure/libs/jquery.min.js"></script>
+  <script src="./unit-tests-infrastructure/libs/chai.min.js"></script>
+  <script src="./unit-tests-infrastructure/libs/mocha.js"></script>
+
+  <!--
+      PP SDK test cases
+    -->
+  <script>
+    // This variable could be used on the page to enable SDK console logging
+    window['pp-sdk-logging'] = true;
+
+    const assert = chai.assert;
+    const expect = chai.expect;
+    chai.config.truncateThreshold = 0;
+    mocha.setup('bdd')
+  </script>
+
+  <script>
+
+    const allUnitTests = [
+      {
+        separator: true,
+        name: 'SDK core'
+      },
+
+      {
+        name: 'SDK smoke test',
+        src: './unit-tests/sdk-smoke.test.js'
+      },
+
+      {
+        name: 'SDK general error handeling',
+        src: './unit-tests/sdk-general-error-handeling.test.js'
+      },
+
+      {
+        separator: true,
+        name: 'Single products'
+      },
+      {
+        name: 'Dipping sauce pricing',
+        src: './unit-tests/dipping-sauce.js'
+      },
+      {
+        name: '3 POP validation test',
+        src: './unit-tests/3-pop-validation.js'
+      },
+      {
+        name: '10 wings pricing',
+        src: './unit-tests/10-wings-pricing.js'
+      },
+      {
+        name: '6 chicken bites',
+        src: './unit-tests/6-chicken-bites.js'
+      },
+      {
+        name: 'Buffalo chicken',
+        src: './unit-tests/buffalo-chicken-pricing.js'
+      },
+      {
+        name: 'Single Pizza Half Toppings',
+        src: './unit-tests/make-own-masterpiece-pricing.js'
+      },
+      {
+        name: 'Sriracha chicken pricing',
+        src: './unit-tests/sriracha-chicken-pricing.js'
+      },
+      {
+        name: 'Sriracha chicken error handeling',
+        src: './unit-tests/sriracha-chicken-validation.js'
+      },
+      {
+        name: '20 tossed and sauced wings',
+        src: './unit-tests/20-tossed-and-sauced-wings.js'
+      },
+      {
+        name: '5 wings',
+        src: './unit-tests/5-wings-product-validation.js'
+      },
+
+      {
+        name: '20 wings',
+        src: './unit-tests/20-wings-product-validation.js'
+      },
+
+      {
+        name: 'Bacon ceasar salad',
+        src: './unit-tests/bacon-ceasar-salad.js'
+      },
+
+      {
+        name: 'Chipotle Chicken Pizza',
+        src: './unit-tests/chipotle-chicken.js'
+      },
+      {
+        name: 'Cheeze Panzerotti',
+        src: './unit-tests/cheese-panzerotti.js'
+      },
+      {
+        separator: true,
+        name: 'Combo products'
+      },
+      {
+        name: 'Medium + poutine or fries',
+        src:'./unit-tests/medium-poutine-fries-combo.js'
+      },
+      {
+        name: 'Party pack Combo',
+        src:'./unit-tests/party-pack-combo.js'
+      },
+      {
+        name: 'Garden Salad PLatter Combo',
+        src: './unit-tests/garden-salad-platter.js'
+      },
+      {
+        name: 'Fan favourive',
+        src: './unit-tests/combo-fan-favourive.js'
+      },
+
+      {
+        name: 'Mega much pricing',
+        src: './unit-tests/mega-munch-pricing.js'
+      },
+      {
+        name: 'Mega much validation',
+        src: './unit-tests/mega-much-validation.js'
+      },
+      {
+        name: 'New Mega much model',
+        src: './unit-tests/mega-munch-new-model.js'
+      },
+      {
+        name: 'New MegaMunch New',
+        src:  './unit-tests/mega-munch-new-model-new.js'
+      },
+
+      {
+        name: 'Score saving upsize',
+        src:  './unit-tests/score-savings-combo_14265.js'
+      },
+      // {
+      //   name: 'Score Savings Compo pricing',
+      //   src: './unit-tests/score-savings-pricing.js'
+      // },
+
+      {
+        name: 'Score Savings Combo New Model',
+        src: './unit-tests/score-savings-pricing-new-model.js'
+      },
+
+      {
+        name: 'Big dinner+Movie(score savings)-old',
+        src: './unit-tests/big-dinner_movie(score_savings).js'
+      },
+      {
+        name: 'Feed 6 under 6',
+        src: './unit-tests/feed-6-under-6.js'
+      },
+      {
+        name: 'Calzone Combo New Model',
+        src: './unit-tests/calzone-combo-new-model.js'
+      },
+
+      // { // product discontinued?
+      //   name: 'Medium + 2 top + dip pricing',
+      //   src: './unit-tests/medium+2-top+dip.js'
+      // },
+      {
+        name: '2 XLarge + 1 top',
+        src: './unit-tests/2xl1top.js'
+      },
+      {
+        name: 'Wing it Box',
+        src: './unit-tests/wingItBox.js'
+      },
+      {
+        name: 'Wing it Box New Model',
+        src: './unit-tests/wing-it-box-new-model.js'
+      },
+      {
+        separator: true,
+        name: 'Twins'
+      },
+      {
+        name: 'Twins',
+        src: './unit-tests/twins-pricing-validation.js'
+      },
+
+
+      {
+        separator: true,
+        name: 'Single Configurable Item'
+      },
+      {
+        name: 'Chicken quesadilla',
+        src: './unit-tests/chicken-pizzadilla-pricing.js'
+      }
+
+    ]
+
+    const testRunner = (() => {
+
+      const _addScript = (src, callback) => {
+        var s = document.createElement('script');
+        s.setAttribute('src', src);
+        s.onload = callback;
+        document.body.appendChild(s);
+      }
+
+
+      const _runTests = () => {
+        mocha.checkLeaks();
+        mocha.globals(['jQuery']);
+        mocha.run();
+      }
+
+      const _renderAllScript = () => {
+        allUnitTests.forEach((testSuite) => {
+          const isChecked = !localStorage.getItem(testSuite.src);
+          if (!testSuite.separator) {
+            $('#all-test .list')
+              .append(`
+                <input type="checkbox" test-suite="`+ testSuite.src + `" 
+                      onclick="testRunner.onCheckboxClick(this)"
+                      ` + (isChecked ? 'checked' : '')
+                + `>`
+                + testSuite.name + `
+              <br>`);
+
+          } else {
+            $('#all-test .list').append('<b>' + testSuite.name + '</b><br>');
+          }
+        });
+      }
+
+      const _loadActiveScripts = (done) => {
+        let scriptToLoad = [];
+        allUnitTests.forEach((testSuite) => {
+          if (!testSuite.separator) {
+            const isChecked = localStorage.getItem(testSuite.src);
+            if (!isChecked) {
+              scriptToLoad.push(testSuite.src);
+            }
+          }
+        })
+
+        if (scriptToLoad.length === 0) {
+          done();
+        }
+        scriptToLoad = scriptToLoad.reverse();
+
+        const fetchNextScript = () => {
+          const currentScript = scriptToLoad.pop();
+          _addScript(currentScript, () => {
+            scriptToLoad.length === 0 ? done() : fetchNextScript();
+          });
+        }
+        fetchNextScript();
+      }
+
+      const onCheckboxClick = (self) => {
+        var src = $(self).attr('test-suite');
+        if (localStorage.getItem(src)) {
+          localStorage.removeItem(src);
+        } else {
+          localStorage.setItem(src, true);
+        }
+        window.location.reload();
+      }
+
+
+      const init = () => {
+        _renderAllScript();
+        _loadActiveScripts(() => {
+          _runTests();
+        });
+      }
+
+      const onSelectAllClick = () => {
+        $('.list input').each(function () {
+          var testCaseUrl = $(this).attr('test-suite');
+          localStorage.removeItem(testCaseUrl);
+        });
+        window.location.reload();
+      }
+
+
+      const onUnSelectAllClick = () => {
+        $('.list input').each(function () {
+          var testCaseUrl = $(this).attr('test-suite');
+          localStorage.setItem(testCaseUrl, true);
+        });
+        window.location.reload();
+      }
+
+      return {
+        init,
+        onCheckboxClick,
+        onSelectAllClick,
+        onUnSelectAllClick
+      }
+
+    })()
+
+    $(document).ready(() => {
+      testRunner.init();
+    });
+
+  </script>
+  <style>
+    #mocha {
+      margin-left: 255px;
+    }
+.list {
+  max-width:250px;
+}
+    #all-test {
+      position: fixed;
+      left: -1px;
+      top: -1px;
+      background-color: white;
+      padding: 10px;
+      overflow: hidden;
+      border: 1px solid black;
+    }
+
+    #all-test:hover {
+      padding: 10px;
+      width: initial;
+      height: initial;
+    }
+
+    #all-test input {
+      margin-left: 14px;
+      margin-top: 5px;
+    }
+  </style>
+
+
+  <div id="all-test">
+    <div class="title">
+      <button onclick="testRunner.onSelectAllClick(this);">Select all</button>
+      <button onclick="testRunner.onUnSelectAllClick(this);">Unselect all</button>
+    </div>
+    <div class="list">
+    </div>
+  </div>
+
+</body>
+
+</html>

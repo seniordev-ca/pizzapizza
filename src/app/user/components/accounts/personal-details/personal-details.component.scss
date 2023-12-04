@@ -1,0 +1,135 @@
+@import 'global-scss-mixing';
+
+$mid-grey: #dae9f0;
+$light-grey: #edf2f5;
+$not-active-btn-color: #6d7273;
+$btn-dark-grey: #dbe4ea;
+$ghost-loader-bg: #e1e7e9;
+$pp-green: #4e7026;
+$pp-secondary-text-color: #3b210b;
+$black: #000;
+
+.personal-details-container {
+	border: 1px solid $ghost-loader-bg;
+	border-radius: 9px;
+	background-color: $light-grey;
+
+	.personal-details-information-col-contact-email {
+		word-wrap: break-word;
+	}
+
+	.personal-details-image-col {
+
+		.user-image-action {
+			span {
+				font-size: .66em;
+				font-weight: 400;
+			}
+		}
+	}
+
+	.personal-details-information-col-user-name {
+		@include font-extra-bold;
+		line-height: .8;
+		letter-spacing: .4px;
+		color: $pp-default-text-colour;
+		font-size: 1.25em;
+		word-wrap: break-word;
+	}
+
+	.personal-details-information-col-edit {
+		cursor: pointer;
+		color: $pp-dark-maincolour;
+
+		i {
+			font-size: .76em;
+		}
+
+		span {
+			font-size: .66em;
+		}
+	}
+
+	.personal-details-information-col-contact {
+		line-height: 1.29;
+		letter-spacing: .3px;
+		color: $pp-secondary-text-color;
+		font-size: .813em;
+	}
+}
+
+@include media-breakpoint-down(md) {
+
+	.personal-details-container {
+
+		.personal-details-image-col {
+
+			.user-profile-image-circle-wrap {
+				margin-top: 10%;
+				width: 85px;
+				height: 85px;
+			}
+		}
+
+		.personal-details-information-col {
+			text-align: center;
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+
+	.personal-details-container {
+
+		.personal-details-image-col {
+
+			.user-profile-image-circle-wrap {
+				width: 100px;
+				height: 100px;
+			}
+		}
+
+		.personal-details-information-col {
+			text-align: start;
+		}
+
+	}
+}
+
+@include media-breakpoint-down(xs) {
+
+	.personal-details-container {
+
+		.personal-details-image-col {
+
+			.user-profile-image-circle-wrap {
+				width: 87.5px;
+				height: 87.5px;
+			}
+		}
+
+		.personal-details-information-col-user-name {
+			@include font-extra-bold;
+			line-height: .8;
+			letter-spacing: .4px;
+			color: $pp-default-text-colour;
+			font-size: .87em;
+		}
+
+		.personal-details-information-col-edit {
+			i {
+				font-size: .81em;
+			}
+
+			span {
+				color: $pp-bg-maincolour;
+				font-size: .7em;
+			}
+		}
+
+		.personal-details-information-col-contact {
+			font-size: .69em;
+		}
+	}
+}
+

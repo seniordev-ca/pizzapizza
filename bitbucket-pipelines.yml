@@ -1,0 +1,263 @@
+# Docker image to base build upon
+# Same as GCP standart runtime 10.14.0
+image: node:10.14
+
+definitions:
+  steps:
+    - step: &angular-install
+        name: Angular CLI and packages installation
+        script:
+          - npm install -g @angular/cli # Install Angular CLI
+          - npm install # Install npm packages
+        artifacts:
+          - node_modules/**
+
+    - step: &sdk-test
+        name: Test SDK shared for platforms
+        script:
+          - cd src-sdk
+          - npm install # Install platforms SDK bundle and dev packages
+          - npm run build
+          - npm run test
+
+    - step: &linting
+        name: Linting
+        script:
+          - node_modules/.bin/ng lint
+          - ./node_modules/tslint/bin/tslint --project ./tslint.json
+          - ./node_modules/sass-lint/bin/sass-lint.js --config .sass-lint.yml -v --max-warnings 0
+
+    - step: &packages_audit
+        name: Packages audit
+        script:
+          - npm install -g audit-ci
+          - sh CI/audit-packages.sh
+
+    - step: &aot_build
+        name: AOT build
+        script:
+          - node_modules/.bin/ng build --aot --output-hashing=none
+
+    - step: &sdk
+        name: SDK packages installation and build
+        script:
+          - sh CI/build.sh sdk
+        artifacts:
+          - dist/**
+
+    - step: &web-en
+        name: Web EN
+        script:
+          - sh CI/build.sh web-en
+        artifacts:
+          - dist/**
+
+    - step: &web-fr
+        name: Web FR
+        script:
+          - sh CI/build.sh web-fr
+        artifacts:
+          - dist/**
+
+    - step: &server-en
+        name: Server EN
+        script:
+          - sh CI/build.sh server-en
+        artifacts:
+          - dist/**
+
+    - step: &server-fr
+        name: Server FR
+        script:
+          - sh CI/build.sh server-fr
+        artifacts:
+          - dist/**
+
+    - step: &ssr-server
+        name: SSR server
+        script:
+          - sh CI/build.sh ssr-server
+        artifacts:
+          - dist/**
+
+    - step: &deploy-all
+        name: Deploy all components
+        script:
+          - source ./CI/deploy-all.sh
+
+
+pipelines:
+  # Linting, AOT build for all orders
+  branches:
+    feature/*:
+      - step: *angular-install
+      - parallel:
+        - step: *packages_audit
+        - step: *linting
+        - step: *aot_build
+  
+    task/*:
+      - step: *angular-install
+      - parallel:
+        - step: *packages_audit
+        - step: *linting
+        - step: *aot_build
+
+    develop:
+      - step:
+          name: Set target environment
+          script:
+            - sh CI/set-deployment-params.sh ppl-tmp-fe-phx2
+          artifacts:
+            - dist/project-id.txt
+            - dist/gae-version.txt
+            - src-web-mw/gae-version.txt
+            - src/revision.ts
+      - step: *angular-install
+      - parallel:
+        - step: *sdk
+        - step: *web-en
+        - step: *web-fr
+        - step: *server-en
+        - step: *server-fr
+      - step: *ssr-server
+      - step: *deploy-all
+
+    ppl_prod:
+      - step:
+          name: Set target environment
+          script:
+            - sh CI/set-deployment-params.sh ppl-prod--fe-phx2
+          artifacts:
+            - dist/project-id.txt
+            - dist/gae-version.txt
+            - src-web-mw/gae-version.txt
+            - src/revision.ts
+      - step: *angular-install
+      - step: *linting
+      - parallel:
+        - step: *sdk
+        - step: *web-en
+        - step: *web-fr
+        - step: *server-en
+        - step: *server-fr
+      - step: *ssr-server
+      # - step: *deploy-all
+    ppl_stg:
+      - step:
+          name: Set target environment
+          script:
+            - sh CI/set-deployment-params.sh ppl-stg-fe-phx2
+          artifacts:
+            - dist/project-id.txt
+            - dist/gae-version.txt
+            - src-web-mw/gae-version.txt
+            - src/revision.ts
+      - step: *angular-install
+      - step: *linting
+      - parallel:
+        - step: *sdk
+        - step: *web-en
+        - step: *web-fr
+        - step: *server-en
+        - step: *server-fr
+      - step: *ssr-server
+      - step: *deploy-all
+    ppl_uat3:
+      - step:
+          name: Set target environment
+          script:
+            - sh CI/set-deployment-params.sh ppl-uat3-fe-phx2
+          artifacts:
+            - dist/project-id.txt
+            - dist/gae-version.txt
+            - src-web-mw/gae-version.txt
+            - src/revision.ts
+      - step: *angular-install
+      - step: *linting
+      - parallel:
+        - step: *sdk
+        - step: *web-en
+        - step: *web-fr
+        - step: *server-en
+        - step: *server-fr
+      - step: *ssr-server
+      - step: *deploy-all
+    ppl_tmp:
+      - step:
+          name: Set target environment
+          script:
+            - sh CI/set-deployment-params.sh ppl-tmp-fe-phx2
+          artifacts:
+            - dist/project-id.txt
+            - dist/gae-version.txt
+            - src-web-mw/gae-version.txt
+            - src/revision.ts
+      - step: *angular-install
+      - step: *linting
+      - parallel:
+        - step: *sdk
+        - step: *web-en
+        - step: *web-fr
+        - step: *server-en
+        - step: *server-fr
+      - step: *ssr-server
+    ppl_stg2:
+      - step:
+          name: Set target environment
+          script:
+            - sh CI/set-deployment-params.sh ppl-stg2-fe-phx2
+          artifacts:
+            - dist/project-id.txt
+            - dist/gae-version.txt
+            - src-web-mw/gae-version.txt
+            - src/revision.ts
+      - step: *angular-install
+      - step: *linting
+      - parallel:
+        - step: *sdk
+        - step: *web-en
+        - step: *web-fr
+        - step: *server-en
+        - step: *server-fr
+      - step: *ssr-server
+      - step: *deploy-all
+  tags:
+    release-phx2-dev-*:
+      - step:
+          name: Set target environment
+          script:
+            - sh CI/set-deployment-params.sh ppl-dev-fe-phx2
+          artifacts:
+            - dist/project-id.txt
+            - dist/gae-version.txt
+            - src-web-mw/gae-version.txt
+            - src/revision.ts
+      - step: *angular-install
+      - parallel:
+        - step: *sdk
+        - step: *web-en
+        - step: *web-fr
+        - step: *server-en
+        - step: *server-fr
+      - step: *ssr-server
+      - step: *deploy-all
+    release-phx2-ppl_prod-*:
+      - step:
+          name: Set target environment
+          script:
+            - sh CI/set-deployment-params.sh ppl-prod--fe-phx2
+          artifacts:
+            - dist/project-id.txt
+            - dist/gae-version.txt
+            - src-web-mw/gae-version.txt
+            - src/revision.ts
+      - step: *angular-install
+      - parallel:
+        - step: *sdk
+        - step: *web-en
+        - step: *web-fr
+        - step: *server-en
+        - step: *server-fr
+      - step: *ssr-server
+      - step: *deploy-all

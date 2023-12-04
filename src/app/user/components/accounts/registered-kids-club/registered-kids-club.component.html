@@ -1,0 +1,54 @@
+<div class="container mt-2 registered-kids-club-container">
+		<div class="row mb-3 d-flex align-items-center registered-kids-club-first-row">
+			<div class="col-1 col-sm-1 col-md-12 col-lg-2 ml-2 pl-2 ml-sm-0 pl-sm-0 d-flex justify-content-center justify-content-lg-start">
+				<i class="icon-balloons-new registered-kids-club-title-icon"></i>
+			</div>
+			<div class="col-10 col-sm-11 col-md-12 col-lg-10 d-flex justify-content-between">
+				<div class="register-kids-club-title" i18n>
+					Kids Club
+				</div>
+
+				<div class="pt-0 pt-sm-1 d-flex align-items-center registered-kids-club-action"
+					(click)="onAddChild($event)">
+					<span class="registered-kids-club-action-span" i18n>
+						Add 
+					</span>
+					<i class="icon-plus-2"></i>
+				</div>
+			</div>
+		</div>
+
+		<div class="row mb-2 registered-kids-club-second-row"
+			*ngFor="let childListed of registeredKidsClub">
+
+			<div class="col-4 col-md-12 col-lg-4 mt-2 d-flex justify-content-end justify-content-md-center justify-content-lg-end child-icon-image-col">
+				<i class="icon-sign-in child-icon"></i>
+			</div>
+			<!-- End of Column One -->
+	
+			<!-- Column Two - Holds User's Information -->
+			<div class="col-8 col-md-12 col-lg-8 mt-3 justify-content-start justify-content-md-center justify-content-lg-start child-info-col">
+	
+				<div class="pl-0 pl-md-2 mb-2 child-user-name">
+					{{childListed.firstName}} {{childListed.lastName}}
+				</div>
+	
+				<div class="pl-0 pl-md-2 mb-2 child-birthday-col">
+					<ng-container i18n>Birthday</ng-container> {{childListed.dobDisplayString}}
+				</div>
+
+				<div class="pl-0 pl-md-2 mb-2 d-flex align-items-center justify-content-start justify-content-md-center justify-content-lg-start child-edit-col"
+					(click)="onEditChild($event, childListed)">
+	
+					<i class="icon-edit"></i>
+					<span class="edit-text" i18n>
+						 Edit
+					</span>
+	
+				</div>
+	
+			</div>
+			<!-- End of Column Two -->
+		</div>
+
+</div>

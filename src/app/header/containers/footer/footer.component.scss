@@ -1,0 +1,156 @@
+@import 'global-scss-mixing';
+
+.footer-container {
+	background-color: $footer-gray;
+	color: $pp-default-text-colour;
+
+	.legal-menu-wrapper {
+
+		span {
+			line-height: 2;
+			font-size: .7875em;
+
+    }
+
+		a {
+			color: $pp-dark-maincolour;
+		}
+
+	}
+
+	.footer-collapsed-menu-item {
+		border: 0;
+		background-color: $footer-gray;
+	}
+
+	.footer-collapsed-menu-item:focus {
+		outline: 0;
+	}
+
+	h2 {
+		@include font-black;
+		padding-bottom: 1em;
+		text-transform: uppercase;
+		line-height: 21.6px;
+		letter-spacing: .35px;
+		font-size: 1.4625em;
+	}
+
+
+	.footer-drop-down-open {
+		display: block;
+	}
+
+
+	ul {
+		padding-left: 0;
+		list-style: none;
+		line-height: 1.5em;
+		letter-spacing: .22px;
+
+		li {
+			font-size: .7875em;
+
+			a {
+				color: $pp-default-text-colour;
+			}
+		}
+	}
+
+	.recaptcha-text {
+		font-size: .7875rem;
+
+	}
+
+	.copyright {
+		font-size: .7875rem;
+  }
+
+	a {
+		color: $pp-dark-maincolour;
+	}
+
+	.social-icons {
+		font-size: 1.2em;
+
+		a {
+			text-decoration: none;
+			color: $pp-bg-maincolour;
+		}
+	}
+
+	.dev {
+		font-size: 12px;
+	}
+
+	.icon-triangle {
+		display: none;
+		transform: rotate(180deg);
+		font-size: 8px;
+	}
+}
+
+// bg colour for footer
+.seo-footer {
+	border-top: 1px solid $border-line-color;
+	background-color: $footer-gray;
+
+	.store-locator-wrapper {
+		color: $pp-dark-maincolour;
+
+		a {
+			color: $pp-dark-maincolour;
+			// font-size: .7875em;
+		}
+	}
+}
+
+@include media-breakpoint-only(lg) {
+	.footer-container {
+
+		h2 {
+			font-size: 1.2em;
+		}
+	}
+}
+
+@include media-breakpoint-only(md) {
+	.footer-container {
+
+		h2 {
+			font-size: 1em;
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.seo-footer {
+		margin: 1em 0;
+	}
+
+	.footer-container {
+		padding-bottom: 50px;
+		height: 100%;
+
+		img {
+			max-width: 180px;
+		}
+
+		h2 {
+			padding-bottom: 0;
+			font-size: .9em;
+		}
+
+		.icon-triangle {
+			display: inline-block;
+		}
+	}
+}
+
+@include media-breakpoint-only(xs) {
+	.footer-container {
+		img {
+			max-width: 100px;
+		}
+	}
+}

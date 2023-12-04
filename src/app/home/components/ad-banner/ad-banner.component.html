@@ -1,0 +1,60 @@
+<div class="container mt-3 mb-2 pizza-banner-container" [class.pp-ghost-container]="loading"
+  [class.d-none]="privateBannerList.length === 0">
+
+  <div class="row" *ngIf="error">
+    <div class="col-12 error-state">
+      <button class="btn btn-primary" (click)="onRetryClick()" i18n>
+        Retry
+      </button>
+    </div>
+  </div>
+  <!-- ad space start -->
+  <div class="row ghost-bg" *ngIf="!error">
+    <ng-container [ngSwitch]="count">
+      <!-- If there are four ads -->
+      <ng-container *ngSwitchCase="4">
+        <div class="col-12 col-md-3 m-0 px-1 py-1 text-center ghost-hidden" *ngFor="let banner of privateBannerList">
+          <a href="{{banner.url}}">
+            {{i}}
+            <img alt="{{banner.title}}" class="img-fluid d-none d-md-inline-block" src="{{ banner.desktopImage }}" />
+            <img alt="{{banner.title}}" class="img-fluid d-inline-block d-md-none" src="{{ banner.mobileImage }}" />
+          </a>
+        </div>
+      </ng-container>
+      <!-- If there are three ads -->
+      <ng-container *ngSwitchCase="3">
+        <div class="col-12 m-0 px-1 py-1 text-center ghost-hidden d-flex"
+          *ngFor="let banner of privateBannerList; let i = index;" [class.col-md-3]="i > 0" [class.col-md-6]="i === 0"
+          [class.justify-content-end]="i === 0">
+
+          <a href="{{banner.url}}" class="align-self-end">
+            {{i}}
+            <img alt="{{banner.title}}" class="img-fluid d-inline-block"
+              [src]="i === 1 ? banner.desktopImage : banner.mobileImage " />
+          </a>
+        </div>
+      </ng-container>
+      <!-- If there are two -->
+      <ng-container *ngSwitchCase="2">
+        <div class="col-12 col-md-6 m-0 px-1 py-1 text-center ghost-hidden" *ngFor="let banner of privateBannerList">
+          <a href="{{banner.url}}">
+            {{i}}
+            <img alt="{{banner.title}}" class="img-fluid d-none d-md-inline-block" src="{{ banner.desktopImage }}" />
+            <img alt="{{banner.title}}" class="img-fluid d-inline-block d-md-none" src="{{ banner.mobileImage }}" />
+          </a>
+        </div>
+      </ng-container>
+      <!-- If there is one ad -->
+      <ng-container *ngSwitchCase="1">
+        <div class="col-12 m-0 px-1 py-1 text-center ghost-hidden" *ngFor="let banner of privateBannerList">
+          <a href="{{banner.url}}">
+            {{i}}
+            <img alt="{{banner.title}}" class="img-fluid d-none d-md-inline-block" src="{{ banner.desktopImage }}" />
+            <img alt="{{banner.title}}" class="img-fluid d-inline-block d-md-none" src="{{ banner.mobileImage }}" />
+          </a>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+  <!-- ad space end -->
+</div>

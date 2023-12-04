@@ -1,0 +1,354 @@
+@import 'global-scss-mixing';
+
+$mid-grey: #dae9f0;
+$light-grey: #edf2f5;
+$not-active-btn-color: #6d7273;
+$ghost-loader-bg: #e1e7e9;
+$modal-bg: #000;
+$pp-green: #4e7026;
+
+.body-confirmation-modal-open {
+	overflow: hidden;
+}
+
+.prompt-modal-parent-row {
+	height: 100%;
+}
+
+.confirmation-modal-container {
+	margin: 0 auto;
+	margin-top: 15%;
+	border-radius: 15px;
+	padding: 0 15px;
+
+	app-confirmation-modal {
+		height: 100%;
+	}
+
+	.pp-orange {
+		color: $pp-bg-maincolour;
+	}
+
+	.icon-clip {
+		position: relative;
+		width: 75px;
+		height: 50px;
+		overflow: hidden;
+		font-size: 3em;
+
+		&:before {
+			position: absolute;
+			top: -35px;
+			left: -39px;
+			margin: 0;
+		}
+
+		&.icon-club-11-11-refresh-card-1 {
+			height: 55px;
+			font-size: 2.5em;
+
+			&:before {
+				top: -18px;
+				left: -30px;
+			}
+		}
+	}
+
+	.modal-dialog {
+		margin: 0 auto;
+		width: 600px;
+		max-width: 100%;
+	}
+
+	.modal-content {
+		border: 0;
+		background-color: $light-grey;
+		// padding-right: 12.5%;
+		// padding-left: 12.5%;
+		width: 100%;
+		height: 100%;
+	}
+
+	.prompt-modal-x {
+		position: absolute;
+		top: 10px;
+		right: 0;
+		z-index: 2;
+		outline: none;
+		border: 0;		
+		background: transparent;
+		cursor: pointer;
+		color: $pp-bg-maincolour;
+		font-size: 1em;
+	}
+
+	&.child-modal {
+		height: auto;
+
+		.modal-dialog,
+		.modal-content {
+			background-color: transparent;
+			height: auto;
+		}
+
+		.prompt-modal-x-col {
+			display: none;
+		}
+	}
+
+	.prompt-modal-header-col {
+		margin-top: 5%;
+
+		.prompt-modal-title {
+			line-height: 1;
+		}
+
+		.prompt-modal-icon-row {
+			color: $pp-bg-maincolour;
+			font-size: 2.5em;
+		}
+
+		.prompt-modal-header-row {
+			@include font-regular;
+			text-align: center;
+			letter-spacing: .25px;
+			color: $pp-default-text-colour;
+			font-size: 2.75em;
+
+			.prompt-modal-subtitle {
+				// padding-bottom: 10px;
+				font-size: 1rem;
+			}
+		}
+	}
+
+	.prompt-modal-body-col {
+		margin: 1rem 0 5%;
+
+		.prompt-modal-body-text {
+			.prompt-modal-subtitle {
+				font-size: 1rem;
+			}
+			@include font-regular;
+			text-align: center;
+			line-height: 1.175;
+			letter-spacing: .15px;
+			color: $pp-default-text-colour;
+			font-size: 1.2em;
+		}
+	}
+
+	.prompt-modal-button-col {
+		margin: 1.5rem 0;
+
+		button {
+			@include font-black;
+			border: 0;
+			border-radius: 5px;
+			cursor: pointer;
+			width: 100%;
+			height: 65px;
+			letter-spacing: .31px;
+			font-size: 1em;
+
+			.btn-text {
+				.button-inner-load {
+					display: none;
+			}
+
+				&.button-load {
+					background-color: $pp-bg-maincolour;
+
+					.button-inner-text {
+						display: none;
+					}
+
+					.button-inner-load {
+						display: block;
+						margin: 0 auto;
+					}
+				}
+			}
+		}
+
+		.prompt-modal-cancel-button {
+			// margin-left: 20px;
+			background-color: $white;
+			padding: 0;
+			color: $pp-bg-maincolour;
+		}
+
+		.prompt-modal-okay-button {
+			background-color: $orange;
+			padding: 0;
+			color: $white;
+		}	
+	}
+
+	.split-modal {
+		border-radius: 15px;
+		background-color: $white;
+		height: 100%;
+
+		.prompt-modal-x {
+			left: 93%;
+		}
+
+		.prompt-modal-header-col {
+			align-self: flex-start;
+			margin-top: 0;
+			border-top-left-radius: 15px;
+			border-top-right-radius: 15px;
+			background-color: $light-grey;
+
+			padding-top: 5%;
+			padding-bottom: 3%;
+
+			.prompt-modal-header-row {
+				font-size: 2em;
+			}
+		}
+
+		.prompt-modal-body-col {
+			padding-bottom: 0;
+		}
+
+		.modal-card-pill {
+			margin-top: -2.5em;
+			border-radius: 15px;
+			background-color: $pp-bg-maincolour;
+			padding: 5px 10px;
+			height: fit-content;
+			color: $white;
+			font-size: .813em;
+
+			strong {
+				font-size: 1rem;
+			}
+		}
+
+		.separator {
+			margin: 0 40px;
+			border-left: 1px solid $light-grey;
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.confirmation-modal-container {
+		margin-top: 0;
+		border-radius: 0;
+		padding: 0;
+		width: 100%;
+		height: 100%;
+
+		.modal-dialog {
+			width: 100%;
+			height: 100%;
+		}
+
+		.modal-content {
+			border-radius: 0;
+		}
+
+		&.child-modal {
+			height: 100%;
+
+			.modal-dialog,
+			.modal-content {
+				height: 100%;
+			}
+		}
+
+		.prompt-modal-x-col {
+			.prompt-modal-x {
+				left: 98%;
+			}
+		} 
+
+		.prompt-modal-button-col {
+			
+			button {
+				height: 45px;
+			}
+
+			.prompt-modal-cancel-button {
+				margin-bottom: 2.25%;
+				margin-left: 0;
+				background-color: $white;
+				padding: 0;
+				color: $pp-bg-maincolour;
+			}
+
+			.prompt-modal-okay-button {
+				margin-right: 0;
+				background-color: $orange;
+				padding: 0;
+				color: $white;
+			}
+		}
+
+		.split-modal {
+			.prompt-modal-header-col {
+				padding-top: 24vh;
+				padding-bottom: 0;
+				height: 50%;
+			}
+
+			.prompt-modal-body-col {
+				margin-bottom: 0;
+			}
+
+			.modal-card-pill {
+				margin-top: calc(-10vh - 1em);
+			}
+		}
+	}
+}
+
+@include media-breakpoint-down(xs) {
+	.confirmation-modal-container {
+
+		.split-modal {
+			border-radius: 0;
+
+			.prompt-modal-header-col {
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+			}
+		}
+
+		.icon-clip {
+			&:before {
+				top: -24px;
+				left: -28px;
+			}
+
+			&.icon-club-11-11-refresh-card-1 {
+				&:before {
+					top: -13px;
+					left: -23px;
+				}
+			}
+		}
+
+		.prompt-modal-header-col {
+			align-self: flex-end;
+
+			.prompt-modal-icon-row {
+				font-size: 1.9em;
+			}
+
+			.prompt-modal-header-row {
+				font-size: 2em;
+			}
+		}
+
+		.prompt-modal-body-col {
+			.prompt-modal-body-text {
+				text-align: center;
+				line-height: 1.05em;
+			}
+		}
+	}
+}

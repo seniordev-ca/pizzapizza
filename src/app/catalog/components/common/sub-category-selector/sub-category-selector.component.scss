@@ -1,0 +1,128 @@
+@import 'global-scss-mixing';
+
+$white: #fff;
+$black: #000;
+$border-color: #4e7026;
+$font-color: #6d7273;
+$font-color-selected: #4e7026;
+$ghost-label: #e1e7e9;
+
+.sub-category-selector-container {
+	display: flex;
+	justify-content: center;
+	background-color: $white;
+	padding: 0;
+	overflow: hidden;
+
+	.sub-category-row {
+		display: inline-flex;
+		position: relative;
+		flex-wrap: nowrap;
+		justify-content: center;
+		padding-bottom: 20px;
+
+		.select-arrow {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			transition: .6s all ease;
+			z-index: 3;
+			height: 0;
+
+			&:after {
+				display: inline-block;
+				position: absolute;
+				top: calc(100% - 26px);
+				left: 45%;
+				transform: rotate(45deg);
+				border: solid $border-color;
+				border-width: 0 1px 1px 0;
+				background-color: $white;
+				padding: 4px;
+				width: 10px;
+				height: 10px;
+				content: ' ';
+			}
+		}
+	}
+
+	.selector-option {
+		@include font-regular;
+
+		display: flex;
+		position: relative;
+		align-items: center;
+		z-index: 2;
+		outline: 0;
+		border: 0;
+		border-bottom: 1px solid $border-color;
+		background: transparent;
+		cursor: pointer;
+		padding: 25px;
+		width: auto;
+		max-width: none;
+		text-align: center;
+		color: $font-color;
+		font-size: 1.125em;
+
+		h6 {
+			margin-bottom: 0;
+			width: 100%;
+		}
+	}
+
+	.active {
+		h6 {
+			@include font-bold;
+
+			color: $font-color-selected;
+		}
+	}
+}
+
+/**
+* Ghost styling
+*/
+.pp-ghost-container {
+	.sub-category-selector-container {
+		.sub-category-row {
+			.select-arrow {
+				display: none;
+			}
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.sub-category-selector-container {
+		.sub-category-row {
+			@include scrollbar-hidden;
+
+			flex-wrap: nowrap;
+			justify-content: start;
+			margin: 0;
+			// border-bottom: 1px solid $border-color;
+			// padding-bottom: 0;
+			min-width: 100%;
+			overflow-x: scroll;
+
+			.selector-option {
+				flex: 0 0 auto;
+				// border-bottom: 0;
+			}
+
+			// .select-arrow {
+
+			// 	&:after {
+			// 		top: calc(100% - 15px);
+			// 		// transform: inherit;
+			// 		// border: 0;
+			// 		// background-color: $border-color;
+			// 		// padding: 0;
+			// 		// width: 25%;
+			// 		// height: 2px;
+			// 	}
+			// }
+		}
+	}
+}

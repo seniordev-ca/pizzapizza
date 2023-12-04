@@ -1,0 +1,126 @@
+<ng-container *ngTemplateOutlet="isManualAddress ? manualForm : defaultForm"></ng-container>
+
+<ng-template #defaultForm>
+<label class="col-12" [class.red-label]="isAutoCompleteEmpty">{{labelName}}</label>
+<div class="col-12 input-group address-input" [class.invalid]="isAutoCompleteEmpty" [formGroup]="addressInput" #autoCompleteWrapper>
+
+	<input class="form-control address-input-field" placeholder="{{addressSearch}}"
+		id="address-search"
+		formControlName="location"
+		autocomplete="off"
+		aria-label="address search"
+		maxlength="60" tabindex="0"
+		(keyup.enter)="clearResults()"
+			#addressSearchElement>
+	<div class="input-group-addon address-input-icon d-flex align-items-center">
+		<!-- <i class="icon-spade"></i> -->
+		<i class="icon-close-bold pr-2" *ngIf="addressInput.get('location').value"
+			 tabindex="0" aria-label="X to remove location"
+			 (click)="clearInput()" (keydown.enter)="clearInput()" ></i>
+		<i class="icon-spade"></i>
+
+		<span class="smaller find-me" (click)="getLocation()" (keydown.enter)="getLocation()"
+					tabindex="0" aria-label="Find Me" *ngIf="isGeoAvailable" i18n>
+			<i class="icon-location"></i>
+			Find Me
+		</span>
+	</div>
+	<div #noResults class="no-results" [class.d-flex]="isResultsActive">
+		<div class="d-block no-results-row d-flex justify-content-between" (mousedown)="clickManualToggle($event, isManualToggleAccepted)">
+			<span class="manual-address-link smaller">
+				<button class="manual-address-btn" *ngIf="isManualToggleAccepted" i18n>
+					<i class="icon-pizza-locator"></i>
+					Manually Enter Address
+				</button>
+			</span>
+			<span class="align-self-end">
+				<img class="pp-image-loaded" alt="google logo" src="./static-files/images/powered_by_google.png" width="100" />
+			</span>
+		</div>
+		<span class="d-block no-results-row" *ngIf="isAutoCompleteEmpty" i18n>
+			Sorry. We can’t find your location.
+		</span>
+	</div>
+</div>
+</ng-template>
+
+<ng-template #manualForm>
+	<div class="pp-form" [formGroup]="manualAddressForm">
+		<div class="form-row">
+			<div class="col-3 col-md-3 form-group" [class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(manualAddressForm.controls['streetNumber'])">
+				<label for="addressOne" class="alternate-label" i18n>Street Number</label>
+				<input class="form-control" formControlName="streetNumber" />
+				<div class="invalid-wrapper mt-1">
+					<app-form-invalid-message
+						[control]="manualAddressForm.controls['streetNumber']"
+						#streetNumberValidation>
+					</app-form-invalid-message>&nbsp;
+				</div>
+			</div>
+			<div class="col-9 col-md-9 form-group" [class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(manualAddressForm.controls['streetName'])">
+				<label for="addressOne" class="alternate-label" i18n>Street Name</label>
+				<input class="form-control" formControlName="streetName" autocomplete="off"/>
+				<div class="invalid-wrapper mt-1">
+					<app-form-invalid-message
+						[control]="manualAddressForm.controls['streetName']"
+						#streetNumberValidation>
+					</app-form-invalid-message>&nbsp;
+				</div>
+			</div>
+		</div>
+		<!-- <div class="form-row">
+			<div class="col-12 form-group">
+				<label for="addressTwo"class="alternate-label">
+					Address 2
+					<span class="optional-label-identifier">(Optional)</span>
+				</label>
+				<input class="form-control" formControlName="addressTwo" />
+			</div>
+		</div> -->
+		<div class="form-row">
+			<div class="col-12 col-lg-5 form-group" [class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(manualAddressForm.controls['city'])">
+				<label for="city" class="alternate-label" i18n>City</label>
+				<input class="form-control" formControlName="city" />
+				<div class="invalid-wrapper mt-1">
+					<app-form-invalid-message
+						[control]="manualAddressForm.controls['city']"
+						#streetNumberValidation>
+					</app-form-invalid-message>&nbsp;
+				</div>
+			</div>
+			<div class="col-6 col-lg-2 form-group" [class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(manualAddressForm.controls['province'])">
+				<label for="province" class="alternate-label" i18n>Province</label>
+				<app-dropdown
+					[inputControl]="manualAddressForm.controls['province']"
+					[options]="provinceArray"
+					[selectedValue]="manualAddressForm.controls['province']['value']">
+				</app-dropdown>
+				<div class="invalid-wrapper mt-1">
+					<app-form-invalid-message
+						[control]="manualAddressForm.controls['province']"
+						#streetNumberValidation>
+					</app-form-invalid-message>&nbsp;
+				</div>
+			</div>
+			<div class="col-6 col-lg-5 form-group" [class.invalid-entry]="formValidationService.isInputInvalidOrEmpty(manualAddressForm.controls['postalCode'])">
+				<label for="postalCode" class="alternate-label" i18n>Postal Code</label>
+				<input class="form-control text-uppercase" formControlName="postalCode" [textMask]="{mask: postalMask}"/>
+				<div class="invalid-wrapper mt-1">
+					<app-form-invalid-message
+						[control]="manualAddressForm.controls['postalCode']"
+						#postalCodeValidation>
+					</app-form-invalid-message>&nbsp;
+				</div>
+			</div>
+		</div>
+<!--		<div class="form-row justify-content-end">
+			<div class="col-12 col-md-2 pl-md-0">
+				<button type="submit" class="btn btn-primary delivery-button w-100"
+				[disabled]="manualAddressForm.invalid"
+				(click)="manualFormSubmission(manualAddressForm.value)" i18n>
+					Go
+				</button>
+			</div>
+		</div> -->
+	</div>
+</ng-template>

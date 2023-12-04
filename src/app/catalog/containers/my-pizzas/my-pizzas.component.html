@@ -1,0 +1,51 @@
+<div class="products-container my-pizza-container" [class.pp-ghost-container]="productListLoading$ | async">
+	<!-- Categories header -->
+	<app-product-header
+		[topBavContent]="{
+			backgroundImage: (myPizzasMeta$ | async).backgroundImage,
+			hasBackgroundImage: (myPizzasMeta$ | async).hasBackgroundImage,
+			textColor: '#FFFFFF',
+			iconColor: '#EE5A00',
+			backToLocation: '/'
+		}"
+		[title]="(myPizzasMeta$ | async).title"
+		navText="Back to menu"
+		i18n-navText>
+	</app-product-header>
+
+	<!-- Products list -->
+	<div class="container my-3 my-md-5 product-list-container"
+		[class.pp-ghost-container]="productListLoading$ | async">
+		<div class="row justify-content-center" *ngIf="(productList$ | async) && (productList$ | async).length > 0">
+			<div class="col-12 p-0 col-lg-10">
+
+				<!-- Render every product -->
+				<ng-container *ngFor="let productItem of productList$ | async">
+					<app-product-item
+						[isComboItem]="false"
+						[productItemInput]="productItem"
+						(productItemEventEmitter)="productItemEventHandler($event)">
+					</app-product-item>
+				</ng-container>
+
+			</div>
+		</div>
+		<div class="row" *ngIf="(productList$ | async) && (productList$ | async).length > 0">
+			<div class="col-12 text-center">
+				<p i18n>Please note Pizza Pizza only stores your last 10 customized pizzas</p>
+			</div>
+		</div>
+		<div class="row" *ngIf="!(productList$ | async) || (productList$ | async).length < 1">
+			<div class="col-12 empty-state text-center">
+				<h3 i18n>Purchase a pizza to save it as you own masterpiece</h3>
+				<i class="icon-loader_01"></i>
+			</div>
+		</div>
+	</div>
+
+	<!-- Upsale component -->
+	<div class="container mb-5">
+		<app-upsells></app-upsells>
+	</div>
+</div>
+

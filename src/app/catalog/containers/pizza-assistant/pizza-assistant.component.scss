@@ -1,0 +1,448 @@
+@import 'global-scss-mixing';
+
+$assistant-shadow: rgba(0, 0, 0, .3);
+$pp-error-colour: #f00;
+
+.pizza-assistant-open {
+	.seo-footer {
+		display: none;
+	}
+
+	.header-container {
+		display: none;
+	}
+}
+
+.pizza-assistant-open-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	background-color: $footer-gray;
+	width: 100%;
+	height: 100%;
+
+	.sub-header-navigation-container {
+		.title {
+			@include font-regular;
+			color: $pp-bg-maincolour;
+			font-size: .875em;
+			font-weight: 700;
+		}
+
+		.back-wrap {
+			font-weight: 100;
+		}
+	}
+
+	.assistant-wrap {
+		min-height: calc(100% - 260px);
+	}
+
+	.assistant-order-list-row {
+		padding: 40px 0;
+
+		.order-block {
+			display: inline-block;
+			flex: 0 1 100%;
+			margin-right: 7px;
+			min-width: 0;
+			vertical-align: middle;
+
+			.product-warning {
+				@include font-regular;
+				position: absolute;
+				padding: 5px;
+				width: 100%;
+				color: $pp-error-colour;
+				font-size: 1rem;
+			}
+
+			.product-image,
+			.product-name,
+			.close-btn {
+				display: inline-block;
+				min-width: 0;
+				vertical-align: middle;
+			}
+
+			.close-btn {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin-left: 5px;
+				border-radius: 18px;
+				background-color: $white;
+				cursor: pointer;
+				width: 18px;
+				height: 18px;
+				text-align: center;
+
+				i {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					color: $green;
+					font-size: 8px;
+				}
+			}
+
+			&.text {
+				margin-left: 7px;
+			}
+
+			.text,
+			.product-name {
+				font-size: 1.5em;
+			}
+
+			h2 {
+				@include font-black;
+				margin: 0;
+				color: $pp-default-text-colour;
+			}
+
+			.product-image {
+				margin-right: 5px;
+				max-height: 70px;
+			}
+
+			.product-name {
+				@include font-black;
+				position: relative;
+				margin-right: 5px;
+				margin-left: 5px;
+				border-bottom: 2px solid $green;
+				cursor: pointer;
+				padding-right: 35px;
+				color: $green;
+
+				&.invalid {
+					border-color: $pp-error-colour;
+				}
+
+				.arrow {
+					position: absolute;
+					right: 0;
+					bottom: 15px;
+					margin-right: 3px;
+					border-top: 9px solid $green;
+					border-right: 7px solid transparent;
+					border-left: 7px solid transparent;
+					width: 0;
+					height: 0;
+				}
+
+				.validation-msg {
+					position: absolute;
+					margin-top: 6px;
+					width: 100%;
+					text-align: center;
+					color: $pp-error-colour;
+					font-size: .5em;
+					font-weight: 600;
+				}
+			}
+
+		}
+	}
+
+	.assistant-information-col {
+
+		.assistant-icon-wrap,
+		.text-wrap {
+			display: inline-block;
+			vertical-align: top;
+		}
+
+		.text-wrap {
+			position: relative;
+			margin-left: 10px;
+			border-radius: 8px;
+			box-shadow: 0 4px 10px -1px $assistant-shadow;
+
+			.arrow {
+				position: absolute;
+				top: 32px;
+				left: 0;
+				transform: translateX(-50%) translateY(-50%) rotate(45deg);
+				// box-shadow: -2px 2px 9px -2px $assistant-shadow;
+				background: $white;
+				width: 20px;
+				height: 20px;
+				content: '';
+			}
+
+			.text-wrap-body {
+				z-index: 10;
+				border-radius: 8px;
+				background-color: $white;
+				padding: 15px;
+				padding-right: 35px;
+				padding-left: 35px;
+			}
+
+			h2 {
+				@include font-black;
+				margin: 0;
+				color: $pp-default-text-colour;
+			}
+
+			h4 {
+				color: $pp-default-text-colour;
+				font-weight: 400;
+			}
+
+			.icon-rotate-right {
+				&:before {
+					transform: rotate(90deg);
+				}
+			}
+		}
+	}
+
+	.assistant-icon-wrap,
+	.assistant-speeach-btn {
+		.icon-pizza-assistant-1,
+		.pp-loading-icon {
+			color: $pp-bg-maincolour;
+		}
+
+		.icon-pizza-assistant-2 {
+			color: $pp-default-text-colour;
+		}
+	}
+
+	.bottom-action-wrap {
+		margin: 0;
+		background-color: $white;
+		width: 100%;
+		overflow: hidden;
+
+		.text-input-line {
+			padding: 10px;
+
+			.enter-btn {
+				border: 0;
+				border-radius: 7px;
+				background-color: $pp-bg-maincolour;
+				cursor: pointer;
+				width: 35px;
+				height: 35px;
+
+				i {
+					margin-left: -8px;
+					color: $white;
+					font-size: .75rem;
+				}
+
+				&.disabled {
+					background-color: $form-button-grey;
+
+					i {
+						color: $form-grey;
+					}
+				}
+
+				&:focus {
+					outline: 0;
+				}
+			}
+		}
+
+		.assistant-text-input {
+			@include font-black;
+			outline: initial;
+			border: 0;
+			width: 100%;
+			height: 2.625rem;
+			min-height: 2.625rem;
+			color: $form-grey;
+			font-size: 1.25em;
+			resize: none;
+			caret-color: $pp-bg-maincolour;
+
+			&::placeholder {
+				@include font-black;
+				font-size: 1.25rem;
+			}
+		}
+
+		.assistant-text-span {
+			@include font-black;
+
+			display: inline-block;
+			position: absolute;
+			visibility: hidden;
+			z-index: -1;
+			padding: .375rem .75rem;
+			width: 100%;
+			min-height: 2.625rem;
+			font-size: 1.25em;
+			word-break: break-all;
+		}
+
+		.assistant-action {
+			border-top: 1px solid $pp-light-gray;
+		}
+
+		.assistant-action-btn {
+			@include font-extra-bold;
+			padding: 15px;
+			padding-right: 30px;
+			padding-left: 30px;
+			text-align: center;
+			color: $form-grey;
+			font-size: 1em;
+
+			&.help {
+				border-right: 1px solid $pp-light-gray;
+				border-left: 1px solid $pp-light-gray;
+			}
+
+			button {
+				@include font-extra-bold;
+				outline: 0;
+				border: 0;
+				background-color: transparent;
+				cursor: pointer;
+				width: 100%;
+				text-transform: uppercase;
+				color: $green;
+
+				&:disabled {
+					color: $form-grey;
+				}
+			}
+		}
+	}
+}
+
+.pizza-assistant-help-vertical-modal {
+
+	.temp-data-box {
+		display: none;
+	}
+
+	.vertical-modal-header {
+		padding: 30px;
+		padding-top: 45px;
+
+		.assistant-icon {
+			position: absolute;
+			top: -15px;
+		}
+
+		.icon-pizza-assistant-1 {
+			color: $pp-bg-maincolour;
+		}
+
+		.icon-pizza-assistant-2 {
+			color: $pp-default-text-colour;
+		}
+
+		h6 {
+			text-align: center;
+			text-transform: uppercase;
+			color: $pp-bg-maincolour;
+			font-weight: 700;
+		}
+	}
+
+	.vertical-modal-body {
+		padding: 30px;
+		text-align: center;
+
+		h3 {
+			@include font-bold;
+			margin: 0;
+			color: $pp-default-text-colour;
+		}
+
+		.separator {
+			width: 100%;
+			height: 50px;
+
+			&:after {
+				position: absolute;
+				margin-top: 25px;
+				margin-left: -20px;
+				background-color: $pp-bg-maincolour;
+				width: 40px;
+				height: 2px;
+				content: ' ';
+			}
+		}
+
+		.questions-example {
+			display: inline-block;
+		}
+
+		h2 {
+			@include font-black;
+			margin-bottom: 24px;
+			color: $pp-default-text-colour;
+		}
+
+	}
+}
+
+
+@include media-breakpoint-down(xs) {
+	.pizza-assistant-open-container {
+
+		.assistant-wrap {
+			min-height: calc(100% - 220px);
+		}
+
+		.assistant-information-col {
+			.text-wrap {
+				max-width: calc(100% - 70px);
+
+				.text-wrap-body {
+					padding-right: 15px;
+					padding-left: 25px;
+				}
+
+				h2 {
+					font-size: 1.063em;
+				}
+
+				h4 {
+					margin: 0;
+					margin-top: 4px;
+					font-size: .875em;
+				}
+
+				.arrow {
+					top: 20px;
+					width: 14px;
+					height: 14px;
+				}
+			}
+		}
+
+		.assistant-order-list-row {
+			.order-block {
+				margin-right: 0;
+
+				.close-btn {
+					margin: 0;
+				}
+			}
+		}
+	}
+}
+// sass-lint:disable no-vendor-prefixes
+@media all and (-ms-high-contrast: none)
+{
+	.pizza-assistant-help-vertical-modal {
+		.vertical-modal-body {
+			.separator {
+				&:after {
+					margin-left: 47%;
+				}
+			}
+		}
+	}
+}

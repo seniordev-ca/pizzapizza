@@ -1,0 +1,306 @@
+{
+  "data": {
+    "products": [
+      {
+        "allow_customization": true,
+        "configuration_options": [
+          {
+            "cal_scale": "5 pcs",
+            "description": "",
+            "id": "BF",
+            "image": "BF.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 216,
+            "parent_id": "sauceonwings",
+            "product_options_data": [
+              {
+                "cal_count": 80,
+                "product_option_id": 9730,
+                "selected": false,
+                "sequence": 10
+              }
+            ],
+            "quantity": 0,
+            "sequence": 10,
+            "tag": null,
+            "title": "Tossed and Sauced Buffalo"
+          },
+          {
+            "cal_scale": "5 pcs",
+            "description": "",
+            "id": "GW",
+            "image": "GW.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 100,
+            "parent_id": "sauceonwings",
+            "product_options_data": [
+              {
+                "cal_count": 45,
+                "product_option_id": 9730,
+                "selected": false,
+                "sequence": 40
+              }
+            ],
+            "quantity": 0,
+            "sequence": 40,
+            "tag": null,
+            "title": "Tossed and Sauced Honey Garlic"
+          },
+          {
+            "cal_scale": "5 pcs",
+            "description": "",
+            "id": "HO",
+            "image": "HO.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 190,
+            "parent_id": "sauceonwings",
+            "product_options_data": [
+              {
+                "cal_count": 35,
+                "product_option_id": 9730,
+                "selected": false,
+                "sequence": 60
+              }
+            ],
+            "quantity": 0,
+            "sequence": 60,
+            "tag": null,
+            "title": "Tossed and Sauced Hot Sauce"
+          },
+          {
+            "cal_scale": "5 pcs",
+            "description": "",
+            "id": "IW",
+            "image": "IW.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 98,
+            "parent_id": "sauceonwings",
+            "product_options_data": [
+              {
+                "cal_count": 50,
+                "product_option_id": 9730,
+                "selected": false,
+                "sequence": 70
+              }
+            ],
+            "quantity": 0,
+            "sequence": 70,
+            "tag": null,
+            "title": "Tossed and Sauced Sweet Chili"
+          },
+          {
+            "cal_scale": null,
+            "description": "",
+            "id": "NS",
+            "image": "NS.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 16,
+            "parent_id": "sauceonwings",
+            "product_options_data": [
+              {
+                "cal_count": null,
+                "product_option_id": 9730,
+                "selected": false,
+                "sequence": 90
+              }
+            ],
+            "quantity": 0,
+            "sequence": 90,
+            "tag": null,
+            "title": "No Sauce"
+          },
+          {
+            "cal_scale": "5 pcs",
+            "description": "",
+            "id": "QB",
+            "image": "QB.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 189,
+            "parent_id": "sauceonwings",
+            "product_options_data": [
+              {
+                "cal_count": 50,
+                "product_option_id": 9730,
+                "selected": false,
+                "sequence": 30
+              }
+            ],
+            "quantity": 0,
+            "sequence": 30,
+            "tag": null,
+            "title": "Tossed and Sauced Texas BBQ"
+          },
+          {
+            "cal_scale": "5 pcs",
+            "description": "",
+            "id": "QQ",
+            "image": "QQ.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 193,
+            "parent_id": "sauceonwings",
+            "product_options_data": [
+              {
+                "cal_count": 35,
+                "product_option_id": 9730,
+                "selected": false,
+                "sequence": 20
+              }
+            ],
+            "quantity": 0,
+            "sequence": 20,
+            "tag": null,
+            "title": "Tossed and Sauced Chipotle BBQ"
+          },
+          {
+            "cal_scale": "5 pcs",
+            "description": "",
+            "id": "WB",
+            "image": "WB.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 90,
+            "parent_id": "classicbreaded",
+            "product_options_data": [
+              {
+                "cal_count": 650,
+                "product_option_id": 9730,
+                "selected": false,
+                "sequence": 1
+              }
+            ],
+            "quantity": 0,
+            "sequence": 1,
+            "tag": null,
+            "title": "Breaded Wings"
+          },
+          {
+            "cal_scale": "5 pcs",
+            "description": "",
+            "id": "WC",
+            "image": "WC.png",
+            "is_dip_on_wings": false,
+            "is_gluten": true,
+            "is_premium": false,
+            "not_available": [],
+            "overlay_sequence": 89,
+            "parent_id": "classicbreaded",
+            "product_options_data": [
+              {
+                "cal_count": 510,
+                "product_option_id": 9730,
+                "selected": true,
+                "sequence": 2
+              }
+            ],
+            "quantity": 1,
+            "sequence": 2,
+            "tag": null,
+            "title": "Classic Wings"
+          }
+        ],
+        "configurations": [
+          {
+            "font_key": "0xe81e",
+            "id": "classicbreaded",
+            "not_available": [],
+            "sequence": 1,
+            "sub_configurations": [
+              {
+                "allow_half_and_half": false,
+                "allow_multiple_options": false,
+                "id": "classicbreaded",
+                "not_available": [],
+                "personalized_message": {
+                  "display_personalized_message": false
+                },
+                "sequence": 1,
+                "title": "CLASSIC / BREADED"
+              }
+            ],
+            "title": "CLASSIC / BREADED"
+          },
+          {
+            "font_key": null,
+            "id": "sauceonwings",
+            "not_available": [],
+            "sequence": 2,
+            "sub_configurations": [
+              {
+                "allow_half_and_half": false,
+                "allow_multiple_options": true,
+                "id": "sauceonwings",
+                "not_available": [],
+                "personalized_message": {
+                  "display_personalized_message": false
+                },
+                "sequence": 1,
+                "title": "Sauce on Wings"
+              }
+            ],
+            "title": "Sauce on Wings"
+          }
+        ],
+        "description": "Have your choice of wing sauce Tossed and Sauced right on your order of classic or breaded wings. Raised without antibiotics and sourced from Canadian farms.",
+        "image": "20WSR.png",
+        "is_flat": false,
+        "is_pizza": false,
+        "line_id": 1,
+        "name": "20 Tossed and Sauced Wings",
+        "product_id": "9730",
+        "product_options": {
+          "label": "Choose Your Size",
+          "options": [
+            {
+              "base_price": 19.49,
+              "cal_count": null,
+              "cal_scale": "Cals/5 pcs, serves 4",
+              "font_key": null,
+              "grouped_products": null,
+              "guarantee_group": "G12",
+              "id": 9730,
+              "image": "20WSR.png",
+              "same_topping_limit": -1,
+              "selected": true,
+              "sequence": 1,
+              "size_code": null,
+              "size_label": null,
+              "size_name": null,
+              "sub_title": null,
+              "title": "20 Tossed and Sauced Wings"
+            }
+          ]
+        },
+        "sequence": 1,
+        "sub_configuration_options": []
+      }
+    ]
+  },
+  "is_coupon_item": false,
+  "js_data": "eJzVllFv2jAQx7+KlWdow0rasTegbENCIAhVHqoqMo5B1hw7teONgfLdZzspJJQyEEhjL0i+O9/d\n7/4murXzg7DI+QIcSdiCYqcGnETwSKFUauvz2qGE4ZCYkIb2Ic7mZKEETAlnJmLtSKgQ5uyXvp8b\nCENURTgKXxVkKUl/W2vr4c41STKdhchQ4FdFBI7KvlQobNwMxtja58J05psCQCoBKJYAEv1r2sRs\n6+QMBLa+uR7DJYlVXC5ft2URhVISNBMYRkXlg726p/faHbR9vz9+6vngFnQnoyd/2h8M2sNpz9/2\nnAd1dURn0ms/9h4/aruRZbszD3myHf23IFdAzaoxJFe0LMxW10qGgmatnTgmuvpmIIkgyJAxRam9\nnB/dm/uW6QlSLgg2SZpePqUig7bMIZXYGPcM1y01gnhkUjrTkV/XKHtg94CYoPH4CrjvLsKtUY7n\n7nz9B9wPXpX7s3sJbo1yPHfQPcS987e+HLlbBfcaJ5E39pAHw7pm+RB8h8Sid64B/d47W3SD3jkJ\nvX8NX7fzwc1r75/0dTso+X/FPT6g+Dvu76Mr4L7MV12jHM899K+Auwg4m1zDHEme/Q1GYoqRvS4U\ntQV6S4hSMwRJVjgsVq8NWrWZT27gT5wSZEjhDNPyrqbxbhMuTIkaiDhjGDRBYSitmDbOAwmSNSCx\n+KmX0KYVLoXLTWvVUgKyRXkt9JouSDnQZODYqrtX9jWg1dqUlKkeNSo2UzMiOz27tBaW92rPoMSb\nJ9Jo3TRbWZE21SKVXoDUGzBmeZg57j7Vkn5FgoSsVvAtQ/ZSEih/C28nq7Z9L/GMa8fzS/YHe24p\n6A==\n",
+  "kind": "single",
+  "product_id": "product_9730",
+  "seo_title": "20-tossed-and-sauced-wings-product_9730"
+}

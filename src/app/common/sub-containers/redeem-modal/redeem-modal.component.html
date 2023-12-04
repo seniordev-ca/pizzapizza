@@ -1,0 +1,167 @@
+<div class="redeem-modal-container" *ngIf="!popupOnly">
+	<button class="btn btn-primary" (click)="handleRedeemClick()" [class.selected]="editAmount > 0"
+		[disabled]="!isRedeemDisabled((accountBalance$ | async).available, (cartTotal$ | async))" *ngIf="!isGiftCard">
+		<ng-container *ngIf="editAmount > 0" i18n>update</ng-container>
+		<ng-container *ngIf="editAmount <= 0" i18n>redeem</ng-container>
+	</button>
+
+	<ng-container *ngIf="isGiftCard">
+		<div class="row click-to-open" (click)="toggleGiftCard()" (keydown.enter)="toggleGiftCard()" tabindex="0">
+			<div class="col-1 pr-0">
+				<i class="user-activity-action-icon h5" [ngClass]="[
+				isGiftCardOpen ? 'icon-minus-2' : 'icon-plus-2'
+				]">
+				</i>
+			</div>
+			<div class="col-11 pl-0">
+				<h6 i18n>Add a gift card</h6>
+			</div>
+		</div>
+		<div class="row" *ngIf="isGiftCardOpen" >
+			<div class="col-11 pl-0 ml-auto">
+				<form class="pp-form" [formGroup]="giftCardForm" (ngSubmit)="onGiftCardFormSubmit()">
+
+					<div class="form-row my-2 {{ isGiftCard ? 'align-items-end' : 'align-items-center'}}">
+
+						<div class="col-12 col-lg-5 form-group"
+							[class.invalid-entry]="giftCardError && !(isGiftCardLoading$ | async)">
+							<label for="giftCardNumber" class="alternate-label">
+								<ng-container i18n>Card number</ng-container>
+								<br *ngIf="!isGiftCard" />
+								<span class="invalid-text" *ngIf="giftCardError && !(isGiftCardLoading$ | async)"
+									i18n>Invalid</span>
+								<app-form-invalid-message [control]="giftCardForm.controls['giftCardNumber']"
+									#giftCardNumberValidation *ngIf="!giftCardError">
+								</app-form-invalid-message>
+							</label>
+							<input type="text" class="form-control {{ isGiftCard ? 'mx-1' : '' }}" id="giftCardNumber"
+								formControlName="giftCardNumber">
+						</div>
+
+						<div class="col-12 col-lg-2 form-group {{ isGiftCard ? 'mx-0 mx-lg-4' : '' }}">
+							<label for="giftCardPin" class="alternate-label">
+								<ng-container i18n>PIN</ng-container>
+								<br *ngIf="!isGiftCard" />
+								<!-- <span class="invalid-text" *ngIf="giftCardError && !(isGiftCardLoading$ | async)"
+						i18n>Invalid</span>
+					<app-form-invalid-message [control]="giftCardForm.controls['giftCardPin']" #giftCardPinValidation
+						*ngIf="!giftCardError">
+					</app-form-invalid-message> -->
+							</label>
+							<input type="text" class="form-control" id="giftCardPin" formControlName="giftCardPin">
+						</div>
+
+						<div
+							class="col-12 col-lg-2 {{ isGiftCard ? 'align-self-center mr-4 ml-auto' : 'mt-3' }} mt-lg-none"
+              [attr.aria-label]="!giftCardForm.valid ? 'Apply Button Disabled' : 'Apply Button'"
+              tabindex="0"
+              >
+							<button class="btn btn-lg btn-primary justify-self-end"
+								[class.loading-state]="(isGiftCardLoading$ | async)" (click)="onGiftCardFormSubmit()"
+
+                [disabled]="!giftCardForm.valid"
+
+                >
+
+								<span class="btn-text" i18n>
+									APPLY
+								</span>
+							</button>
+						</div>
+
+					</div>
+				</form>
+			</div>
+		</div>
+	</ng-container>
+</div>
+
+<ng-template #redeemModal let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal(); giftCardForm.reset()" aria-label="close button">
+		<i class="icon-close-bold"></i>
+	</button>
+	<app-confirmation-modal [data]="{
+				icon: 'icon-club-11-11 icon-clip',
+				class: 'split-modal'
+			}" title="Redeem Balance" subtitle="Add your balance to your cart" i18n-title i18n-subtitle>
+		<ng-template>
+			<div class="modal-card-pill">
+				<ng-container i18n>Card</ng-container>#:&nbsp;
+				<strong *ngIf="!isGiftCard">{{ (accountBalance$ | async).maskedCardNumber }}</strong>
+				<strong *ngIf="isGiftCard">{{giftCardForm.controls['giftCardNumber'].value}}</strong>
+			</div>
+
+			<ng-container *ngIf="(isGiftCardLoading$ | async) && isGiftCard">
+				<button class="btn-primary btn-white loading-state"></button>
+			</ng-container>
+
+			<ng-container *ngIf="(!(isGiftCardLoading$ | async) && isGiftCard )|| !isGiftCard">
+				<div class="redeem-modal-container w-100">
+					<form class="pp-form w-100 py-3" [formGroup]="redeemForm">
+						<div class="form-row justify-content-center">
+							<div class="col-6 col-lg-3 form-group mb-0">
+								<label for="availableBalance" class="alternate-label" i18n>
+									Available
+								</label>
+								<span class="availableAmount d-block h2 fw-extra-bold" *ngIf="!isGiftCard">
+									{{ (accountBalance$ | async).available | currency:'CAD':'symbol-narrow':'1.2' }}
+								</span>
+								<span class="availableAmount d-block h2 fw-extra-bold"
+									*ngIf="isGiftCard && !(isGiftCardLoading$ | async)">
+									{{ (giftCardBalance$ | async) | currency:'CAD':'symbol-narrow':'1.2'}}
+								</span>
+							</div>
+							<div class="col-auto d-none d-md-inline-block separator">
+								&nbsp;
+							</div>
+							<div class="col-6 col-lg-3 form-group text-left mb-0"
+								[class.invalid-entry]="!isAmountValid((giftCardBalance$ | async), (accountBalance$ | async).available, (cartTotal$ | async))">
+								<label for="redeemAmount" class="alternate-label">
+									<ng-container i18n>Redeem Amount</ng-container>
+									<span class="invalid-text d-inline-block"
+										*ngIf="!isAmountValid((giftCardBalance$ | async), (accountBalance$ | async).available, (cartTotal$ | async))"
+										i18n>
+										Invalid
+									</span>
+								</label>
+								<!-- <span class="redeem-amount">
+										{{redeemForm.controls['redeemAmount'].value | currency:'CAD':'symbol-narrow':'1.2'}}
+									</span> -->
+								<input type="text" class="form-control" formControlName="redeemAmount">
+							</div>
+						</div>
+					</form>
+				</div>
+			</ng-container>
+			<div class="col-12">
+				<div class="row justify-content-center button-row">
+					<div class="col-12 col-md-5">
+						<button class="btn btn-lg btn-primary text-uppercase"
+							[disabled]="!isAmountValid((giftCardBalance$ | async), (accountBalance$ | async).available, (cartTotal$ | async))"
+							(click)="submitRedeem(); closeModal()" i18n>
+							Redeem
+						</button>
+					</div>
+				</div>
+			</div>
+			<!-- Button Row -->
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>
+
+<ng-template #failureSecondGiftCard let-closeModal="close">
+	<button class="prompt-modal-x" (click)="closeModal()" aria-label="close button">
+		<i class="icon-close-bold"></i>
+	</button>
+	<app-confirmation-modal [data]="{
+		icon: 'icon-bell'
+	}" title="D'ough!"
+		subtitle='Only one gift card can be applied per order. In order to apply this gift card remove the previously redeemed gift card.'
+		i18n-title i18n-subtitle>
+		<ng-template>
+			<button class="btn btn-primary" (click)="closeModal()">
+				OKAY
+			</button>
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>

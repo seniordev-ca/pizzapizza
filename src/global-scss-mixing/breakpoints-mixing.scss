@@ -1,0 +1,8 @@
+// custom breakpoint to control top nav including IE
+@mixin custom-breakpoint {
+	@media (max-width: 1220px) {
+		.custom-nav-element {
+			display: none;
+		}
+	}
+}

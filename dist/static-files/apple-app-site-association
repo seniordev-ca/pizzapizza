@@ -1,0 +1,13 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "9F2P86YJX9.com.pizzapizza.live",
+                "paths": [
+                    "/user/*"
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,119 @@
+@import 'global-scss-mixing';
+
+$black: #000;
+$green: #4e7026;
+$red: #f00;
+$light-blue: #eaf0f3;
+$dark-blue: #6d7273;
+$border-color: #ccd6d8;
+$border-color2: #e1e7e9;
+
+.store-locator-container {
+
+	color: $pp-default-text-colour;
+
+	.underline-link {
+		margin: 0 5px;
+		text-decoration: underline;
+	}
+
+	.btn-pill {
+		padding: .375rem 1.5rem;
+		height: auto;
+		min-height: 2em;
+	}
+
+	.placeholder-results-icon {
+		padding: 50px 0;
+		color: $light-blue;
+
+		span {
+			color: $dark-blue;
+			font-size: 1.875em;
+		}
+
+		i {
+			font-size: 10em;
+
+			&:before {
+				width: auto;
+			}
+		}
+	}
+
+	.pp-form {
+
+		.address-input {
+			.no-results-row {
+				border-bottom: 1px solid $border-color;
+			}
+
+			.no-results {
+				right: 15px;
+				left: 15px;
+				border-right: 1px solid $border-color;
+				border-left: 1px solid $border-color;
+				width: auto;
+			}
+		}
+
+		.address-input-field {
+			@include font-regular;
+			
+			padding: 0;
+			// height: auto;
+			line-height: 1.875em;
+			letter-spacing: .31px;
+			font-size: 1.875em;
+		}
+
+		.address-input-icon {
+			padding: 11px 0;
+			font-size: .875em;
+
+			.icon-close-bold {
+				cursor: pointer;
+				// color: $pp-bg-maincolour;
+				font-size: .875rem;
+			}
+		} 
+
+		.find-me {
+			display: none;
+		}
+
+		@include media-breakpoint-down(sm) {  
+			.address-input-field {
+				font-size: 1.375em;
+			}
+
+			.address-input-icon { 
+				font-size: 1.375em;
+
+				.icon-close-bold {
+					font-size: .65rem;
+				}
+			}
+		}
+	}	
+
+	.search-results-wrapper {
+		padding-top: 80px;
+		padding-bottom: 50px;
+	}
+
+	.store-city-list {
+		border-top: 1px solid $border-color;
+		padding-top: 40px;
+
+		ul {
+			list-style: none;
+
+			li {
+				a {
+					color: inherit;
+				}
+			}
+		}
+	}
+}

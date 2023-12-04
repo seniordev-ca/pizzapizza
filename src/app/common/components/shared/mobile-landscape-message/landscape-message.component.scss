@@ -1,0 +1,37 @@
+@import 'global-scss-mixing';
+
+$bg-color: #edf2f5;
+
+
+.landscape-message-container {
+	display: none;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	z-index: -1;
+	background-color: $bg-color;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	color: $pp-bg-maincolour;
+
+	i {
+		&:before {
+			transform: rotate(90deg);
+			border-radius: 100%;
+			background-color: $white;
+			
+		}
+	}
+}
+@media screen and (min-width: 500px) and (max-width: 812px) and (max-height: 420px) and (orientation: landscape) {
+	body {
+		overflow: hidden;
+	}
+
+	.landscape-message-container {
+		display: block;
+		z-index: 1060;
+	}
+}

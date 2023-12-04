@@ -1,0 +1,135 @@
+@import 'global-scss-mixing';
+
+$not-active-btn-color: #6d7273;
+$selector-active-bg: #4e7026;
+$not-active-btn-color: #6d7273;
+$not-active-add-to-cart-btn: #dbe4ea;
+$added-btn-icon-color: #8abc53;
+
+.side-product-details-container {
+
+	.product-image-row {
+		.product-image-wrap {
+			position: relative;
+		}
+
+		.product-image {
+			width: 100%;
+		}
+
+		.side-wrapper {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			overflow: hidden;
+
+			&.left {
+				width: 50%;
+			}
+
+			&.right {
+				left: 50%;
+				width: 50%;
+
+				img {
+					margin-left: -25%;
+				}
+			}
+
+			img {
+				width: 100%;
+			}
+		}
+		/*
+		.image-overlay-container {
+			width: 90%;
+
+			img {
+				position: absolute;
+				top: 20px;
+				width: 260px;
+			}
+		}
+		*/
+	}
+
+	.product-quantity-price {
+		@include font-black;
+		color: $pp-default-text-colour;
+
+		.plus-minus {
+			width: 100px;
+		}
+
+		i {
+			cursor: pointer;
+			color: $not-active-btn-color;
+			font-size: 24px;
+
+			&.active {
+				color: $pp-bg-maincolour;
+			}
+		}
+
+	}
+
+	.product-desription {
+		p {
+			color: $pp-default-text-colour;
+			font-size: .875em;
+		}
+	}
+
+	.size-picker-wrapper {
+		padding: 0 15px;
+	}
+
+	.product-validation {
+		@include font-extra-bold;
+		line-height: 1.2;
+		color: $pp-bg-maincolour;
+		font-size: .875rem;
+	}
+
+	.cart-update-btn {
+		@include font-extra-bold;
+
+		cursor: pointer;
+		padding: 13px;
+
+		// &.not-active {
+		// 	border-color: $white;
+		// 	background-color: $not-active-add-to-cart-btn;
+
+		// 	span {
+		// 		color: $not-active-btn-color;
+		// 	}
+		// }
+
+		// &.added {
+		// 	border-color: $selector-active-bg;
+		// 	background-color: $selector-active-bg;
+
+		// 	i {
+		// 		margin-right: 5px;
+		// 		color: $added-btn-icon-color;
+		// 	}
+		// }
+
+		&.loading-state {
+			padding: 10px;
+
+			img {
+				height: 30px;
+			}
+		}
+	}
+
+
+	.product-cals-disclaimer {
+		@include font-black;
+		color: $pp-default-text-colour;
+		font-size: 1.625em;
+	}
+}

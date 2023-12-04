@@ -1,0 +1,30 @@
+$red: #f00;
+
+.redeem-modal-container {
+	display: inline-block;
+	width: 100%;
+
+	.pp-form {
+		.invalid-text-alt {
+			display: inline-block;
+		}
+
+		.redeem-amount {
+			position: absolute;
+			bottom: 0;
+			left: -3px;
+			padding-bottom: 10px;
+			font-size: 1rem;
+		}
+
+		.invalid-entry {
+			.redeem-amount {
+				color: $red;
+			}
+		}
+	}
+
+	.click-to-open {
+		cursor: pointer;
+	}
+}

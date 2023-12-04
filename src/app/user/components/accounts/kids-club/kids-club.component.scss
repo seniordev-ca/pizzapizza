@@ -1,0 +1,100 @@
+@import 'global-scss-mixing';
+
+$mid-grey: #dae9f0;
+$light-grey: #edf2f5;
+$not-active-btn-color: #6d7273;
+$btn-dark-grey: #dbe4ea;
+$ghost-loader-bg: #e1e7e9;
+$pp-green: #4e7026;
+$black: #000;
+$border-grey: #ccd6d8;
+$pp-secondary-text-color: #3b210b;
+
+
+.accounts-kids-club-container {
+	border: 1px solid $border-grey;
+	border-radius: 9px;
+
+
+	.accounts-kids-club-title-col {
+		i {
+			color: $pp-bg-maincolour;
+			font-size: 2.4em;
+		}
+
+		span {
+			letter-spacing: .6px;
+			color: $pp-secondary-text-color;
+			font-size: 2em;
+		}
+	}
+
+	.accounts-kids-club-text-col {
+		line-height: 1.29em;
+		letter-spacing: .3px;
+		color: $pp-secondary-text-color;
+		font-size: .78em;
+	}
+}
+
+@include media-breakpoint-down(lg) {
+	.accounts-kids-club-container {
+		.accounts-kids-club-text-col {
+			font-size: .74em;
+		}
+	}
+}
+
+@include media-breakpoint-down(md) {
+	.accounts-kids-club-container {
+		.accounts-kids-club-title-col {
+			i {
+
+				font-size: 2.1em;
+			}
+
+			span {
+				letter-spacing: .6px;
+				color: $pp-secondary-text-color;
+				font-size: 1.8em;
+			}
+		}
+
+		.accounts-kids-club-text-col {
+			font-size: .78em;
+		}
+}
+}
+
+
+
+@include media-breakpoint-down(sm) {
+	.accounts-kids-club-container {
+
+		.accounts-kids-club-title-col {
+			i {
+				font-size: 1.5em;
+			}
+
+			span {
+				font-size: 1.3em;
+			}
+		}
+
+		.accounts-kids-club-text-col {
+			font-size: .68em;
+		}
+
+		.accounts-kids-club-button-col {
+			
+			button {
+				@include font-extra-bold;
+				margin-right: 0;
+				width: 100%;
+				letter-spacing: .6px;
+				color: $white;
+				font-size: .87em;
+			}
+		}
+	}
+}

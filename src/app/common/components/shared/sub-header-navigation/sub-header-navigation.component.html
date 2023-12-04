@@ -1,0 +1,23 @@
+
+
+<div class="container pt-md-4 pt-lg-5 h-100 sub-header-navigation-container px-0">
+	<div class="row h-100 justify-content-between">
+		<div class="col-12 col-md-auto align-self-center back-wrap" (click)="onBackClick()" (keydown.enter)="onBackClick()"
+    [attr.tabindex]="isVerticalModalOpen" aria-role="button">
+			<h6>
+				<i class="icon-back" aria-hidden="true" [style.color]="subHeaderNavContent.iconColor"></i>
+				<span [style.color]="subHeaderNavContent.textColor">
+					{{ navText }}
+				</span>
+
+			</h6>
+		</div>
+
+		<div class="col-12 col-md-6 col-lg-auto ghost-col-6 align-self-center text-center ml-md-auto mr-md-auto p-md-0" >
+			<h1 class="title ghost-bar ghost-white h3" >
+				{{ title ? title : '&nbsp;'}}
+			</h1>
+		</div>
+
+	</div>
+</div>

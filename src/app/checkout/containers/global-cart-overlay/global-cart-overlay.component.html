@@ -1,0 +1,251 @@
+<!--
+	Global cart overlay
+-->
+<div
+	class="container-fluid cart-overlay-container"
+	id="cart-overlay-component"
+	[class.responsive-cart]="isCartOverlayExpanded"
+	[hidden]="isCartHidden$ | async"
+>
+	<div class="row" *ngIf="showCheckoutCart">
+		<div
+			class="col-12 col-md-5 col-lg-4 col-xl-3 offset-0 offset-md-6 offset-lg-7 offset-xl-8 cart-wrapper"
+		>
+			<div class="row justify-content-end cart-header">
+				<div
+					class="col-12 col-lg-10 px-3 py-2 p-md-1 cart-header-container d-flex justify-content-between"
+					[class.items-in-cart]="(productsInCart$ | async).length"
+					(click)="toggleCart()"
+					(keydown.enter)="toggleCart()"
+					tabindex="0"
+					aria-label=""
+				>
+					<ng-container *ngIf="!(isCartUpdating$ | async)">
+						<div class="cart-items d-flex align-items-center">
+							<i class="icon-cart pr-2"></i>
+							<ng-container *ngIf="(productsInCart$ | async).length === 1" i18n>
+								<span aria-label="1 item in cart"> 1 Item</span>
+							</ng-container>
+							<ng-container *ngIf="(productsInCart$ | async).length > 1">
+								<span
+									[attr.aria-label]="
+										' ' +
+										(productsInCart$ | async).length +
+										' items in the cart'
+									"
+								>
+									{{ (productsInCart$ | async).length }}</span
+								>
+								<ng-container i18n> &nbsp;Items</ng-container>
+							</ng-container>
+							<ng-container *ngIf="(productsInCart$ | async).length <= 0" i18n>
+								Empty Cart
+							</ng-container>
+						</div>
+
+						<div
+							class="cart-toggle d-flex align-items-center mr-2 align-self-center"
+						>
+							<span
+								class="price px-2"
+								*ngIf="(productsInCart$ | async).length > 0"
+								[attr.aria-label]="
+									isCartOverlayExpanded
+										? 'for' +
+											(orderSummaryData$ | async).subtotal +
+											'press enter to close cart'
+										: 'for' +
+											(orderSummaryData$ | async).subtotal +
+											'press enter to open cart'
+								"
+							>
+								{{
+									(orderSummaryData$ | async).subtotal
+										| currency: "CAD":"symbol-narrow":"1.2"
+								}}
+							</span>
+							<i
+								class="icon-toggle"
+								[class.expanded]="isCartOverlayExpanded"
+							></i>
+						</div>
+					</ng-container>
+					<ng-container *ngIf="isCartUpdating$ | async">
+						<div class="w-100 text-center">
+							<button
+								class="btn-primary loading-state py-3 h-100"
+								[class.btn-transparent]="(productsInCart$ | async).length < 1"
+							></button>
+						</div>
+					</ng-container>
+				</div>
+			</div>
+			<div class="row cart-content" *ngIf="isCartOverlayExpanded">
+				<div class="col-12 cart">
+					<ng-container *ngTemplateOutlet="cartContentTemplate"> </ng-container>
+				</div>
+			</div>
+			<!-- <div class="row cart-footer d-flex d-md-none mobile-stripe" *ngIf="isCartOverlayExpanded">
+				<div class="col-12 py-2 text-center">
+					{{calorieText$ | async}}
+				</div>
+			</div> -->
+		</div>
+	</div>
+
+	<div class="row stripe">
+		<div class="col-12 py-2 text-center">
+			{{ calorieText$ | async }}
+		</div>
+	</div>
+</div>
+
+<!--
+	Overlay cart content
+-->
+<ng-template #cartContentTemplate>
+	<div class="container-fluid cart-content-container">
+		<div class="row header" #header *ngIf="!(productsInCart$ | async).length">
+			<div class="col-3 align-self-center">
+				<img
+					alt="club-11-11"
+					class="img-fluid"
+					src="./static-files/images/11-11.png"
+				/>
+			</div>
+			<div class="col-9 align-self-center" i18n>
+				Add items to start earning 'dough'
+			</div>
+		</div>
+
+		<div class="row mt-3" *ngIf="(productsInCart$ | async).length > 0">
+			<app-club-11-11-card parentContainer="inCart" class="container-fluid p-0">
+			</app-club-11-11-card>
+		</div>
+
+		<div class="row pt-3 cart-label">
+			<div class="col-12 p-0" i18n>Your Cart</div>
+		</div>
+
+		<div class="row py-0 items" #items>
+			<div class="col-12 cart-products-wrapper">
+				<img
+					alt="cart product"
+					class="img-fluid cart-image"
+					src="./static-files/images/cart.png"
+					*ngIf="!(productsInCart$ | async).length"
+				/>
+
+				<ng-container *ngFor="let product of productsInCart$ | async">
+					<app-cart-item
+						[cartProduct]="product"
+						(cartProductEventEmitter)="cartProductEventHandler($event)"
+						tabindex="0"
+					>
+					</app-cart-item>
+				</ng-container>
+			</div>
+		</div>
+
+		<!--
+			TODO implement upsale modal
+
+			<div class="row py-0" *ngIf="upsell">
+				<div class="col-12 p-0">
+					<div class="py-2 cart-label">
+						Recommended
+					</div>
+					<app-cart-upsell-card
+						[item]="upsell">
+					</app-cart-upsell-card>
+				</div>
+			</div>
+			-->
+
+		<!--
+				Checkout button action only when cart is not empty
+			-->
+		<div class="row my-3 button-row align-items-end">
+			<div class="col-12 p-0 text-center">
+				<ng-container *ngIf="isAddressComplete$ | async">
+					<button
+						(click)="toggleCart()"
+						[routerLink]="['/checkout']"
+						[disabled]="(productsInCart$ | async).length < 1"
+						[class.activate]="(productsInCart$ | async).length"
+						i18n
+					>
+						CHECKOUT
+					</button>
+				</ng-container>
+				<ng-container *ngIf="!(isAddressComplete$ | async)">
+					<button
+						(click)="toggleModal()"
+						[disabled]="(productsInCart$ | async).length < 1"
+						[class.activate]="(productsInCart$ | async).length"
+						i18n
+					>
+						CHECKOUT
+					</button>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+	<div
+		class="row cart-footer d-flex d-md-none mobile-stripe"
+		*ngIf="isCartOverlayExpanded"
+	>
+		<div class="col-12 py-2 text-center">
+			{{ calorieText$ | async }}
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #incompleteCartModal let-closeModal="close">
+	<button
+		class="prompt-modal-x"
+		(click)="closeModal()"
+		aria-label="close button"
+	>
+		<i class="icon-close-bold"></i>
+	</button>
+	<app-confirmation-modal
+		[data]="{
+			icon: 'icon-half-pizza-2'
+		}"
+		title="Incomplete Order"
+		i18n-title
+	>
+		<ng-template>
+			<div class="col-12 mb-4">
+				<p i18n>
+					It looks like you’ve got items in your cart that you haven’t
+					purchased. Want to retrieve the order?
+				</p>
+			</div>
+			<div class="col-12 align-self-end">
+				<div class="row justify-content-center button-row">
+					<div class="col-6 col-md-5 px-1">
+						<button
+							class="btn btn-lg btn-primary btn-white text-uppercase w-100"
+							(click)="closeModal(); closeIncompleteOrder(true)"
+							i18n
+						>
+							Cancel
+						</button>
+					</div>
+					<div class="col-6 col-md-5 px-1">
+						<button
+							class="btn btn-lg btn-primary text-uppercase w-100"
+							(click)="closeModal(); closeIncompleteOrder(false)"
+							i18n
+						>
+							Okay
+						</button>
+					</div>
+				</div>
+			</div>
+			<!-- Button Row -->
+		</ng-template>
+	</app-confirmation-modal>
+</ng-template>

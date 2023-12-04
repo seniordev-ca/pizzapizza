@@ -1,0 +1,193 @@
+<div class="container-fluid store-locator-header-container">
+
+	<div class="row pb-4 header-nav">
+
+		<div class="col-12 align-self-start">
+			<app-sub-header-navigation [subHeaderNavContent]="{
+				textColor: '#4C3017',
+				iconColor: '#EE5A00'
+			}"
+			title="Restaurant Locator"
+			navText="Back"
+			i18n-navText
+			i18n-title>
+
+			</app-sub-header-navigation>
+		</div>
+
+	</div>
+
+</div>
+
+<div class="container store-locator-container">
+	<div class="row justify-content-center">
+
+		<div class="col-12 col-md-8">
+			<form class="pp-form">
+				<div class="form-group">
+					<div class="row mx-0">
+						<app-address-autocomplete
+							class="w-100"
+							[isManualToggleAllowed]="false"
+							[minimumRequirements]="[]"
+							[placeholder]="initialSearchQuery ? initialSearchQuery : ''"
+							(addressSearchEmitter)="handleSearchStores($event)"
+							labelName="Search by city, province or postal code"
+							i18n-labelName
+						>
+						</app-address-autocomplete>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="col-12 col-md-8" *ngIf="province">
+			<div class="row mx-0">
+				<div class="col-12">
+					<button class="btn btn-primary btn-small btn-pill m-1 text-capitalize"
+						[routerLink]="buildUrl('base')" i18n>
+						All Locations
+					</button>
+
+					<button class="btn btn-primary btn-small btn-pill m-1 text-capitalize"
+						[routerLink]="buildUrl('province') ">
+						{{province}}
+					</button>
+
+					<button class="btn btn-primary btn-small btn-pill m-1 text-capitalize"
+						[routerLink]="buildUrl('city') "
+						*ngIf="city">
+						{{city}}
+					</button>
+
+					<button class="btn btn-primary btn-small btn-pill m-1 text-capitalize"
+						[routerLink]="buildUrl('store')"
+						*ngIf="streetAddress && storeId">
+						{{streetAddress}}
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12 col-md-11 search-results-wrapper" *ngIf="!(storeDetails$ | async)">
+			<p class="text-center placeholder-results-icon"
+				*ngIf="!(storeList$ | async) || (storeList$ | async).length < 1">
+				<span class="d-block"
+					*ngIf="errorResults$ | async" i18n>
+					No results found
+				</span>
+				<i class="icon-pp-speech-bubble"></i>
+			</p>
+
+			<app-store-result
+				*ngFor="let store of storeList$ | async"
+				(storeEmitter)="handleStoreClick()"
+				[layout]="storeResultLayoutEnum.LIST"
+				[store]="store">
+			</app-store-result>
+
+			<ng-container *ngIf="(storeCityList$ | async)">
+				<div class="row" *ngIf="(storeList$ | async) && (storeList$ | async).length > 0">
+					<div class="col-12">
+						<h4 class="fw-bold">
+							<ng-container i18n>Having trouble finding what you are looking for?</ng-container>
+								<span class="d-inline" *ngIf="!city">
+									<a
+										class="underline-link"
+										[routerLink]="['/restaurant-locator', provinceLink.provinceSlug]"
+										*ngFor="let provinceLink of storeCityListProvince$ | async">
+										{{provinceLink.province}}
+									</a>
+								</span>
+								<span class="d-inline" *ngIf="city">
+									<a
+										class="underline-link"
+										[routerLink]="['/restaurant-locator', cityLink.provinceSlug, cityLink.citySlug]"
+										*ngFor="let cityLink of storeCityListCity$ | async">
+										{{cityLink.city}}
+									</a>
+								</span>
+						</h4>
+					</div>
+				</div>
+				<div class="row store-city-list no-gutters" *ngIf="!(storeList$ | async) || (storeList$ | async).length < 1">
+					<div class="col-12 mb-3">
+						<h6 class="fw-extra-bold">{{(storeCityList$ | async)[0].province}}</h6>
+						<div class="row">
+							<div class="col-12 col-md-6">
+								<div class="row">
+								<div class="col-12 col-md-3" *ngFor="let column of (storeCityList$ | async)[0].columns | slice:0:(storeCityList$ | async)[0].columns.length / 2">
+									<ul class="p-0 m-0">
+										<li *ngFor="let city of column" class="smaller ">
+											<a
+												(click)="handleStoreClick()"
+												[routerLink]="['/restaurant-locator', (storeCityList$ | async)[0].provinceSlug, city.citySlug]">
+												{{city.city}}
+											</a>
+										</li>
+									</ul>
+								</div>
+								</div>
+							</div>
+							<div class="col-12 col-md-6">
+								<div class="row">
+								<div class="col-12 col-md-3" *ngFor="let column of (storeCityList$ | async)[0].columns | slice:(storeCityList$ | async)[0].columns.length / 2:(storeCityList$ | async)[0].columns.length">
+									<ul class="p-0 m-0">
+										<li *ngFor="let city of column" class="smaller">
+											<a
+												(click)="handleStoreClick()"
+												[routerLink]="['/restaurant-locator', (storeCityList$ | async)[0].provinceSlug, city.citySlug]">
+												{{city.city}}
+											</a>
+										</li>
+									</ul>
+								</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="row">
+							<div class="col-12 col-md-2 px-1" *ngFor="let province of (storeCityList$ | async) | slice:1:(storeCityList$ | async).lengh;">
+								<h6 class="fw-extra-bold">{{province.province}}</h6>
+								<div class="row">
+									<div class="col-12" *ngFor="let column of province.columns">
+										<ul class="p-0 m-0">
+											<li *ngFor="let city of column" class="smaller">
+												<a
+													(click)="handleStoreClick()"
+													[routerLink]="['/restaurant-locator', province.provinceSlug, city.citySlug]">
+													{{city.city}}
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+
+		</div>
+
+		<div class="col-12 col-md-11 search-results-wrapper store-details" *ngIf="(storeDetails$ | async)">
+			<app-store-result
+				[layout]="storeResultLayoutEnum.SINGLE"
+				[store]="(storeDetails$ | async)">
+			</app-store-result>
+
+			<div class="nearby-stores row" *ngIf="!(storeList$ | async) || (storeList$ | async).length > 1">
+				<h6 class="fw-extra-bold col-12 mb-4" i18n>Nearby Locations</h6>
+				<div class="col-12 col-md-4 mb-2" *ngFor="let store of (storeList$ | async) | slice:0:3">
+					<app-store-result
+						(storeEmitter)="handleStoreClick()"
+						[layout]="storeResultLayoutEnum.NEARBY"
+						[store]="store">
+					</app-store-result>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

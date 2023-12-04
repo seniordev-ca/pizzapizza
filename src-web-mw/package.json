@@ -1,0 +1,33 @@
+{
+  "name": "pp-web-mw",
+  "description": "Web middleware",
+  "version": "0.9.5",
+  "private": true,
+  "license": "Private",
+  "author": "Plastic Havas",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "dependencies": {
+    "atob": "^2.1.2",
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "btoa": "^1.2.1",
+    "cookie-parser": "^1.4.4",
+    "crypto-js": "^3.1.9-1",
+    "express": "^4.16.3",
+    "redis": "^2.8.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "cloud-repo-tools": {
+    "requiresKeyFile": true,
+    "requiresProjectId": true
+  }
+}

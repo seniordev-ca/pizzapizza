@@ -1,0 +1,28 @@
+<div class="container pizza-assistant-container">
+	<!-- pizza assistant start -->
+	<div class="row justify-content-center my-md-3 mx-0">
+		<div class="col-12 pizza-assistant-col">
+			<div class="row pizza-assistant mx-0 px-0 px-md-3">
+				<div class="col h2 m-2 d-flex align-items-center search p-0">
+					<button class="search-text py-2 px-0" routerLink="/catalog/pizza-assistant">
+						<ng-container *ngIf="userDetails">
+							<ng-container i18n>Hi</ng-container>
+							{{userDetails.firstName}},
+							<ng-container i18n>what can I help you order?</ng-container>
+						</ng-container>
+						<ng-container *ngIf="!userDetails" i18n>
+							Hi, I'm the Pizza Assistant, what can I help you order?
+						</ng-container>
+					</button>
+				</div>
+				<div class="col-auto p-0 d-flex align-items-center">
+					<i class="icon-stack ml-auto">
+						<i class="icon icon-pizza-assistant-1 icon-stack-base h1"></i>
+						<i class="icon icon-pizza-assistant-2 h1"></i>
+					</i>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- pizza assistant end -->
+</div>

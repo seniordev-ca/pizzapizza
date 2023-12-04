@@ -1,0 +1,145 @@
+@import 'global-scss-mixing';
+
+$mid-grey: #dae9f0;
+$light-grey: #edf2f5;
+$not-active-btn-color: #6d7273;
+$ghost-loader-bg: #e1e7e9;
+$modal-bg: #000;
+$pp-green: #4e7026;
+$pp-secondary-text-color: #3b210b;
+$lighter-gray: #ccd6d8;
+
+$weak: #857700;
+$strong: #8abc53;
+
+
+.sign-up-form-container {
+
+	.modal-dialog {
+		margin: 0;
+		padding: 0;
+		max-width: 100%;
+		height: 100%;
+	}
+
+	.modal-content {
+		border: 0;
+		border-radius: 0;
+		background-color: $white;
+		padding-right: 0;
+		padding-left: 0;
+		width: 100%;
+		height: 100%;
+		overflow: scroll;
+	}
+
+	.header-icon {
+		color: $pp-bg-maincolour;
+		font-size: 3em;
+	}
+
+	.header-subtitle {
+		text-align: center;
+		letter-spacing: .3px;
+		color: $pp-bg-maincolour;
+		font-size: .82em;
+	}
+
+	.header-title {
+		text-align: center;
+		letter-spacing: .3px;
+		color: $pp-default-text-colour;
+		font-size: 1.9em;
+		font-weight: 900;
+	}
+
+	.edit-profile-modal-header-row {
+		border: 1px solid $ghost-loader-bg;
+		background-color: $light-grey;
+		height: 20%;
+	}
+
+	.edit-profile-body-row {
+		// border: 1px solid $pp-default-text-colour;
+		width: 100%;
+	}
+
+	.edit-personal-details-content-wrapper {
+		margin-right: 2.5%;
+		margin-left: 2.5%;
+		border: 1px solid $pp-bg-maincolour;
+		width: 100%;
+	}
+
+	.promotion-label {
+		line-height: 1.3;
+	}
+
+	.il {
+		visibility: hidden;
+	}
+
+	.local-show-pw-label {
+		@include font-bold;
+		color: $pp-bg-maincolour;
+		font-size: .84em;
+	}
+
+	.local-radio-col {
+		letter-spacing: .4px;
+		color: $pp-secondary-text-color;
+		font-size: 1em;
+	}
+
+	.prone-row {
+		.form-group {
+			.alternate-label {
+				display: block;
+				min-height: 46px;
+			}
+		} 
+	}
+
+	.pp-form {
+		.invalid-text-alt {
+			display: inline-block;
+
+			span {
+				display: block;
+				width: 100%;
+				white-space: nowrap;
+			}
+		}
+
+		.form-control {
+			&.password {
+				float: left;
+				margin-right: -50px;
+				margin-bottom: 10px;
+			}
+		}
+
+		.password-strength {
+			@include font-semi-bold;
+			float: right;
+			margin-left: -50px;
+			text-transform: uppercase;
+			line-height: 2rem;
+			font-size: .8rem;
+
+			&.strong {
+				color: $strong;
+			}
+
+			&.weak {
+				color: $weak;
+			}
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.sign-up-form-container {
+		overflow-x: hidden;
+	}
+}
